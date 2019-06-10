@@ -3,8 +3,11 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="white_80">#CCFFFFFF</color>
+    <color name="white_95">#F2FFFFFF</color>
     <color name="white">#fff</color>
+    <color name="black">#000</color>
+    <color name="textColorPrimary">#E6000000</color>
+    <color name="textColorSecondary">#CC000000</color>
 
     <!-- Screens background color-->
     <color name="bg_screen1">#f64c73</color>
