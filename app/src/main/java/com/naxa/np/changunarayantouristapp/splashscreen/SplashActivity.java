@@ -7,8 +7,8 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.naxa.np.changunarayantouristapp.MainActivity;
 import com.naxa.np.changunarayantouristapp.R;
+import com.naxa.np.changunarayantouristapp.selectlanguage.SelectlanguageActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 
@@ -30,7 +30,7 @@ public class SplashActivity extends AppCompatActivity {
                 if (SharedPreferenceUtils.getInstance(SplashActivity.this).getBoolanValue(IS_APP_FIRST_TIME_LAUNCH, true)) {
                     ActivityUtil.openActivity(WalkThroughSliderActivity.class, SplashActivity.this);
                 } else {
-                    ActivityUtil.openActivity(MainActivity.class, SplashActivity.this);
+                    ActivityUtil.openActivity(SelectlanguageActivity.class, SplashActivity.this);
                 }
             }
 

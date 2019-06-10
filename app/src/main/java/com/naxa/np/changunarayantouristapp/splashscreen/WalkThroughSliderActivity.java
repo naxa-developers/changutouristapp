@@ -18,8 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.naxa.np.changunarayantouristapp.MainActivity;
 import com.naxa.np.changunarayantouristapp.R;
+import com.naxa.np.changunarayantouristapp.selectlanguage.SelectlanguageActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 
@@ -82,7 +82,7 @@ public class WalkThroughSliderActivity extends AppCompatActivity {
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                launchHomeScreen();
+                launchLanguageSelectorScreen();
             }
         });
 
@@ -96,7 +96,7 @@ public class WalkThroughSliderActivity extends AppCompatActivity {
                     // move to next screen
                     viewPager.setCurrentItem(current);
                 } else {
-                    launchHomeScreen();
+                    launchLanguageSelectorScreen();
                 }
             }
         });
@@ -125,9 +125,9 @@ public class WalkThroughSliderActivity extends AppCompatActivity {
         return viewPager.getCurrentItem() + i;
     }
 
-    private void launchHomeScreen() {
+    private void launchLanguageSelectorScreen() {
         SharedPreferenceUtils.getInstance(WalkThroughSliderActivity.this).setValue(IS_APP_FIRST_TIME_LAUNCH, false);
-        ActivityUtil.openActivity(MainActivity.class, WalkThroughSliderActivity.this);
+        ActivityUtil.openActivity(SelectlanguageActivity.class, WalkThroughSliderActivity.this);
     }
 
     //  viewpager change listener

@@ -21,6 +21,9 @@
     <string name="slide_5_desc">Easy way to find a way to a destination with little effort.</string>
 
     <string name="storage_rationale">Changunarayan Tourist App need storage permission to download and save data so they can be shared directly</string>
+    <string name="english">English</string>
+    <string name="nepali">Nepali (नेपाली)</string>
+    <string name="chinese">Chinese (中文)</string>
 
 
 </resources>
