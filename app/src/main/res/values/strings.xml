@@ -1,23 +1,26 @@
 <resources>
     <string name="app_name">Changunarayan Tourist App</string>
 
-    <string name="next">NEXT</string>
-    <string name="skip">SKIP</string>
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
     <string name="got_it">GOT IT</string>
 
-    <string name="slide_1_title">Disaster Ready!</string>
-    <string name="slide_1_desc">Prepared yourself for disaster!</string>
+    <string name="slide_1_title">Travelling!</string>
+    <string name="slide_1_desc">Travel with better Technology.</string>
 
-    <string name="slide_2_title">Report Disaster Events</string>
-    <string name="slide_2_desc">Know what is happening around you!</string>
+    <string name="slide_2_title">Scan QR Code!</string>
+    <string name="slide_2_desc">Scan QR Code for easy access to information.</string>
 
-    <string name="slide_3_title">Report Quickly</string>
-    <string name="slide_3_desc">Best discounts on every single service we offer!</string>
+    <string name="slide_3_title">360/VR Images!</string>
+    <string name="slide_3_desc">Explore more with 360 degree images of all seasons and time.</string>
 
-    <string name="slide_4_title">Get Connected</string>
-    <string name="slide_4_desc">A bridge between public and local government!</string>
+    <string name="slide_4_title">Better with Audio!</string>
+    <string name="slide_4_desc">Audio description of places for finer understanding.</string>
 
-    <string name="slide_5_title">Registration</string>
-    <string name="slide_5_desc">Register for more services!</string>
+    <string name="slide_5_title">View on MAP!</string>
+    <string name="slide_5_desc">Easy way to find a way to a destination with little effort.</string>
+
+    <string name="storage_rationale">Changunarayan Tourist App need storage permission to download and save data so they can be shared directly</string>
+
 
 </resources>
