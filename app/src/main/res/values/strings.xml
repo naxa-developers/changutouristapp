@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">Changunarayan Tourist App</string>
+
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+    <string name="slide_1_title">Disaster Ready!</string>
+    <string name="slide_1_desc">Prepared yourself for disaster!</string>
+
+    <string name="slide_2_title">Report Disaster Events</string>
+    <string name="slide_2_desc">Know what is happening around you!</string>
+
+    <string name="slide_3_title">Report Quickly</string>
+    <string name="slide_3_desc">Best discounts on every single service we offer!</string>
+
+    <string name="slide_4_title">Get Connected</string>
+    <string name="slide_4_desc">A bridge between public and local government!</string>
+
+    <string name="slide_5_title">Registration</string>
+    <string name="slide_5_desc">Register for more services!</string>
+
 </resources>
