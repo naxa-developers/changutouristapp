@@ -1,9 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".splashscreen.SplashActivity">
+    tools:context=".splashscreen.SplashActivity"
+    android:background="@color/colorPrimary">
 
-</android.support.constraint.ConstraintLayout>
+<ImageView
+    android:id="@+id/imageView"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:layout_margin="@dimen/activity_default_margin"
+    android:src="@drawable/changunarayan_temple_image"
+    android:layout_above="@+id/app_lbl"
+    />
+
+    <TextView
+        android:id="@+id/app_lbl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_material_header1"
+        android:text="Changunarayan\nTourist App"/>
+
+</RelativeLayout>
