@@ -3,6 +3,7 @@
     <dimen name="activity_default_margin">16dp</dimen>
     <dimen name="activity_default_padding">10dp</dimen>
     <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_xsmall">4dp</dimen>
     <dimen name="banner_height">300dp</dimen>
     <dimen name="margin_large">16dp</dimen>
 
