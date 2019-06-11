@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".barcodereader.QRCodeReaderActivity">
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar_layout">
+    </include>
+
+
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_scan_qr_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/scan_barcode"/>
+
+
+
+
+        <com.budiyev.android.codescanner.CodeScannerView
+            android:layout_below="@id/toolbar_layout"
+            android:layout_above="@id/btn_scan_qr_code"
+            android:id="@+id/scanner_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:autoFocusButtonColor="@android:color/white"
+            app:autoFocusButtonVisible="true"
+            app:flashButtonColor="@android:color/white"
+            app:flashButtonVisible="true"
+            app:frameColor="@android:color/white"
+            app:frameCornersSize="50dp"
+            app:frameCornersRadius="0dp"
+            app:frameAspectRatioWidth="1"
+            app:frameAspectRatioHeight="1"
+            app:frameSize="0.75"
+            app:frameThickness="2dp"
+            app:maskColor="#77000000"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_qr_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btn_scan_qr_code"
+        android:text="@string/no_barcode_captured"
+        style="@style/LanguageSelectorTextStyle"
+        android:layout_margin="@dimen/activity_default_margin"/>
+
+</RelativeLayout>
