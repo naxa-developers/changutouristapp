@@ -26,6 +26,7 @@
     <string name="chinese">Chinese (中文)</string>
     <string name="scan_barcode">Scan QRCode</string>
     <string name="no_barcode_captured">No QRCode Captured</string>
+    <string name="image_description">Image Description</string>
 
 
 </resources>
