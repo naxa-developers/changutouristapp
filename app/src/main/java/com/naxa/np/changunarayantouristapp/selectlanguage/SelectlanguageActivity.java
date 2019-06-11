@@ -1,22 +1,31 @@
 package com.naxa.np.changunarayantouristapp.selectlanguage;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.naxa.np.changunarayantouristapp.MainActivity;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
+import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 
-public class SelectlanguageActivity extends BaseActivity implements View.OnClickListener {
+import java.util.List;
+
+public class SelectlanguageActivity extends BaseActivity {
+
+    private static final String TAG = "SelectlanguageActivity";
 
     Toolbar toolbar;
-    TextView tvSelectEnglish;
-    TextView tvSelectNepali;
-    TextView tvSelectChinese;
+    RecyclerView recyclerView;
+    private BaseRecyclerViewAdapter<LanguageDetails, SelectLanguageViewHolder> adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,34 +38,46 @@ public class SelectlanguageActivity extends BaseActivity implements View.OnClick
     }
 
     private void initUI(){
+
         toolbar = findViewById(R.id.toolbar);
-        tvSelectEnglish = findViewById(R.id.tv_select_english);
-        tvSelectEnglish.setOnClickListener(this);
-        tvSelectNepali = findViewById(R.id.tv_select_nepali);
-        tvSelectNepali.setOnClickListener(this);
-        tvSelectChinese = findViewById(R.id.tv_select_chinese);
-        tvSelectChinese.setOnClickListener(this);
+        recyclerView = findViewById(R.id.rv_language_selector);
+        setuprecyclerView(LanguageDetails.getLanguageDetails());
     }
 
+    private void setuprecyclerView(List<LanguageDetails> languageDetailsList) {
 
+        if(languageDetailsList == null){
+            return;
+        }
+
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        adapter = new BaseRecyclerViewAdapter<LanguageDetails, SelectLanguageViewHolder>(languageDetailsList, R.layout.language_selector_row_item_layout){
+
+            @Override
+            public void viewBinded(SelectLanguageViewHolder selectLanguageViewHolder, final LanguageDetails languageDetails, int position) {
+                selectLanguageViewHolder.bindView(languageDetails);
+                selectLanguageViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.d(TAG, "onClick: "+ languageDetails.getTitle());
+                        launchHomeScreen();
+                    }
+                });
+
+            }
+
+            @Override
+            public SelectLanguageViewHolder attachViewHolder(View view) {
+                return new SelectLanguageViewHolder(view);
+            }
+        };
+        recyclerView.setAdapter(adapter);
+    }
 
 
     private void launchHomeScreen() {
         ActivityUtil.openActivity(MainActivity.class, SelectlanguageActivity.this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_select_english:
-                launchHomeScreen();
-                break;
-            case R.id.tv_select_nepali:
-                launchHomeScreen();
-                break;
-            case R.id.tv_select_chinese:
-                launchHomeScreen();
-                break;
-        }
     }
 }

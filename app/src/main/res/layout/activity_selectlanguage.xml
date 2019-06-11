@@ -11,33 +11,11 @@
         android:id="@+id/toolbar_layout">
     </include>
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_below="@id/toolbar_layout"
+        android:id="@+id/rv_language_selector"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_default_margin"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_select_english"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/english"
-            style="@style/LanguageSelectorTextStyle"/>
-
-        <TextView
-            android:id="@+id/tv_select_nepali"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/nepali"
-            style="@style/LanguageSelectorTextStyle"/>
-
-        <TextView
-            android:id="@+id/tv_select_chinese"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/chinese"
-            style="@style/LanguageSelectorTextStyle"/>
-
-    </LinearLayout>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_margin="@dimen/activity_default_margin"/>
 </RelativeLayout>
