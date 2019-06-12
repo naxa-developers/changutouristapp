@@ -27,6 +27,22 @@
         android:layout_centerVertical="true"
         >
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_medium"
+            android:text="Verification Code" />
+
+        <EditText
+            android:id="@+id/et_verification_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_large"
+            android:background="@drawable/rectangle_rounded_text_bordered_light_"
+            android:inputType="text"
+            android:hint="Enter Verification Code"
+            android:padding="@dimen/spacing_medium" />
+
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,11 +52,30 @@
             app:cornerRadius="@dimen/spacing_small"
             />
 
-        <View
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/spacing_xxxsmall"
-            android:background="@color/colorPrimary"
-            android:layout_marginBottom="@dimen/spacing_medium"/>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_medium">
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_xxxsmall"
+                android:background="@color/colorPrimary"
+                android:layout_centerVertical="true"
+                />
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/circle_bg"
+                android:layout_centerHorizontal="true"
+                android:text="OR"
+                android:gravity="center"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+
+
+
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"

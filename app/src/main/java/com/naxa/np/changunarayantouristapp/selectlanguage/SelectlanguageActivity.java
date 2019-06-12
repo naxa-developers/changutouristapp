@@ -78,5 +78,6 @@ public class SelectlanguageActivity extends BaseActivity {
 
     private void launchLoginScreen() {
         ActivityUtil.openActivity(LoginActivity.class, SelectlanguageActivity.this);
+        finish();
     }
 }

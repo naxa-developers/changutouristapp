@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.google.android.material.button.MaterialButton;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
+import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.FieldValidatorUtils;
 
@@ -102,6 +103,7 @@ public class RequestForAccessActivity extends BaseActivity implements View.OnCli
                 if(FieldValidatorUtils.validateEditText(etFullName) &&
                 FieldValidatorUtils.validateEmailPattern(etEmail) &&
                 FieldValidatorUtils.validateAutoCompleteText(etCountry)){
+
 
                     if(isNetworkAvailable()) {
                         registerUser();

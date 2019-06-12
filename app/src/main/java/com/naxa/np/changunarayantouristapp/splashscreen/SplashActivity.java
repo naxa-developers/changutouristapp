@@ -32,6 +32,7 @@ public class SplashActivity extends AppCompatActivity {
                 } else {
                     ActivityUtil.openActivity(SelectlanguageActivity.class, SplashActivity.this);
                 }
+                finish();
             }
 
         }, 2000);
