@@ -20,13 +20,21 @@
     <string name="slide_5_title">View on MAP!</string>
     <string name="slide_5_desc">Easy way to find a way to a destination with little effort.</string>
 
-    <string name="storage_rationale">Changunarayan Tourist App need storage permission to download and save data so they can be shared directly</string>
+    <string name="storage_rationale">Changunarayan Tourist App need storage permission to download and save data so they can be shared directly.</string>
+    <string name="camera_rationale">Changunarayan Tourist App need camera permission to san QRCode.</string>
     <string name="english">English</string>
     <string name="nepali">Nepali (नेपाली)</string>
     <string name="chinese">Chinese (中文)</string>
     <string name="scan_barcode">Scan QRCode</string>
     <string name="no_barcode_captured">No QRCode Captured</string>
     <string name="image_description">Image Description</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="others">Others</string>
+    <string name="religious_visit">Religious Visit</string>
+    <string name="sight_seeing">Sight Seeing</string>
+    <string name="verification">Verify</string>
+    <string name="request_for_access">Request For Access</string>
 
 
 </resources>

@@ -20,6 +20,7 @@ public class VRImageViewActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vrimage_view);
 
+        setupToolbar("View VR Image", false);
         initUI();
     }
 

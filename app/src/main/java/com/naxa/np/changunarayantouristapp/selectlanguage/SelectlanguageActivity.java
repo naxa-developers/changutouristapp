@@ -3,17 +3,16 @@ package com.naxa.np.changunarayantouristapp.selectlanguage;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.naxa.np.changunarayantouristapp.MainActivity;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
+import com.naxa.np.changunarayantouristapp.login.LoginActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 
 import java.util.List;
@@ -62,7 +61,7 @@ public class SelectlanguageActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         Log.d(TAG, "onClick: "+ languageDetails.getTitle());
-                        launchHomeScreen();
+                        launchLoginScreen();
                     }
                 });
 
@@ -77,7 +76,8 @@ public class SelectlanguageActivity extends BaseActivity {
     }
 
 
-    private void launchHomeScreen() {
-        ActivityUtil.openActivity(MainActivity.class, SelectlanguageActivity.this);
+    private void launchLoginScreen() {
+        ActivityUtil.openActivity(LoginActivity.class, SelectlanguageActivity.this);
+        finish();
     }
 }

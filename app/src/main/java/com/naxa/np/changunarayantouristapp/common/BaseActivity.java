@@ -5,7 +5,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.naxa.np.changunarayantouristapp.R;
+import com.naxa.np.changunarayantouristapp.network.NetworkApiClient;
+import com.naxa.np.changunarayantouristapp.network.NetworkApiInterface;
 
 import java.util.ArrayList;
 
@@ -25,7 +26,7 @@ public class BaseActivity extends AppCompatActivity {
     protected Toolbar toolbar;
     ProgressDialog progressDialog;
 
-//    protected NetworkApiInterface apiInterface = NetworkApiClient.getAPIClient().create(NetworkApiInterface.class);
+    protected NetworkApiInterface apiInterface = NetworkApiClient.getAPIClient().create(NetworkApiInterface.class);
 
     protected void setupToolbar(boolean isCenterTitle) {
         toolbar = findViewById(R.id.toolbar);
@@ -109,4 +110,12 @@ public class BaseActivity extends AppCompatActivity {
             progressDialog.dismiss();
         }
     }
+
+
+
+
+
+
+
+
 }
