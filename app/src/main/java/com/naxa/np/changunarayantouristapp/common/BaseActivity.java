@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.naxa.np.changunarayantouristapp.R;
+import com.naxa.np.changunarayantouristapp.network.NetworkApiClient;
+import com.naxa.np.changunarayantouristapp.network.NetworkApiInterface;
 
 import java.util.ArrayList;
 
@@ -24,7 +26,7 @@ public class BaseActivity extends AppCompatActivity {
     protected Toolbar toolbar;
     ProgressDialog progressDialog;
 
-//    protected NetworkApiInterface apiInterface = NetworkApiClient.getAPIClient().create(NetworkApiInterface.class);
+    protected NetworkApiInterface apiInterface = NetworkApiClient.getAPIClient().create(NetworkApiInterface.class);
 
     protected void setupToolbar(boolean isCenterTitle) {
         toolbar = findViewById(R.id.toolbar);

@@ -6,11 +6,17 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
+import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.FieldValidatorUtils;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 public class RequestForAccessActivity extends BaseActivity implements View.OnClickListener {
 
@@ -96,13 +102,38 @@ public class RequestForAccessActivity extends BaseActivity implements View.OnCli
                 if(FieldValidatorUtils.validateEditText(etFullName) &&
                 FieldValidatorUtils.validateEmailPattern(etEmail) &&
                 FieldValidatorUtils.validateAutoCompleteText(etCountry)){
-                    registerUser();
+
+                    if(isNetworkAvailable()) {
+                        registerUser();
+                    }else {
+                        Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 break;
         }
     }
 
     private void registerUser() {
+        apiInterface.getUserregistrationResponse(new UserLoginDetails(etFullName.getText().toString(), etEmail.getText().toString(), etCountry.getText().toString(),
+                gender, purpose_for_visit))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retry(Constant.Network.KEY_MAX_RETRY_COUNT)
+                .subscribe(new DisposableObserver<UserLoginResponse>() {
+                    @Override
+                    public void onNext(UserLoginResponse userLoginResponse) {
+                        
+                    }
 
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }
