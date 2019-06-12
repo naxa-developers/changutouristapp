@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".login.RequestForAccessActivity"></activity>
+        <activity android:name=".login.RequestForAccessActivity"
+            android:exported="true"></activity>
         <activity
             android:name=".vrimage.VRImageViewActivity"
             android:exported="true" />
