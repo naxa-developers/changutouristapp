@@ -5,7 +5,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,4 +108,12 @@ public class BaseActivity extends AppCompatActivity {
             progressDialog.dismiss();
         }
     }
+
+
+
+
+
+
+
+
 }

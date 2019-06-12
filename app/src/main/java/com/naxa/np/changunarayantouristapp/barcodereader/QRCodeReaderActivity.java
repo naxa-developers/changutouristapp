@@ -14,37 +14,64 @@ import com.google.android.material.button.MaterialButton;
 import com.google.zxing.Result;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
+import com.naxa.np.changunarayantouristapp.utils.PermissionUtils;
 
 public class QRCodeReaderActivity extends BaseActivity  {
 
     TextView tvQRCode;
     MaterialButton btnScanQrCode;
     private CodeScanner mCodeScanner;
+    CodeScannerView scannerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode_reader);
 
+        setupToolbar("QR Code Scan", false);
         initUI();
     }
 
     private void initUI() {
         tvQRCode = findViewById(R.id.tv_qr_code);
         btnScanQrCode = findViewById(R.id.btn_scan_qr_code);
-        setupQRCodeReader();
-        btnScanQrCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCodeScanner.startPreview();
+        btnScanQrCode.setEnabled(false);
 
+        new PermissionUtils.CameraPermission(QRCodeReaderActivity.this) {
+            @Override
+            protected void cameraPermisionGranted() {
+                setupQRCodeReader();
+                mCodeScanner.startPreview();
+                QRCodeReaderActivity.this.onResume();
+                btnScanQrCode.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mCodeScanner.startPreview();
+
+                    }
+                });
+
+                btnScanQrCode.setEnabled(true);
+                btnScanQrCode.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mCodeScanner.startPreview();
+                    }
+                });
             }
-        });
+
+            @Override
+            protected void cameraPermisionDenied() {
+                btnScanQrCode.setEnabled(false);
+            }
+        };
+
     }
 
     private void setupQRCodeReader() {
-        CodeScannerView scannerView = findViewById(R.id.scanner_view);
+        scannerView = findViewById(R.id.scanner_view);
         mCodeScanner = new CodeScanner(this, scannerView);
+
         mCodeScanner.setDecodeCallback(new DecodeCallback() {
             @Override
             public void onDecoded(@NonNull final Result result) {
@@ -67,13 +94,17 @@ public class QRCodeReaderActivity extends BaseActivity  {
 
     @Override
     protected void onResume() {
+        if(mCodeScanner != null){
+            mCodeScanner.startPreview();
+        }
         super.onResume();
-        mCodeScanner.startPreview();
     }
 
     @Override
     protected void onPause() {
-        mCodeScanner.releaseResources();
+        if(mCodeScanner != null){
+            mCodeScanner.releaseResources();
+        }
         super.onPause();
     }
 
