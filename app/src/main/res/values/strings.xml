@@ -33,6 +33,8 @@
     <string name="others">Others</string>
     <string name="religious_visit">Religious Visit</string>
     <string name="sight_seeing">Sight Seeing</string>
+    <string name="verification">Verification</string>
+    <string name="request_for_access">Request For Access</string>
 
 
 </resources>

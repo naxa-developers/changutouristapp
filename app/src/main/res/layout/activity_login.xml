@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".login.LoginActivity">
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar_layout"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar_layout"
+        android:layout_margin="@dimen/activity_default_margin"
+        android:text="Easy way to get details with little effort."
+        style="@style/headlineText"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/activity_default_margin"
+        android:layout_centerVertical="true"
+        >
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_verification"
+            android:text="@string/verification"
+            android:layout_marginBottom="@dimen/spacing_medium"
+            app:cornerRadius="@dimen/spacing_small"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_xxxsmall"
+            android:background="@color/colorPrimary"
+            android:layout_marginBottom="@dimen/spacing_medium"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_request_for_access"
+            android:text="@string/request_for_access"
+            android:layout_marginBottom="@dimen/spacing_large"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

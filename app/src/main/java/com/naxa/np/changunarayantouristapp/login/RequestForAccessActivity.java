@@ -122,7 +122,7 @@ public class RequestForAccessActivity extends BaseActivity implements View.OnCli
                 .subscribe(new DisposableObserver<UserLoginResponse>() {
                     @Override
                     public void onNext(UserLoginResponse userLoginResponse) {
-                        
+
                     }
 
                     @Override
