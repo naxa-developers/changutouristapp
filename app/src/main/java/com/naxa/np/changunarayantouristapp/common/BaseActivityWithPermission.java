@@ -20,6 +20,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.network.NetworkApiClient;
@@ -124,6 +125,11 @@ public class BaseActivityWithPermission  extends AppCompatActivity {
     int REQUEST_CODE;
     protected void checkPermission(int requestCode, final String[] permissions, String rationaleMsg, @NonNull PermissionRequestListener listener){
 
+        // Location Permission
+        if (ContextCompat.checkSelfPermission(this, permissions[0]) == PackageManager.PERMISSION_GRANTED) {
+            listener.onPermissionGranted();
+            return;
+        }
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setMessage(rationaleMsg);
         builder1.setCancelable(true);
@@ -137,6 +143,7 @@ public class BaseActivityWithPermission  extends AppCompatActivity {
                     }
                 });
         AlertDialog alert11 = builder1.create();
+
         alert11.show();
 
         REQUEST_CODE = requestCode;

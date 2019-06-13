@@ -38,14 +38,7 @@ public class QRCodeReaderActivity extends BaseActivityWithPermission {
     private void initUI() {
         tvQRCode = findViewById(R.id.tv_qr_code);
         btnScanQrCode = findViewById(R.id.btn_scan_qr_code);
-        btnScanQrCode.setEnabled(true);
-        btnScanQrCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                        mCodeScanner.startPreview();
-            }
-        });
-
+        btnScanQrCode.setEnabled(false);
 
         checkPermission(Constant.Permission.RC_CAMERA, new String[]{Manifest.permission.CAMERA},
                 getString(R.string.camera_rationale), new PermissionRequestListener() {
@@ -56,7 +49,7 @@ public class QRCodeReaderActivity extends BaseActivityWithPermission {
 
             @Override
             public void onPermissionDenied() {
-
+                return;
             }
         });
 
@@ -65,6 +58,7 @@ public class QRCodeReaderActivity extends BaseActivityWithPermission {
     private void setupQRCodeReader() {
         scannerView = findViewById(R.id.scanner_view);
         mCodeScanner = new CodeScanner(this, scannerView);
+        btnScanQrCode.setEnabled(true);
 
         mCodeScanner.setDecodeCallback(new DecodeCallback() {
             @Override
@@ -81,6 +75,13 @@ public class QRCodeReaderActivity extends BaseActivityWithPermission {
         scannerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mCodeScanner.startPreview();
+            }
+        });
+
+        btnScanQrCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 mCodeScanner.startPreview();
             }
         });
