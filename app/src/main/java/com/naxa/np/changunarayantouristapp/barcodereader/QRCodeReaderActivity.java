@@ -1,5 +1,6 @@
 package com.naxa.np.changunarayantouristapp.barcodereader;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -13,10 +14,12 @@ import com.budiyev.android.codescanner.DecodeCallback;
 import com.google.android.material.button.MaterialButton;
 import com.google.zxing.Result;
 import com.naxa.np.changunarayantouristapp.R;
-import com.naxa.np.changunarayantouristapp.common.BaseActivity;
-import com.naxa.np.changunarayantouristapp.utils.PermissionUtils;
+import com.naxa.np.changunarayantouristapp.common.BaseActivityWithPermission;
+import com.naxa.np.changunarayantouristapp.utils.Constant;
 
-public class QRCodeReaderActivity extends BaseActivity  {
+public class QRCodeReaderActivity extends BaseActivityWithPermission {
+    
+    private static final String TAG = "QRCodeReaderActivity";
 
     TextView tvQRCode;
     MaterialButton btnScanQrCode;
@@ -35,36 +38,26 @@ public class QRCodeReaderActivity extends BaseActivity  {
     private void initUI() {
         tvQRCode = findViewById(R.id.tv_qr_code);
         btnScanQrCode = findViewById(R.id.btn_scan_qr_code);
-        btnScanQrCode.setEnabled(false);
-
-        new PermissionUtils.CameraPermission(QRCodeReaderActivity.this) {
+        btnScanQrCode.setEnabled(true);
+        btnScanQrCode.setOnClickListener(new View.OnClickListener() {
             @Override
-            protected void cameraPermisionGranted() {
+            public void onClick(View v) {
+                        mCodeScanner.startPreview();
+            }
+        });
+
+
+        checkPermission(Constant.Permission.RC_CAMERA, new String[]{Manifest.permission.CAMERA}, getString(R.string.camera_rationale), new PermissionRequestListener() {
+            @Override
+            public void onPermissionGranted() {
                 setupQRCodeReader();
-                mCodeScanner.startPreview();
-                QRCodeReaderActivity.this.onResume();
-                btnScanQrCode.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mCodeScanner.startPreview();
-
-                    }
-                });
-
-                btnScanQrCode.setEnabled(true);
-                btnScanQrCode.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mCodeScanner.startPreview();
-                    }
-                });
             }
 
             @Override
-            protected void cameraPermisionDenied() {
-                btnScanQrCode.setEnabled(false);
+            public void onPermissionDenied() {
+
             }
-        };
+        });
 
     }
 
