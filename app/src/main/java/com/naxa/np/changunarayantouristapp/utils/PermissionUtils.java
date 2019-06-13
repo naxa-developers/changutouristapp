@@ -17,7 +17,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class PermissionUtils {
 
     public static abstract class CameraPermission extends BaseActivity {
-        
+
         AppCompatActivity appCompatActivity;
         public CameraPermission(AppCompatActivity appCompatActivity) {
             this.appCompatActivity = appCompatActivity;

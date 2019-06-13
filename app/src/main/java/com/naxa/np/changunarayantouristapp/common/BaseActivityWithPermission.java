@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -120,14 +122,25 @@ public class BaseActivityWithPermission  extends AppCompatActivity {
 
     PermissionRequestListener listener;
     int REQUEST_CODE;
-    protected void checkPermission(int requestCode, String[] permissions, String rationaleMsg, @NonNull PermissionRequestListener listener){
+    protected void checkPermission(int requestCode, final String[] permissions, String rationaleMsg, @NonNull PermissionRequestListener listener){
 
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setMessage(rationaleMsg);
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        ActivityCompat.requestPermissions(BaseActivityWithPermission.this, permissions, REQUEST_CODE);
+                    }
+                });
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
 
         REQUEST_CODE = requestCode;
         this.listener = listener;
-        ActivityCompat.requestPermissions(this,
-                permissions,
-                REQUEST_CODE);
     }
 
     @Override

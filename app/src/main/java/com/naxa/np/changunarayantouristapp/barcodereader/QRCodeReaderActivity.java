@@ -47,7 +47,8 @@ public class QRCodeReaderActivity extends BaseActivityWithPermission {
         });
 
 
-        checkPermission(Constant.Permission.RC_CAMERA, new String[]{Manifest.permission.CAMERA}, getString(R.string.camera_rationale), new PermissionRequestListener() {
+        checkPermission(Constant.Permission.RC_CAMERA, new String[]{Manifest.permission.CAMERA},
+                getString(R.string.camera_rationale), new PermissionRequestListener() {
             @Override
             public void onPermissionGranted() {
                 setupQRCodeReader();
