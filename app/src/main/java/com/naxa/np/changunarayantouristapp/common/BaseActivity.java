@@ -2,6 +2,8 @@ package com.naxa.np.changunarayantouristapp.common;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.view.Gravity;
@@ -12,8 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.network.NetworkApiClient;
@@ -112,6 +117,57 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
+    PermissionRequestListener listener;
+    int REQUEST_CODE;
+    protected void checkPermission(int requestCode, final String[] permissions, String rationaleMsg, @NonNull PermissionRequestListener listener){
+
+        // Location PermissionID
+        if (ContextCompat.checkSelfPermission(this, permissions[0]) == PackageManager.PERMISSION_GRANTED) {
+            listener.onPermissionGranted();
+            return;
+        }
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setMessage(rationaleMsg);
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        ActivityCompat.requestPermissions(BaseActivity.this, permissions, REQUEST_CODE);
+                    }
+                });
+        AlertDialog alert11 = builder1.create();
+
+        alert11.show();
+
+        REQUEST_CODE = requestCode;
+        this.listener = listener;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        if(requestCode == REQUEST_CODE){
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // permission was granted, yay! Do the
+                listener.onPermissionGranted();
+            } else {
+
+                // permission denied, boo! Disable the
+                listener.onPermissionDenied();
+                Toast.makeText(this, "PermissionID denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+    public interface PermissionRequestListener {
+        void onPermissionGranted();
+        void onPermissionDenied();
+    }
 
 
 

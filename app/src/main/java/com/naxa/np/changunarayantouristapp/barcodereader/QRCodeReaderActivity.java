@@ -1,6 +1,5 @@
 package com.naxa.np.changunarayantouristapp.barcodereader;
 
-import android.Manifest;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -14,10 +13,12 @@ import com.budiyev.android.codescanner.DecodeCallback;
 import com.google.android.material.button.MaterialButton;
 import com.google.zxing.Result;
 import com.naxa.np.changunarayantouristapp.R;
-import com.naxa.np.changunarayantouristapp.common.BaseActivityWithPermission;
-import com.naxa.np.changunarayantouristapp.utils.Constant;
+import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 
-public class QRCodeReaderActivity extends BaseActivityWithPermission {
+import static com.naxa.np.changunarayantouristapp.utils.Constant.Permission.CAMERA;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.PermissionID.RC_CAMERA;
+
+public class QRCodeReaderActivity extends BaseActivity {
     
     private static final String TAG = "QRCodeReaderActivity";
 
@@ -40,18 +41,18 @@ public class QRCodeReaderActivity extends BaseActivityWithPermission {
         btnScanQrCode = findViewById(R.id.btn_scan_qr_code);
         btnScanQrCode.setEnabled(false);
 
-        checkPermission(Constant.Permission.RC_CAMERA, new String[]{Manifest.permission.CAMERA},
-                getString(R.string.camera_rationale), new PermissionRequestListener() {
-            @Override
-            public void onPermissionGranted() {
-                setupQRCodeReader();
-            }
+        checkPermission(RC_CAMERA, new String[]{CAMERA},
+                getString(R.string.camera_rationale),new PermissionRequestListener() {
+                    @Override
+                    public void onPermissionGranted() {
+                        setupQRCodeReader();
+                    }
 
-            @Override
-            public void onPermissionDenied() {
-                return;
-            }
-        });
+                    @Override
+                    public void onPermissionDenied() {
+                        return;
+                    }
+                });
 
     }
 
