@@ -12,7 +12,7 @@ import com.naxa.np.changunarayantouristapp.vrimage.VRImageViewActivity;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
-    TextView tvQRScan, tvVRImage;
+    TextView tvQRScan, tvVRImage, tvViewOnMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +26,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void initUI() {
         tvQRScan = findViewById(R.id.tv_qr_scanner);
         tvVRImage = findViewById(R.id.tv_view_vr_image);
+        tvViewOnMap = findViewById(R.id.tv_view_map);
 
         tvQRScan.setOnClickListener(this);
         tvVRImage.setOnClickListener(this);
+        tvViewOnMap.setOnClickListener(this);
 
     }
 
@@ -40,6 +42,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
 
             case R.id.tv_view_vr_image:
+                ActivityUtil.openActivity(VRImageViewActivity.class, MainActivity.this);
+                break;
+
+            case R.id.tv_view_map:
                 ActivityUtil.openActivity(VRImageViewActivity.class, MainActivity.this);
                 break;
 

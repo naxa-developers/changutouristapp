@@ -120,7 +120,7 @@ public class BaseActivity extends AppCompatActivity {
     PermissionRequestListener listener;
     int REQUEST_CODE;
     protected void checkPermission(int requestCode, final String[] permissions, String rationaleMsg, @NonNull PermissionRequestListener listener){
-
+        REQUEST_CODE = requestCode;
         // Location PermissionID
         if (ContextCompat.checkSelfPermission(this, permissions[0]) == PackageManager.PERMISSION_GRANTED) {
             listener.onPermissionGranted();
@@ -141,8 +141,6 @@ public class BaseActivity extends AppCompatActivity {
         AlertDialog alert11 = builder1.create();
 
         alert11.show();
-
-        REQUEST_CODE = requestCode;
         this.listener = listener;
     }
 

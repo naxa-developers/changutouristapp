@@ -93,8 +93,8 @@ public class SelectlanguageActivity extends BaseActivity {
 
             @Override
             public void onPermissionDenied() {
-                ActivityUtil.openActivity(LoginActivity.class, SelectlanguageActivity.this);
-                finish();
+//                ActivityUtil.openActivity(LoginActivity.class, SelectlanguageActivity.this);
+//                finish();
             }
         });
 
