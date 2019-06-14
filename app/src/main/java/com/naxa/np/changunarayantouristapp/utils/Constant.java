@@ -20,11 +20,14 @@ public class Constant {
     public class PermissionID {
         public static final int RC_STORAGE = 1994;
         public static final int RC_CAMERA= 1995;
+        public static final int RC_LOCATION= 1996;
     }
 
     public class Permission {
         public static final String CAMERA = Manifest.permission.CAMERA;
         public static final String STORAGE_WRITE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
         public static final String STORAGE_READ = Manifest.permission.READ_EXTERNAL_STORAGE;
+        public static final String LOCATION_FINE = Manifest.permission.ACCESS_FINE_LOCATION;
+        public static final String LOCATION_COURSE = Manifest.permission.ACCESS_COARSE_LOCATION;
     }
 }
