@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.daasuu.bl.BubbleLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="12dp"
+    android:padding="8dp"
+    app:bl_arrowDirection="bottom_center"
+    app:bl_arrowHeight="8dp"
+    app:bl_arrowPosition="16dp"
+    app:bl_arrowWidth="8dp"
+    app:bl_cornersRadius="6dp"
+    app:bl_strokeWidth="1dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <!--android:background="@drawable/bonuspack_bubble"-->
+
+
+        <TextView
+            android:id="@+id/map_popup_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="3dp"
+            android:text="TextView"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/black"
+            android:paddingLeft="@dimen/dp_10" />
+
+        <TextView
+            android:id="@+id/map_popup_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/map_popup_header"
+            android:layout_below="@+id/map_popup_header"
+            android:layout_marginTop="5dp"
+            android:text=""
+            android:paddingLeft="@dimen/dp_10"
+            android:textSize="@dimen/sp_14"
+            />
+
+        <TextView
+            android:id="@+id/map_more_info_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/map_popup_body"
+            android:layout_marginEnd="5dp"
+            android:text="View Details"
+            android:gravity="center"
+            android:drawableRight="@drawable/ic_maneuver_depart_right"
+            android:drawableTint="@color/colorPrimaryDark"
+            android:background="?android:selectableItemBackground"
+            />
+
+    </RelativeLayout>>
+
+</com.daasuu.bl.BubbleLayout>

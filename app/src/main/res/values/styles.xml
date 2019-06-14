@@ -42,4 +42,23 @@
         <item name="android:layout_marginTop">@dimen/margin_small</item>
     </style>
 
+
+
+    <!--Navigation-->
+    <style name="NavigationMapRoute">
+        <!-- Colors -->
+        <item name="routeColor">@color/mapboxBlue</item>
+        <item name="routeModerateCongestionColor">@color/mapboxYellow</item>
+        <item name="routeSevereCongestionColor">@color/mapboxPink</item>
+        <item name="routeShieldColor">@color/mapboxAppPrimaryLight</item>
+        <!-- Scales -->
+        <item name="routeScale">1.0</item>
+    </style>
+
+    <style name="NavigationView" parent="Theme.AppCompat.NoActionBar">
+        <item name="navigationViewPrimary">@color/mapboxAppPrimaryLight</item>
+        <item name="navigationViewSecondary">@color/mapboxBlue</item>
+        <item name="navigationViewAccent">@color/mapboxPink</item>
+    </style>
+
 </resources>
