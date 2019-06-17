@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.naxa.np.changunarayantouristapp.barcodereader.QRCodeReaderActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
+import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.vrimage.VRImageViewActivity;
 
@@ -46,7 +47,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
 
             case R.id.tv_view_map:
-                ActivityUtil.openActivity(VRImageViewActivity.class, MainActivity.this);
+                ActivityUtil.openActivity(MapMainActivity.class, MainActivity.this);
+
                 break;
 
 

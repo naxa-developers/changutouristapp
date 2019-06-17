@@ -31,21 +31,6 @@
         android:orientation="vertical"
         >
 
-        <com.arlib.floatingsearchview.FloatingSearchView
-            android:id="@+id/floating_search_map_category"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:floatingSearch_actionMenuOverflowColor="@color/background"
-            app:floatingSearch_backgroundColor="@color/white"
-            app:floatingSearch_hintTextColor="@color/textColorSearchHint"
-            app:floatingSearch_leftActionColor="@color/isetPurple"
-            app:floatingSearch_close_search_on_keyboard_dismiss="true"
-            app:floatingSearch_leftActionMode="showSearch"
-            app:floatingSearch_searchHint="Search by Category"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:visibility="gone"
-            />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
