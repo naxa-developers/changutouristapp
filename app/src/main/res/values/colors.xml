@@ -10,6 +10,14 @@
     <color name="black">#000</color>
     <color name="textColorPrimary">#E6000000</color>
     <color name="textColorSecondary">#CC000000</color>
+    <color name="slate_black">#4B4A4C</color>
+    <color name="divider_grey">#D4D4D4</color>
+
+    <color name="listItemFirstBG">#E3F2FD</color>
+    <color name="sectionrecyclerHeadBG">#F3BBDEFB</color>
+    <color name="transparent">#00e040fb</color>
+
+
 
 
     <color name="mapboxAppPrimaryLight">@color/green_boarder</color>

@@ -37,4 +37,12 @@
     <string name="request_for_access">Request For Access</string>
 
 
+    <string name="dialog_action_ok">OK</string>
+    <string name="dialog_error_title">Unexpected Error Occured.</string>
+    <string name="dialog_error_title_sync_failed">Data Sync Failed (Code: %1$s)</string>
+    <string name="dialog_action_hide">Hide</string>
+    <string name="select_base_layer">Select Base Layer</string>
+    <string name="select_overlay_layer">Select Overlay Layer</string>
+    <string name="title">Title</string>
+    <string name="icon_explanation">Icon Explanation</string>
 </resources>

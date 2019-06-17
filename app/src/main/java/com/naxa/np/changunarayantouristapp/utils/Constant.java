@@ -30,4 +30,16 @@ public class Constant {
         public static final String LOCATION_FINE = Manifest.permission.ACCESS_FINE_LOCATION;
         public static final String LOCATION_COURSE = Manifest.permission.ACCESS_COARSE_LOCATION;
     }
+
+    public class MapKey {
+        public static final String MAP_BASE_LAYER = "base_layer";
+        public static final String MAP_OVERLAY_LAYER = "overlay_layer";
+
+        public static final int KEY_STREET = 0 ;
+        public static final int KEY_SATELLITE = 1;
+        public static final int KEY_OPENSTREET = 2;
+        public static final int KEY_MUNICIPAL_BOARDER = 3;
+        public static final int KEY_WARD = 4;
+    }
+
 }

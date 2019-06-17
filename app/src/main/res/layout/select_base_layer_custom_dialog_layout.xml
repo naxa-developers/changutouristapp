@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:paddingBottom="@dimen/spacing_xxxlarge">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_above="@id/btn_closeDialog"
+        android:layout_margin="@dimen/activity_default_margin">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/select_base_layer"
+            android:textSize="@dimen/text_material_header"
+            android:textStyle="bold"
+            android:textColor="@color/slate_black"/>
+
+        <RadioGroup android:id="@+id/toggleGroupBaseLayer"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_default_margin"
+            android:orientation="vertical"
+            >
+
+            <Switch
+                android:id="@+id/switchStreetView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Street view"
+                android:textAlignment="viewStart"
+                android:layout_centerHorizontal="true"
+                android:textOn="On"
+                android:textOff="Off"
+                android:textColor="@color/slate_black"
+                android:gravity="center"
+                android:textSize="@dimen/text_material_header"
+                tools:ignore="RtlCompat"
+                android:layout_marginTop="@dimen/spacing_large"
+                />
+
+            <Switch
+                android:id="@+id/switchSatelliteView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="Satellite view"
+                android:textAlignment="viewStart"
+                android:layout_centerHorizontal="true"
+                android:textOn="On"
+                android:textOff="Off"
+                android:textColor="@color/slate_black"
+                android:gravity="center"
+                android:textSize="@dimen/text_material_header"
+                android:layout_marginTop="@dimen/spacing_mlarge"
+                tools:ignore="RtlCompat" />
+
+            <Switch
+                android:id="@+id/switchOpenStreetView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="OpenStreetMap"
+                android:textAlignment="viewStart"
+                android:layout_centerHorizontal="true"
+                android:textOn="On"
+                android:textOff="Off"
+                android:textColor="@color/slate_black"
+                android:gravity="center"
+                android:textSize="@dimen/text_material_header"
+                android:layout_marginTop="@dimen/spacing_mlarge"
+                tools:ignore="RtlCompat" />
+
+        </RadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_grey"
+            android:layout_marginLeft="@dimen/activity_default_margin"
+            android:layout_marginRight="@dimen/activity_default_margin"
+            android:layout_marginTop="@dimen/spacing_xlarge">
+
+        </View>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/select_overlay_layer"
+            android:textSize="@dimen/text_material_header"
+            android:textStyle="bold"
+            android:textColor="@color/slate_black"
+            android:layout_marginTop="@dimen/spacing_xxxlarge"
+            />
+
+        <RadioGroup android:id="@+id/toggleGroupOverlaysLayer"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_default_margin"
+            android:orientation="vertical"
+            >
+
+            <Switch
+                android:id="@+id/switchMetropolitianBoundary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Metropolitan Boundary"
+                android:textAlignment="viewStart"
+                android:layout_centerHorizontal="true"
+                android:textOn="On"
+                android:textOff="Off"
+                android:textColor="@color/slate_black"
+                android:gravity="center"
+                android:textSize="@dimen/text_material_header"
+                tools:ignore="RtlCompat"
+                android:layout_marginTop="@dimen/spacing_mlarge"/>
+
+            <Switch
+                android:id="@+id/switchWardBoundary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorPrimary"
+                android:checked="false"
+                android:text="Ward Boundary"
+                android:textAlignment="viewStart"
+                android:layout_centerHorizontal="true"
+                android:textOn="On"
+                android:textOff="Off"
+                android:textColor="@color/slate_black"
+                android:gravity="center"
+                android:textSize="@dimen/text_material_header"
+                android:layout_marginTop="@dimen/spacing_mlarge"
+                tools:ignore="RtlCompat" />
+
+        </RadioGroup>
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_closeDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="close"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/spacing_xlarge"/>
+</RelativeLayout>
