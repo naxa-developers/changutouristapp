@@ -33,4 +33,16 @@
         android:layout_marginRight="@dimen/activity_default_margin"
         />
 
+
+    <TextView
+        android:layout_below="@id/tv_view_vr_image"
+        android:id="@+id/tv_view_map"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/LanguageSelectorTextStyle"
+        android:text="View on Map"
+        android:layout_marginLeft="@dimen/activity_default_margin"
+        android:layout_marginRight="@dimen/activity_default_margin"
+        />
+
 </RelativeLayout>

@@ -17,6 +17,11 @@ import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 
 import java.util.List;
 
+import static android.Manifest.permission_group.STORAGE;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.Permission.STORAGE_READ;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.Permission.STORAGE_WRITE;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.PermissionID.RC_STORAGE;
+
 public class SelectlanguageActivity extends BaseActivity {
 
     private static final String TAG = "SelectlanguageActivity";
@@ -77,7 +82,22 @@ public class SelectlanguageActivity extends BaseActivity {
 
 
     private void launchLoginScreen() {
-        ActivityUtil.openActivity(LoginActivity.class, SelectlanguageActivity.this);
-        finish();
+
+        checkPermission(RC_STORAGE, new String[] {STORAGE_READ, STORAGE_WRITE}, getString(R.string.storage_rationale),
+        new PermissionRequestListener() {
+            @Override
+            public void onPermissionGranted() {
+                ActivityUtil.openActivity(LoginActivity.class, SelectlanguageActivity.this);
+                finish();
+            }
+
+            @Override
+            public void onPermissionDenied() {
+//                ActivityUtil.openActivity(LoginActivity.class, SelectlanguageActivity.this);
+//                finish();
+            }
+        });
+
+
     }
 }

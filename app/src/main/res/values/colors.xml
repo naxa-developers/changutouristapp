@@ -9,7 +9,24 @@
     <color name="white">#fff</color>
     <color name="black">#000</color>
     <color name="textColorPrimary">#E6000000</color>
-    <color name="textColorSecondary">#CC000000</color>
+    <color name="textColorSecondary">#393939</color>
+    <color name="slate_black">#4B4A4C</color>
+    <color name="divider_grey">#D4D4D4</color>
+
+    <color name="listItemFirstBG">#E3F2FD</color>
+    <color name="sectionrecyclerHeadBG">#F3BBDEFB</color>
+    <color name="transparent">#00e040fb</color>
+
+
+
+
+    <color name="mapboxAppPrimaryLight">@color/green_boarder</color>
+    <color name="mapboxWhite">#ffffff</color>
+    <color name="mapboxBlue">#4264fb</color>
+    <color name="mapboxGrayLight">#c6d2e1</color>
+    <color name="mapboxPink">#ee4e8b</color>
+    <color name="mapboxYellow">#d9d838</color>
+    <color name="mapboxRed">#b43b71</color>
 
     <!-- Screens background color-->
     <color name="bg_screen1">#f64c73</color>

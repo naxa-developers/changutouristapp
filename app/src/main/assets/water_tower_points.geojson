@@ -1,0 +1,5 @@
+{"type":"FeatureCollection", "features": [
+{"type":"Feature","geometry":{"type":"Point","coordinates":[85.32768920000007,27.735154300000033,0,-1.7976931348623157e+308]},"properties":{"Name":"Placemark","address":"","contact_no":0,"contact_pe":"","open_space":"","evacuation":"","fire_extin":"","data_sourc":"","remarks":"","X":85.3276892,"Y":27.7351543,"ward_no":3}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[85.30056820000004,27.72505300000006,0,-1.7976931348623157e+308]},"properties":{"Name":"Everyday Tower","address":"","contact_no":0,"contact_pe":"","open_space":"","evacuation":"","fire_extin":"","data_sourc":"","remarks":"","X":85.3005682,"Y":27.725053,"ward_no":16}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[85.29888250000005,27.72808390000006,0,-1.7976931348623157e+308]},"properties":{"Name":"Placemark","address":"","contact_no":0,"contact_pe":"","open_space":"","evacuation":"","fire_extin":"","data_sourc":"","remarks":"","X":85.2988825,"Y":27.7280839,"ward_no":16}}
+]}
