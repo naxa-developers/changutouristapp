@@ -12,22 +12,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
+import com.naxa.np.changunarayantouristapp.fetchdata.DataDonwloadView;
+import com.naxa.np.changunarayantouristapp.fetchdata.DataDownloadPresenter;
+import com.naxa.np.changunarayantouristapp.fetchdata.DataDownloadPresenterImpl;
 import com.naxa.np.changunarayantouristapp.login.LoginActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 
 import java.util.List;
 
 import static android.Manifest.permission_group.STORAGE;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.Network.API_KEY;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.Permission.STORAGE_READ;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.Permission.STORAGE_WRITE;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.PermissionID.RC_STORAGE;
 
-public class SelectlanguageActivity extends BaseActivity {
+public class SelectlanguageActivity extends BaseActivity implements DataDonwloadView {
 
     private static final String TAG = "SelectlanguageActivity";
 
     Toolbar toolbar;
     RecyclerView recyclerView;
+    DataDownloadPresenter dataDownloadPresenter;
     private BaseRecyclerViewAdapter<LanguageDetails, SelectLanguageViewHolder> adapter;
 
 
@@ -35,6 +40,8 @@ public class SelectlanguageActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selectlanguage);
+
+        dataDownloadPresenter = new DataDownloadPresenterImpl(this);
 
         setupToolbar("Select Language", false);
         initUI();
@@ -66,7 +73,8 @@ public class SelectlanguageActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         Log.d(TAG, "onClick: "+ languageDetails.getTitle());
-                        launchLoginScreen();
+
+                        dataDownloadPresenter.handleDataDownload(apiInterface, API_KEY, languageDetails.languagekey);
                     }
                 });
 
@@ -93,11 +101,24 @@ public class SelectlanguageActivity extends BaseActivity {
 
             @Override
             public void onPermissionDenied() {
-//                ActivityUtil.openActivity(LoginActivity.class, SelectlanguageActivity.this);
-//                finish();
             }
         });
 
+
+    }
+
+    @Override
+    public void downloadProgress(int progress, int total, String successMsg) {
+
+    }
+
+    @Override
+    public void downloadSuccess(String successMsg) {
+        launchLoginScreen();
+    }
+
+    @Override
+    public void downloadFailed(String failedMsg) {
 
     }
 }
