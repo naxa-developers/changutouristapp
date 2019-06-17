@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -85,8 +86,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     RecyclerView recyclerViewMapCategory;
 
     ImageView ivSlidingLayoutIndicator;
-    Button btnMapLayerData;
-    Button btnMapLayerSwitch;
+    ImageButton btnMapLayerData;
+    ImageButton btnMapLayerSwitch;
     Button btnGoThere;
 
     private SlidingUpPanelLayout mLayout;
@@ -233,16 +234,22 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
             @Override
             public void onMetropolitanClick() {
-                filename = "kathmandu_boundary.geojson";
+//                filename = "kathmandu_boundary.geojson";
+//                drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
+//                removeLayerFromMap("kathmandu_wards.geojson");
+                filename = "municipality_boundary.geojson";
                 drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
-                removeLayerFromMap("kathmandu_wards.geojson");
+                removeLayerFromMap("municipality_boundary.geojson");
             }
 
             @Override
             public void onWardClick() {
-                filename = "kathmandu_wards.geojson";
+//                filename = "kathmandu_wards.geojson";
+//                drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
+//                removeLayerFromMap("kathmandu_boundary.geojson");
+                filename = "municipality_wards.geojson";
                 drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
-                removeLayerFromMap("kathmandu_boundary.geojson");
+                removeLayerFromMap("municipality_wards.geojson");
 
 
             }
