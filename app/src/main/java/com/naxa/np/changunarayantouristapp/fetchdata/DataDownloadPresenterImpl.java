@@ -12,6 +12,6 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
 
     @Override
     public void handleDataDownload(NetworkApiInterface apiInterface, String apiKey, String language) {
-
+        dataDonwloadView.downloadSuccess("success");
     }
 }
