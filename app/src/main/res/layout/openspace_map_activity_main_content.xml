@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/toolbar"
+            android:id="@+id/toolbar">
+        </include>
+
+        <com.mapbox.mapboxsdk.maps.MapView
+            android:layout_below="@+id/toolbar"
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            mapbox:layout_constraintHeight_percent=".9"
+            mapbox:mapbox_cameraTargetLat="40.73581"
+            mapbox:mapbox_cameraTargetLng="-73.99155"
+            mapbox:mapbox_styleUrl="@string/mapbox_style_mapbox_streets"
+            mapbox:mapbox_cameraZoom="11"
+            />
+
+        <Button
+            android:id="@+id/point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Point"
+            android:layout_below="@+id/navigation"
+            android:layout_alignParentRight="true"
+            android:layout_margin="16dp"
+            android:background="@android:color/transparent"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/multipolygon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Multipolygon"
+            android:layout_below="@id/point"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:background="@android:color/transparent"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/multiLineString"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Line"
+            android:layout_below="@id/multipolygon"
+            android:layout_alignParentRight="true"
+            android:layout_margin="16dp"
+            android:background="@android:color/transparent"
+            android:visibility="gone"/>
+
+
+        <Button
+            android:id="@+id/navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Navigation"
+            android:layout_below="@+id/toolbar"
+            android:layout_margin="16dp"
+            android:background="@drawable/button_rounded_bg"
+            android:textColor="@color/white"
+            android:visibility="gone"/>
+
+
+        <!--data layer switch button-->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/dataLayerSwitchcard"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            mapbox:cardCornerRadius="5dp"
+            android:layout_centerVertical="true">
+        <Button
+            android:id="@+id/btnMapLayerData"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_map_data_list_bulleted_purple_24dp"
+ />
+        </androidx.cardview.widget.CardView>
+
+        <!--base layer switch button-->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/baseLayerSwitchcard"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="16dp"
+            mapbox:cardCornerRadius="5dp"
+           android:layout_below="@id/dataLayerSwitchcard" >
+
+            <Button
+                android:id="@+id/btnMapLayerSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_map_layer_purple_24dp" />
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+</FrameLayout>

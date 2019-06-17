@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:clickable="true"
+    android:focusable="false"
+    android:id="@+id/dragView"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/colorPrimary"
+        >
+        <ImageView
+            android:id="@+id/iv_sliding_layout_indicator"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/ic_keyboard_arrow_up_white_24dp" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <com.arlib.floatingsearchview.FloatingSearchView
+            android:id="@+id/floating_search_map_category"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:floatingSearch_actionMenuOverflowColor="@color/background"
+            app:floatingSearch_backgroundColor="@color/white"
+            app:floatingSearch_hintTextColor="@color/textColorSearchHint"
+            app:floatingSearch_leftActionColor="@color/isetPurple"
+            app:floatingSearch_close_search_on_keyboard_dismiss="true"
+            app:floatingSearch_leftActionMode="showSearch"
+            app:floatingSearch_searchHint="Search by Category"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:visibility="gone"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:layout_marginLeft="@dimen/spacing_medium"
+            android:layout_marginRight="@dimen/spacing_medium"
+
+            android:layout_marginBottom="@dimen/spacing_small">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Detailed Information"
+            android:layout_marginBottom="@dimen/activity_default_margin"
+            android:layout_marginRight="@dimen/activity_default_margin"
+            android:textColor="@color/slate_black"
+            android:textSize="@dimen/material_text_body1"
+            android:padding="@dimen/default_padding"
+            />
+
+
+            <Button
+                android:id="@+id/btnGoThere"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/spacing_xxxlarge"
+                android:text="@string/go_there"
+                android:textAllCaps="false"
+                android:background="@drawable/button_rounded_bg"
+                android:textColor="@color/white" />
+
+
+    </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewMapCategory"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/activity_default_margin"
+            android:layout_marginBottom="@dimen/activity_default_margin"
+            android:layout_marginRight="@dimen/activity_default_margin"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+
+</LinearLayout>
+

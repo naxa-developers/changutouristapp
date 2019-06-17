@@ -1,0 +1,29 @@
+<com.sothree.slidinguppanel.SlidingUpPanelLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sliding_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    sothree:umanoPanelHeight="0dp"
+    sothree:umanoShadowHeight="4dp"
+    sothree:umanoInitialState="collapsed"
+    sothree:layout_collapseMode="parallax"
+    sothree:umanoParallaxOffset="100dp"
+    sothree:umanoDragView="@+id/dragView"
+    sothree:umanoOverlay="true"
+    sothree:umanoScrollableView="@+id/recyclerViewMapCategory">
+
+    <!-- MAIN CONTENT -->
+    <include layout="@layout/openspace_map_activity_main_content"
+        android:id="@+id/openspace_main_content">
+    </include>
+
+    <!-- SLIDING LAYOUT -->
+    <include layout="@layout/openspace_map_activity_sliding_containt_layout"
+        android:id="@+id/openspace_sliding_content"
+        android:visibility="visible"
+        >
+    </include>
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>

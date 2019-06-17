@@ -303,6 +303,7 @@ public final class DialogFactory {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         ImageButton dialogButton = (ImageButton) dialog.findViewById(R.id.btn_close_dialog);
+        dialogButton.bringToFront();
 
 
         dialogButton.setOnClickListener(new View.OnClickListener() {

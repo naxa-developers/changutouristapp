@@ -45,4 +45,5 @@
     <string name="select_overlay_layer">Select Overlay Layer</string>
     <string name="title">Title</string>
     <string name="icon_explanation">Icon Explanation</string>
+    <string name="go_there">Go There</string>
 </resources>
