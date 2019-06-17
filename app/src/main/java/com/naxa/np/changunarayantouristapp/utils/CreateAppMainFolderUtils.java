@@ -16,6 +16,7 @@ public class CreateAppMainFolderUtils {
     public CreateAppMainFolderUtils(Context context, String mainFolderName) {
         this.context = context;
         this.mainFolderName = mainFolderName;
+        createMainFolder();
     }
 
 

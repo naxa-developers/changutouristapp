@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.selectlanguage.SelectlanguageActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
+import com.naxa.np.changunarayantouristapp.utils.CreateAppMainFolderUtils;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 
 import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_APP_FIRST_TIME_LAUNCH;
@@ -21,6 +22,10 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         makeActivityFullScreen();
         setContentView(R.layout.activity_splash);
+
+        new CreateAppMainFolderUtils(SplashActivity.this, CreateAppMainFolderUtils.appmainFolderName);
+
+
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override

@@ -25,6 +25,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -304,6 +305,7 @@ public final class DialogFactory {
 
         ImageButton dialogButton = (ImageButton) dialog.findViewById(R.id.btn_close_dialog);
         dialogButton.bringToFront();
+        ViewCompat.setTranslationZ(dialogButton, 0);
 
 
         dialogButton.setOnClickListener(new View.OnClickListener() {
