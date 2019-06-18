@@ -33,6 +33,7 @@
                     />
 
                 <ImageButton
+                    android:id="@+id/btn_view_vr_image"
                     android:layout_width="56dp"
                     android:layout_height="56dp"
                     android:src="@drawable/ic_vr_image"
@@ -50,6 +51,7 @@
                     android:padding="@dimen/activity_default_margin">
 
                     <TextView
+                        android:id="@+id/tv_place_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/slate_black"
@@ -59,12 +61,13 @@
                         android:textStyle="bold"/>
 
                     <RatingBar
+                        android:id="@+id/rating_bar_place"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:progressBackgroundTint="@color/colorAccent"
-                        android:secondaryProgressTint="@color/divider_grey"/>
+                      />
 
                     <TextView
+                        android:id="@+id/tv_place_desc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/textColorSecondary"
