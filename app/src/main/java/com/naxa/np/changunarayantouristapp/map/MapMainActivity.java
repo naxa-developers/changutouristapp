@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 
 import androidx.annotation.NonNull;
@@ -46,8 +45,8 @@ import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.events.MapDataLayerListCheckEvent;
 import com.naxa.np.changunarayantouristapp.events.MarkerClickEvent;
-import com.naxa.np.changunarayantouristapp.map.detailspage.MarkerDetailedDisplayAdapter;
-import com.naxa.np.changunarayantouristapp.map.detailspage.MarkerDetailsKeyValue;
+import com.naxa.np.changunarayantouristapp.map.markerdetailspage.MarkerDetailedDisplayAdapter;
+import com.naxa.np.changunarayantouristapp.map.markerdetailspage.MarkerDetailsKeyValue;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.DrawGeoJsonOnMap;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.DrawRouteOnMap;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.MapDataLayerDialogCloseListen;

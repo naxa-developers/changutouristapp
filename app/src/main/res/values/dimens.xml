@@ -57,6 +57,7 @@
     <dimen name="slide_desc">16dp</dimen>
     <dimen name="desc_padding">40dp</dimen>
     <dimen name="default_padding">10dp</dimen>
+    <dimen name="details_page_img_height">250dp</dimen>
     <!--intro slider dimens end-->
 
 </resources>

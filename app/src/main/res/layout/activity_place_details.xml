@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".placedetailsview.PlaceDetailsActivity">
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar_layout"/>
+
+    <FrameLayout
+        android:layout_below="@id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!---->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_place_details_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/details_page_img_height"
+                    app:srcCompat="@drawable/ic_bottom_menu_image_24dp"
+                    />
+
+                <LinearLayout
+                    android:layout_below="@id/iv_place_details_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/activity_default_margin">
+
+                </LinearLayout>
+
+            </RelativeLayout>
+        </ScrollView>
+
+
+        <!-- Main content -->
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/white"
+            app:itemIconTint="@color/colorPrimary"
+            app:itemTextColor="@color/slate_black"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/bottom_navigation_menu" />
+
+    </FrameLayout>
+
+</RelativeLayout>

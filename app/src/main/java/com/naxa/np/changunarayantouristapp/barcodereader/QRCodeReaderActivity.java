@@ -85,8 +85,8 @@ public class QRCodeReaderActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 mCodeScanner.startPreview();
-                LoadImageUtils.downloadAndSaveImageToStorage(QRCodeReaderActivity.this, "butterfly", "https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg");
-                LoadImageUtils.downloadAndSaveImageToStorage(QRCodeReaderActivity.this, "nature", "https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832_960_720.jpg");
+//                LoadImageUtils.downloadAndSaveImageToStorage(QRCodeReaderActivity.this, "butterfly", "https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg");
+//                LoadImageUtils.downloadAndSaveImageToStorage(QRCodeReaderActivity.this, "nature", "https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832_960_720.jpg");
             }
         });
     }

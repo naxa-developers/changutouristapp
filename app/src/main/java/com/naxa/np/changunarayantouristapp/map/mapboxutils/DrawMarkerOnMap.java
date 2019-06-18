@@ -155,6 +155,38 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
     }
 
 
+    public void addSingleMarker (String imageName, String snippest, LatLng latLng){
+
+        Icon icon ;
+
+        if((LoadImageUtils.getImageBitmapFromDrawable(context, imageName)) == null){
+            icon = IconFactory.getInstance(context).fromResource(R.drawable.mapbox_marker_icon_default);
+        }else {
+            icon = IconFactory.getInstance(context).fromBitmap(LoadImageUtils.getImageBitmapFromDrawable(context, imageName));
+        }
+
+//        Add the custom icon marker to the map
+        Marker marker = mapboxMap.addMarker(new MarkerOptions()
+                .position(new LatLng(latLng))
+                .title("title")
+                .snippet(snippest)
+                .icon(icon));
+
+
+        mapboxMap.setOnMarkerClickListener(new MapboxMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(@NonNull Marker marker) {
+                Toast.makeText(context, "Marker tapped: " + marker.getTitle(), Toast.LENGTH_LONG).show();
+                onInfoWindowClick(marker);
+                animateCameraPosition(marker.getPosition());
+                return true;
+            }
+        });
+
+    }
+
+
+
 
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {

@@ -19,8 +19,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".map.MapMainActivity"></activity>
-        <activity android:name=".map.detailspage.MarkerDetailsDisplayActivity"></activity>
+        <activity android:name=".placedetailsview.PlaceDetailsActivity"
+            android:exported="true">
+        </activity>
+
+        <activity android:name=".map.MapMainActivity" />
+        <activity android:name=".map.markerdetailspage.MarkerDetailsDisplayActivity" />
         <activity android:name=".login.LoginActivity" />
         <activity
             android:name=".login.RequestForAccessActivity"
