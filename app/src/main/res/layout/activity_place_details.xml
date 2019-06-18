@@ -17,7 +17,8 @@
         <!---->
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="?android:attr/actionBarSize">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -27,7 +28,18 @@
                     android:id="@+id/iv_place_details_main"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/details_page_img_height"
+                    android:background="@color/slate_black"
                     app:srcCompat="@drawable/ic_bottom_menu_image_24dp"
+                    />
+
+                <ImageButton
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/ic_vr_image"
+                    android:background="@drawable/ripple_effect_circular_button"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="222dp"
+                    android:layout_marginEnd="@dimen/activity_default_margin"
                     />
 
                 <LinearLayout
@@ -36,6 +48,30 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="@dimen/activity_default_margin">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/slate_black"
+                        android:text="Place Name"
+                        android:layout_marginTop="@dimen/spacing_medium"
+                        android:textSize="@dimen/material_text_title"
+                        android:textStyle="bold"/>
+
+                    <RatingBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:progressBackgroundTint="@color/colorAccent"
+                        android:secondaryProgressTint="@color/divider_grey"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/material_text_body1"
+                        android:text="@string/loremipsum"/>
+
+
 
                 </LinearLayout>
 
