@@ -1,4 +1,4 @@
-package com.naxa.np.changunarayantouristapp.map.detailspage;
+package com.naxa.np.changunarayantouristapp.map.markerdetailspage;
 
 import android.content.Intent;
 import android.os.Bundle;

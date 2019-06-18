@@ -3,7 +3,7 @@ package com.naxa.np.changunarayantouristapp.utils;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.naxa.np.changunarayantouristapp.map.detailspage.MarkerDetailsKeyValue;
+import com.naxa.np.changunarayantouristapp.map.markerdetailspage.MarkerDetailsKeyValue;
 
 import java.util.ArrayList;
 import java.util.List;
