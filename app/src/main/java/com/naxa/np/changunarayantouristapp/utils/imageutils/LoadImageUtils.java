@@ -253,58 +253,5 @@ public class LoadImageUtils {
         String [] imageUlrAndLocationToSave = {imageName, imageUrl, CreateAppMainFolderUtils.getAppMapDataFolderName()};
         ImageSaveTask imageSaveTask = new ImageSaveTask(context);
         imageSaveTask.execute(imageUlrAndLocationToSave);
-
-//        Observable.just(imageUlrAndLocationToSave)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(Schedulers.io())
-//                .subscribe(new DisposableObserver<String[]>() {
-//                    @Override
-//                    public void onNext(String[] strings) {
-//                        String imgName = strings[0];
-//                        String imageSource = strings[1];
-//                        String storagePath = strings[2];
-//
-//                        Glide.with(context)
-//                                .load(imageSource)
-//                                .asBitmap()
-//                                .into(new SimpleTarget<Bitmap>(Target.SIZE_ORIGINAL,Target.SIZE_ORIGINAL) {
-//                                    @Override
-//                                    public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
-//
-//
-//                                        String imageFileName = imgName + ".jpg";
-//                                        File storageDir = new File(storagePath);
-//                                        boolean success = true;
-//                                        if (!storageDir.exists()) {
-//                                            success = storageDir.mkdirs();
-//                                        }
-//                                        if (success) {
-//                                            File imageFile = new File(storageDir, imageFileName);
-//                                            try {
-//                                                OutputStream fOut = new FileOutputStream(imageFile);
-//                                                resource.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
-//                                                fOut.close();
-//                                            } catch (Exception e) {
-//                                                e.printStackTrace();
-//                                            }
-//                                            // Add the image to the system gallery
-//                                            Log.d("ImageSaveTask", "doInBackground: "+imageFileName+ "saved successfully ");
-//
-////            galleryAddPic(savedImagePath);
-//                                        }
-//                                    }
-//                                });
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
     }
 }
