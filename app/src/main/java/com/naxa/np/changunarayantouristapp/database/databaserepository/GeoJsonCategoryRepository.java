@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData;
 
 import com.naxa.np.changunarayantouristapp.database.ISETRoomDatabase;
 import com.naxa.np.changunarayantouristapp.database.dao.GeoJsonCategoryDao;
-import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryEntity;
+import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonListDetailsEntity;
 
 import java.util.List;
 
@@ -19,8 +19,8 @@ import io.reactivex.schedulers.Schedulers;
 public class GeoJsonCategoryRepository {
 
     private GeoJsonCategoryDao mGeoJsonCategoryDao;
-    private LiveData<List<GeoJsonCategoryEntity>> mAllGeoJsonCategoryEntity;
-    private Maybe<List<GeoJsonCategoryEntity>> mSpecificTypeGeoJsonCategoryEntity;
+    private LiveData<List<GeoJsonListDetailsEntity>> mAllGeoJsonCategoryEntity;
+    private Maybe<List<GeoJsonListDetailsEntity>> mSpecificTypeGeoJsonCategoryEntity;
 
     // Note that in order to unit test the WordRepository, you have to remove the Application
     // dependency. This adds complexity and much more code, and this sample is not about testing.
@@ -34,11 +34,11 @@ public class GeoJsonCategoryRepository {
 
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
-    public LiveData<List<GeoJsonCategoryEntity>> getAllGeoJsonCategoryEntity() {
+    public LiveData<List<GeoJsonListDetailsEntity>> getAllGeoJsonCategoryEntity() {
         return mAllGeoJsonCategoryEntity;
     }
 
-    public Maybe<List<GeoJsonCategoryEntity>> getSpecificTypeListGeoJsonCategoryEntity(String category_type) {
+    public Maybe<List<GeoJsonListDetailsEntity>> getSpecificTypeListGeoJsonCategoryEntity(String category_type) {
         mSpecificTypeGeoJsonCategoryEntity = mGeoJsonCategoryDao.getGeoJsonListByCategoryType(category_type);
         return mSpecificTypeGeoJsonCategoryEntity;
     }
@@ -46,14 +46,14 @@ public class GeoJsonCategoryRepository {
     // You must call this on a non-UI thread or your app will crash.
     // Like this, Room ensures that you're not doing any long running operations on the main
     // thread, blocking the UI.
-    public void insert (GeoJsonCategoryEntity geoJsonCategoryEntity) {
-        Observable.just(geoJsonCategoryEntity)
+    public void insert (GeoJsonListDetailsEntity geoJsonListDetailsEntity) {
+        Observable.just(geoJsonListDetailsEntity)
                 .subscribeOn(Schedulers.io())
-                .subscribe(new DisposableObserver<GeoJsonCategoryEntity>() {
+                .subscribe(new DisposableObserver<GeoJsonListDetailsEntity>() {
             @Override
-            public void onNext(GeoJsonCategoryEntity geoJsonCategoryEntity) {
-                Log.d("GeoJsonCategoryEntity", "insert: "+ geoJsonCategoryEntity.getCategoryName());
-                mGeoJsonCategoryDao.insert(geoJsonCategoryEntity);
+            public void onNext(GeoJsonListDetailsEntity geoJsonListDetailsEntity) {
+                Log.d("GeoJsonListDetailsEntity", "insert: "+ geoJsonListDetailsEntity.getCategoryName());
+                mGeoJsonCategoryDao.insert(geoJsonListDetailsEntity);
             }
 
             @Override

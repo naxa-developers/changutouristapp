@@ -10,10 +10,10 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-@Entity(tableName = "GeoJsonCategoryEntity",
+@Entity(tableName = "GeoJsonListDetailsEntity",
         indices = {@Index(value = "category_table",
                 unique = true)})
-public class GeoJsonCategoryEntity {
+public class GeoJsonListDetailsEntity {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -59,7 +59,7 @@ public class GeoJsonCategoryEntity {
     private String publicView;
 
 
-    public GeoJsonCategoryEntity(String categoryName, String categoryTable, String categoryType, String categoryPhoto, String summaryList, String summaryName, String lastUpdated, String publicView) {
+    public GeoJsonListDetailsEntity(String categoryName, String categoryTable, String categoryType, String categoryPhoto, String summaryList, String summaryName, String lastUpdated, String publicView) {
         this.categoryName = categoryName;
         this.categoryTable = categoryTable;
         this.categoryType = categoryType;

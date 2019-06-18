@@ -6,26 +6,26 @@
         android:id="@+id/action_bottom_images"
         android:enabled="true"
         android:icon="@drawable/ic_bottom_menu_image_24dp"
-        android:title="Images"
+        android:title="@string/images"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_bottom_videos"
         android:enabled="true"
         android:icon="@drawable/ic_bottom_menu_video_24dp"
-        android:title="Videos"
+        android:title="@string/videos"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_bottom_audios"
         android:enabled="true"
         android:icon="@drawable/ic_bottom_menu_audio_24dp"
-        android:title="Audios"
+        android:title="@string/audios"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_bottom_map"
         android:enabled="true"
         android:icon="@drawable/ic_bottom_menu_map_24dp"
-        android:title="Map"
+        android:title="@string/map"
         app:showAsAction="ifRoom" />
 </menu>

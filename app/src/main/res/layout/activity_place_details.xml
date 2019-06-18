@@ -55,7 +55,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/slate_black"
-                        android:text="Place Name"
+                        android:text="@string/place_name"
                         android:layout_marginTop="@dimen/spacing_medium"
                         android:textSize="@dimen/material_text_title"
                         android:textStyle="bold"/>
@@ -75,8 +75,40 @@
                         android:text="@string/loremipsum"/>
 
 
+                    <LinearLayout
+                        android:id="@+id/ll_nearby_places_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_nearby_place_LBL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/slate_black"
+                        android:text="@string/nearby_places"
+                        android:layout_marginTop="@dimen/activity_default_margin"
+                        android:textSize="@dimen/material_text_title"
+                        android:textStyle="bold"/>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_nearby_places"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                        </androidx.recyclerview.widget.RecyclerView>
+                    <Button
+                        android:id="@+id/btn_view_all_nearby_places"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="@string/view_all"
+                        />
+                    </LinearLayout>
+
 
                 </LinearLayout>
+
+
 
             </RelativeLayout>
         </ScrollView>
