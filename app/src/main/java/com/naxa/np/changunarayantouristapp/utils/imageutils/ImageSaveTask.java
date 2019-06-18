@@ -1,26 +1,25 @@
 package com.naxa.np.changunarayantouristapp.utils.imageutils;
 
-import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.concurrent.ExecutionException;
 
 public class ImageSaveTask  extends AsyncTask< String, Void, Void> {
-    private Context context;
+    private AppCompatActivity context;
+    private static final String TAG = "ImageSaveTask";
 
-    public ImageSaveTask(Context context) {
+    public ImageSaveTask(AppCompatActivity context) {
         this.context = context;
     }
 
@@ -30,67 +29,54 @@ public class ImageSaveTask  extends AsyncTask< String, Void, Void> {
             throw new IllegalArgumentException("You should offer 2 params, the first for the image source url, and the other for the destination file save path");
         }
 
-        String src = params[0];
-        String dst = params[1];
+        String imgName = params[0];
+        String src = params[1];
+        String dst = params[2];
 
-        try {
-//            File file = Glide.with(context)
-//                    .load(src)
-//                    .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-//                    .get();
-
-            File file = Glide.with(context)
-                    .load(new File(src))
-                    .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                    .get();
-
-
-
-            File dstFile = new File(dst);
-            if (!dstFile.exists()) {
-                boolean success = dstFile.createNewFile();
-                if (!success) {
-                    return null;
-                }
+        context.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Glide.with(context)
+                        .load(src)
+                        .asBitmap()
+                        .into(new SimpleTarget<Bitmap>(Target.SIZE_ORIGINAL,Target.SIZE_ORIGINAL) {
+                            @Override
+                            public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                                saveImage(resource,imgName, dst);
+                            }
+                        });
             }
-
-            InputStream in = null;
-            OutputStream out = null;
-
-            try {
-                in = new BufferedInputStream(new FileInputStream(file));
-                out = new BufferedOutputStream(new FileOutputStream(dst));
-
-                byte[] buf = new byte[1024];
-                int len;
-                while ((len = in.read(buf)) > 0) {
-                    out.write(buf, 0, len);
-                }
-                out.flush();
-            } finally {
-                if (in != null) {
-                    try {
-                        in.close();
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-                }
-
-                if (out != null) {
-                    try {
-                        out.close();
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-                }
-            }
-
-            Log.d("ImageSaveTask", "doInBackground: ReportActivity Image file saved successfully ");
-        } catch (InterruptedException | ExecutionException | IOException e) {
-            e.printStackTrace();
-        }
-
+        });
 
         return null;
+    }
+
+    private String saveImage(Bitmap image, String imageName, String storagePath) {
+        String savedImagePath = null;
+
+        String imageFileName = imageName + ".jpg";
+        File storageDir = new File(
+                storagePath);
+        boolean success = true;
+        if (!storageDir.exists()) {
+            success = storageDir.mkdirs();
+        }
+        if (success) {
+            File imageFile = new File(storageDir, imageFileName);
+            savedImagePath = imageFile.getAbsolutePath();
+            try {
+                OutputStream fOut = new FileOutputStream(imageFile);
+                image.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+                fOut.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // Add the image to the system gallery
+                        Log.d("ImageSaveTask", "doInBackground: "+imageFileName+ "saved successfully ");
+                        Log.d("ImageSaveTask", "image saved path"+ savedImagePath);
+
+        }
+        return savedImagePath;
     }
 }

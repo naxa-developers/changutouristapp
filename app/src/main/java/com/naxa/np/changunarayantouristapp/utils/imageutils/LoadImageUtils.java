@@ -11,9 +11,12 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.mapbox.mapboxsdk.annotations.Icon;
 import com.mapbox.mapboxsdk.annotations.IconFactory;
@@ -25,12 +28,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.RandomAccessFile;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.concurrent.ExecutionException;
 
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -240,6 +245,66 @@ public class LoadImageUtils {
             return source1;
         }
 
+    }
 
+
+    public static void downloadAndSaveImageToStorage(AppCompatActivity context , String imageName, String imageUrl){
+
+        String [] imageUlrAndLocationToSave = {imageName, imageUrl, CreateAppMainFolderUtils.getAppMapDataFolderName()};
+        ImageSaveTask imageSaveTask = new ImageSaveTask(context);
+        imageSaveTask.execute(imageUlrAndLocationToSave);
+
+//        Observable.just(imageUlrAndLocationToSave)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(Schedulers.io())
+//                .subscribe(new DisposableObserver<String[]>() {
+//                    @Override
+//                    public void onNext(String[] strings) {
+//                        String imgName = strings[0];
+//                        String imageSource = strings[1];
+//                        String storagePath = strings[2];
+//
+//                        Glide.with(context)
+//                                .load(imageSource)
+//                                .asBitmap()
+//                                .into(new SimpleTarget<Bitmap>(Target.SIZE_ORIGINAL,Target.SIZE_ORIGINAL) {
+//                                    @Override
+//                                    public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+//
+//
+//                                        String imageFileName = imgName + ".jpg";
+//                                        File storageDir = new File(storagePath);
+//                                        boolean success = true;
+//                                        if (!storageDir.exists()) {
+//                                            success = storageDir.mkdirs();
+//                                        }
+//                                        if (success) {
+//                                            File imageFile = new File(storageDir, imageFileName);
+//                                            try {
+//                                                OutputStream fOut = new FileOutputStream(imageFile);
+//                                                resource.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+//                                                fOut.close();
+//                                            } catch (Exception e) {
+//                                                e.printStackTrace();
+//                                            }
+//                                            // Add the image to the system gallery
+//                                            Log.d("ImageSaveTask", "doInBackground: "+imageFileName+ "saved successfully ");
+//
+////            galleryAddPic(savedImagePath);
+//                                        }
+//                                    }
+//                                });
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
     }
 }

@@ -4,14 +4,17 @@ import android.content.Context;
 import android.os.Environment;
 import android.widget.Toast;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 
 public class CreateAppMainFolderUtils {
     public static final String appmainFolderName = "Changunarayan Tourist App";
     Context context;
-    String mainFolderName ;
+    static String mainFolderName ;
     public static final String databaseFolderName  = "data" ;
     public static final String mediaFolderName = "media" ;
+    public static final String mapFolderName = "mapdata" ;
 
     public CreateAppMainFolderUtils(Context context, String mainFolderName) {
         this.context = context;
@@ -22,7 +25,6 @@ public class CreateAppMainFolderUtils {
 
     public void createMainFolder (){
         String myfolderLoc=Environment.getExternalStorageDirectory()+"/"+mainFolderName;
-
         File f=new File(myfolderLoc);
         if(!f.exists())
             if(!f.mkdir()){
@@ -32,6 +34,7 @@ public class CreateAppMainFolderUtils {
             else{
             createDatabaseFolder();
             createMediaFolder();
+            createMapFolder();
                 Toast.makeText(context, myfolderLoc+" folder has been created.", Toast.LENGTH_SHORT).show();
             }
     }
@@ -39,12 +42,20 @@ public class CreateAppMainFolderUtils {
     public String getAppmainFolderName(){
      return Environment.getExternalStorageDirectory()+"/"+mainFolderName;
     }
-    public String getAppDataFolderName(){
+
+    @NotNull
+    public static String getAppDataFolderName(){
         return Environment.getExternalStorageDirectory()+"/"+mainFolderName+"/"+databaseFolderName;
     }
 
-    public String getAppMediaFolderName(){
+    @NotNull
+    public static String getAppMediaFolderName(){
         return Environment.getExternalStorageDirectory()+"/"+mainFolderName+"/"+mediaFolderName;
+    }
+
+    @NotNull
+    public static String getAppMapDataFolderName(){
+        return Environment.getExternalStorageDirectory()+"/"+mainFolderName+"/"+mapFolderName;
     }
 
     public void createDatabaseFolder(){
@@ -74,6 +85,21 @@ public class CreateAppMainFolderUtils {
                 Toast.makeText(context, myfolderLoc+" folder has been created.", Toast.LENGTH_SHORT).show();
             }
     }
+
+    public void createMapFolder(){
+        String myfolderLoc=Environment.getExternalStorageDirectory()+"/"+mainFolderName+"/"+mapFolderName;
+
+        File f=new File(myfolderLoc);
+        if(!f.exists())
+            if(!f.mkdir()){
+                Toast.makeText(context, myfolderLoc+" folder can't be created.", Toast.LENGTH_SHORT).show();
+
+            }
+            else{
+                Toast.makeText(context, myfolderLoc+" folder has been created.", Toast.LENGTH_SHORT).show();
+            }
+    }
+
 
     public boolean isFolderExist(String folderName){
         boolean isExist;
