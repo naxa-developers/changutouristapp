@@ -6,9 +6,11 @@ public class UrlConstant {
     public static final String REQUEST_401 = "401";
     public static final String REQUEST_400 = "400";
 
-        public static final String BASE_URL = "http://139.59.67.104:8002/";
 
-        public static final String FETCH_LANGUAGE_LIST_URL = "api/get_language_list";
+
+        public static final String BASE_URL = "http://changu.naxa.com.np/";
+
+        public static final String FETCH_LANGUAGE_LIST_URL = "mobileapi/mobapi/language";
         public static final String POST_USER_DETAILS_URL = "api/registration";
 
 }

@@ -126,7 +126,6 @@ public class WalkThroughSliderActivity extends AppCompatActivity {
     }
 
     private void launchLanguageSelectorScreen() {
-        SharedPreferenceUtils.getInstance(WalkThroughSliderActivity.this).setValue(IS_APP_FIRST_TIME_LAUNCH, false);
         ActivityUtil.openActivity(SelectlanguageActivity.class, WalkThroughSliderActivity.this);
     }
 
