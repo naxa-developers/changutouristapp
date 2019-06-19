@@ -1,6 +1,8 @@
 package com.naxa.np.changunarayantouristapp.placedetailsview;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -20,15 +22,20 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
+import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenter;
+import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenterImpl;
+import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadView;
 import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
+import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.vrimage.VRImageViewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlaceDetailsActivity extends BaseActivity implements View.OnClickListener {
+public class PlaceDetailsActivity extends BaseActivity implements View.OnClickListener, FileDownloadView {
 
+    private static final String TAG = "PlaceDetailsActivity";
     ImageView ivImageMain;
     TextView tvPlaceTitle, tvPlaceDesc;
     ImageButton btnView360Image;
@@ -37,6 +44,8 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
     BottomNavigationView bottomNavigationView;
     RecyclerView recyclerViewnearByPlaces;
     LinearLayout llNearByPlacesLayout;
+
+    FileDownloadPresenter fileDownloadPresenter;
 
 
     private BaseRecyclerViewAdapter<NearByPlacesPojo, NearByPlacesViewHolder> adapter;
@@ -47,8 +56,10 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_details);
 
-        setupToolbar("Place Details", false);
 
+        fileDownloadPresenter = new FileDownloadPresenterImpl(this, PlaceDetailsActivity.this);
+
+        setupToolbar("Place Details", false);
         initUI();
     }
 
@@ -58,6 +69,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         ivImageMain = findViewById(R.id.iv_place_details_main);
         ratingBar = findViewById(R.id.rating_bar_place);
         recyclerViewnearByPlaces = findViewById(R.id.rv_nearby_places);
+        llNearByPlacesLayout = findViewById(R.id.ll_nearby_places_layout);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -77,13 +89,13 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_bottom_images:
-                    toolbar.setTitle("Shop");
+                    toolbar.setTitle("Images");
                     return true;
                 case R.id.action_bottom_videos:
-                    toolbar.setTitle("My Gifts");
+                    toolbar.setTitle("Videos");
                     return true;
                 case R.id.action_bottom_audios:
-                    toolbar.setTitle("Cart");
+                    toolbar.setTitle("Audios");
                     return true;
                 case R.id.action_bottom_map:
                     ActivityUtil.openActivity(MapMainActivity.class, PlaceDetailsActivity.this);
@@ -148,7 +160,31 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
                 break;
 
             case R.id.btn_view_all_nearby_places:
+                dialog = DialogFactory.createProgressDialog(PlaceDetailsActivity.this , "Please wait!!! \nDownloading file");
+                dialog.show();
+                fileDownloadPresenter.handleFileDownload("http://kmc.naxa.com.np/uploads/publication/file/75.mp3", "Audio file test");
                 break;
         }
+    }
+
+
+
+Dialog dialog;
+    @Override
+    public void fileDownloadProgress(int progress, int total, String successMsg) {
+
+    }
+
+    @Override
+    public void fileDownloadSuccess(String fileName, String successMsg, boolean isAlreadyExists) {
+        dialog.dismiss();
+        Log.d(TAG, "fileDownloadSuccess: "+fileName + " , "+ successMsg + " , "+isAlreadyExists);
+    }
+
+    @Override
+    public void fileDownloadFailed(String failedMsg) {
+        dialog.dismiss();
+        Log.d(TAG, "fileDownloadFailed: "+failedMsg);
+
     }
 }

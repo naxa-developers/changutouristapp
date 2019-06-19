@@ -70,6 +70,7 @@ public class LoadImageUtils {
         return  bitmap;
     }
 
+
     /**
      * Converts a immutable bitmap to a mutable bitmap. This operation doesn't allocates
      * more memory that there is already allocated.
