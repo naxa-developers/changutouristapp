@@ -65,6 +65,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     Dialog dialog;
     private void verifyUser(String verificatioCode) {
+        dialog = DialogFactory.createProgressDialog(LoginActivity.this, "Verifying User\nPlease wait....");
+        dialog.show();
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("token", verificatioCode);
