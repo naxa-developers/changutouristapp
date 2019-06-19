@@ -15,7 +15,7 @@ public class LanguageDetailsResponse {
     private String message;
     @SerializedName("data")
     @Expose
-    private List<Datum> data = null;
+    private List<LanguageDetails> data = null;
 
     public Integer getError() {
         return error;
@@ -33,11 +33,11 @@ public class LanguageDetailsResponse {
         this.message = message;
     }
 
-    public List<Datum> getData() {
+    public List<LanguageDetails> getData() {
         return data;
     }
 
-    public void setData(List<Datum> data) {
+    public void setData(List<LanguageDetails> data) {
         this.data = data;
     }
 

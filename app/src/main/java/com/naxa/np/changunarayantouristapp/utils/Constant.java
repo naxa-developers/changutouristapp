@@ -9,6 +9,7 @@ public class Constant {
 
     public class SharedPrefKey {
         public static final String IS_APP_FIRST_TIME_LAUNCH = "is_app_first_time_launch";
+        public static final String KEY_LANGUAGE_LIST_DETAILS = "language_list_details";
 
     }
 

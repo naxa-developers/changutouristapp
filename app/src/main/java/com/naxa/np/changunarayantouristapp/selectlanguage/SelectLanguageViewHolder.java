@@ -20,6 +20,6 @@ public class SelectLanguageViewHolder extends RecyclerView.ViewHolder {
     }
 
     void bindView(LanguageDetails languageDetails) {
-        tvSelectLanguage.setText(languageDetails.getTitle());
+        tvSelectLanguage.setText(languageDetails.getName());
     }
 }
