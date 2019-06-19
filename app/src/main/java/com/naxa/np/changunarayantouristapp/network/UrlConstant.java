@@ -11,6 +11,6 @@ public class UrlConstant {
         public static final String BASE_URL = "http://changu.naxa.com.np/";
 
         public static final String FETCH_LANGUAGE_LIST_URL = "mobileapi/mobapi/language";
-        public static final String POST_USER_DETAILS_URL = "api/registration";
+        public static final String POST_USER_DETAILS_URL = "mobileapi/mobapi/checkNregistration";
 
 }

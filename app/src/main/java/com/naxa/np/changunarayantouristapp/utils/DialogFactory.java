@@ -61,6 +61,23 @@ public final class DialogFactory {
         return alertDialog.create();
     }
 
+    public static Dialog createSimpleOkWithTitleDialog(Context context, String title, String message, onOkClickListner listner ) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context)
+                .setTitle(title)
+                .setMessage(message)
+                .setNeutralButton(R.string.dialog_action_ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        listner.onOkClick();
+                    }
+                });
+        return alertDialog.create();
+    }
+
+    public interface onOkClickListner{
+        public void onOkClick();
+    }
+
 
     public static Dialog createGenericErrorDialog(Context context, String message) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context, R.style.RiseUpDialog)
