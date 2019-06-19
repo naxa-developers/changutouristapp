@@ -1,5 +1,6 @@
 package com.naxa.np.changunarayantouristapp.login;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
+import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.FieldValidatorUtils;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -22,6 +24,8 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class RequestForAccessActivity extends BaseActivity implements View.OnClickListener {
+
+    private static final String TAG = "RequestForAccess";
 
     private EditText etFullName, etEmail;
     private AutoCompleteTextView etCountry;
@@ -84,32 +88,35 @@ public class RequestForAccessActivity extends BaseActivity implements View.OnCli
             case R.id.rb_religious:
                 if (checked)
                     purpose_for_visit = "Religious Visit";
-                    break;
+                break;
 
             case R.id.rb_sight_seeing:
                 if (checked)
                     purpose_for_visit = "Sight Seeing";
-                    break;
+                break;
 
             case R.id.rb_visit_others:
                 if (checked)
                     purpose_for_visit = "Others";
-                    break;
+                break;
         }
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_register:
-                if(FieldValidatorUtils.validateEditText(etFullName) &&
-                FieldValidatorUtils.validateEmailPattern(etEmail) &&
-                FieldValidatorUtils.validateAutoCompleteText(etCountry)){
+                if (FieldValidatorUtils.validateEditText(etFullName) &&
+                        FieldValidatorUtils.validateEmailPattern(etEmail) &&
+                        FieldValidatorUtils.validateAutoCompleteText(etCountry)) {
 
 
-                    if(isNetworkAvailable()) {
-                        registerUser();
-                    }else {
+                    if (isNetworkAvailable()) {
+                        Gson gson = new Gson();
+                        jsonToPost = gson.toJson(new UserLoginDetails(etFullName.getText().toString(), etEmail.getText().toString(), etCountry.getText().toString(), gender, purpose_for_visit));
+                        Log.d(TAG, "onClick: " + jsonToPost);
+                        registerUser(jsonToPost);
+                    } else {
                         Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -117,22 +124,45 @@ public class RequestForAccessActivity extends BaseActivity implements View.OnCli
         }
     }
 
-    private void registerUser() {
-        Gson gson = new Gson();
-        apiInterface.getUserregistrationResponse(Constant.Network.API_KEY,
-                gson.toJson(new UserLoginDetails(etFullName.getText().toString(), etEmail.getText().toString(), etCountry.getText().toString(), gender, purpose_for_visit)))
+    Dialog dialog;
+    String jsonToPost = "";
+
+    private void registerUser(String jsonToSend) {
+        dialog = DialogFactory.createProgressDialog(RequestForAccessActivity.this, "Registering\nPlease wait....");
+        dialog.show();
+        apiInterface.getUserregistrationResponse(Constant.Network.API_KEY, jsonToSend)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .retry(Constant.Network.KEY_MAX_RETRY_COUNT)
                 .subscribe(new DisposableObserver<UserLoginResponse>() {
                     @Override
                     public void onNext(UserLoginResponse userLoginResponse) {
+                        dialog.dismiss();
+                        if (userLoginResponse == null) {
+                            dialog = DialogFactory.createGenericErrorDialog(RequestForAccessActivity.this, "Registration failed");
+                            dialog.show();
+                        } else {
+                            if (userLoginResponse.getError() == 0) {
+                                dialog = DialogFactory.createSimpleOkWithTitleDialog(RequestForAccessActivity.this, "Success", userLoginResponse.getMessage(), new DialogFactory.onOkClickListner() {
+                                    @Override
+                                    public void onOkClick() {
+                                        ActivityUtil.openActivity(LoginActivity.class, RequestForAccessActivity.this);
 
+                                    }
+                                });
+                                dialog.show();
+                            } else {
+                                dialog = DialogFactory.createSimpleOkErrorDialog(RequestForAccessActivity.this, "Failed", userLoginResponse.getMessage());
+                                dialog.show();
+                            }
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        dialog.dismiss();
+                        dialog = DialogFactory.createSimpleOkErrorDialog(RequestForAccessActivity.this, "Failed", e.getMessage());
+                        dialog.show();
                     }
 
                     @Override
