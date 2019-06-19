@@ -1,6 +1,7 @@
 package com.naxa.np.changunarayantouristapp.login;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -9,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.gson.Gson;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
@@ -116,8 +118,9 @@ public class RequestForAccessActivity extends BaseActivity implements View.OnCli
     }
 
     private void registerUser() {
-        apiInterface.getUserregistrationResponse(new UserLoginDetails(etFullName.getText().toString(), etEmail.getText().toString(), etCountry.getText().toString(),
-                gender, purpose_for_visit))
+        Gson gson = new Gson();
+        apiInterface.getUserregistrationResponse(Constant.Network.API_KEY,
+                gson.toJson(new UserLoginDetails(etFullName.getText().toString(), etEmail.getText().toString(), etCountry.getText().toString(), gender, purpose_for_visit)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .retry(Constant.Network.KEY_MAX_RETRY_COUNT)

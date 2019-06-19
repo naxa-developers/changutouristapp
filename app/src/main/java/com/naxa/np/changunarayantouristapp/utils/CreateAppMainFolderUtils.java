@@ -40,22 +40,22 @@ public class CreateAppMainFolderUtils {
     }
 
     public String getAppmainFolderName(){
-     return Environment.getExternalStorageDirectory()+"/"+mainFolderName;
+     return Environment.getExternalStorageDirectory()+"/"+appmainFolderName;
     }
 
     @NotNull
     public static String getAppDataFolderName(){
-        return Environment.getExternalStorageDirectory()+"/"+mainFolderName+"/"+databaseFolderName;
+        return Environment.getExternalStorageDirectory()+"/"+appmainFolderName+"/"+databaseFolderName;
     }
 
     @NotNull
     public static String getAppMediaFolderName(){
-        return Environment.getExternalStorageDirectory()+"/"+mainFolderName+"/"+mediaFolderName;
+        return Environment.getExternalStorageDirectory()+"/"+appmainFolderName+"/"+mediaFolderName;
     }
 
     @NotNull
     public static String getAppMapDataFolderName(){
-        return Environment.getExternalStorageDirectory()+"/"+mainFolderName+"/"+mapFolderName;
+        return Environment.getExternalStorageDirectory()+"/"+appmainFolderName+"/"+mapFolderName;
     }
 
     public void createDatabaseFolder(){

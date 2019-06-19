@@ -19,5 +19,5 @@ public interface NetworkApiInterface {
 
     @POST(UrlConstant.FETCH_LANGUAGE_LIST_URL)
     @FormUrlEncoded
-    Observable<UserLoginResponse> getUserregistrationResponse(@Body UserLoginDetails userLoginDetails);
+    Observable<UserLoginResponse> getUserregistrationResponse(@Field("api_key") String api_key, @Field("data") String jsonData);
 }
