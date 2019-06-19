@@ -22,7 +22,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
-import static com.chad.library.adapter.base.listener.SimpleClickListener.TAG;
 
 public class FileDownloadPresenterImpl implements FileDownloadPresenter {
     private DownloadManager downloadManager;
@@ -43,11 +42,11 @@ public class FileDownloadPresenterImpl implements FileDownloadPresenter {
     @Override
     public void handleFileDownload(String fileSourceURL, String fileName) {
 
-        downloadAudioFile(fileSourceURL, fileName);
+        downloaFile(fileSourceURL, fileName);
     }
 
 
-    private void downloadAudioFile(String fileSourceURL, String fileName) {
+    private void downloaFile(String fileSourceURL, String fileName) {
 
         if (TextUtils.isEmpty(fileSourceURL)) {
             Toast.makeText(ChangunarayanTouristApp.getInstance(), "FIle Source URL Found", Toast.LENGTH_SHORT).show();
@@ -57,7 +56,9 @@ public class FileDownloadPresenterImpl implements FileDownloadPresenter {
             fileType = fileUrl.substring(stringLength - 4, stringLength);
             downloadedFileName = fileName + fileType;
 
-            File targetFile = new File(CreateAppMainFolderUtils.getAppMediaFolderName() + File.separator +  downloadedFileName);
+            String folderPath = CreateAppMainFolderUtils.getAppMediaFolderName();
+            Log.d("PlaceDetailsActivity", "downloaFile: full file path  "+folderPath+ File.separator +  downloadedFileName);
+            File targetFile = new File(folderPath+ File.separator +  downloadedFileName);
             if (targetFile.exists()) {
                 fileDownloadView.fileDownloadSuccess(downloadedFileName, "File already exist", true);
 
