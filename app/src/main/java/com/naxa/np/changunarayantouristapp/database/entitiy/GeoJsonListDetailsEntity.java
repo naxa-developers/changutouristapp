@@ -58,8 +58,17 @@ public class GeoJsonListDetailsEntity {
     @Expose
     private String publicView;
 
+    @SerializedName("latitude")
+    @ColumnInfo(name = "latitude")
+    @Expose
+    private Double latitude;
 
-    public GeoJsonListDetailsEntity(String categoryName, String categoryTable, String categoryType, String categoryPhoto, String summaryList, String summaryName, String lastUpdated, String publicView) {
+    @SerializedName("longitude")
+    @ColumnInfo(name = "longitude")
+    @Expose
+    private Double longitude;
+
+    public GeoJsonListDetailsEntity(String categoryName, String categoryTable, String categoryType, String categoryPhoto, String summaryList, String summaryName, String lastUpdated, String publicView, Double latitude, Double longitude) {
         this.categoryName = categoryName;
         this.categoryTable = categoryTable;
         this.categoryType = categoryType;
@@ -68,7 +77,10 @@ public class GeoJsonListDetailsEntity {
         this.summaryName = summaryName;
         this.lastUpdated = lastUpdated;
         this.publicView = publicView;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
+
 
     public String getCategoryName() {
         return categoryName;
@@ -141,5 +153,21 @@ public class GeoJsonListDetailsEntity {
 
     public void setPublicView(String publicView) {
         this.publicView = publicView;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 }
