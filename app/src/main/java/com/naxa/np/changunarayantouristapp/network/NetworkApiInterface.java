@@ -21,4 +21,9 @@ public interface NetworkApiInterface {
     @POST(UrlConstant.POST_USER_DETAILS_URL)
     @FormUrlEncoded
     Observable<UserLoginResponse> getUserregistrationResponse(@Field("api_key") String api_key, @Field("data") String jsonData);
+
+
+    @POST(UrlConstant.POST_USER_Verification_URL)
+    @FormUrlEncoded
+    Observable<UserLoginResponse> getUserVerificationResponse(@Field("api_key") String api_key, @Field("data") String jsonData);
 }
