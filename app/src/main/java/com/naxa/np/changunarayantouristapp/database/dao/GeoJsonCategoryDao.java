@@ -22,8 +22,6 @@ public interface GeoJsonCategoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(GeoJsonCategoryListEntity geoJsonCategoryListEntity);
 
-    @Query("SELECT * from GeoJsonCategoryListEntity WHERE category_type =:category_type")
-    Maybe<List<GeoJsonCategoryListEntity>> getGeoJsonListByCategoryType(String category_type);
 
     @Query("DELETE FROM GeoJsonCategoryListEntity")
     void deleteAll();

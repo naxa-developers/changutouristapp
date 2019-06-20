@@ -14,6 +14,7 @@ import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.FieldValidatorUtils;
+import com.naxa.np.changunarayantouristapp.utils.NetworkUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,7 +53,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         switch (v.getId()){
             case R.id.btn_verification:
                 if(FieldValidatorUtils.validateEditText(etVerificationCode)){
-                    verifyUser(etVerificationCode.getText().toString());
+                    if(NetworkUtils.isNetworkAvailable()) {
+                        verifyUser(etVerificationCode.getText().toString());
+                    }else {
+                        dialog = DialogFactory.createSimpleOkErrorDialog(LoginActivity.this, "No Internet Connection!", "Please check your internet connection and try again.");
+                        dialog.show();
+                    }
 
                 }
                 break;

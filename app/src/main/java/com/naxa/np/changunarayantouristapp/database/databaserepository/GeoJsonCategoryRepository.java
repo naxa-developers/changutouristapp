@@ -38,10 +38,6 @@ public class GeoJsonCategoryRepository {
         return mAllGeoJsonCategoryEntity;
     }
 
-    public Maybe<List<GeoJsonCategoryListEntity>> getSpecificTypeListGeoJsonCategoryEntity(String category_type) {
-        mSpecificTypeGeoJsonCategoryEntity = mGeoJsonCategoryDao.getGeoJsonListByCategoryType(category_type);
-        return mSpecificTypeGeoJsonCategoryEntity;
-    }
 
     // You must call this on a non-UI thread or your app will crash.
     // Like this, Room ensures that you're not doing any long running operations on the main
