@@ -3,6 +3,7 @@ package com.naxa.np.changunarayantouristapp;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -15,9 +16,11 @@ import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonListViewMod
 import com.naxa.np.changunarayantouristapp.fetchdata.DataDonwloadView;
 import com.naxa.np.changunarayantouristapp.fetchdata.DataDownloadPresenter;
 import com.naxa.np.changunarayantouristapp.fetchdata.DataDownloadPresenterImpl;
+import com.naxa.np.changunarayantouristapp.login.LoginActivity;
 import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
+import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 import com.naxa.np.changunarayantouristapp.vrimage.VRImageViewActivity;
 
@@ -30,6 +33,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     GeoJsonListViewModel geoJsonListViewModel;
     ProgressDialog progressDialog;
     DataDownloadPresenter dataDownloadPresenter;
+    Button btnDownloadData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         geoJsonCategoryViewModel = ViewModelProviders.of(this).get(GeoJsonCategoryViewModel.class);
         geoJsonListViewModel = ViewModelProviders.of(this).get(GeoJsonListViewModel.class);
+
+        progressDialog = DialogFactory.createProgressBarDialog(MainActivity.this, "", "");
 
         dataDownloadPresenter = new DataDownloadPresenterImpl(this, geoJsonListViewModel, geoJsonCategoryViewModel);
 
@@ -56,10 +62,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         tvQRScan = findViewById(R.id.tv_qr_scanner);
         tvVRImage = findViewById(R.id.tv_view_vr_image);
         tvViewOnMap = findViewById(R.id.tv_view_map);
+        btnDownloadData = findViewById(R.id.btn_download_data);
 
         tvQRScan.setOnClickListener(this);
         tvVRImage.setOnClickListener(this);
         tvViewOnMap.setOnClickListener(this);
+        btnDownloadData.setOnClickListener(this);
 
     }
 
@@ -79,6 +87,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 ActivityUtil.openActivity(MapMainActivity.class, MainActivity.this);
 
                 break;
+
+            case R.id.btn_download_data:
+                fetchAllData();
+                break;
         }
     }
 
@@ -91,23 +103,35 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     }
 
+
     private void fetchDataFromServerAndSave() {
+        progressDialog.show();
         dataDownloadPresenter.handleDataDownload(apiInterface, API_KEY, SharedPreferenceUtils.getInstance(MainActivity.this).getStringValue(Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE, null));
 
     }
 
+
     @Override
-    public void downloadProgress(int progress, int total, String successMsg) {
+    public void downloadProgress(int progress, int totalCount, String geoJsonFileName) {
+        String alertMsg = getString(R.string.fetching_file, geoJsonFileName, String.valueOf(progress), String.valueOf(totalCount));
+        progressDialog.setMax(totalCount);
+        progressDialog.setMessage(alertMsg);
+        progressDialog.setProgress(progress);
 
     }
 
     @Override
     public void downloadSuccess(String successMsg) {
-
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
     }
 
     @Override
     public void downloadFailed(String failedMsg) {
-
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+        DialogFactory.createSimpleOkErrorDialog(MainActivity.this, "Failed", failedMsg).show();
     }
 }
