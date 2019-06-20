@@ -16,7 +16,7 @@ public interface PlaceDetailsDao {
 
 
     @Query("SELECT * from PlacesDetailsEntity ORDER BY pid ASC")
-    Flowable<List<PlacesDetailsEntity>> getPlacesDetailsEntity();
+    Flowable<List<PlacesDetailsEntity>> getAllPlacesDetailsEntity();
 
     @Query("SELECT * from PlacesDetailsEntity WHERE place_type LIKE :placeType AND category_type IN (:categoryType)")
     Flowable<List<PlacesDetailsEntity>> getPlacesDetailsEntityBYPlaceAndCategoryType(String placeType, List<String> categoryType);
