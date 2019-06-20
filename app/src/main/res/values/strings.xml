@@ -55,4 +55,7 @@
     <string name="videos">Videos</string>
     <string name="audios">Audios</string>
     <string name="map">Map</string>
+
+    <string name="fetching_file">Getting %1$s.\n\Geojson data %2$s of %3$s file(s)</string>
+
 </resources>

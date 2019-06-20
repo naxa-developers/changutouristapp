@@ -37,29 +37,28 @@ import static com.naxa.np.changunarayantouristapp.utils.Constant.Permission.STOR
 import static com.naxa.np.changunarayantouristapp.utils.Constant.PermissionID.RC_STORAGE;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_APP_FIRST_TIME_LAUNCH;
 
-public class SelectlanguageActivity extends BaseActivity implements DataDonwloadView {
+public class SelectlanguageActivity extends BaseActivity {
 
     private static final String TAG = "SelectlanguageActivity";
 
     Toolbar toolbar;
     RecyclerView recyclerView;
-    DataDownloadPresenter dataDownloadPresenter;
     private BaseRecyclerViewAdapter<LanguageDetails, SelectLanguageViewHolder> adapter;
 
-    Gson gson ;
+    Gson gson;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selectlanguage);
         gson = new Gson();
-        dataDownloadPresenter = new DataDownloadPresenterImpl(this);
 
         setupToolbar("Select Language", false);
         initUI();
 
     }
 
-    private void initUI(){
+    private void initUI() {
 
         toolbar = findViewById(R.id.toolbar);
         recyclerView = findViewById(R.id.rv_language_selector);
@@ -79,19 +78,19 @@ public class SelectlanguageActivity extends BaseActivity implements DataDonwload
                     @Override
                     public void onNext(LanguageDetailsResponse languageDetailsResponse) {
 
-                        if(languageDetailsResponse == null){
+                        if (languageDetailsResponse == null) {
                             dialog = DialogFactory.createSimpleOkErrorDialog(SelectlanguageActivity.this, "Data Fetch Error", "unable to download data ");
                             dialog.show();
                             return;
                         }
 
-                        if(languageDetailsResponse.getError() == 0){
+                        if (languageDetailsResponse.getError() == 0) {
                             dialog.dismiss();
-                            if(languageDetailsResponse.getData()!= null){
-                                SharedPreferenceUtils.getInstance(SelectlanguageActivity.this).setValue(Constant.SharedPrefKey.KEY_LANGUAGE_LIST_DETAILS, gson.toJson(languageDetailsResponse) );
+                            if (languageDetailsResponse.getData() != null) {
+                                SharedPreferenceUtils.getInstance(SelectlanguageActivity.this).setValue(Constant.SharedPrefKey.KEY_LANGUAGE_LIST_DETAILS, gson.toJson(languageDetailsResponse));
                                 setuprecyclerView(languageDetailsResponse.getData());
                             }
-                        }else {
+                        } else {
                             dialog.dismiss();
                             dialog = DialogFactory.createSimpleOkErrorDialog(SelectlanguageActivity.this, "Data Fetch Error", languageDetailsResponse.getMessage());
                             dialog.show();
@@ -115,14 +114,14 @@ public class SelectlanguageActivity extends BaseActivity implements DataDonwload
 
     private void setuprecyclerView(List<LanguageDetails> languageDetailsList) {
 
-        if(languageDetailsList == null){
+        if (languageDetailsList == null) {
             return;
         }
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new BaseRecyclerViewAdapter<LanguageDetails, SelectLanguageViewHolder>(languageDetailsList, R.layout.language_selector_row_item_layout){
+        adapter = new BaseRecyclerViewAdapter<LanguageDetails, SelectLanguageViewHolder>(languageDetailsList, R.layout.language_selector_row_item_layout) {
 
             @Override
             public void viewBinded(SelectLanguageViewHolder selectLanguageViewHolder, final LanguageDetails languageDetails, int position) {
@@ -130,9 +129,9 @@ public class SelectlanguageActivity extends BaseActivity implements DataDonwload
                 selectLanguageViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.d(TAG, "onClick: "+ languageDetails.getName());
-
-                        dataDownloadPresenter.handleDataDownload(apiInterface, API_KEY, languageDetails.getLanguage());
+                        Log.d(TAG, "onClick: " + languageDetails.getName());
+                        SharedPreferenceUtils.getInstance(SelectlanguageActivity.this).setValue(Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE, languageDetails.getLanguage());
+                        launchLoginScreen();
                     }
                 });
 
@@ -149,36 +148,22 @@ public class SelectlanguageActivity extends BaseActivity implements DataDonwload
 
     private void launchLoginScreen() {
 
-        checkPermission(RC_STORAGE, new String[] {STORAGE_READ, STORAGE_WRITE}, getString(R.string.storage_rationale),
-        new PermissionRequestListener() {
-            @Override
-            public void onPermissionGranted() {
-                SharedPreferenceUtils.getInstance(SelectlanguageActivity.this).setValue(IS_APP_FIRST_TIME_LAUNCH, false);
+        checkPermission(RC_STORAGE, new String[]{STORAGE_READ, STORAGE_WRITE}, getString(R.string.storage_rationale),
+                new PermissionRequestListener() {
+                    @Override
+                    public void onPermissionGranted() {
+                        SharedPreferenceUtils.getInstance(SelectlanguageActivity.this).setValue(IS_APP_FIRST_TIME_LAUNCH, false);
 
-                ActivityUtil.openActivity(LoginActivity.class, SelectlanguageActivity.this);
-                finish();
-            }
+                        ActivityUtil.openActivity(LoginActivity.class, SelectlanguageActivity.this);
+                        finish();
+                    }
 
-            @Override
-            public void onPermissionDenied() {
-            }
-        });
+                    @Override
+                    public void onPermissionDenied() {
+                    }
+                });
 
-
-    }
-
-    @Override
-    public void downloadProgress(int progress, int total, String successMsg) {
 
     }
 
-    @Override
-    public void downloadSuccess(String successMsg) {
-        launchLoginScreen();
-    }
-
-    @Override
-    public void downloadFailed(String failedMsg) {
-
-    }
 }

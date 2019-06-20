@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.naxa.np.changunarayantouristapp.database.dao.GeoJsonCategoryDao;
 import com.naxa.np.changunarayantouristapp.database.dao.GeoJsonListDao;
-import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonListDetailsEntity;
+import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListEntity;
 import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonListEntity;
 import com.naxa.np.changunarayantouristapp.utils.CreateAppMainFolderUtils;
 
@@ -22,7 +22,7 @@ import java.io.File;
  * Created by samir on 4/22/2018.
  */
 
-@Database(entities = { GeoJsonListDetailsEntity.class, GeoJsonListEntity.class
+@Database(entities = { GeoJsonCategoryListEntity.class, GeoJsonListEntity.class
 }, version = 1, exportSchema = false)
 
 public abstract class ISETRoomDatabase extends RoomDatabase {
