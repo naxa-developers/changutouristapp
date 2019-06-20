@@ -12,11 +12,6 @@ import com.naxa.np.changunarayantouristapp.map.mapcategory.GeojsonCategoriesList
 import com.naxa.np.changunarayantouristapp.network.NetworkApiInterface;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
-import com.naxa.np.changunarayantouristapp.utils.ToastUtils;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -34,13 +29,11 @@ import static com.chad.library.adapter.base.listener.SimpleClickListener.TAG;
 
 public class DataDownloadPresenterImpl implements DataDownloadPresenter {
 
-    DataDonwloadView dataDonwloadView;
-    GeoJsonCategoryViewModel geoJsonCategoryViewModel;
-    GeoJsonListViewModel geoJsonListViewModel;
+    private DataDonwloadView dataDonwloadView;
+   private GeoJsonCategoryViewModel geoJsonCategoryViewModel;
+    private GeoJsonListViewModel geoJsonListViewModel;
 
-    int[] totalCount = new int[1];
-    int[] progress = new int[1];
-    String[] geoJsonDisplayName = new String[1];
+
 
     public DataDownloadPresenterImpl(DataDonwloadView dataDonwloadView, GeoJsonListViewModel geoJsonListViewModel, GeoJsonCategoryViewModel geoJsonCategoryViewModel) {
         this.dataDonwloadView = dataDonwloadView;
@@ -51,14 +44,16 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
     @Override
     public void handleDataDownload(NetworkApiInterface apiInterface, String apiKey, String language) {
 
+        int[] totalCount = new int[1];
+        int[] progress = new int[1];
+        String[] geoJsonDisplayName = new String[1];
 
         final String[] geoJsonName = new String[1];
-        final String[] summaryName = new String[1];
-        final String[] geoJsonBaseType = new String[1];
 
         apiInterface
                 .getGeoJsonCategoriesListResponse(Constant.Network.API_KEY)
                 .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
                 .flatMap(new Function<GeojsonCategoriesListResponse, ObservableSource<List<GeoJsonCategoryListEntity>>>() {
                     @Override
                     public ObservableSource<List<GeoJsonCategoryListEntity>> apply(GeojsonCategoriesListResponse geoJsonCategoryDetails) throws Exception {
@@ -80,12 +75,12 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                         geoJsonCategoryViewModel.insert(geoJsonCategoryEntity);
                         geoJsonDisplayName[0] = geoJsonCategoryEntity.getCategoryName();
                         geoJsonName[0] = geoJsonCategoryEntity.getCategoryTable();
-                        summaryName[0] = geoJsonCategoryEntity.getSummaryName();
 
                         return apiInterface.getGeoJsonDetails(Constant.Network.API_KEY,geoJsonCategoryEntity.getCategoryTable());
                     }
 
                 })
+                .retry(Constant.Network.KEY_MAX_RETRY_COUNT)
                 .subscribe(new DisposableObserver<ResponseBody>() {
                     @Override
                     public void onNext(ResponseBody s) {
@@ -189,8 +184,8 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
 
                     @Override
                     public void onComplete() {
-                        SharedPreferenceUtils.getInstance(ChangunarayanTouristApp.getInstance()).setValue(Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS, true);
                         dataDonwloadView.downloadSuccess("All Data Downloaded Successfully");
+                        SharedPreferenceUtils.getInstance(ChangunarayanTouristApp.getInstance()).setValue(Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS, true);
                     }
                 });
 

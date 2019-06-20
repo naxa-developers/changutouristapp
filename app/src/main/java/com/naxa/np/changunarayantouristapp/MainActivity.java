@@ -1,8 +1,11 @@
 package com.naxa.np.changunarayantouristapp;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -40,10 +43,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        progressDialog = DialogFactory.createProgressBarDialog(MainActivity.this, "", "");
+
         geoJsonCategoryViewModel = ViewModelProviders.of(this).get(GeoJsonCategoryViewModel.class);
         geoJsonListViewModel = ViewModelProviders.of(this).get(GeoJsonListViewModel.class);
-
-        progressDialog = DialogFactory.createProgressBarDialog(MainActivity.this, "", "");
 
         dataDownloadPresenter = new DataDownloadPresenterImpl(this, geoJsonListViewModel, geoJsonCategoryViewModel);
 
@@ -95,16 +98,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void fetchAllData() {
-        if(SharedPreferenceUtils.getInstance(MainActivity.this).getBoolanValue(Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS,false)){
+//        if(SharedPreferenceUtils.getInstance(MainActivity.this).getBoolanValue(Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS,false)){
 
-        }else {
-            fetchDataFromServerAndSave();
-        }
+//        }else {
+        fetctDataFromServerAndSave();
+//                }
 
     }
 
-
-    private void fetchDataFromServerAndSave() {
+    private void fetctDataFromServerAndSave() {
         progressDialog.show();
         dataDownloadPresenter.handleDataDownload(apiInterface, API_KEY, SharedPreferenceUtils.getInstance(MainActivity.this).getStringValue(Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE, null));
 
