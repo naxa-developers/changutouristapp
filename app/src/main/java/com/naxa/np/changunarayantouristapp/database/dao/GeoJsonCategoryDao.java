@@ -6,7 +6,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonListDetailsEntity;
+import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListEntity;
 
 import java.util.List;
 
@@ -16,15 +16,15 @@ import io.reactivex.Maybe;
 @Dao
 public interface GeoJsonCategoryDao {
 
-    @Query("SELECT * from GeoJsonListDetailsEntity ORDER BY id ASC")
-    LiveData<List<GeoJsonListDetailsEntity>> getGeoJsonCategoryList();
+    @Query("SELECT * from GeoJsonCategoryListEntity ORDER BY id ASC")
+    LiveData<List<GeoJsonCategoryListEntity>> getGeoJsonCategoryList();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(GeoJsonListDetailsEntity geoJsonListDetailsEntity);
+    void insert(GeoJsonCategoryListEntity geoJsonCategoryListEntity);
 
-    @Query("SELECT * from GeoJsonListDetailsEntity WHERE category_type =:category_type")
-    Maybe<List<GeoJsonListDetailsEntity>> getGeoJsonListByCategoryType(String category_type);
+    @Query("SELECT * from GeoJsonCategoryListEntity WHERE category_type =:category_type")
+    Maybe<List<GeoJsonCategoryListEntity>> getGeoJsonListByCategoryType(String category_type);
 
-    @Query("DELETE FROM GeoJsonListDetailsEntity")
+    @Query("DELETE FROM GeoJsonCategoryListEntity")
     void deleteAll();
 }

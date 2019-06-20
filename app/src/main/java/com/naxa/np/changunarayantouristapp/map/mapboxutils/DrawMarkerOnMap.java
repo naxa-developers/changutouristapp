@@ -20,7 +20,7 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.plugins.cluster.clustering.ClusterItem;
 import com.naxa.np.changunarayantouristapp.R;
-import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonListDetailsEntity;
+import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListEntity;
 import com.naxa.np.changunarayantouristapp.events.MarkerClickEvent;
 import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 
@@ -159,7 +159,7 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
     }
 
 
-    public void AddListOfMarkerOnMap(List<GeoJsonListDetailsEntity> geoJsonListDetailsEntityList, String imageName){
+    public void AddListOfMarkerOnMap(List<GeoJsonCategoryListEntity> geoJsonListDetailsEntityCategoryList, String imageName){
 
 
         Icon icon ;
@@ -170,41 +170,41 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
             icon = IconFactory.getInstance(context).fromBitmap(LoadImageUtils.getImageBitmapFromDrawable(context, imageName));
         }
 
-        if(geoJsonListDetailsEntityList == null){
+        if(geoJsonListDetailsEntityCategoryList == null){
             Toast.makeText(context, "No Data found", Toast.LENGTH_SHORT).show();
             return;
         }
 
 
-        Observable.just(geoJsonListDetailsEntityList)
+        Observable.just(geoJsonListDetailsEntityCategoryList)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .flatMapIterable(new Function<List<GeoJsonListDetailsEntity>, Iterable<GeoJsonListDetailsEntity>>() {
+                .flatMapIterable(new Function<List<GeoJsonCategoryListEntity>, Iterable<GeoJsonCategoryListEntity>>() {
                     @Override
-                    public Iterable<GeoJsonListDetailsEntity> apply(List<GeoJsonListDetailsEntity> geoJsonListDetailsEntities) throws Exception {
+                    public Iterable<GeoJsonCategoryListEntity> apply(List<GeoJsonCategoryListEntity> geoJsonListDetailsEntities) throws Exception {
                         return geoJsonListDetailsEntities;
                     }
                 })
-                .map(new Function<GeoJsonListDetailsEntity, GeoJsonListDetailsEntity>() {
+                .map(new Function<GeoJsonCategoryListEntity, GeoJsonCategoryListEntity>() {
                     @Override
-                    public GeoJsonListDetailsEntity apply(GeoJsonListDetailsEntity geoJsonListDetailsEntity) throws Exception {
-                        return geoJsonListDetailsEntity;
+                    public GeoJsonCategoryListEntity apply(GeoJsonCategoryListEntity geoJsonCategoryListEntity) throws Exception {
+                        return geoJsonCategoryListEntity;
                     }
                 })
-                .subscribe(new DisposableObserver<GeoJsonListDetailsEntity>() {
+                .subscribe(new DisposableObserver<GeoJsonCategoryListEntity>() {
                     @Override
-                    public void onNext(GeoJsonListDetailsEntity geoJsonListDetailsEntity) {
+                    public void onNext(GeoJsonCategoryListEntity geoJsonCategoryListEntity) {
 
 
 
-                        String snippest = gson.toJson(geoJsonListDetailsEntity);
+                        String snippest = gson.toJson(geoJsonCategoryListEntity);
                         Log.d(TAG, "onNext: JSON Object "+snippest);
-                        Log.d(TAG, "onNext: JSON Object Geometry "+geoJsonListDetailsEntity.getLatitude() + " "+ geoJsonListDetailsEntity.getLongitude());
+                        Log.d(TAG, "onNext: JSON Object Geometry "+ geoJsonCategoryListEntity.getLatitude() + " "+ geoJsonCategoryListEntity.getLongitude());
 
 
                         LatLng location = new LatLng(0.0, 0.0);
 
-                            location = new LatLng(geoJsonListDetailsEntity.getLatitude(), geoJsonListDetailsEntity.getLongitude());
+                            location = new LatLng(geoJsonCategoryListEntity.getLatitude(), geoJsonCategoryListEntity.getLongitude());
 
 
 
