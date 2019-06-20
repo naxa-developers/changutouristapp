@@ -24,6 +24,11 @@ public class PlacesDetailsEntity implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int pid;
 
+    @SerializedName("Place Type")
+    @ColumnInfo(name = "place_type")
+    @Expose
+    private String placeType;
+
     @SerializedName("Category Type")
     @ColumnInfo(name = "category_type")
     @Expose
@@ -104,7 +109,8 @@ public class PlacesDetailsEntity implements Parcelable {
     @Expose
     private String theGeom;
 
-    public PlacesDetailsEntity(String categoryType, Integer fID, String name, String type, String description, List<String> photo, String primaryImage, List<String> images, List<String> videos, List<String> _360Images, List<String> audio, String qRCode, String language, String latitude, String longitude, String theGeom) {
+    public PlacesDetailsEntity(String placeType, String categoryType, Integer fID, String name, String type, String description, List<String> photo, String primaryImage, List<String> images, List<String> videos, List<String> _360Images, List<String> audio, String qRCode, String language, String latitude, String longitude, String theGeom) {
+        this.placeType = placeType;
         this.categoryType = categoryType;
         this.fID = fID;
         this.name = name;
@@ -268,6 +274,7 @@ public class PlacesDetailsEntity implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.pid);
+        dest.writeString(this.placeType);
         dest.writeString(this.categoryType);
         dest.writeValue(this.fID);
         dest.writeString(this.name);
@@ -288,6 +295,7 @@ public class PlacesDetailsEntity implements Parcelable {
 
     protected PlacesDetailsEntity(@NotNull Parcel in) {
         this.pid = in.readInt();
+        this.placeType = in.readString();
         this.categoryType = in.readString();
         this.fID = (Integer) in.readValue(Integer.class.getClassLoader());
         this.name = in.readString();
@@ -317,4 +325,12 @@ public class PlacesDetailsEntity implements Parcelable {
             return new PlacesDetailsEntity[size];
         }
     };
+
+    public String getPlaceType() {
+        return placeType;
+    }
+
+    public void setPlaceType(String placeType) {
+        this.placeType = placeType;
+    }
 }
