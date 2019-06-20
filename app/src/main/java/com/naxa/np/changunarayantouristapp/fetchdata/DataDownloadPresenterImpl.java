@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.mapboxsdk.annotations.Marker;
@@ -13,6 +14,7 @@ import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.naxa.np.changunarayantouristapp.common.ChangunarayanTouristApp;
 import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListEntity;
 import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonListEntity;
+import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonCategoryViewModel;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonListViewModel;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntityViewModel;
@@ -47,6 +49,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
    private GeoJsonCategoryViewModel geoJsonCategoryViewModel;
     private GeoJsonListViewModel geoJsonListViewModel;
     private PlaceDetailsEntityViewModel placeDetailsEntityViewModel;
+    Gson gson;
 
 
 
@@ -55,6 +58,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
         this.geoJsonCategoryViewModel = geoJsonCategoryViewModel;
         this.geoJsonListViewModel = geoJsonListViewModel;
         this.placeDetailsEntityViewModel = placeDetailsEntityViewModel;
+        gson = new Gson();
     }
 
     @Override
@@ -150,7 +154,10 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
 
 //                        String title = feature.getStringProperty("name");
 
-                                            String snippest = feature.toString();
+                                            String snippest = feature.properties().toString();
+                                            PlacesDetailsEntity placesDetailsEntity = gson.fromJson(snippest, PlacesDetailsEntity.class);
+                                            placesDetailsEntity.setCategoryType(geoJsonName[0]);
+                                            placeDetailsEntityViewModel.insert(placesDetailsEntity);
                                             Log.d(TAG, "onNext: JSON Object "+snippest);
                                             Log.d(TAG, "onNext: JSON Object Geometry "+feature.geometry().toJson());
 

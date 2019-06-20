@@ -51,7 +51,7 @@ public class PlaceDetailsEntityRepository {
                 .subscribe(new DisposableObserver<PlacesDetailsEntity>() {
                     @Override
                     public void onNext(PlacesDetailsEntity placesDetailsEntity1) {
-                        Log.d("GeoJsonListEntity", "insert: "+ placesDetailsEntity1.getCategoryType());
+                        Log.d("PlaceDetailsEntity", "insert: "+ placesDetailsEntity1.get_360Images());
                         placeDetailsDao.insert(placesDetailsEntity1);
                     }
 

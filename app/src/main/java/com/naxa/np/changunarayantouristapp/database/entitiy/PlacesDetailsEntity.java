@@ -35,7 +35,7 @@ public class PlacesDetailsEntity implements Parcelable {
     @SerializedName("FID")
     @ColumnInfo(name = "fid")
     @Expose
-    private Integer fID;
+    private Integer FID;
 
     @SerializedName("Name")
     @ColumnInfo(name = "name")
@@ -85,7 +85,7 @@ public class PlacesDetailsEntity implements Parcelable {
     @SerializedName("QR code")
     @ColumnInfo(name = "qr_code")
     @Expose
-    private String qRCode;
+    private String QRCode;
 
     @SerializedName("Language")
     @ColumnInfo(name = "language")
@@ -107,10 +107,10 @@ public class PlacesDetailsEntity implements Parcelable {
     @Expose
     private String theGeom;
 
-    public PlacesDetailsEntity(String placeType, String categoryType, Integer fID, String name, String type, String description, String photo, String primaryImage, String images, String videos, String _360Images, String audio, String qRCode, String language, String latitude, String longitude, String theGeom) {
+    public PlacesDetailsEntity(String placeType, String categoryType, Integer FID, String name, String type, String description, String photo, String primaryImage, String images, String videos, String _360Images, String audio, String QRCode, String language, String latitude, String longitude, String theGeom) {
         this.placeType = placeType;
         this.categoryType = categoryType;
-        this.fID = fID;
+        this.FID = FID;
         this.name = name;
         this.type = type;
         this.description = description;
@@ -120,7 +120,7 @@ public class PlacesDetailsEntity implements Parcelable {
         this.videos = videos;
         this._360Images = _360Images;
         this.audio = audio;
-        this.qRCode = qRCode;
+        this.QRCode = QRCode;
         this.language = language;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -136,6 +136,14 @@ public class PlacesDetailsEntity implements Parcelable {
         this.pid = pid;
     }
 
+    public String getPlaceType() {
+        return placeType;
+    }
+
+    public void setPlaceType(String placeType) {
+        this.placeType = placeType;
+    }
+
     public String getCategoryType() {
         return categoryType;
     }
@@ -144,13 +152,6 @@ public class PlacesDetailsEntity implements Parcelable {
         this.categoryType = categoryType;
     }
 
-    public Integer getfID() {
-        return fID;
-    }
-
-    public void setfID(Integer fID) {
-        this.fID = fID;
-    }
 
     public String getName() {
         return name;
@@ -224,13 +225,6 @@ public class PlacesDetailsEntity implements Parcelable {
         this.audio = audio;
     }
 
-    public String getqRCode() {
-        return qRCode;
-    }
-
-    public void setqRCode(String qRCode) {
-        this.qRCode = qRCode;
-    }
 
     public String getLanguage() {
         return language;
@@ -264,6 +258,22 @@ public class PlacesDetailsEntity implements Parcelable {
         this.theGeom = theGeom;
     }
 
+    public Integer getFID() {
+        return FID;
+    }
+
+    public String getQRCode() {
+        return QRCode;
+    }
+
+    public void setFID(Integer FID) {
+        this.FID = FID;
+    }
+
+    public void setQRCode(String QRCode) {
+        this.QRCode = QRCode;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -274,7 +284,7 @@ public class PlacesDetailsEntity implements Parcelable {
         dest.writeInt(this.pid);
         dest.writeString(this.placeType);
         dest.writeString(this.categoryType);
-        dest.writeValue(this.fID);
+        dest.writeValue(this.FID);
         dest.writeString(this.name);
         dest.writeString(this.type);
         dest.writeString(this.description);
@@ -284,18 +294,18 @@ public class PlacesDetailsEntity implements Parcelable {
         dest.writeString(this.videos);
         dest.writeString(this._360Images);
         dest.writeString(this.audio);
-        dest.writeString(this.qRCode);
+        dest.writeString(this.QRCode);
         dest.writeString(this.language);
         dest.writeString(this.latitude);
         dest.writeString(this.longitude);
         dest.writeString(this.theGeom);
     }
 
-    protected PlacesDetailsEntity(@NotNull Parcel in) {
+    protected PlacesDetailsEntity(Parcel in) {
         this.pid = in.readInt();
         this.placeType = in.readString();
         this.categoryType = in.readString();
-        this.fID = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.FID = (Integer) in.readValue(Integer.class.getClassLoader());
         this.name = in.readString();
         this.type = in.readString();
         this.description = in.readString();
@@ -305,7 +315,7 @@ public class PlacesDetailsEntity implements Parcelable {
         this.videos = in.readString();
         this._360Images = in.readString();
         this.audio = in.readString();
-        this.qRCode = in.readString();
+        this.QRCode = in.readString();
         this.language = in.readString();
         this.latitude = in.readString();
         this.longitude = in.readString();
@@ -323,12 +333,4 @@ public class PlacesDetailsEntity implements Parcelable {
             return new PlacesDetailsEntity[size];
         }
     };
-
-    public String getPlaceType() {
-        return placeType;
-    }
-
-    public void setPlaceType(String placeType) {
-        this.placeType = placeType;
-    }
 }

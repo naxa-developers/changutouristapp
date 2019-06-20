@@ -13,6 +13,7 @@ import com.naxa.np.changunarayantouristapp.database.dao.GeoJsonListDao;
 import com.naxa.np.changunarayantouristapp.database.dao.PlaceDetailsDao;
 import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListEntity;
 import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonListEntity;
+import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.utils.CreateAppMainFolderUtils;
 
 import java.io.File;
@@ -22,7 +23,7 @@ import java.io.File;
  * Created by samir on 4/22/2018.
  */
 
-@Database(entities = { GeoJsonCategoryListEntity.class, GeoJsonListEntity.class, PlaceDetailsDao.class
+@Database(entities = { GeoJsonCategoryListEntity.class, GeoJsonListEntity.class, PlacesDetailsEntity.class
 }, version = 1, exportSchema = false)
 //@TypeConverters({Converters.class})
 
