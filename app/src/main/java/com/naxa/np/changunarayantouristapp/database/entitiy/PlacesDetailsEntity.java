@@ -13,8 +13,6 @@ import com.google.gson.annotations.SerializedName;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
 @Entity(tableName = "PlacesDetailsEntity",
         indices = {@Index(value = "qr_code",
                 unique = true)})
@@ -57,7 +55,7 @@ public class PlacesDetailsEntity implements Parcelable {
     @SerializedName("Photo")
     @ColumnInfo(name = "photo")
     @Expose
-    private List<String> photo = null;
+    private String photo ;
 
     @SerializedName("Primary image")
     @ColumnInfo(name = "primary_image")
@@ -67,22 +65,22 @@ public class PlacesDetailsEntity implements Parcelable {
     @SerializedName("Images")
     @ColumnInfo(name = "images")
     @Expose
-    private List<String> images = null;
+    private String images ;
 
     @SerializedName("Videos")
     @ColumnInfo(name = "videos")
     @Expose
-    private List<String> videos = null;
+    private String videos ;
 
     @SerializedName("360 images")
     @ColumnInfo(name = "360_images")
     @Expose
-    private List<String> _360Images = null;
+    private String _360Images;
 
     @SerializedName("Audio")
     @ColumnInfo(name = "audio")
     @Expose
-    private List<String> audio = null;
+    private String audio ;
 
     @SerializedName("QR code")
     @ColumnInfo(name = "qr_code")
@@ -109,7 +107,7 @@ public class PlacesDetailsEntity implements Parcelable {
     @Expose
     private String theGeom;
 
-    public PlacesDetailsEntity(String placeType, String categoryType, Integer fID, String name, String type, String description, List<String> photo, String primaryImage, List<String> images, List<String> videos, List<String> _360Images, List<String> audio, String qRCode, String language, String latitude, String longitude, String theGeom) {
+    public PlacesDetailsEntity(String placeType, String categoryType, Integer fID, String name, String type, String description, String photo, String primaryImage, String images, String videos, String _360Images, String audio, String qRCode, String language, String latitude, String longitude, String theGeom) {
         this.placeType = placeType;
         this.categoryType = categoryType;
         this.fID = fID;
@@ -178,11 +176,11 @@ public class PlacesDetailsEntity implements Parcelable {
         this.description = description;
     }
 
-    public List<String> getPhoto() {
+    public String getPhoto() {
         return photo;
     }
 
-    public void setPhoto(List<String> photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 
@@ -194,35 +192,35 @@ public class PlacesDetailsEntity implements Parcelable {
         this.primaryImage = primaryImage;
     }
 
-    public List<String> getImages() {
+    public String getImages() {
         return images;
     }
 
-    public void setImages(List<String> images) {
+    public void setImages(String images) {
         this.images = images;
     }
 
-    public List<String> getVideos() {
+    public String getVideos() {
         return videos;
     }
 
-    public void setVideos(List<String> videos) {
+    public void setVideos(String videos) {
         this.videos = videos;
     }
 
-    public List<String> get_360Images() {
+    public String get_360Images() {
         return _360Images;
     }
 
-    public void set_360Images(List<String> _360Images) {
+    public void set_360Images(String _360Images) {
         this._360Images = _360Images;
     }
 
-    public List<String> getAudio() {
+    public String getAudio() {
         return audio;
     }
 
-    public void setAudio(List<String> audio) {
+    public void setAudio(String audio) {
         this.audio = audio;
     }
 
@@ -280,12 +278,12 @@ public class PlacesDetailsEntity implements Parcelable {
         dest.writeString(this.name);
         dest.writeString(this.type);
         dest.writeString(this.description);
-        dest.writeStringList(this.photo);
+        dest.writeString(this.photo);
         dest.writeString(this.primaryImage);
-        dest.writeStringList(this.images);
-        dest.writeStringList(this.videos);
-        dest.writeStringList(this._360Images);
-        dest.writeStringList(this.audio);
+        dest.writeString(this.images);
+        dest.writeString(this.videos);
+        dest.writeString(this._360Images);
+        dest.writeString(this.audio);
         dest.writeString(this.qRCode);
         dest.writeString(this.language);
         dest.writeString(this.latitude);
@@ -301,12 +299,12 @@ public class PlacesDetailsEntity implements Parcelable {
         this.name = in.readString();
         this.type = in.readString();
         this.description = in.readString();
-        this.photo = in.createStringArrayList();
+        this.photo = in.readString();
         this.primaryImage = in.readString();
-        this.images = in.createStringArrayList();
-        this.videos = in.createStringArrayList();
-        this._360Images = in.createStringArrayList();
-        this.audio = in.createStringArrayList();
+        this.images = in.readString();
+        this.videos = in.readString();
+        this._360Images = in.readString();
+        this.audio = in.readString();
         this.qRCode = in.readString();
         this.language = in.readString();
         this.latitude = in.readString();

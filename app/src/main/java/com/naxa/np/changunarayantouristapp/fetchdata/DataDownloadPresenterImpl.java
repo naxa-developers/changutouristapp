@@ -2,16 +2,29 @@ package com.naxa.np.changunarayantouristapp.fetchdata;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.mapbox.geojson.Feature;
+import com.mapbox.geojson.FeatureCollection;
+import com.mapbox.mapboxsdk.annotations.Marker;
+import com.mapbox.mapboxsdk.annotations.MarkerOptions;
+import com.mapbox.mapboxsdk.geometry.LatLng;
+import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.naxa.np.changunarayantouristapp.common.ChangunarayanTouristApp;
 import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListEntity;
 import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonListEntity;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonCategoryViewModel;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonListViewModel;
+import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntityViewModel;
 import com.naxa.np.changunarayantouristapp.map.mapcategory.GeojsonCategoriesListResponse;
 import com.naxa.np.changunarayantouristapp.network.NetworkApiInterface;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
+import com.naxa.np.changunarayantouristapp.utils.ToastUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -20,6 +33,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -32,13 +46,15 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
     private DataDonwloadView dataDonwloadView;
    private GeoJsonCategoryViewModel geoJsonCategoryViewModel;
     private GeoJsonListViewModel geoJsonListViewModel;
+    private PlaceDetailsEntityViewModel placeDetailsEntityViewModel;
 
 
 
-    public DataDownloadPresenterImpl(DataDonwloadView dataDonwloadView, GeoJsonListViewModel geoJsonListViewModel, GeoJsonCategoryViewModel geoJsonCategoryViewModel) {
+    public DataDownloadPresenterImpl(DataDonwloadView dataDonwloadView, GeoJsonListViewModel geoJsonListViewModel, GeoJsonCategoryViewModel geoJsonCategoryViewModel, PlaceDetailsEntityViewModel placeDetailsEntityViewModel) {
         this.dataDonwloadView = dataDonwloadView;
         this.geoJsonCategoryViewModel = geoJsonCategoryViewModel;
         this.geoJsonListViewModel = geoJsonListViewModel;
+        this.placeDetailsEntityViewModel = placeDetailsEntityViewModel;
     }
 
     @Override
@@ -109,64 +125,61 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
 
 //                            json parse and store to database
 
-//                            JSONObject jsonObject = null;
-//                            try {
-//                                int latlongDiffCounter = 0;
-//
-//                                jsonObject = new JSONObject(geoJsonToString);
-//
-//                                JSONArray jsonarray = new JSONArray(jsonObject.getString("features"));
-//                                Log.d(TAG, "onNext: " + "save data to database --> " + geoJsonName[0] + " , " + geoJsonBaseType[0]);
-//
-//                                for (int i = 0; i < jsonarray.length(); i++) {
-//                                    JSONObject properties = new JSONObject(jsonarray.getJSONObject(i).getString("properties"));
-//                                    JSONObject geometry = new JSONObject(jsonarray.getJSONObject(i).getString("geometry"));
-//                                    JSONArray coordinates = geometry.getJSONArray("coordinates");
-//
-//                                    String name = properties.has(summaryName[0]) ? properties.getString(summaryName[0])
-//                                            : properties.has("name") ? properties.getString("name")
-//                                            : properties.has("Name") ? properties.getString("Name")
-//                                            : properties.has("Name of Bank Providing ATM Service") ? properties.getString("Name of Bank Providing ATM Service")
-//                                            : "null";
-//
-//                                    String address = properties.has("address") ? properties.getString("address") : properties.has("Address") ? properties.getString("Address") : " ";
-//
-//                                    String type = geometry.getString("type");
-//
-//
-//                                    double longitude;
-//                                    double latitude;
-//                                    double latlongMakeDiff = Double.parseDouble("0.000000000000"+latlongDiffCounter+i);
-//                                    if (type.equals("Point")) {
-//                                        longitude = Double.parseDouble(coordinates.get(0).toString()) + latlongMakeDiff;
-//                                        latitude = Double.parseDouble(coordinates.get(1).toString()) + latlongMakeDiff;
-//                                    } else if (type.equals("MultiPolygon")) {
-//                                        JSONArray coordinates1 = coordinates.getJSONArray(0);
-//                                        JSONArray coordinates2 = coordinates1.getJSONArray(0);
-//                                        JSONArray coordinates3 = coordinates2.getJSONArray(0);
-//
-//                                        longitude = Double.parseDouble(coordinates3.get(0).toString()) + latlongMakeDiff;
-//                                        latitude = Double.parseDouble(coordinates3.get(1).toString()) + latlongMakeDiff;
-//                                    } else {
-//// for multiLineString
-//                                        JSONArray coordinates1 = coordinates.getJSONArray(0);
-//                                        JSONArray coordinates2 = coordinates1.getJSONArray(0);
-//
-//                                        longitude = Double.parseDouble(coordinates2.get(0).toString()) + latlongMakeDiff;
-//                                        latitude = Double.parseDouble(coordinates2.get(1).toString()) + latlongMakeDiff;
-//                                    }
-//
-//
-//                                    latlongDiffCounter++;
-//                                    if(latlongDiffCounter > 9){
-//                                        latlongDiffCounter = 0;
-//                                    }
-//
-//                                }
-//
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
+                            FeatureCollection featureCollection = FeatureCollection.fromJson(geoJsonToString);
+                            List<Feature> featureList  = featureCollection.features();
+
+                            Observable.just(featureList)
+                                    .subscribeOn(Schedulers.computation())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .flatMapIterable(new Function<List<Feature>, Iterable<Feature>>() {
+                                        @Override
+                                        public Iterable<Feature> apply(List<Feature> features) throws Exception {
+                                            return features;
+                                        }
+                                    })
+                                    .map(new Function<Feature, Feature>() {
+                                        @Override
+                                        public Feature apply(Feature feature) throws Exception {
+                                            return feature;
+                                        }
+                                    })
+                                    .subscribe(new DisposableObserver<Feature>() {
+                                        @Override
+                                        public void onNext(Feature feature) {
+
+
+//                        String title = feature.getStringProperty("name");
+
+                                            String snippest = feature.toString();
+                                            Log.d(TAG, "onNext: JSON Object "+snippest);
+                                            Log.d(TAG, "onNext: JSON Object Geometry "+feature.geometry().toJson());
+
+
+                                            LatLng location = new LatLng(0.0, 0.0);
+                                            try {
+                                                JSONObject jsonObject = new JSONObject(feature.geometry().toJson());
+                                                Log.d(TAG, "onNext: JSON Object Co-ordinates "+jsonObject.getJSONArray("coordinates").getString(0));
+                                                String Lon = jsonObject.getJSONArray("coordinates").getString(0) ;
+                                                String Lat = jsonObject.getJSONArray("coordinates").getString(1) ;
+                                                location = new LatLng(Double.parseDouble(Lat), Double.parseDouble(Lon));
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+                                            ToastUtils.showShortToast("Error reading Json file");
+                                        }
+
+                                        @Override
+                                        public void onComplete() {
+                                            Log.d(TAG, "onComplete: ");
+
+//                        runThread(items);
+                                        }
+                                    });
                         }
 
                     }

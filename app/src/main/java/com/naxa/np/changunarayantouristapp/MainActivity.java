@@ -1,14 +1,10 @@
 package com.naxa.np.changunarayantouristapp;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 
 import androidx.lifecycle.ViewModelProviders;
 
@@ -16,10 +12,10 @@ import com.naxa.np.changunarayantouristapp.barcodereader.QRCodeReaderActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonCategoryViewModel;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonListViewModel;
+import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntityViewModel;
 import com.naxa.np.changunarayantouristapp.fetchdata.DataDonwloadView;
 import com.naxa.np.changunarayantouristapp.fetchdata.DataDownloadPresenter;
 import com.naxa.np.changunarayantouristapp.fetchdata.DataDownloadPresenterImpl;
-import com.naxa.np.changunarayantouristapp.login.LoginActivity;
 import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
@@ -34,6 +30,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     TextView tvQRScan, tvVRImage, tvViewOnMap;
     GeoJsonCategoryViewModel geoJsonCategoryViewModel;
     GeoJsonListViewModel geoJsonListViewModel;
+    PlaceDetailsEntityViewModel placeDetailsEntityViewModel;
     ProgressDialog progressDialog;
     DataDownloadPresenter dataDownloadPresenter;
     Button btnDownloadData;
@@ -47,8 +44,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         geoJsonCategoryViewModel = ViewModelProviders.of(this).get(GeoJsonCategoryViewModel.class);
         geoJsonListViewModel = ViewModelProviders.of(this).get(GeoJsonListViewModel.class);
+        placeDetailsEntityViewModel = ViewModelProviders.of(this).get(PlaceDetailsEntityViewModel.class);
 
-        dataDownloadPresenter = new DataDownloadPresenterImpl(this, geoJsonListViewModel, geoJsonCategoryViewModel);
+        dataDownloadPresenter = new DataDownloadPresenterImpl(this, geoJsonListViewModel, geoJsonCategoryViewModel, placeDetailsEntityViewModel);
 
 
         setupToolbar("Home Page", false);

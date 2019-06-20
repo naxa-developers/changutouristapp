@@ -2,7 +2,6 @@ package com.naxa.np.changunarayantouristapp.database;
 
 import android.content.Context;
 
-
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
@@ -25,6 +24,7 @@ import java.io.File;
 
 @Database(entities = { GeoJsonCategoryListEntity.class, GeoJsonListEntity.class, PlaceDetailsDao.class
 }, version = 1, exportSchema = false)
+//@TypeConverters({Converters.class})
 
 public abstract class ISETRoomDatabase extends RoomDatabase {
 
