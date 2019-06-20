@@ -18,12 +18,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".placedetailsview.PlaceDetailsActivity"
-            android:exported="true">
-        </activity>
-
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".videoplayer.VideoPlayerActivity"></activity>
+        <activity
+            android:name=".placedetailsview.PlaceDetailsActivity"
+            android:exported="true"></activity>
         <activity android:name=".map.MapMainActivity" />
         <activity android:name=".map.markerdetailspage.MarkerDetailsDisplayActivity" />
         <activity android:name=".login.LoginActivity" />
