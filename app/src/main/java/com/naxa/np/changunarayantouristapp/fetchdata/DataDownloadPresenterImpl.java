@@ -31,26 +31,30 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.SocketTimeoutException;
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.observers.DisposableObserver;
+import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
+import timber.log.Timber;
 
 import static com.chad.library.adapter.base.listener.SimpleClickListener.TAG;
 
 public class DataDownloadPresenterImpl implements DataDownloadPresenter {
 
     private DataDonwloadView dataDonwloadView;
-   private GeoJsonCategoryViewModel geoJsonCategoryViewModel;
+    private GeoJsonCategoryViewModel geoJsonCategoryViewModel;
     private GeoJsonListViewModel geoJsonListViewModel;
     private PlaceDetailsEntityViewModel placeDetailsEntityViewModel;
     Gson gson;
-
 
 
     public DataDownloadPresenterImpl(DataDonwloadView dataDonwloadView, GeoJsonListViewModel geoJsonListViewModel, GeoJsonCategoryViewModel geoJsonCategoryViewModel, PlaceDetailsEntityViewModel placeDetailsEntityViewModel) {
@@ -67,11 +71,57 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
         int[] totalCount = new int[1];
         int[] progress = new int[1];
         String[] geoJsonDisplayName = new String[1];
-
         final String[] geoJsonName = new String[1];
 
-        apiInterface
-                .getGeoJsonCategoriesListResponse(Constant.Network.API_KEY)
+        apiInterface.getGeoJsonCategoriesListResponse(Constant.Network.API_KEY)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(listResponse -> {
+                    totalCount[0] = listResponse.getData().size();
+                    return listResponse.getData();
+                })
+                .flatMapIterable((Function<List<GeoJsonCategoryListEntity>, Iterable<GeoJsonCategoryListEntity>>) entities -> entities)
+                .flatMap((Function<GeoJsonCategoryListEntity, ObservableSource<ResponseBody>>) categoryListEntity -> {
+                    geoJsonCategoryViewModel.insert(categoryListEntity);
+                    geoJsonDisplayName[0] = categoryListEntity.getCategoryName();
+                    geoJsonName[0] = categoryListEntity.getCategoryTable();
+
+                    return apiInterface.getGeoJsonDetails(Constant.Network.API_KEY, categoryListEntity.getCategoryTable()).subscribeOn(Schedulers.io());
+                })
+                .doOnNext(responseBody -> {
+                    progress[0]++;
+                    dataDonwloadView.downloadProgress(progress[0], totalCount[0], geoJsonDisplayName[0]);
+                })
+                .map(responseBody -> {
+                    FeatureCollection featureCollection = FeatureCollection.fromJson(responseBody.string());
+                    return featureCollection.features();
+                })
+                .toList()
+                .map(lists -> {
+                    List<Feature> features = new ArrayList<>();
+                    for (List<Feature> list: lists){
+                        features.addAll(list);
+                    }
+                    return features;
+                })
+                .subscribe(new DisposableSingleObserver<List<Feature>>() {
+                    @Override
+                    public void onSuccess(List<Feature> features) {
+                        Timber.d("onSuccess()");
+                        dataDonwloadView.downloadSuccess("Downloaded");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.showLongToast("Error occured");
+                        dataDonwloadView.downloadFailed("Error occured while download necessary files");
+                        Timber.e(e);
+                    }
+                });
+
+        if(true)return;
+
+        apiInterface.getGeoJsonCategoriesListResponse(Constant.Network.API_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .flatMap(new Function<GeojsonCategoriesListResponse, ObservableSource<List<GeoJsonCategoryListEntity>>>() {
@@ -96,16 +146,17 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                         geoJsonDisplayName[0] = geoJsonCategoryEntity.getCategoryName();
                         geoJsonName[0] = geoJsonCategoryEntity.getCategoryTable();
 
-                        return apiInterface.getGeoJsonDetails(Constant.Network.API_KEY,geoJsonCategoryEntity.getCategoryTable());
+                        return apiInterface.getGeoJsonDetails(Constant.Network.API_KEY, geoJsonCategoryEntity.getCategoryTable());
                     }
 
                 })
-                .retry(Constant.Network.KEY_MAX_RETRY_COUNT)
+//                .retry(Constant.Network.KEY_MAX_RETRY_COUNT)
+
                 .subscribe(new DisposableObserver<ResponseBody>() {
                     @Override
                     public void onNext(ResponseBody s) {
-                                progress[0]++;
-                                dataDonwloadView.downloadProgress(progress[0], totalCount[0], geoJsonDisplayName[0]);
+                        progress[0]++;
+                        dataDonwloadView.downloadProgress(progress[0], totalCount[0], geoJsonDisplayName[0]);
 
 
                         BufferedReader reader = new BufferedReader(new InputStreamReader(s.byteStream()));
@@ -130,7 +181,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
 //                            json parse and store to database
 
                             FeatureCollection featureCollection = FeatureCollection.fromJson(geoJsonToString);
-                            List<Feature> featureList  = featureCollection.features();
+                            List<Feature> featureList = featureCollection.features();
 
                             Observable.just(featureList)
                                     .subscribeOn(Schedulers.computation())
@@ -158,16 +209,16 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                                             PlacesDetailsEntity placesDetailsEntity = gson.fromJson(snippest, PlacesDetailsEntity.class);
                                             placesDetailsEntity.setCategoryType(geoJsonName[0]);
                                             placeDetailsEntityViewModel.insert(placesDetailsEntity);
-                                            Log.d(TAG, "onNext: JSON Object "+snippest);
-                                            Log.d(TAG, "onNext: JSON Object Geometry "+feature.geometry().toJson());
+                                            Log.d(TAG, "onNext: JSON Object " + snippest);
+                                            Log.d(TAG, "onNext: JSON Object Geometry " + feature.geometry().toJson());
 
 
                                             LatLng location = new LatLng(0.0, 0.0);
                                             try {
                                                 JSONObject jsonObject = new JSONObject(feature.geometry().toJson());
-                                                Log.d(TAG, "onNext: JSON Object Co-ordinates "+jsonObject.getJSONArray("coordinates").getString(0));
-                                                String Lon = jsonObject.getJSONArray("coordinates").getString(0) ;
-                                                String Lat = jsonObject.getJSONArray("coordinates").getString(1) ;
+                                                Log.d(TAG, "onNext: JSON Object Co-ordinates " + jsonObject.getJSONArray("coordinates").getString(0));
+                                                String Lon = jsonObject.getJSONArray("coordinates").getString(0);
+                                                String Lat = jsonObject.getJSONArray("coordinates").getString(1);
                                                 location = new LatLng(Double.parseDouble(Lat), Double.parseDouble(Lon));
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
@@ -196,7 +247,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                         e.printStackTrace();
                         if (e instanceof SocketTimeoutException) {
                             dataDonwloadView.downloadFailed("Slow Internet Connection, Please try again later.");
-                        }else {
+                        } else {
                             dataDonwloadView.downloadFailed(e.getMessage());
                         }
 

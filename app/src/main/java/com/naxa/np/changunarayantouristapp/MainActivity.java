@@ -40,7 +40,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        progressDialog = DialogFactory.createProgressBarDialog(MainActivity.this, "", "");
+
 
         geoJsonCategoryViewModel = ViewModelProviders.of(this).get(GeoJsonCategoryViewModel.class);
         geoJsonListViewModel = ViewModelProviders.of(this).get(GeoJsonListViewModel.class);
@@ -102,9 +102,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         fetctDataFromServerAndSave();
 //                }
 
+        fetctDataFromServerAndSave();
+
     }
 
     private void fetctDataFromServerAndSave() {
+        progressDialog = DialogFactory.createProgressBarDialog(MainActivity.this, "", "");
         progressDialog.show();
         dataDownloadPresenter.handleDataDownload(apiInterface, API_KEY, SharedPreferenceUtils.getInstance(MainActivity.this).getStringValue(Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE, null));
 
@@ -114,9 +117,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void downloadProgress(int progress, int totalCount, String geoJsonFileName) {
         String alertMsg = getString(R.string.fetching_file, geoJsonFileName, String.valueOf(progress), String.valueOf(totalCount));
-        progressDialog.setMax(totalCount);
-        progressDialog.setMessage(alertMsg);
-        progressDialog.setProgress(progress);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                progressDialog.setMax(totalCount);
+                progressDialog.setMessage(alertMsg);
+                progressDialog.setProgress(progress);
+            }
+        });
+
 
     }
 
