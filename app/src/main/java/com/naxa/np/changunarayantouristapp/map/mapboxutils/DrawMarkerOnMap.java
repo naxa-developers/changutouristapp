@@ -21,6 +21,7 @@ import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.plugins.cluster.clustering.ClusterItem;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListEntity;
+import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.events.MarkerClickEvent;
 import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 
@@ -159,91 +160,90 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
     }
 
 
-//    public void AddListOfMarkerOnMap(List<GeoJsonCategoryListEntity> geoJsonListDetailsEntityCategoryList, String imageName){
-//
-//
-//        Icon icon ;
-//
-//        if((LoadImageUtils.getImageBitmapFromDrawable(context, imageName)) == null){
-//            icon = IconFactory.getInstance(context).fromResource(R.drawable.mapbox_marker_icon_default);
-//        }else {
-//            icon = IconFactory.getInstance(context).fromBitmap(LoadImageUtils.getImageBitmapFromDrawable(context, imageName));
-//        }
-//
-//        if(geoJsonListDetailsEntityCategoryList == null){
-//            Toast.makeText(context, "No Data found", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//
-//        Observable.just(geoJsonListDetailsEntityCategoryList)
-//                .subscribeOn(Schedulers.computation())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .flatMapIterable(new Function<List<GeoJsonCategoryListEntity>, Iterable<GeoJsonCategoryListEntity>>() {
-//                    @Override
-//                    public Iterable<GeoJsonCategoryListEntity> apply(List<GeoJsonCategoryListEntity> geoJsonListDetailsEntities) throws Exception {
-//                        return geoJsonListDetailsEntities;
-//                    }
-//                })
-//                .map(new Function<GeoJsonCategoryListEntity, GeoJsonCategoryListEntity>() {
-//                    @Override
-//                    public GeoJsonCategoryListEntity apply(GeoJsonCategoryListEntity geoJsonCategoryListEntity) throws Exception {
-//                        return geoJsonCategoryListEntity;
-//                    }
-//                })
-//                .subscribe(new DisposableObserver<GeoJsonCategoryListEntity>() {
-//                    @Override
-//                    public void onNext(GeoJsonCategoryListEntity geoJsonCategoryListEntity) {
-//
-//
-//
-//                        String snippest = gson.toJson(geoJsonCategoryListEntity);
-//                        Log.d(TAG, "onNext: JSON Object "+snippest);
-//                        Log.d(TAG, "onNext: JSON Object Geometry "+ geoJsonCategoryListEntity.getLatitude() + " "+ geoJsonCategoryListEntity.getLongitude());
-//
-//
-//                        LatLng location = new LatLng(0.0, 0.0);
-//
-//                            location = new LatLng(geoJsonCategoryListEntity.getLatitude(), geoJsonCategoryListEntity.getLongitude());
-//
-//
-//
-////                         Add the custom icon marker to the map
-//                        Marker marker = mapboxMap.addMarker(new MarkerOptions()
-//                                .position(new LatLng(location))
-////                                .title(title)
-//                                .title("title")
-//                                .snippet(snippest)
-//                                .icon(icon));
-//////
-////                        items.add(new MyItem(location,title,snippest, icon));
-//                        items.add(new MyItem(location,"title",snippest, icon));
-//
-//                        mapboxMap.setOnMarkerClickListener(new MapboxMap.OnMarkerClickListener() {
-//                            @Override
-//                            public boolean onMarkerClick(@NonNull Marker marker) {
-//                                Toast.makeText(context, "Marker tapped: " + marker.getTitle(), Toast.LENGTH_LONG).show();
-//                                onInfoWindowClick(marker);
-//                                animateCameraPosition(marker.getPosition());
-//                                return true;
-//                            }
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Toast.makeText(context, "Problem reading list of markers.", Toast.LENGTH_LONG).show();
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//                        Log.d(TAG, "onComplete: "+items.size());
-//
-////                        runThread(items);
-//                    }
-//                });
-//
-//    }
+    public void AddListOfMarkerOnMap(List<PlacesDetailsEntity> placesDetailsEntityList, String imageName){
+
+
+        Icon icon ;
+
+        if((LoadImageUtils.getImageBitmapFromDrawable(context, imageName)) == null){
+            icon = IconFactory.getInstance(context).fromResource(R.drawable.mapbox_marker_icon_default);
+        }else {
+            icon = IconFactory.getInstance(context).fromBitmap(LoadImageUtils.getImageBitmapFromDrawable(context, imageName));
+        }
+
+        if(placesDetailsEntityList == null){
+            Toast.makeText(context, "No Data found", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+        Observable.just(placesDetailsEntityList)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMapIterable(new Function<List<PlacesDetailsEntity>, Iterable<PlacesDetailsEntity>>() {
+                    @Override
+                    public Iterable<PlacesDetailsEntity> apply(List<PlacesDetailsEntity> placesDetailsEntities) throws Exception {
+                        return placesDetailsEntities;
+                    }
+                })
+                .map(new Function<PlacesDetailsEntity, PlacesDetailsEntity>() {
+                    @Override
+                    public PlacesDetailsEntity apply(PlacesDetailsEntity placesDetailsEntity) throws Exception {
+                        return placesDetailsEntity;
+                    }
+                })
+                .subscribe(new DisposableObserver<PlacesDetailsEntity>() {
+                    @Override
+                    public void onNext(PlacesDetailsEntity placesDetailsEntity) {
+
+
+
+                        String snippest = gson.toJson(placesDetailsEntity);
+                        Log.d(TAG, "onNext: JSON Object "+snippest);
+                        Log.d(TAG, "onNext: JSON Object Geometry "+ placesDetailsEntity.getLatitude() + " "+ placesDetailsEntity.getLongitude());
+
+
+                        LatLng location = new LatLng(0.0, 0.0);
+
+                            location = new LatLng(Double.parseDouble(placesDetailsEntity.getLatitude()), Double.parseDouble(placesDetailsEntity.getLongitude()));
+
+
+
+//                         Add the custom icon marker to the map
+                        Marker marker = mapboxMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(location))
+//                                .title(title)
+                                .title("title")
+                                .snippet(snippest)
+                                .icon(icon));
+////
+//                        items.add(new MyItem(location,title,snippest, icon));
+                        items.add(new MyItem(location,"title",snippest, icon));
+
+                        mapboxMap.setOnMarkerClickListener(new MapboxMap.OnMarkerClickListener() {
+                            @Override
+                            public boolean onMarkerClick(@NonNull Marker marker) {
+                                Toast.makeText(context, "Marker tapped: " + marker.getTitle(), Toast.LENGTH_LONG).show();
+                                onInfoWindowClick(marker);
+                                animateCameraPosition(marker.getPosition());
+                                return true;
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(context, "Problem reading list of markers.", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "onComplete: "+items.size());
+
+                    }
+                });
+
+    }
 
     public void addSingleMarker (String imageName, String snippest, LatLng latLng){
 
