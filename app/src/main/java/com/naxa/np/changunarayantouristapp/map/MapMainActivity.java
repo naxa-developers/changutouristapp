@@ -22,7 +22,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,9 +45,12 @@ import com.mapbox.services.android.navigation.ui.v5.route.NavigationMapRoute;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListEntity;
+import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonCategoryViewModel;
+import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntityViewModel;
 import com.naxa.np.changunarayantouristapp.events.MapDataLayerListCheckEvent;
 import com.naxa.np.changunarayantouristapp.events.MarkerClickEvent;
+import com.naxa.np.changunarayantouristapp.map.mapboxutils.DrawMarkerOnMap;
 import com.naxa.np.changunarayantouristapp.map.markerdetailspage.MarkerDetailedDisplayAdapter;
 import com.naxa.np.changunarayantouristapp.map.markerdetailspage.MarkerDetailsKeyValue;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.DrawGeoJsonOnMap;
@@ -58,7 +60,6 @@ import com.naxa.np.changunarayantouristapp.map.mapboxutils.MapboxBaseStyleUtils;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.QueryBuildWithSplitter;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
-import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.DataServer;
 import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.MultiItemSectionModel;
 import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.SectionMultipleItem;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -101,6 +102,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     private MapboxMap mapboxMap;
 
     GeoJsonCategoryViewModel geoJsonCategoryViewModel;
+    PlaceDetailsEntityViewModel placeDetailsEntityViewModel;
 
 
     String filename = "";
@@ -128,6 +130,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         setContentView(R.layout.activity_map_main);
 
         geoJsonCategoryViewModel = ViewModelProviders.of(this).get(GeoJsonCategoryViewModel.class);
+        placeDetailsEntityViewModel = ViewModelProviders.of(this).get(PlaceDetailsEntityViewModel.class);
 
         setupToolbar("Explore", false);
         initUI(savedInstanceState);
@@ -312,20 +315,20 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         return DialogFactory.createMapDataLayerDialog(MapMainActivity.this, mapDataLayerList, drawGeoJsonOnMap, isFirstTime, new MapDataLayerDialogCloseListen() {
                     @Override
                     public void onDialogClose() {
-                        drawGeoJsonOnMap();
+                        drawCategoryWiseMarkersOnMap();
                     }
 
                     @Override
                     public void isFirstTime() {
-                        drawGeoJsonOnMap();
+                        drawCategoryWiseMarkersOnMap();
 
                     }
                 }
         );
     }
 
-    private void drawGeoJsonOnMap() {
-
+    List<String> placeCategoryList;
+    private void drawCategoryWiseMarkersOnMap() {
         Observable.just(mapDataLayerListCheckedEventList)
                 .subscribeOn(Schedulers.io())
                 .flatMapIterable(new Function<List<MapDataLayerListCheckEvent.MapDataLayerListCheckedEvent>, Iterable<MapDataLayerListCheckEvent.MapDataLayerListCheckedEvent>>() {
@@ -344,11 +347,30 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 .subscribe(new DisposableObserver<MapDataLayerListCheckEvent.MapDataLayerListCheckedEvent>() {
                     @Override
                     public void onNext(MapDataLayerListCheckEvent.MapDataLayerListCheckedEvent mapDataLayerListCheckedEvent) {
-                        Log.d(TAG, "onNext: "+mapDataLayerListCheckedEvent.getMultiItemSectionModel().getData_key());
-                        Log.d(TAG, "onNext: "+mapDataLayerListCheckedEvent.getChecked());
+                        Log.d(TAG, "onNext: "+mapDataLayerListCheckedEvent.getMultiItemSectionModel().getData_value());
 
-                        drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(mapDataLayerListCheckedEvent.getMultiItemSectionModel().getData_value(),
-                                mapDataLayerListCheckedEvent.getChecked(), mapDataLayerListCheckedEvent.getMultiItemSectionModel().getImage());
+
+//                        placeDetailsEntityViewModel.getPlacesDetailsEntityBYPlaceAndCategoryType(null, mapDataLayerListCheckedEvent.getMultiItemSectionModel().getData_value())
+                        placeDetailsEntityViewModel.getAllPlacesDetailsEntity()
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new DisposableSubscriber<List<PlacesDetailsEntity>>() {
+                                    @Override
+                                    public void onNext(List<PlacesDetailsEntity> placesDetailsEntities) {
+                                        drawMarkerOnMap.AddListOfMarkerOnMap(placesDetailsEntities, placesDetailsEntities.get(0).getCategoryType());
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable t) {
+
+                                    }
+
+                                    @Override
+                                    public void onComplete() {
+
+                                    }
+                                });
+
 
                     }
 
@@ -378,6 +400,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     }
 
     DrawGeoJsonOnMap drawGeoJsonOnMap;
+    DrawMarkerOnMap drawMarkerOnMap;
     DrawRouteOnMap drawRouteOnMap;
     MapboxBaseStyleUtils mapboxBaseStyleUtils;
 
@@ -392,6 +415,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
 
         drawGeoJsonOnMap = new DrawGeoJsonOnMap(MapMainActivity.this, mapboxMap, mapView);
+        drawMarkerOnMap = new DrawMarkerOnMap(MapMainActivity.this, mapboxMap, mapView);
         drawRouteOnMap = new DrawRouteOnMap(MapMainActivity.this, mapboxMap, mapView);
         mapboxBaseStyleUtils = new MapboxBaseStyleUtils(MapMainActivity.this, mapboxMap, mapView);
         mapboxBaseStyleUtils.changeBaseColor();

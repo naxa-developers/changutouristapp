@@ -30,7 +30,7 @@ public class PlaceDetailsEntityViewModel extends AndroidViewModel {
         return mAllEntityList;
     }
 
-    public Flowable<List<PlacesDetailsEntity>> getPlacesDetailsEntityBYPlaceAndCategoryType(String placeType, List<String> categoryType) {
+    public Flowable<List<PlacesDetailsEntity>> getPlacesDetailsEntityBYPlaceAndCategoryType(String placeType, String categoryType) {
         mAllSpecificEntityList = mRepository.getPlacesDetailsEntityBYPlaceAndCategoryType(placeType, categoryType);
         return mAllSpecificEntityList;
     }
