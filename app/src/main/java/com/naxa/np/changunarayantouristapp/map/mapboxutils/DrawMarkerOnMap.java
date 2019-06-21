@@ -168,7 +168,8 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
         if((LoadImageUtils.getImageBitmapFromDrawable(context, imageName)) == null){
             icon = IconFactory.getInstance(context).fromResource(R.drawable.mapbox_marker_icon_default);
         }else {
-            icon = IconFactory.getInstance(context).fromBitmap(LoadImageUtils.getImageBitmapFromDrawable(context, imageName));
+
+            icon = IconFactory.getInstance(context).fromBitmap(LoadImageUtils.getImageBitmapFromStorage(imageName));
         }
 
         if(placesDetailsEntityList == null){

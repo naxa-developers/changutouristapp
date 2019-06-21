@@ -11,6 +11,7 @@ import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListE
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.observers.DisposableObserver;
@@ -19,7 +20,7 @@ import io.reactivex.schedulers.Schedulers;
 public class GeoJsonCategoryRepository {
 
     private GeoJsonCategoryDao mGeoJsonCategoryDao;
-    private LiveData<List<GeoJsonCategoryListEntity>> mAllGeoJsonCategoryEntity;
+    private Flowable<List<GeoJsonCategoryListEntity>> mAllGeoJsonCategoryEntity;
     private Maybe<List<GeoJsonCategoryListEntity>> mSpecificTypeGeoJsonCategoryEntity;
 
     // Note that in order to unit test the WordRepository, you have to remove the Application
@@ -34,7 +35,7 @@ public class GeoJsonCategoryRepository {
 
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
-    public LiveData<List<GeoJsonCategoryListEntity>> getAllGeoJsonCategoryEntity() {
+    public Flowable<List<GeoJsonCategoryListEntity>> getAllGeoJsonCategoryEntity() {
         return mAllGeoJsonCategoryEntity;
     }
 

@@ -10,6 +10,7 @@ import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListE
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 
 
@@ -17,7 +18,7 @@ import io.reactivex.Maybe;
 public interface GeoJsonCategoryDao {
 
     @Query("SELECT * from GeoJsonCategoryListEntity ORDER BY id ASC")
-    LiveData<List<GeoJsonCategoryListEntity>> getGeoJsonCategoryList();
+    Flowable<List<GeoJsonCategoryListEntity>> getGeoJsonCategoryList();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(GeoJsonCategoryListEntity geoJsonCategoryListEntity);

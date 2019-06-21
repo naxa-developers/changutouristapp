@@ -108,7 +108,7 @@ public class SectionMultipleItemAdapter extends BaseSectionMultiItemQuickAdapter
                 ImageView imageViewData = helper.getView(R.id.ivCategoryIndicator);
                 Glide
                         .with(imageViewData.getContext())
-                        .load(LoadImageUtils.getImageResIDFromDrawable(mContext,item.getMultiItemSectionModel().getImage()))
+                        .load(item.getMultiItemSectionModel().getImage())
                         .fitCenter()
                         .into(imageViewData);
 

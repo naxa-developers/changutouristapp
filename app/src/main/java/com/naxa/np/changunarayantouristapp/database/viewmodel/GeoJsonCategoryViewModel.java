@@ -11,12 +11,13 @@ import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListE
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 
 public class GeoJsonCategoryViewModel extends AndroidViewModel {
     private GeoJsonCategoryRepository mRepository;
 
-    private LiveData<List<GeoJsonCategoryListEntity>> mAllGeoJsonCategoryEntity;
+    private Flowable<List<GeoJsonCategoryListEntity>> mAllGeoJsonCategoryEntity;
     private Maybe<List<GeoJsonCategoryListEntity>> mSpecificTypeGeoJsonCategoryEntity;
 
     public GeoJsonCategoryViewModel(Application application) {
@@ -26,7 +27,7 @@ public class GeoJsonCategoryViewModel extends AndroidViewModel {
         mAllGeoJsonCategoryEntity = mRepository.getAllGeoJsonCategoryEntity();
     }
     
-    public LiveData<List<GeoJsonCategoryListEntity>> getAllGeoJsonCategoryEntity() {
+    public Flowable<List<GeoJsonCategoryListEntity>> getAllGeoJsonCategoryEntity() {
         return mAllGeoJsonCategoryEntity; }
 
 

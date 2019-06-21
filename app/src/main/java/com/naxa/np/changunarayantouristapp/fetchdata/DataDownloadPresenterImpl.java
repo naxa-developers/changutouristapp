@@ -69,7 +69,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                 .flatMapIterable((Function<List<GeoJsonCategoryListEntity>, Iterable<GeoJsonCategoryListEntity>>) entities -> entities)
                 .flatMap((Function<GeoJsonCategoryListEntity, ObservableSource<ResponseBody>>) categoryListEntity -> {
                     geoJsonCategoryViewModel.insert(categoryListEntity);
-                    LoadImageUtils.downloadAndSaveImageToStorage(appCompatActivity, categoryListEntity.getCategoryName(), categoryListEntity.getCategoryMarker());
+                    LoadImageUtils.downloadAndSaveImageToStorage(appCompatActivity, categoryListEntity.getCategoryTable(), categoryListEntity.getCategoryMarker());
                     geoJsonDisplayName[0] = categoryListEntity.getCategoryName();
                     geoJsonName[0] = categoryListEntity.getCategoryTable();
 
