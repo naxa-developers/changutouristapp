@@ -20,7 +20,7 @@ public class PlacesDetailsEntity implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int pid;
 
-    @SerializedName("Place Type")
+    @SerializedName("place_type")
     @ColumnInfo(name = "place_type")
     @Expose
     private String placeType;
