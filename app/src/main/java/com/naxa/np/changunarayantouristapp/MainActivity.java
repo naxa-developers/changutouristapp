@@ -99,7 +99,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 //        if(SharedPreferenceUtils.getInstance(MainActivity.this).getBoolanValue(Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS,false)){
 
 //        }else {
-        fetctDataFromServerAndSave();
+
 //                }
 
         fetctDataFromServerAndSave();
@@ -117,6 +117,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void downloadProgress(int progress, int totalCount, String geoJsonFileName) {
         String alertMsg = getString(R.string.fetching_file, geoJsonFileName, String.valueOf(progress), String.valueOf(totalCount));
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -125,7 +126,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 progressDialog.setProgress(progress);
             }
         });
-
 
     }
 
