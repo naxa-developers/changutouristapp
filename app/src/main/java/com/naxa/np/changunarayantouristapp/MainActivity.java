@@ -21,6 +21,7 @@ import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
+import com.naxa.np.changunarayantouristapp.utils.NetworkUtils;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 import com.naxa.np.changunarayantouristapp.vrimage.VRImageViewActivity;
 
@@ -35,7 +36,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     PlaceDetailsEntityViewModel placeDetailsEntityViewModel;
     ProgressDialog progressDialog;
     DataDownloadPresenter dataDownloadPresenter;
-    Button btnDownloadData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,12 +65,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         tvQRScan = findViewById(R.id.tv_qr_scanner);
         tvVRImage = findViewById(R.id.tv_view_vr_image);
         tvViewOnMap = findViewById(R.id.tv_view_map);
-        btnDownloadData = findViewById(R.id.btn_download_data);
 
         tvQRScan.setOnClickListener(this);
         tvVRImage.setOnClickListener(this);
         tvViewOnMap.setOnClickListener(this);
-        btnDownloadData.setOnClickListener(this);
 
     }
 
@@ -91,20 +89,29 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
                 break;
 
-            case R.id.btn_download_data:
-                fetctDataFromServerAndSave();
-                break;
         }
     }
 
     private void fetchAllData() {
-//        if(SharedPreferenceUtils.getInstance(MainActivity.this).getBoolanValue(Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS,false)){
-//
-//        }else {
+        if(SharedPreferenceUtils.getInstance(MainActivity.this).getBoolanValue(Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS,false)){
 
-//                }
+        }else {
+            if(NetworkUtils.isNetworkAvailable()) {
+                fetctDataFromServerAndSave();
+            }else {
+                if (progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
+                DialogFactory.createSimpleOkWithTitleDialog(MainActivity.this, getResources().getString(R.string.no_internet_connection),
+                        getResources().getString(R.string.check_internet_retry_again), new DialogFactory.onClickListner() {
+                            @Override
+                            public void onClick() {
+                                fetctDataFromServerAndSave();
+                            }
+                        }).show();
+            }
+                }
 
-        fetctDataFromServerAndSave();
 
     }
 
