@@ -48,7 +48,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         geoJsonListViewModel = ViewModelProviders.of(this).get(GeoJsonListViewModel.class);
         placeDetailsEntityViewModel = ViewModelProviders.of(this).get(PlaceDetailsEntityViewModel.class);
 
-        dataDownloadPresenter = new DataDownloadPresenterImpl(this, geoJsonListViewModel, geoJsonCategoryViewModel, placeDetailsEntityViewModel);
+        dataDownloadPresenter = new DataDownloadPresenterImpl(this, MainActivity.this, geoJsonListViewModel, geoJsonCategoryViewModel, placeDetailsEntityViewModel);
 
 
         setupToolbar("Home Page", false);

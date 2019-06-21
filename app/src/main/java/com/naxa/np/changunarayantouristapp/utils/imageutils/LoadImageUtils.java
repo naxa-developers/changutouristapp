@@ -24,7 +24,10 @@ import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.ChangunarayanTouristApp;
 import com.naxa.np.changunarayantouristapp.utils.CreateAppMainFolderUtils;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -70,6 +73,34 @@ public class LoadImageUtils {
         return  bitmap;
     }
 
+    public static Bitmap getImageBitmapFromStorage(@NonNull String imageFileName){
+
+        try {
+            Bitmap bitmap = null;
+            File f= new File(CreateAppMainFolderUtils.getAppMapDataFolderName(), imageFileName);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+
+            bitmap = BitmapFactory.decodeStream(new FileInputStream(f), null, options);
+            return bitmap;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Nullable
+    public static File getImageFileFromStorage(@NonNull String imageFileName){
+
+        try {
+
+            File file= new File(CreateAppMainFolderUtils.getAppMapDataFolderName(), imageFileName);
+            return file;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     /**
      * Converts a immutable bitmap to a mutable bitmap. This operation doesn't allocates

@@ -22,6 +22,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,6 +45,8 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.services.android.navigation.ui.v5.route.NavigationMapRoute;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
+import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListEntity;
+import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonCategoryViewModel;
 import com.naxa.np.changunarayantouristapp.events.MapDataLayerListCheckEvent;
 import com.naxa.np.changunarayantouristapp.events.MarkerClickEvent;
 import com.naxa.np.changunarayantouristapp.map.markerdetailspage.MarkerDetailedDisplayAdapter;
@@ -55,6 +59,7 @@ import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.QueryBuildWithSplitter;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.DataServer;
+import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.MultiItemSectionModel;
 import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.SectionMultipleItem;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
@@ -70,6 +75,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subscribers.DisposableSubscriber;
 
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_MUNICIPAL_BOARDER;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_WARD;
@@ -94,6 +100,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     private MapView mapView;
     private MapboxMap mapboxMap;
 
+    GeoJsonCategoryViewModel geoJsonCategoryViewModel;
+
 
     String filename = "";
 
@@ -111,13 +119,15 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     SharedPreferenceUtils sharedPreferenceUtils;
 
     // 1. create entityList which item data extend SectionMultiEntity
-    private List<SectionMultipleItem> mData;
+    private List<SectionMultipleItem> mapDataLayerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Mapbox.getInstance(this, "pk.eyJ1IjoicGVhY2VuZXBhbCIsImEiOiJjand6d3U1Zm4ycDhvNGJwNXBoazB2bHVsIn0.A-aBUuDaGi01JNFhYmzAtA");
         setContentView(R.layout.activity_map_main);
+
+        geoJsonCategoryViewModel = ViewModelProviders.of(this).get(GeoJsonCategoryViewModel.class);
 
         setupToolbar("Explore", false);
         initUI(savedInstanceState);
@@ -144,7 +154,34 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
         setupBottomSlidingPanel();
         setupListMarkerDetailsRecycler();
-        mData = DataServer.getMapDatacategoryList(MapMainActivity.this);
+
+
+        mapDataLayerList = new ArrayList<>();
+
+        geoJsonCategoryViewModel.getAllGeoJsonCategoryEntity()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableSubscriber<List<GeoJsonCategoryListEntity>>() {
+                    @Override
+                    public void onNext(List<GeoJsonCategoryListEntity> geoJsonCategoryListEntities) {
+                        for (GeoJsonCategoryListEntity geoJsonCategoryListEntity : geoJsonCategoryListEntities){
+                            mapDataLayerList.add(new SectionMultipleItem(SectionMultipleItem.MAP_DATA_LIST, new MultiItemSectionModel(
+                                    geoJsonCategoryListEntity.getCategoryMarker(), geoJsonCategoryListEntity.getCategoryName(), geoJsonCategoryListEntity.getCategoryTable())));
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+
     }
 
 
@@ -272,7 +309,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
             Toast.makeText(this, "Your map is not ready yet", Toast.LENGTH_SHORT).show();
         }
 
-        return DialogFactory.createMapDataLayerDialog(MapMainActivity.this, mData, drawGeoJsonOnMap, isFirstTime, new MapDataLayerDialogCloseListen() {
+        return DialogFactory.createMapDataLayerDialog(MapMainActivity.this, mapDataLayerList, drawGeoJsonOnMap, isFirstTime, new MapDataLayerDialogCloseListen() {
                     @Override
                     public void onDialogClose() {
                         drawGeoJsonOnMap();
@@ -393,9 +430,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
             mapboxMap.removeMarker(destinationMarker);
         }
         destinationCoord = latLngPoint;
-//        destinationMarker = mapboxMap.addMarker(new MarkerOptions()
-//                .position(destinationCoord)
-//        );
 
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

@@ -2,6 +2,8 @@ package com.naxa.np.changunarayantouristapp.fetchdata;
 
 import android.util.Log;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.gson.Gson;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
@@ -14,6 +16,7 @@ import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntity
 import com.naxa.np.changunarayantouristapp.network.NetworkApiInterface;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
+import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
@@ -35,11 +38,13 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
     private GeoJsonCategoryViewModel geoJsonCategoryViewModel;
     private GeoJsonListViewModel geoJsonListViewModel;
     private PlaceDetailsEntityViewModel placeDetailsEntityViewModel;
+    AppCompatActivity appCompatActivity;
     Gson gson;
 
 
-    public DataDownloadPresenterImpl(DataDonwloadView dataDonwloadView, GeoJsonListViewModel geoJsonListViewModel, GeoJsonCategoryViewModel geoJsonCategoryViewModel, PlaceDetailsEntityViewModel placeDetailsEntityViewModel) {
+    public DataDownloadPresenterImpl(DataDonwloadView dataDonwloadView, AppCompatActivity appCompatActivity, GeoJsonListViewModel geoJsonListViewModel, GeoJsonCategoryViewModel geoJsonCategoryViewModel, PlaceDetailsEntityViewModel placeDetailsEntityViewModel) {
         this.dataDonwloadView = dataDonwloadView;
+        this.appCompatActivity = appCompatActivity;
         this.geoJsonCategoryViewModel = geoJsonCategoryViewModel;
         this.geoJsonListViewModel = geoJsonListViewModel;
         this.placeDetailsEntityViewModel = placeDetailsEntityViewModel;
@@ -64,6 +69,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                 .flatMapIterable((Function<List<GeoJsonCategoryListEntity>, Iterable<GeoJsonCategoryListEntity>>) entities -> entities)
                 .flatMap((Function<GeoJsonCategoryListEntity, ObservableSource<ResponseBody>>) categoryListEntity -> {
                     geoJsonCategoryViewModel.insert(categoryListEntity);
+                    LoadImageUtils.downloadAndSaveImageToStorage(appCompatActivity, categoryListEntity.getCategoryTable(), categoryListEntity.getCategoryMarker());
                     geoJsonDisplayName[0] = categoryListEntity.getCategoryName();
                     geoJsonName[0] = categoryListEntity.getCategoryTable();
 
