@@ -31,7 +31,7 @@ public class ImageSaveTask  extends AsyncTask< String, Void, Void> {
 
         String imgName = params[0];
         String src = params[1];
-        String dst = params[2];
+        String folderPath = params[2];
 
         context.runOnUiThread(new Runnable() {
             @Override
@@ -42,7 +42,14 @@ public class ImageSaveTask  extends AsyncTask< String, Void, Void> {
                         .into(new SimpleTarget<Bitmap>(Target.SIZE_ORIGINAL,Target.SIZE_ORIGINAL) {
                             @Override
                             public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
-                                saveImage(resource,imgName, dst);
+                                File targetFile = new File(folderPath+ File.separator +  imgName);
+                                if (targetFile.exists()) {
+                                    if(targetFile.delete()){
+                                        saveImage(resource,imgName, folderPath);
+                                    }
+                                }else {
+                                    saveImage(resource,imgName, folderPath);
+                                }
                             }
                         });
             }
@@ -57,12 +64,14 @@ public class ImageSaveTask  extends AsyncTask< String, Void, Void> {
         String imageFileName = imageName + ".jpg";
         File storageDir = new File(
                 storagePath);
+
         boolean success = true;
         if (!storageDir.exists()) {
             success = storageDir.mkdirs();
         }
         if (success) {
             File imageFile = new File(storageDir, imageFileName);
+
             savedImagePath = imageFile.getAbsolutePath();
             try {
                 OutputStream fOut = new FileOutputStream(imageFile);
