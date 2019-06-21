@@ -2,15 +2,11 @@ package com.naxa.np.changunarayantouristapp.fetchdata;
 
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
-import com.mapbox.mapboxsdk.annotations.Marker;
-import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.geometry.LatLng;
-import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.naxa.np.changunarayantouristapp.common.ChangunarayanTouristApp;
 import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListEntity;
 import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonListEntity;
@@ -24,7 +20,6 @@ import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 import com.naxa.np.changunarayantouristapp.utils.ToastUtils;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,9 +36,10 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 
-import static com.chad.library.adapter.base.listener.SimpleClickListener.TAG;
 
 public class DataDownloadPresenterImpl implements DataDownloadPresenter {
+
+    private static final String TAG = "DataDownloadPresntr";
 
     private DataDonwloadView dataDonwloadView;
    private GeoJsonCategoryViewModel geoJsonCategoryViewModel;
@@ -78,7 +74,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                     @Override
                     public ObservableSource<List<GeoJsonCategoryListEntity>> apply(GeojsonCategoriesListResponse geoJsonCategoryDetails) throws Exception {
                         totalCount[0] = geoJsonCategoryDetails.getData().size();
-
+                        Log.d(TAG, "apply: total count : "+totalCount[0]);
                         return Observable.just(geoJsonCategoryDetails.getData());
                     }
                 })
@@ -95,7 +91,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                         geoJsonCategoryViewModel.insert(geoJsonCategoryEntity);
                         geoJsonDisplayName[0] = geoJsonCategoryEntity.getCategoryName();
                         geoJsonName[0] = geoJsonCategoryEntity.getCategoryTable();
-
+                        Log.d(TAG, "apply: category_name : "+ geoJsonName[0]);
                         return apiInterface.getGeoJsonDetails(Constant.Network.API_KEY,geoJsonCategoryEntity.getCategoryTable());
                     }
 
@@ -104,8 +100,8 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                 .subscribe(new DisposableObserver<ResponseBody>() {
                     @Override
                     public void onNext(ResponseBody s) {
-                                progress[0]++;
-                                dataDonwloadView.downloadProgress(progress[0], totalCount[0], geoJsonDisplayName[0]);
+//                                progress[0]++;
+//                                dataDonwloadView.downloadProgress(progress[0], totalCount[0], geoJsonDisplayName[0]);
 
 
                         BufferedReader reader = new BufferedReader(new InputStreamReader(s.byteStream()));
@@ -150,9 +146,6 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                                     .subscribe(new DisposableObserver<Feature>() {
                                         @Override
                                         public void onNext(Feature feature) {
-
-
-//                        String title = feature.getStringProperty("name");
 
                                             String snippest = feature.properties().toString();
                                             PlacesDetailsEntity placesDetailsEntity = gson.fromJson(snippest, PlacesDetailsEntity.class);

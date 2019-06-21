@@ -2,6 +2,7 @@ package com.naxa.np.changunarayantouristapp;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import com.naxa.np.changunarayantouristapp.vrimage.VRImageViewActivity;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.Network.API_KEY;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, DataDonwloadView {
+
 
     TextView tvQRScan, tvVRImage, tvViewOnMap;
     GeoJsonCategoryViewModel geoJsonCategoryViewModel;
@@ -52,8 +54,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         setupToolbar("Home Page", false);
         initUI();
 
-        fetchAllData();
 
+        fetchAllData();
 
     }
 
@@ -90,14 +92,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
 
             case R.id.btn_download_data:
-                fetchAllData();
+                fetctDataFromServerAndSave();
                 break;
         }
     }
 
     private void fetchAllData() {
 //        if(SharedPreferenceUtils.getInstance(MainActivity.this).getBoolanValue(Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS,false)){
-
+//
 //        }else {
         fetctDataFromServerAndSave();
 //                }
@@ -106,6 +108,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     private void fetctDataFromServerAndSave() {
         progressDialog.show();
+        Log.d(TAG, "fetctDataFromServerAndSave: ");
         dataDownloadPresenter.handleDataDownload(apiInterface, API_KEY, SharedPreferenceUtils.getInstance(MainActivity.this).getStringValue(Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE, null));
 
     }

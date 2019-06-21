@@ -11,8 +11,6 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import org.jetbrains.annotations.NotNull;
-
 @Entity(tableName = "PlacesDetailsEntity",
         indices = {@Index(value = "qr_code",
                 unique = true)})
