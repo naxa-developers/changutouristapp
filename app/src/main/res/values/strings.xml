@@ -35,14 +35,18 @@
     <string name="sight_seeing">Sight Seeing</string>
     <string name="verification">Verify</string>
     <string name="request_for_access">Request For Access</string>
+    <string name="no_internet_connection">No Internet Connection!</string>
+    <string name="check_internet_retry_again">Check your Internet Connection and try again.</string>
 
 
     <string name="dialog_action_ok">OK</string>
     <string name="dialog_error_title">Unexpected Error Occured.</string>
     <string name="dialog_error_title_sync_failed">Data Sync Failed (Code: %1$s)</string>
     <string name="dialog_action_hide">Hide</string>
+    <string name="dialog_action_retry">Retry</string>
     <string name="select_base_layer">Select Base Layer</string>
     <string name="select_overlay_layer">Select Overlay Layer</string>
+    <string name="select_place_layer">Select Place</string>
     <string name="title">Title</string>
     <string name="icon_explanation">Icon Explanation</string>
     <string name="go_there">Go There</string>
@@ -57,5 +61,7 @@
     <string name="map">Map</string>
 
     <string name="fetching_file">Getting %1$s.\n\Geojson data %2$s of %3$s file(s)</string>
+    <string name="changunarayan_boundary">Changunarayan </string>
+    <string name="nagarkot_boundary">Nagarkot </string>
 
 </resources>

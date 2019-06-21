@@ -143,9 +143,9 @@ public class RequestForAccessActivity extends BaseActivity implements View.OnCli
                             dialog.show();
                         } else {
                             if (userLoginResponse.getError() == 0) {
-                                dialog = DialogFactory.createSimpleOkWithTitleDialog(RequestForAccessActivity.this, "Success", userLoginResponse.getMessage(), new DialogFactory.onOkClickListner() {
+                                dialog = DialogFactory.createSimpleOkWithTitleDialog(RequestForAccessActivity.this, "Success", userLoginResponse.getMessage(), new DialogFactory.onClickListner() {
                                     @Override
-                                    public void onOkClick() {
+                                    public void onClick() {
                                         ActivityUtil.openActivity(LoginActivity.class, RequestForAccessActivity.this);
 
                                     }

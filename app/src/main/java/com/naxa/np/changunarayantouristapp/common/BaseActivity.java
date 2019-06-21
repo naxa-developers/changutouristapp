@@ -28,6 +28,8 @@ import java.util.ArrayList;
 
 public class BaseActivity extends AppCompatActivity {
 
+    public String TAG = this.getClass().getSimpleName();
+
     protected Toolbar toolbar;
     ProgressDialog progressDialog;
 

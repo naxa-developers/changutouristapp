@@ -14,6 +14,7 @@ import android.content.DialogInterface;
 
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -61,21 +62,21 @@ public final class DialogFactory {
         return alertDialog.create();
     }
 
-    public static Dialog createSimpleOkWithTitleDialog(Context context, String title, String message, onOkClickListner listner ) {
+    public static Dialog createSimpleOkWithTitleDialog(Context context, String title, String message, onClickListner listner ) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setMessage(message)
                 .setNeutralButton(R.string.dialog_action_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        listner.onOkClick();
+                        listner.onClick();
                     }
                 });
         return alertDialog.create();
     }
 
-    public interface onOkClickListner{
-        public void onOkClick();
+    public interface onClickListner {
+        public void onClick();
     }
 
 
@@ -138,7 +139,6 @@ public final class DialogFactory {
                                 progress.dismiss();
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
-
                                 break;
                         }
                     }
@@ -147,9 +147,7 @@ public final class DialogFactory {
 
         progress.setMessage(message);
         progress.setTitle(title);
-
         progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-
         progress.setButton(DialogInterface.BUTTON_POSITIVE, context.getString(R.string.dialog_action_hide), buttonListerns);
         progress.setIndeterminate(false);
         progress.setProgress(0);
