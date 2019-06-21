@@ -233,22 +233,16 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
             @Override
             public void onMetropolitanClick() {
-//                filename = "kathmandu_boundary.geojson";
-//                drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
-//                removeLayerFromMap("kathmandu_wards.geojson");
                 filename = "changunarayan_boundary.geojson";
                 drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
-                removeLayerFromMap("changunarayan_boundary.geojson");
+                removeLayerFromMap("nagarkot_boundary.geojson");
             }
 
             @Override
             public void onWardClick() {
-//                filename = "kathmandu_wards.geojson";
-//                drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
-//                removeLayerFromMap("kathmandu_boundary.geojson");
                 filename = "nagarkot_boundary.geojson";
                 drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
-                removeLayerFromMap("nagarkot_boundary.geojson");
+                removeLayerFromMap("changunarayan_boundary.geojson");
 
 
             }
