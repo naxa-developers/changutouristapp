@@ -100,8 +100,8 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                 .subscribe(new DisposableObserver<ResponseBody>() {
                     @Override
                     public void onNext(ResponseBody s) {
-//                                progress[0]++;
-//                                dataDonwloadView.downloadProgress(progress[0], totalCount[0], geoJsonDisplayName[0]);
+                                progress[0]++;
+                                dataDonwloadView.downloadProgress(progress[0], totalCount[0], geoJsonDisplayName[0]);
 
 
                         BufferedReader reader = new BufferedReader(new InputStreamReader(s.byteStream()));
