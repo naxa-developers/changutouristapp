@@ -61,6 +61,7 @@ import com.naxa.np.changunarayantouristapp.map.mapboxutils.MapboxBaseStyleUtils;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.QueryBuildWithSplitter;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
+import com.naxa.np.changunarayantouristapp.utils.ToastUtils;
 import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.MultiItemSectionModel;
 import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.SectionMultipleItem;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -170,7 +171,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 .subscribe(new DisposableSubscriber<List<GeoJsonCategoryListEntity>>() {
                     @Override
                     public void onNext(List<GeoJsonCategoryListEntity> geoJsonCategoryListEntities) {
-                        for (GeoJsonCategoryListEntity geoJsonCategoryListEntity : geoJsonCategoryListEntities){
+                        for (GeoJsonCategoryListEntity geoJsonCategoryListEntity : geoJsonCategoryListEntities) {
                             mapDataLayerList.add(new SectionMultipleItem(SectionMultipleItem.MAP_DATA_LIST, new MultiItemSectionModel(
                                     geoJsonCategoryListEntity.getCategoryMarker(), geoJsonCategoryListEntity.getCategoryName(), geoJsonCategoryListEntity.getCategoryTable())));
                         }
@@ -292,7 +293,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
             private void removeLayerFromMap(String filename) {
 
-                if(filename != null) {
+                if (filename != null) {
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -331,6 +332,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     }
 
     List<String> placeCategoryList;
+
     private void drawCategoryWiseMarkersOnMap() {
         Observable.just(mapDataLayerListCheckedEventList)
                 .subscribeOn(Schedulers.io())
@@ -350,7 +352,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 .subscribe(new DisposableObserver<MapDataLayerListCheckEvent.MapDataLayerListCheckedEvent>() {
                     @Override
                     public void onNext(MapDataLayerListCheckEvent.MapDataLayerListCheckedEvent mapDataLayerListCheckedEvent) {
-                        Log.d(TAG, "onNext: "+mapDataLayerListCheckedEvent.getMultiItemSectionModel().getData_value());
+                        Log.d(TAG, "onNext: filter " + mapDataLayerListCheckedEvent.getMultiItemSectionModel().getData_value());
 
 
                         placeDetailsEntityViewModel.getPlacesDetailsEntityBYPlaceAndCategoryType(placeType, mapDataLayerListCheckedEvent.getMultiItemSectionModel().getData_value())
@@ -360,7 +362,11 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                                 .subscribe(new DisposableSubscriber<List<PlacesDetailsEntity>>() {
                                     @Override
                                     public void onNext(List<PlacesDetailsEntity> placesDetailsEntities) {
-                                        drawMarkerOnMap.AddListOfMarkerOnMap(placesDetailsEntities, placesDetailsEntities.get(0).getCategoryType());
+                                        if (placesDetailsEntities == null) {
+                                            ToastUtils.showShortToast("No Data Found.");
+                                        } else {
+                                            drawMarkerOnMap.AddListOfMarkerOnMap(placesDetailsEntities, placesDetailsEntities.get(0).getCategoryType());
+                                        }
                                     }
 
                                     @Override
