@@ -84,7 +84,7 @@
             />
 
         <Button
-            android:id="@+id/btn_view_etails"
+            android:id="@+id/btn_view_marker_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/view_details"

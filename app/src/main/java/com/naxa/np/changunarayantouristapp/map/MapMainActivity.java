@@ -11,21 +11,21 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
-
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.geojson.Point;
@@ -34,7 +34,6 @@ import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
-import com.mapbox.mapboxsdk.geometry.LatLngBounds;
 import com.mapbox.mapboxsdk.location.LocationComponent;
 import com.mapbox.mapboxsdk.location.LocationComponentOptions;
 import com.mapbox.mapboxsdk.location.modes.CameraMode;
@@ -51,16 +50,17 @@ import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonCategoryVie
 import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntityViewModel;
 import com.naxa.np.changunarayantouristapp.events.MapDataLayerListCheckEvent;
 import com.naxa.np.changunarayantouristapp.events.MarkerClickEvent;
-import com.naxa.np.changunarayantouristapp.map.mapboxutils.DrawMarkerOnMap;
-import com.naxa.np.changunarayantouristapp.map.markerdetailspage.MarkerDetailsKeyValue;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.DrawGeoJsonOnMap;
+import com.naxa.np.changunarayantouristapp.map.mapboxutils.DrawMarkerOnMap;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.DrawRouteOnMap;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.MapDataLayerDialogCloseListen;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.MapboxBaseStyleUtils;
+import com.naxa.np.changunarayantouristapp.placedetailsview.PlaceDetailsActivity;
+import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
-import com.naxa.np.changunarayantouristapp.utils.QueryBuildWithSplitter;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 import com.naxa.np.changunarayantouristapp.utils.ToastUtils;
+import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.MultiItemSectionModel;
 import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.SectionMultipleItem;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -98,10 +98,14 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     ImageView ivSlidingLayoutIndicator;
     ImageButton btnMapLayerData;
     ImageButton btnMapLayerSwitch;
-    Button btnGoThere;
 
     private SlidingUpPanelLayout mLayout;
-    
+    TextView tvMarkerTitle, tvMarkerDesc;
+    ImageView ivMarkerPrimaryImage;
+    Button btnGoThere, btnViewMarkerDetails;
+
+    Gson gson;
+
 
 
     private PermissionsManager permissionsManager;
@@ -138,6 +142,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         Mapbox.getInstance(this, "pk.eyJ1IjoicGVhY2VuZXBhbCIsImEiOiJjand6d3U1Zm4ycDhvNGJwNXBoazB2bHVsIn0.A-aBUuDaGi01JNFhYmzAtA");
         setContentView(R.layout.activity_map_main);
 
+        gson = new Gson();
         geoJsonCategoryViewModel = ViewModelProviders.of(this).get(GeoJsonCategoryViewModel.class);
         placeDetailsEntityViewModel = ViewModelProviders.of(this).get(PlaceDetailsEntityViewModel.class);
 
@@ -152,10 +157,17 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         btnMapLayerSwitch = findViewById(R.id.btnMapLayerSwitch);
         btnGoThere = findViewById(R.id.btnGoThere);
 
+        tvMarkerTitle = findViewById(R.id.tv_marker_title);
+        tvMarkerDesc = findViewById(R.id.tv_marker_desc);
+        ivMarkerPrimaryImage = findViewById(R.id.iv_marker_primary_image);
+        btnViewMarkerDetails = findViewById(R.id.btn_view_marker_details);
+
+
         btnNavigation.setOnClickListener(this);
         btnGoThere.setOnClickListener(this);
         btnMapLayerData.setOnClickListener(this);
         btnMapLayerSwitch.setOnClickListener(this);
+        btnViewMarkerDetails.setOnClickListener(this);
 
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
@@ -704,7 +716,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMarkerItemClick(MarkerClickEvent.MarkerItemClick itemClick) {
 
-        List<MarkerDetailsKeyValue> markerDetailsKeyValueListCommn = new ArrayList<MarkerDetailsKeyValue>();
+
         selectedMarkerPosition = itemClick.getLocation();
         if (selectedMarkerPosition == null) {
             btnGoThere.setVisibility(View.GONE);
@@ -712,11 +724,16 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
             btnGoThere.setVisibility(View.VISIBLE);
         }
 
-        String markerPropertiesJson = itemClick.getMarkerProperties();
-        QueryBuildWithSplitter queryBuildWithSplitter = new QueryBuildWithSplitter();
-        markerDetailsKeyValueListCommn = queryBuildWithSplitter.splitedKeyValueList(
-                queryBuildWithSplitter.splitedStringList(markerPropertiesJson));
+        if(!TextUtils.isEmpty(itemClick.getMarkerProperties())) {
+            PlacesDetailsEntity placesDetailsEntity = gson.fromJson(itemClick.getMarkerProperties(), PlacesDetailsEntity.class);
 
+            tvMarkerTitle.setText(placesDetailsEntity.getName());
+            tvMarkerDesc.setText(placesDetailsEntity.getDescription());
+
+            if(!TextUtils.isEmpty(placesDetailsEntity.getPrimaryImage())) {
+                LoadImageUtils.loadImageToViewFromSrc(ivMarkerPrimaryImage, placesDetailsEntity.getPrimaryImage());
+            }
+        }
 
 //        mLayout.setAnchorPoint(0.52f);
         mLayout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
@@ -775,6 +792,11 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
             case R.id.btnMapLayerSwitch:
                 setupMapOptionsDialog().show();
+                break;
+
+            case R.id.btn_view_marker_details:
+
+                ActivityUtil.openActivity(PlaceDetailsActivity.class, MapMainActivity.this);
                 break;
 
             case R.id.btnGoThere:
