@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.naxa.np.changunarayantouristapp.common.ChangunarayanTouristApp;
+import com.naxa.np.changunarayantouristapp.database.ISETRoomDatabase;
 import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListEntity;
 import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonCategoryViewModel;
@@ -68,6 +69,9 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(listResponse -> {
                     totalCount = listResponse.getData().size();
+                    if(listResponse.getData() != null){
+                        new ISETRoomDatabase.DeleteAllDbTableAsync(ISETRoomDatabase.getDatabase(appCompatActivity)).execute();
+                    }
                     return listResponse.getData();
                 })
                 .flatMapIterable((Function<List<GeoJsonCategoryListEntity>, Iterable<GeoJsonCategoryListEntity>>) entities -> entities)
