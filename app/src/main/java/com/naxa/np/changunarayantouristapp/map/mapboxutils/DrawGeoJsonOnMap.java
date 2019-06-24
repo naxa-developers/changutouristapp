@@ -297,8 +297,8 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
                             if(geoJsonObj.optJSONArray("features").optJSONObject(0).has("bbox")) {
                                 JSONArray boundingBox = geoJsonObj.optJSONArray("features").optJSONObject(0).optJSONArray("bbox");
                                 LatLngBounds latLngBounds = new LatLngBounds.Builder()
-                                        .include(new LatLng(Double.parseDouble(boundingBox.getString(0)), Double.parseDouble(boundingBox.getString(1)))) // Northeast
-                                        .include(new LatLng(Double.parseDouble(boundingBox.getString(3)), Double.parseDouble(boundingBox.getString(4)))) // Southwest
+                                        .include(new LatLng(Double.parseDouble(boundingBox.getString(1)), Double.parseDouble(boundingBox.getString(0)))) // Northeast
+                                        .include(new LatLng(Double.parseDouble(boundingBox.getString(4)), Double.parseDouble(boundingBox.getString(3)))) // Southwest
                                         .build();
                                 mapboxMap.setLatLngBoundsForCameraTarget(latLngBounds);
                                 mapboxMap.easeCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 50), 2000);
