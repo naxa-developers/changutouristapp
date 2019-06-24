@@ -107,6 +107,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
 
     String filename = "";
+    String placeType = "";
+
 
     // variables for adding a marker
     private Marker destinationMarker;
@@ -277,6 +279,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 filename = "changunarayan_boundary.geojson";
                 drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
                 removeLayerFromMap("nagarkot_boundary.geojson");
+                placeType = "changunarayan";
             }
 
             @Override
@@ -284,8 +287,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 filename = "nagarkot_boundary.geojson";
                 drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
                 removeLayerFromMap("changunarayan_boundary.geojson");
-
-
+                placeType = "nagarkot";
             }
 
             private void removeLayerFromMap(String filename) {
@@ -351,8 +353,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                         Log.d(TAG, "onNext: "+mapDataLayerListCheckedEvent.getMultiItemSectionModel().getData_value());
 
 
-//                        placeDetailsEntityViewModel.getPlacesDetailsEntityBYPlaceAndCategoryType(null, mapDataLayerListCheckedEvent.getMultiItemSectionModel().getData_value())
-                        placeDetailsEntityViewModel.getAllPlacesDetailsEntity()
+                        placeDetailsEntityViewModel.getPlacesDetailsEntityBYPlaceAndCategoryType(placeType, mapDataLayerListCheckedEvent.getMultiItemSectionModel().getData_value())
+//                        placeDetailsEntityViewModel.getAllPlacesDetailsEntity()
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(new DisposableSubscriber<List<PlacesDetailsEntity>>() {

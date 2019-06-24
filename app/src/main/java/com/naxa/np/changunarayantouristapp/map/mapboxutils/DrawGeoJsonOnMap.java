@@ -99,6 +99,7 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
     ArrayList<LatLng> points = null;
     StringBuilder geoJsonString;
 
+
 //    String imageName;
 
 
@@ -301,7 +302,7 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
                                         .include(new LatLng(Double.parseDouble(boundingBox.getString(4)), Double.parseDouble(boundingBox.getString(3)))) // Southwest
                                         .build();
                                 mapboxMap.setLatLngBoundsForCameraTarget(latLngBounds);
-                                mapboxMap.easeCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 50), 2000);
+                                mapboxMap.easeCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 60), 2000);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
