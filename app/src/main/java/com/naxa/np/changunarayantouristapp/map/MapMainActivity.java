@@ -353,32 +353,39 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                     @Override
                     public void onNext(MapDataLayerListCheckEvent.MapDataLayerListCheckedEvent mapDataLayerListCheckedEvent) {
                         Log.d(TAG, "onNext: filter " + mapDataLayerListCheckedEvent.getMultiItemSectionModel().getData_value());
+                        Log.d(TAG, "onNext: filter " + placeType);
+                        if (mapDataLayerListCheckedEvent.getChecked()) {
 
-
-                        placeDetailsEntityViewModel.getPlacesDetailsEntityBYPlaceAndCategoryType(placeType, mapDataLayerListCheckedEvent.getMultiItemSectionModel().getData_value())
+                            placeDetailsEntityViewModel.getPlacesDetailsEntityBYPlaceAndCategoryType(placeType, mapDataLayerListCheckedEvent.getMultiItemSectionModel().getData_value())
 //                        placeDetailsEntityViewModel.getAllPlacesDetailsEntity()
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new DisposableSubscriber<List<PlacesDetailsEntity>>() {
-                                    @Override
-                                    public void onNext(List<PlacesDetailsEntity> placesDetailsEntities) {
-                                        if (placesDetailsEntities == null) {
-                                            ToastUtils.showShortToast("No Data Found.");
-                                        } else {
-                                            drawMarkerOnMap.AddListOfMarkerOnMap(placesDetailsEntities, placesDetailsEntities.get(0).getCategoryType());
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new DisposableSubscriber<List<PlacesDetailsEntity>>() {
+                                        @Override
+                                        public void onNext(List<PlacesDetailsEntity> placesDetailsEntities) {
+                                            if (placesDetailsEntities == null) {
+                                                ToastUtils.showShortToast("No Data Found.");
+                                            } else {
+                                                try {
+
+                                                    drawMarkerOnMap.AddListOfMarkerOnMap(placesDetailsEntities, placesDetailsEntities.get(0).getCategoryType());
+                                                }catch (IndexOutOfBoundsException | NullPointerException e){
+                                                    e.printStackTrace();
+                                                }
+                                            }
                                         }
-                                    }
 
-                                    @Override
-                                    public void onError(Throwable t) {
+                                        @Override
+                                        public void onError(Throwable t) {
 
-                                    }
+                                        }
 
-                                    @Override
-                                    public void onComplete() {
+                                        @Override
+                                        public void onComplete() {
 
-                                    }
-                                });
+                                        }
+                                    });
+                        }
 
                     }
 
