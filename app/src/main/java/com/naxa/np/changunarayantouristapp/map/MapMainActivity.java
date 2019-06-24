@@ -52,7 +52,6 @@ import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntity
 import com.naxa.np.changunarayantouristapp.events.MapDataLayerListCheckEvent;
 import com.naxa.np.changunarayantouristapp.events.MarkerClickEvent;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.DrawMarkerOnMap;
-import com.naxa.np.changunarayantouristapp.map.markerdetailspage.MarkerDetailedDisplayAdapter;
 import com.naxa.np.changunarayantouristapp.map.markerdetailspage.MarkerDetailsKeyValue;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.DrawGeoJsonOnMap;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.DrawRouteOnMap;
@@ -91,7 +90,10 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     private static final String TAG = "DemoActivity";
 
     Button btnNavigation;
-    RecyclerView recyclerViewMapCategory;
+//    RecyclerView recyclerViewMapCategory;
+
+
+
 
     ImageView ivSlidingLayoutIndicator;
     ImageButton btnMapLayerData;
@@ -99,6 +101,9 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     Button btnGoThere;
 
     private SlidingUpPanelLayout mLayout;
+    
+
+
     private PermissionsManager permissionsManager;
     private MapView mapView;
     private MapboxMap mapboxMap;
@@ -142,7 +147,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
     private void initUI(Bundle savedInstanceState) {
         btnNavigation = findViewById(R.id.navigation);
-        recyclerViewMapCategory = findViewById(R.id.recyclerViewMapCategory);
         ivSlidingLayoutIndicator = findViewById(R.id.iv_sliding_layout_indicator);
         btnMapLayerData = findViewById(R.id.btnMapLayerData);
         btnMapLayerSwitch = findViewById(R.id.btnMapLayerSwitch);
@@ -160,7 +164,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         sharedPreferenceUtils = new SharedPreferenceUtils(MapMainActivity.this);
 
         setupBottomSlidingPanel();
-        setupListMarkerDetailsRecycler();
 
 
         mapDataLayerList = new ArrayList<>();
@@ -227,13 +230,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
             }
         });
-
-    }
-
-    private void setupListMarkerDetailsRecycler() {
-        MarkerDetailedDisplayAdapter markerDetailedDisplayAdapter = new MarkerDetailedDisplayAdapter(R.layout.marker_detailed_info_display_layout, null);
-        recyclerViewMapCategory.setLayoutManager(new LinearLayoutManager(this));
-        recyclerViewMapCategory.setAdapter(markerDetailedDisplayAdapter);
 
     }
 
@@ -721,9 +717,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         markerDetailsKeyValueListCommn = queryBuildWithSplitter.splitedKeyValueList(
                 queryBuildWithSplitter.splitedStringList(markerPropertiesJson));
 
-        ((MarkerDetailedDisplayAdapter) recyclerViewMapCategory.getAdapter()).replaceData(markerDetailsKeyValueListCommn);
 
-        mLayout.setAnchorPoint(0.52f);
+//        mLayout.setAnchorPoint(0.52f);
         mLayout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
 
         drawRouteOnMap.removeRoute();
