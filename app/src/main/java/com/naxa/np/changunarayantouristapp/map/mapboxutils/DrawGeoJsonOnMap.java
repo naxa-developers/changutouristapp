@@ -22,7 +22,9 @@ import com.daasuu.bl.BubbleLayout;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.mapboxsdk.annotations.Marker;
+import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
+import com.mapbox.mapboxsdk.geometry.LatLngBounds;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.style.expressions.Expression;
@@ -66,6 +68,7 @@ import static com.mapbox.mapboxsdk.style.expressions.Expression.has;
 import static com.mapbox.mapboxsdk.style.expressions.Expression.interpolate;
 import static com.mapbox.mapboxsdk.style.expressions.Expression.literal;
 import static com.mapbox.mapboxsdk.style.expressions.Expression.lt;
+import static com.mapbox.mapboxsdk.style.expressions.Expression.neq;
 import static com.mapbox.mapboxsdk.style.expressions.Expression.rgb;
 import static com.mapbox.mapboxsdk.style.expressions.Expression.stop;
 import static com.mapbox.mapboxsdk.style.expressions.Expression.toNumber;
@@ -95,6 +98,7 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
 
     ArrayList<LatLng> points = null;
     StringBuilder geoJsonString;
+
 
 //    String imageName;
 
@@ -183,7 +187,9 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
 
                             inputStream.close();
 
-                            drawGeoJsonOnMap(geoJsonString, isChecked, imageName);
+
+                                drawGeoJsonOnMap(geoJsonString, isChecked, imageName);
+
 
 
                         } catch (IOException e) {
@@ -203,7 +209,7 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
                 });
     }
 
-    private void drawGeoJsonOnMap(StringBuilder geoJsonString, Boolean isChecked, String imageName) {
+    private void drawGeoJsonOnMap(StringBuilder geoJsonString, Boolean isChecked, String imageName)  {
         GeoJsonSource source = new GeoJsonSource(geojsonSourceId, geoJsonString.toString());
         String type = "";
             try {
@@ -275,12 +281,39 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
                 );
 
                 if(isChecked) {
+
                     if(mapboxMap.getLayer(geojsonLayerId) == null){
+
+
+
+
+
+
                         mapboxMap.addLayer(lineLayer);
+                        JSONObject geoJsonObj = null;
+                        try {
+                            geoJsonObj = new JSONObject(geoJsonString.toString());
+
+                            JSONObject jsonObject = geoJsonObj.optJSONArray("features").optJSONObject(0).optJSONObject("properties");
+                            if(geoJsonObj.optJSONArray("features").optJSONObject(0).has("bbox")) {
+                                JSONArray boundingBox = geoJsonObj.optJSONArray("features").optJSONObject(0).optJSONArray("bbox");
+                                LatLngBounds latLngBounds = new LatLngBounds.Builder()
+                                        .include(new LatLng(Double.parseDouble(boundingBox.getString(1)), Double.parseDouble(boundingBox.getString(0)))) // Northeast
+                                        .include(new LatLng(Double.parseDouble(boundingBox.getString(4)), Double.parseDouble(boundingBox.getString(3)))) // Southwest
+                                        .build();
+                                mapboxMap.setLatLngBoundsForCameraTarget(latLngBounds);
+                                mapboxMap.easeCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 60), 2000);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
                     }
                 }else {
                     mapboxMap.removeLayer(lineLayer);
                 }
+                mapView.invalidate();
             }
 
 

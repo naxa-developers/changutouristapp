@@ -37,7 +37,7 @@ public class PlaceDetailsEntityRepository {
         return mAllPlacesDetailsEntity;
     }
 
-    public Flowable<List<PlacesDetailsEntity>> getPlacesDetailsEntityBYPlaceAndCategoryType(String placeType, List<String> categoryType) {
+    public Flowable<List<PlacesDetailsEntity>> getPlacesDetailsEntityBYPlaceAndCategoryType(String placeType, String categoryType) {
         mSpecificPlacesDetailsEntity = placeDetailsDao.getPlacesDetailsEntityBYPlaceAndCategoryType(placeType, categoryType);
         return mSpecificPlacesDetailsEntity;
     }
