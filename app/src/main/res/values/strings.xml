@@ -63,5 +63,7 @@
     <string name="fetching_file">Getting %1$s.\n\Geojson data %2$s of %3$s file(s)</string>
     <string name="changunarayan_boundary">Changunarayan </string>
     <string name="nagarkot_boundary">Nagarkot </string>
+    <string name="select_language">Select Language</string>
+    <string name="refresh_data">Refresh Data</string>
 
 </resources>
