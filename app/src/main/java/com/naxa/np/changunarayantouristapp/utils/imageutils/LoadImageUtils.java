@@ -77,11 +77,7 @@ public class LoadImageUtils {
 
         try {
             Bitmap bitmap = null;
-            File f= new File(CreateAppMainFolderUtils.getAppMapDataFolderName(), imageFileName);
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-
-            bitmap = BitmapFactory.decodeStream(new FileInputStream(f), null, options);
+            bitmap = BitmapFactory.decodeFile(CreateAppMainFolderUtils.getAppMapDataFolderName()+"/"+imageFileName+".jpg");
             return bitmap;
         } catch (Exception e) {
             e.printStackTrace();
