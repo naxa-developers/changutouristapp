@@ -3,6 +3,9 @@ package com.naxa.np.changunarayantouristapp;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -113,6 +116,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 }
 
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.settings_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId())
+        {
+            case R.id.action_select_language:
+                break;
+            case R.id.action_refresh_data:
+                fetctDataFromServerAndSave();
+                break;
+        }
+        return true;
     }
 
     private void fetctDataFromServerAndSave() {
