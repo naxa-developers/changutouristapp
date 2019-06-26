@@ -1,46 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    android:id="@+id/card_view"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
-    android:foreground="?android:attr/selectableItemBackground"
-    card_view:cardBackgroundColor="@color/white"
-    card_view:cardCornerRadius="4dp"
-    card_view:cardElevation="0dp"
-    card_view:cardUseCompatPadding="true">
-
-    <LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/margin_small"
+        app:cardCornerRadius="@dimen/margin_xsmall"
+        app:cardElevation="5dp">
 
         <TextView
             android:id="@+id/tv"
-            android:layout_width="0dp"
-            android:layout_weight="4"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/slate_black"
-            android:textSize="14sp"
-            android:textStyle="bold"
             android:text="@string/title"
-            android:padding="@dimen/spacing_medium"
-
+            style="@style/LanguageSelectorTextStyle"
             />
 
         <TextView
             android:id="@+id/tv1"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="6"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="14sp"
-            android:text="If you would hit the mark,"
-            android:padding="@dimen/spacing_medium"
+            android:text="@string/title"
+            style="@style/LanguageSelectorTextStyle"
+            android:visibility="gone"
             />
-    </LinearLayout>
+
 </androidx.cardview.widget.CardView>
+</LinearLayout>

@@ -15,6 +15,7 @@ import java.io.File;
 import java.util.HashMap;
 
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_OBJECT;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_VALUE;
 
 public class VideoPlayerActivity extends BaseActivity {
 
@@ -35,7 +36,10 @@ public class VideoPlayerActivity extends BaseActivity {
         if(intent != null){
             videoView = findViewById(R.id.video_view);
             HashMap<String, Object> hashMap = (HashMap<String, Object>) intent.getSerializableExtra("map");
-            String fileName = (String) hashMap.get(KEY_OBJECT);
+            String fileName = (String) hashMap.get(KEY_VALUE);
+
+            setupToolbar(fileName, false);
+
 
             String folderPath = CreateAppMainFolderUtils.getAppMediaFolderName();
             Log.d("PlaceDetailsActivity", "downloaFile: full file path  "+folderPath+ File.separator +  fileName);

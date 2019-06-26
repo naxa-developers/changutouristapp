@@ -32,6 +32,7 @@ import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
+import com.naxa.np.changunarayantouristapp.videoplayer.VideoListActivity;
 import com.naxa.np.changunarayantouristapp.videoplayer.VideoPlayerActivity;
 import com.naxa.np.changunarayantouristapp.vrimage.VRImageViewActivity;
 
@@ -44,7 +45,7 @@ import java.util.List;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_OBJECT;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_VALUE;
 
-public class PlaceDetailsActivity extends BaseActivity implements View.OnClickListener, FileDownloadView {
+public class PlaceDetailsActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = "PlaceDetailsActivity";
     ImageView ivImageMain;
@@ -68,12 +69,14 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         setContentView(R.layout.activity_place_details);
 
 
-        fileDownloadPresenter = new FileDownloadPresenterImpl(this, PlaceDetailsActivity.this);
-
         setupToolbar("Place Details", false);
         initUI();
 
-        getnewIntent(getIntent());
+        try {
+            getnewIntent(getIntent());
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
 
     }
 
@@ -132,13 +135,19 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
                 case R.id.action_bottom_images:
                     HashMap<String, Object> hashMap = new HashMap<>();
                     hashMap.put(KEY_OBJECT, placesDetailsEntity);
-                    ActivityUtil.openActivity(ImageListGridViewActivity.class, PlaceDetailsActivity.this, hashMap, false);                    return true;
-                case R.id.action_bottom_videos:
-                    toolbar.setTitle("Videos");
+                    ActivityUtil.openActivity(ImageListGridViewActivity.class, PlaceDetailsActivity.this, hashMap, false);
                     return true;
+
+                case R.id.action_bottom_videos:
+                    HashMap<String, Object> hashMap1 = new HashMap<>();
+                    hashMap1.put(KEY_OBJECT, placesDetailsEntity);
+                    ActivityUtil.openActivity(VideoListActivity.class, PlaceDetailsActivity.this, hashMap1, false);
+                    return true;
+
                 case R.id.action_bottom_audios:
                     toolbar.setTitle("Audios");
                     return true;
+
                 case R.id.action_bottom_map:
                     ActivityUtil.openActivity(MapMainActivity.class, PlaceDetailsActivity.this);
                     return true;
@@ -202,37 +211,10 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
                 break;
 
             case R.id.btn_view_all_nearby_places:
-                dialog = DialogFactory.createProgressDialog(PlaceDetailsActivity.this , "Please wait!!! \nDownloading file");
-                dialog.show();
-//                fileDownloadPresenter.handleFileDownload("http://kmc.naxa.com.np/uploads/publication/file/75.mp3", "Audio file test");
-                fileDownloadPresenter.handleFileDownload("http://changu.naxa.com.np//assets//admin/SampleVideo_1280x720_1mb_(3).mp4", "Sample video file test");
-                break;
+               break;
         }
     }
 
 
-
-Dialog dialog;
-    @Override
-    public void fileDownloadProgress(int progress, int total, String successMsg) {
-
-    }
-
-    @Override
-    public void fileDownloadSuccess(String fileName, String successMsg, boolean isAlreadyExists) {
-        dialog.dismiss();
-        Log.d(TAG, "fileDownloadSuccess: "+fileName + " , "+ successMsg + " , "+isAlreadyExists);
-
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put(KEY_OBJECT, fileName);
-        ActivityUtil.openActivity(VideoPlayerActivity.class, PlaceDetailsActivity.this, hashMap, false);
-    }
-
-    @Override
-    public void fileDownloadFailed(String failedMsg) {
-        dialog.dismiss();
-        Log.d(TAG, "fileDownloadFailed: "+failedMsg);
-
-    }
 
 }

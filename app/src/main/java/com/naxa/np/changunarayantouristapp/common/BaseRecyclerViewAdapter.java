@@ -1,5 +1,6 @@
 package com.naxa.np.changunarayantouristapp.common;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ public abstract class BaseRecyclerViewAdapter<L, VH extends RecyclerView.ViewHol
 
     @Override
     public int getItemCount() {
+        Log.d("BaseAdapter", "getItemCount: "+itemList.size());
         return itemList.size();
     }
 
