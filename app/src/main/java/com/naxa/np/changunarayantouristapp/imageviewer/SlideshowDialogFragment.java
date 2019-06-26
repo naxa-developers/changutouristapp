@@ -17,6 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.placedetailsview.FileNameAndUrlPojo;
 import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
+import com.naxa.np.changunarayantouristapp.utils.imageutils.TouchImageView;
 
 import java.util.List;
 
@@ -109,7 +110,9 @@ public class SlideshowDialogFragment extends DialogFragment {
             layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = layoutInflater.inflate(R.layout.image_fullscreen_preview, container, false);
 
-            ImageView imageViewPreview = view.findViewById(R.id.image_preview);
+            TouchImageView imageViewPreview = view.findViewById(R.id.image_preview);
+            imageViewPreview.setMaxZoom(4f);
+
 
             FileNameAndUrlPojo image = images.get(position);
 

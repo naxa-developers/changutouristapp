@@ -2,6 +2,7 @@ package com.naxa.np.changunarayantouristapp.imageviewer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.FragmentTransaction;
@@ -13,6 +14,9 @@ import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.FileNameAndUrlPojo;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -85,20 +89,18 @@ public class ImageListGridViewActivity extends BaseActivity {
 
     private void   fetchImagesList() {
 
-        String imagesString = "https://ichef.bbci.co.uk/news/660/cpsprodpb/10D88/production/_103600096_mediaitem103600095.jpg," +
-                "https://cdn.pixabay.com/photo/2017/01/06/19/15/soap-bubble-1958650_960_720.jpg," +
-                "https://wallpaper.wiki/wp-content/uploads/2017/05/wallpaper.wiki-Sunset-serpentine-road-wallpapers-3840x2160-PIC-WPE0013986.jpg," +
-                "https://cdn.pixabay.com/photo/2018/05/28/22/11/message-in-a-bottle-3437294__340.jpg,"+
-        "https://ichef.bbci.co.uk/news/660/cpsprodpb/10D88/production/_103600096_mediaitem103600095.jpg," +
-        "https://cdn.pixabay.com/photo/2017/01/06/19/15/soap-bubble-1958650_960_720.jpg," +
-                "https://wallpaper.wiki/wp-content/uploads/2017/05/wallpaper.wiki-Sunset-serpentine-road-wallpapers-3840x2160-PIC-WPE0013986.jpg," +
-                "https://cdn.pixabay.com/photo/2018/05/28/22/11/message-in-a-bottle-3437294__340.jpg";
+        try {
+            JSONArray jsonArray = new JSONArray(placesDetailsEntity.getImages());
+            for (int i = 0 ; i<jsonArray.length(); i++){
+                int imageCount = i+1;
+                images.add(new FileNameAndUrlPojo(placesDetailsEntity.getName()+" Image "+imageCount, jsonArray.getString(i)));
+            }
 
-//        List<String> imagesListUrl = new ArrayList<String>(Arrays.asList(placesDetailsEntity.getImages().split(",")));
-        List<String> imagesListUrl = new ArrayList<String>(Arrays.asList(imagesString.split(",")));
-        for (String url : imagesListUrl){
-            images.add(new FileNameAndUrlPojo(placesDetailsEntity.getName(), url));
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         mAdapter.notifyDataSetChanged();
+
+
     }
 }

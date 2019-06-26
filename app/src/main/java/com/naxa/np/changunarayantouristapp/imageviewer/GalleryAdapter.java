@@ -1,7 +1,6 @@
 package com.naxa.np.changunarayantouristapp.imageviewer;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -11,8 +10,6 @@ import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.placedetailsview.FileNameAndUrlPojo;
 import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
