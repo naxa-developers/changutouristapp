@@ -30,8 +30,11 @@ import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadView;
 import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
+import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 import com.naxa.np.changunarayantouristapp.videoplayer.VideoPlayerActivity;
 import com.naxa.np.changunarayantouristapp.vrimage.VRImageViewActivity;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,9 +57,6 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
 
     FileDownloadPresenter fileDownloadPresenter;
 
-    PlacesDetailsEntity placesDetailsEntity;
-    boolean isFromMainPlaceList = false;
-
     private BaseRecyclerViewAdapter<NearByPlacesPojo, NearByPlacesViewHolder> adapter;
 
 
@@ -78,14 +78,27 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
     private void getnewIntent(Intent intent) {
         if(intent != null){
             HashMap<String, Object> hashMap = (HashMap<String, Object>) intent.getSerializableExtra("map");
-            isFromMainPlaceList = (boolean) hashMap.get(KEY_VALUE);
-            placesDetailsEntity = (PlacesDetailsEntity) hashMap.get(KEY_OBJECT);
+            boolean isFromMainPlaceList = (boolean) hashMap.get(KEY_VALUE);
+            PlacesDetailsEntity placesDetailsEntity = (PlacesDetailsEntity) hashMap.get(KEY_OBJECT);
 
             if(isFromMainPlaceList){
                 llNearByPlacesLayout.setVisibility(View.VISIBLE);
             }
 
+            if(placesDetailsEntity != null) {
+                setValueOnView(placesDetailsEntity);
+                setupToolbar(placesDetailsEntity.getName(), false);
+
+            }
         }
+    }
+
+    private void setValueOnView(@NotNull PlacesDetailsEntity placesDetailsEntity) {
+
+        tvPlaceTitle.setText(placesDetailsEntity.getName());
+        tvPlaceDesc.setText(placesDetailsEntity.getDescription());
+
+        LoadImageUtils.loadImageToViewFromSrc(ivImageMain, placesDetailsEntity.getPrimaryImage());
     }
 
     private void initUI() {
