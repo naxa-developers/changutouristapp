@@ -4,6 +4,7 @@ package com.naxa.np.changunarayantouristapp.utils;
 import android.Manifest;
 
 public class Constant {
+    public static final String KEY_VALUE = "value";
     public static final String KEY_OBJECT = "object";
     public static final String KEY_EXTRA_OBJECT = "extra_object";
 

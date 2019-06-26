@@ -1,6 +1,7 @@
 package com.naxa.np.changunarayantouristapp.database;
 
 import android.content.Context;
+import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -15,6 +16,8 @@ import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListE
 import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonListEntity;
 import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.utils.CreateAppMainFolderUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
@@ -65,9 +68,37 @@ public abstract class ISETRoomDatabase extends RoomDatabase {
             super.onOpen(db);
             // If you want to keep the data through app restarts,
             // comment out the following line.
+
         }
     };
 
+    public static class DeleteAllDbTableAsync extends AsyncTask<Void, Void, Void> {
+
+
+        private final GeoJsonCategoryDao mGeoJsonCategoryDao;
+        private final GeoJsonListDao mGeoJsonListDao;
+        private final PlaceDetailsDao mPlaceDetailsDao;
+
+        public DeleteAllDbTableAsync(@NotNull ISETRoomDatabase db) {
+            mGeoJsonCategoryDao = db.geoJsonCategoryDao();
+            mGeoJsonListDao = db.geoJsonListDao();
+            mPlaceDetailsDao = db.placeDetailsDao();
+
+        }
+
+        @Override
+        protected Void doInBackground(final Void... params) {
+            // Start the app with a clean database every time.
+            // Not needed if you only populate on creation.
+            mGeoJsonCategoryDao.deleteAll();
+            mGeoJsonListDao.deleteAll();
+            mPlaceDetailsDao.deleteAll();
+
+            return null;
+        }
+
+
+    }
 
 
 }

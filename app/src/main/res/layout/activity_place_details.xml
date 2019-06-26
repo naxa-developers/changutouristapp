@@ -41,6 +41,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="222dp"
                     android:layout_marginEnd="@dimen/activity_default_margin"
+                    android:visibility="gone"
                     />
 
                 <LinearLayout
@@ -64,6 +65,7 @@
                         android:id="@+id/rating_bar_place"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:rating="3.7"
                       />
 
                     <TextView

@@ -25,4 +25,5 @@ public class MarkerDetailsKeyValue {
     public void setValue(String value) {
         this.value = value;
     }
+
 }

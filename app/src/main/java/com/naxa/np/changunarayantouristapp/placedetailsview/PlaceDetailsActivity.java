@@ -1,6 +1,7 @@
 package com.naxa.np.changunarayantouristapp.placedetailsview;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -22,20 +23,25 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
+import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenter;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenterImpl;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadView;
 import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
+import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 import com.naxa.np.changunarayantouristapp.videoplayer.VideoPlayerActivity;
 import com.naxa.np.changunarayantouristapp.vrimage.VRImageViewActivity;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_OBJECT;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_VALUE;
 
 public class PlaceDetailsActivity extends BaseActivity implements View.OnClickListener, FileDownloadView {
 
@@ -51,7 +57,6 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
 
     FileDownloadPresenter fileDownloadPresenter;
 
-
     private BaseRecyclerViewAdapter<NearByPlacesPojo, NearByPlacesViewHolder> adapter;
 
 
@@ -65,6 +70,35 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
 
         setupToolbar("Place Details", false);
         initUI();
+
+        getnewIntent(getIntent());
+
+    }
+
+    private void getnewIntent(Intent intent) {
+        if(intent != null){
+            HashMap<String, Object> hashMap = (HashMap<String, Object>) intent.getSerializableExtra("map");
+            boolean isFromMainPlaceList = (boolean) hashMap.get(KEY_VALUE);
+            PlacesDetailsEntity placesDetailsEntity = (PlacesDetailsEntity) hashMap.get(KEY_OBJECT);
+
+            if(isFromMainPlaceList){
+                llNearByPlacesLayout.setVisibility(View.VISIBLE);
+            }
+
+            if(placesDetailsEntity != null) {
+                setValueOnView(placesDetailsEntity);
+                setupToolbar(placesDetailsEntity.getName(), false);
+
+            }
+        }
+    }
+
+    private void setValueOnView(@NotNull PlacesDetailsEntity placesDetailsEntity) {
+
+        tvPlaceTitle.setText(placesDetailsEntity.getName());
+        tvPlaceDesc.setText(placesDetailsEntity.getDescription());
+
+        LoadImageUtils.loadImageToViewFromSrc(ivImageMain, placesDetailsEntity.getPrimaryImage());
     }
 
     private void initUI() {
@@ -74,6 +108,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         ratingBar = findViewById(R.id.rating_bar_place);
         recyclerViewnearByPlaces = findViewById(R.id.rv_nearby_places);
         llNearByPlacesLayout = findViewById(R.id.ll_nearby_places_layout);
+        llNearByPlacesLayout.setVisibility(View.GONE);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -196,4 +231,5 @@ Dialog dialog;
         Log.d(TAG, "fileDownloadFailed: "+failedMsg);
 
     }
+
 }
