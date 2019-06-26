@@ -27,6 +27,7 @@ import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenter;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenterImpl;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadView;
+import com.naxa.np.changunarayantouristapp.imageviewer.ImageListGridViewActivity;
 import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
@@ -56,6 +57,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
     LinearLayout llNearByPlacesLayout;
 
     FileDownloadPresenter fileDownloadPresenter;
+    PlacesDetailsEntity placesDetailsEntity;
 
     private BaseRecyclerViewAdapter<NearByPlacesPojo, NearByPlacesViewHolder> adapter;
 
@@ -79,7 +81,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         if(intent != null){
             HashMap<String, Object> hashMap = (HashMap<String, Object>) intent.getSerializableExtra("map");
             boolean isFromMainPlaceList = (boolean) hashMap.get(KEY_VALUE);
-            PlacesDetailsEntity placesDetailsEntity = (PlacesDetailsEntity) hashMap.get(KEY_OBJECT);
+            placesDetailsEntity = (PlacesDetailsEntity) hashMap.get(KEY_OBJECT);
 
             if(isFromMainPlaceList){
                 llNearByPlacesLayout.setVisibility(View.VISIBLE);
@@ -128,8 +130,9 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_bottom_images:
-                    toolbar.setTitle("Images");
-                    return true;
+                    HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put(KEY_OBJECT, placesDetailsEntity);
+                    ActivityUtil.openActivity(ImageListGridViewActivity.class, PlaceDetailsActivity.this, hashMap, false);                    return true;
                 case R.id.action_bottom_videos:
                     toolbar.setTitle("Videos");
                     return true;
