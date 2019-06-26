@@ -9,6 +9,7 @@ import android.widget.VideoView;
 
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
+import com.naxa.np.changunarayantouristapp.placedetailsview.FileNameAndUrlPojo;
 import com.naxa.np.changunarayantouristapp.utils.CreateAppMainFolderUtils;
 
 import java.io.File;
@@ -37,8 +38,9 @@ public class VideoPlayerActivity extends BaseActivity {
             videoView = findViewById(R.id.video_view);
             HashMap<String, Object> hashMap = (HashMap<String, Object>) intent.getSerializableExtra("map");
             String fileName = (String) hashMap.get(KEY_VALUE);
+            FileNameAndUrlPojo fileNameAndUrlPojo = (FileNameAndUrlPojo) hashMap.get(KEY_OBJECT);
 
-            setupToolbar(fileName, false);
+            setupToolbar(fileNameAndUrlPojo.getName(), false);
 
 
             String folderPath = CreateAppMainFolderUtils.getAppMediaFolderName();

@@ -91,8 +91,9 @@ public class VideoListActivity extends BaseActivity implements FileDownloadView 
 
     }
 
+    FileNameAndUrlPojo fileNameAndUrlPojo1;
     private void setupRecyclerView(List<FileNameAndUrlPojo> videos) {
-
+        fileNameAndUrlPojo1 = new FileNameAndUrlPojo();
         LinearLayoutManager manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -105,6 +106,8 @@ public class VideoListActivity extends BaseActivity implements FileDownloadView 
                 videosAudiosListViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        fileNameAndUrlPojo1 = fileNameAndUrlPojo;
+
                         dialog = DialogFactory.createProgressDialog(VideoListActivity.this , "Please wait!!! \nDownloading video file"+fileNameAndUrlPojo.getName());
                         dialog.show();
 //                        fileDownloadPresenter.handleFileDownload("http://changu.naxa.com.np//assets//admin/SampleVideo_1280x720_1mb_(3).mp4", "Sample video file test");
@@ -137,6 +140,7 @@ public class VideoListActivity extends BaseActivity implements FileDownloadView 
 
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put(KEY_VALUE, fileName);
+        hashMap.put(KEY_OBJECT, fileNameAndUrlPojo1);
         ActivityUtil.openActivity(VideoPlayerActivity.class, VideoListActivity.this, hashMap, false);
     }
 
