@@ -41,6 +41,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="222dp"
                     android:layout_marginEnd="@dimen/activity_default_margin"
+                    android:visibility="gone"
                     />
 
                 <LinearLayout

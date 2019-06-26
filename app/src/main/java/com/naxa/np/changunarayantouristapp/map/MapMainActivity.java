@@ -70,6 +70,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -79,6 +80,8 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
 
+import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_OBJECT;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_VALUE;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_MUNICIPAL_BOARDER;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_WARD;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.MAP_OVERLAY_LAYER;
@@ -167,7 +170,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         btnGoThere.setOnClickListener(this);
         btnMapLayerData.setOnClickListener(this);
         btnMapLayerSwitch.setOnClickListener(this);
-        btnViewMarkerDetails.setOnClickListener(this);
 
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
@@ -733,6 +735,19 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
             if(!TextUtils.isEmpty(placesDetailsEntity.getPrimaryImage())) {
                 LoadImageUtils.loadImageToViewFromSrc(ivMarkerPrimaryImage, placesDetailsEntity.getPrimaryImage());
             }
+
+
+            btnViewMarkerDetails.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put(KEY_VALUE, false);
+                    hashMap.put(KEY_OBJECT, placesDetailsEntity);
+                    ActivityUtil.openActivity(PlaceDetailsActivity.class, MapMainActivity.this, hashMap, false);
+
+                }
+            });
+
         }
 
 //        mLayout.setAnchorPoint(0.52f);
@@ -792,11 +807,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
             case R.id.btnMapLayerSwitch:
                 setupMapOptionsDialog().show();
-                break;
-
-            case R.id.btn_view_marker_details:
-
-                ActivityUtil.openActivity(PlaceDetailsActivity.class, MapMainActivity.this);
                 break;
 
             case R.id.btnGoThere:
