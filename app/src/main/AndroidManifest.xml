@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -22,10 +21,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".videoplayer.VideoPlayerActivity"></activity>
+        <activity android:name=".imageviewer.ImageListGridViewActivity"></activity>
+        <activity android:name=".videoplayer.VideoPlayerActivity" />
         <activity
             android:name=".placedetailsview.PlaceDetailsActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity android:name=".map.MapMainActivity" />
         <activity android:name=".map.markerdetailspage.MarkerDetailsDisplayActivity" />
         <activity android:name=".login.LoginActivity" />
@@ -47,8 +47,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
-            android:exported="true"/>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
         <activity android:name=".splashscreen.WalkThroughSliderActivity" />
     </application>
 
