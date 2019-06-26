@@ -1,12 +1,18 @@
 package com.naxa.np.changunarayantouristapp.placedetailsview;
 
-public class FileNameAndUrlPojo {
+import java.io.Serializable;
+
+public class FileNameAndUrlPojo implements Serializable {
     String name;
     String fileUrl;
+
 
     public FileNameAndUrlPojo(String name, String fileUrl) {
         this.name = name;
         this.fileUrl = fileUrl;
+    }
+
+    public FileNameAndUrlPojo() {
     }
 
     public String getName() {

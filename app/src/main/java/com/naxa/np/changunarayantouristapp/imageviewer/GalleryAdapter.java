@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.placedetailsview.FileNameAndUrlPojo;
+import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 
 import java.util.List;
 
@@ -50,11 +51,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     public void onBindViewHolder(MyViewHolder holder, int position) {
         FileNameAndUrlPojo image = images.get(position);
 
-        Glide.with(mContext).load(image.getFileUrl())
-                .thumbnail(0.5f)
-                .crossFade()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(holder.thumbnail);
+        LoadImageUtils.loadImageToViewFromSrc(holder.thumbnail, image.getFileUrl());
+
     }
 
     @Override
