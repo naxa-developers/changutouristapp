@@ -77,7 +77,7 @@ public class LoadImageUtils {
 
         try {
             Bitmap bitmap = null;
-            bitmap = BitmapFactory.decodeFile(CreateAppMainFolderUtils.getAppMapDataFolderName()+"/"+imageFileName+".jpg");
+            bitmap = BitmapFactory.decodeFile(CreateAppMainFolderUtils.getAppMapDataFolderName()+"/"+imageFileName+".png");
             return bitmap;
         } catch (Exception e) {
             e.printStackTrace();
