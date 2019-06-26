@@ -20,7 +20,7 @@ public class VideosAudiosListViewHolder extends RecyclerView.ViewHolder  {
 
     }
 
-    void bindView(FileNameAndUrlPojo fileNameAndUrlPojo) {
+    public void bindView(FileNameAndUrlPojo fileNameAndUrlPojo) {
         tvFileName.setText(fileNameAndUrlPojo.getName());
 
     }
