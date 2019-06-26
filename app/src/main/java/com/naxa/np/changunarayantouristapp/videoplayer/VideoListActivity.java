@@ -3,6 +3,7 @@ package com.naxa.np.changunarayantouristapp.videoplayer;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -64,7 +65,9 @@ public class VideoListActivity extends BaseActivity implements FileDownloadView 
 
             if (placesDetailsEntity != null) {
                 setupToolbar(placesDetailsEntity.getName(), false);
-                fetchVideosList();
+                if(!TextUtils.isEmpty(placesDetailsEntity.getVideos())) {
+                    fetchVideosList();
+                }
             }
         }
     }
