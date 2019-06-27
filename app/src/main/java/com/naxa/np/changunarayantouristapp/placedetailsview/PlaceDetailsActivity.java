@@ -60,6 +60,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
 
     FileDownloadPresenter fileDownloadPresenter;
     PlacesDetailsEntity placesDetailsEntity;
+    boolean isFromMainPlaceList;
 
     private BaseRecyclerViewAdapter<NearByPlacesPojo, NearByPlacesViewHolder> adapter;
 
@@ -84,11 +85,12 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
     private void getnewIntent(Intent intent) {
         if(intent != null){
             HashMap<String, Object> hashMap = (HashMap<String, Object>) intent.getSerializableExtra("map");
-            boolean isFromMainPlaceList = (boolean) hashMap.get(KEY_VALUE);
+            isFromMainPlaceList = (boolean) hashMap.get(KEY_VALUE);
             placesDetailsEntity = (PlacesDetailsEntity) hashMap.get(KEY_OBJECT);
 
             if(isFromMainPlaceList){
                 llNearByPlacesLayout.setVisibility(View.VISIBLE);
+
             }
 
             if(placesDetailsEntity != null) {
@@ -152,7 +154,10 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
                     return true;
 
                 case R.id.action_bottom_map:
-                    ActivityUtil.openActivity(MapMainActivity.class, PlaceDetailsActivity.this);
+                    HashMap<String, Object> hashMap3 = new HashMap<>();
+                    hashMap3.put(KEY_VALUE, isFromMainPlaceList);
+                    hashMap3.put(KEY_OBJECT, placesDetailsEntity);
+                    ActivityUtil.openActivity(AudioListActivity.class, PlaceDetailsActivity.this, hashMap3, false);
                     return true;
             }
             return false;
