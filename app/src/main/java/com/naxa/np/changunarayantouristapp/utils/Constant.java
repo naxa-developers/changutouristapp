@@ -43,8 +43,8 @@ public class Constant {
         public static final int KEY_STREET = 0 ;
         public static final int KEY_SATELLITE = 1;
         public static final int KEY_OPENSTREET = 2;
-        public static final int KEY_MUNICIPAL_BOARDER = 3;
-        public static final int KEY_WARD = 4;
+        public static final int KEY_CHANGUNARAYAN_BOARDER = 3;
+        public static final int KEY_NAGARKOT_BOARDER = 4;
     }
 
 }

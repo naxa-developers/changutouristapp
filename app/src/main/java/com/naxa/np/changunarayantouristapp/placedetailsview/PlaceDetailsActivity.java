@@ -157,7 +157,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
                     HashMap<String, Object> hashMap3 = new HashMap<>();
                     hashMap3.put(KEY_VALUE, isFromMainPlaceList);
                     hashMap3.put(KEY_OBJECT, placesDetailsEntity);
-                    ActivityUtil.openActivity(AudioListActivity.class, PlaceDetailsActivity.this, hashMap3, false);
+                    ActivityUtil.openActivity(MapMainActivity.class, PlaceDetailsActivity.this, hashMap3, false);
                     return true;
             }
             return false;
