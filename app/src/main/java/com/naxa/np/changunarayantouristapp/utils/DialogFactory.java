@@ -366,4 +366,23 @@ public final class DialogFactory {
     }
 
 
+
+
+
+
+
+
+
+    public interface AudioPlayerDialogListner {
+        void onAudioPlay();
+
+        void onAudioPause();
+
+        void onAudioStop();
+
+        void onAudioForward();
+
+        void onAudioBackward();
+    }
+
 }

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/transparent"
+    >
+
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/spacing_medium"
+        android:layout_marginTop="@dimen/activity_default_margin"
+        android:background="@color/white"
+        >
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/btn_close_dialog"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/ic_circlular_purple_close_button"
+
+                />
+            <TextView
+                android:layout_below="@id/btn_close_dialog"
+                android:id="@+id/tv_audio_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/LanguageSelectorTextStyle"
+                android:text="Audio title"
+                android:gravity="center"
+                />
+
+            <LinearLayout
+                android:layout_below="@id/tv_audio_title"
+                android:id="@+id/ll_fast_backward_stop_layout"
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ToggleButton
+                    android:id="@+id/btn_audio_back"
+                    style="@style/BloodCustomToggleButtonStyle"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:checked="false"
+                    android:text="@string/reverse" />
+
+                <ToggleButton
+                    android:id="@+id/btn_audio_stop"
+                    style="@style/BloodCustomToggleButtonStyle"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:checked="false"
+                    android:text="@string/stop" />
+
+                <ToggleButton
+                    android:id="@+id/btn_audio_fast"
+                    style="@style/BloodCustomToggleButtonStyle"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:checked="false"
+                    android:text="@string/fast" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+            android:layout_below="@+id/ll_fast_backward_stop_layout"
+            android:id="@+id/ll_play_pause_layout"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ToggleButton
+                android:id="@+id/btn_audio_play"
+                style="@style/BloodCustomToggleButtonStyle"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:checked="false"
+                android:text="@string/play" />
+
+            <ToggleButton
+                android:id="@+id/btn_audio_pause"
+                style="@style/BloodCustomToggleButtonStyle"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:checked="false"
+                android:text="@string/pause" />
+
+        </LinearLayout>
+
+
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
