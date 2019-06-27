@@ -66,7 +66,7 @@ public class AudioListActivity extends BaseActivity implements FileDownloadView 
 
             if (placesDetailsEntity != null) {
                 setupToolbar(placesDetailsEntity.getName(), false);
-                if(!TextUtils.isEmpty(placesDetailsEntity.getAudio())){
+                if (!TextUtils.isEmpty(placesDetailsEntity.getAudio())) {
                     fetchAudioList();
                 }
             }
@@ -95,6 +95,7 @@ public class AudioListActivity extends BaseActivity implements FileDownloadView 
     }
 
     FileNameAndUrlPojo fileNameAndUrlPojo1;
+
     private void setupRecyclerView(List<FileNameAndUrlPojo> audios) {
         fileNameAndUrlPojo1 = new FileNameAndUrlPojo();
         LinearLayoutManager manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
@@ -104,13 +105,13 @@ public class AudioListActivity extends BaseActivity implements FileDownloadView 
 
             @Override
             public void viewBinded(VideosAudiosListViewHolder videosAudiosListViewHolder, FileNameAndUrlPojo fileNameAndUrlPojo, int position) {
-                Log.d(TAG, "viewBinded: "+position);
+                Log.d(TAG, "viewBinded: " + position);
                 videosAudiosListViewHolder.bindView(fileNameAndUrlPojo);
                 videosAudiosListViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         fileNameAndUrlPojo1 = fileNameAndUrlPojo;
-                        dialog = DialogFactory.createProgressDialog(AudioListActivity.this , "Please wait!!! \nDownloading audio file"+fileNameAndUrlPojo.getName());
+                        dialog = DialogFactory.createProgressDialog(AudioListActivity.this, "Please wait!!! \nDownloading audio file" + fileNameAndUrlPojo.getName());
                         dialog.show();
 //                        fileDownloadPresenter.handleFileDownload("http://changu.naxa.com.np//assets//admin/SampleVideo_1280x720_1mb_(3).mp4", "Sample video file test");
                         fileDownloadPresenter.handleFileDownload(fileNameAndUrlPojo.getFileUrl(), fileNameAndUrlPojo.getName());
@@ -136,10 +137,11 @@ public class AudioListActivity extends BaseActivity implements FileDownloadView 
 
 
     MediaPlayer mp;
+
     @Override
     public void fileDownloadSuccess(String fileName, String successMsg, boolean isAlreadyExists) {
         dialog.dismiss();
-        Log.d(TAG, "fileDownloadSuccess: "+fileName + " , "+ successMsg + " , "+isAlreadyExists);
+        Log.d(TAG, "fileDownloadSuccess: " + fileName + " , " + successMsg + " , " + isAlreadyExists);
 
 
         mp = new MediaPlayer();
@@ -155,25 +157,49 @@ public class AudioListActivity extends BaseActivity implements FileDownloadView 
         dialogFactory.createAudioPlayerDialog(AudioListActivity.this, fileNameAndUrlPojo1.getName(), new DialogFactory.AudioPlayerDialogListner() {
             @Override
             public void onAudioPlay() {
-                mp.start();
-            }
+                if (!mp.isPlaying()) {
+                    try {
+                        mp.start();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }            }
 
             @Override
             public void onAudioPause() {
-                mp.pause();
-
+                if (mp.isPlaying()) {
+                    try {
+                        mp.pause();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
             public void onAudioStop() {
-                mp.stop();
-
+                if (mp.isPlaying()) {
+                    try {
+                        mp.stop();
+                        mp.reset();
+                        mp.setDataSource(CreateAppMainFolderUtils.getAppMediaFolderName() + File.separator + fileName);
+                        mp.prepare();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-            
+
 
             @Override
             public void onDialogClose() {
-                mp.stop();
+                if (mp.isPlaying()) {
+                    try {
+                        mp.stop();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }).show();
 
@@ -182,7 +208,7 @@ public class AudioListActivity extends BaseActivity implements FileDownloadView 
     @Override
     public void fileDownloadFailed(String failedMsg) {
         dialog.dismiss();
-        Log.d(TAG, "fileDownloadFailed: "+failedMsg);
+        Log.d(TAG, "fileDownloadFailed: " + failedMsg);
 
     }
 }
