@@ -1,16 +1,11 @@
 package com.naxa.np.changunarayantouristapp.network;
 
-import com.naxa.np.changunarayantouristapp.login.UserLoginDetails;
 import com.naxa.np.changunarayantouristapp.login.UserLoginResponse;
 import com.naxa.np.changunarayantouristapp.map.mapcategory.GeojsonCategoriesListResponse;
-import com.naxa.np.changunarayantouristapp.selectlanguage.LanguageDetails;
 import com.naxa.np.changunarayantouristapp.selectlanguage.LanguageDetailsResponse;
-
-import java.util.List;
 
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -37,4 +32,9 @@ public interface NetworkApiInterface {
     @POST(UrlConstant.FETCH_GEOJSON_FILES)
     @FormUrlEncoded
     Observable<ResponseBody> getGeoJsonDetails(@Field("api_key") String api_key, @Field("cat_table") String catTable);
+
+
+    @POST(UrlConstant.FETCH_PLACE_DETAILS)
+    @FormUrlEncoded
+    Observable<ResponseBody> getMainPlacesDetails(@Field("api_key") String api_key);
 }

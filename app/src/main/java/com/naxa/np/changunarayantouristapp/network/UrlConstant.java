@@ -15,5 +15,6 @@ public class UrlConstant {
         public static final String POST_USER_Verification_URL = "mobileapi/mobapi/authCheck";
         public static final String FETCH_GEOJSON_CATEGORIES_LIST = "mobileapi/mobapi/categoryApi";
         public static final String FETCH_GEOJSON_FILES= "mobileapi/mobapi/geojson";
+        public static final String FETCH_PLACE_DETAILS= "mobileapi/mobapi/place_details_api";
 
 }
