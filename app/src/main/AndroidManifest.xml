@@ -21,7 +21,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".videoplayer.VideoListActivity"></activity>
+        <activity android:name=".audioplayer.AudioListActivity"></activity>
+        <activity android:name=".videoplayer.VideoListActivity" />
         <activity android:name=".imageviewer.ImageListGridViewActivity" />
         <activity android:name=".videoplayer.VideoPlayerActivity" />
         <activity

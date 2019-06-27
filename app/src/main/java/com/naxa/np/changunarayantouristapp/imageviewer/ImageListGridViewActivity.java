@@ -2,6 +2,7 @@ package com.naxa.np.changunarayantouristapp.imageviewer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -65,7 +66,9 @@ public class ImageListGridViewActivity extends BaseActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
-        fetchImagesList();
+        if(!TextUtils.isEmpty(placesDetailsEntity.getImages())) {
+            fetchImagesList();
+        }
 
            recyclerView.addOnItemTouchListener(new GalleryAdapter.RecyclerTouchListener(getApplicationContext(), recyclerView, new GalleryAdapter.ClickListener() {
             @Override

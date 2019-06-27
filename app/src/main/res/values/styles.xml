@@ -85,4 +85,18 @@
         <item name="android:windowExitAnimation">@anim/dialog_slide_bottom</item>
     </style>
 
+
+    <style name="BloodCustomToggleButtonStyle">
+        <item name="android:layout_width">35dp</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:background">@drawable/audio_player_button_group_toggle_custom_drawable</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:layout_margin">12dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/audio_player_button_text_toggle</item>
+        <item name="android:textOff"></item>
+        <item name="android:textOn"></item>
+    </style>
+
 </resources>

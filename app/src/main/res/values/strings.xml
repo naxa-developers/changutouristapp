@@ -69,5 +69,11 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pause">Pause</string>
+    <string name="play">Play</string>
+    <string name="reverse">Reverse</string>
+    <string name="stop">Stop</string>
+    <string name="fast">Fast</string>
+    <string name="audio_title">Audio title</string>
 
 </resources>

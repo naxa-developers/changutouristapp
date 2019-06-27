@@ -10,10 +10,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_below="@id/toolbar_layout"
-        android:id="@+id/recycler_view_videos"
+        android:id="@+id/recycler_view_audios"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       android:layout_margin="@dimen/activity_default_margin"
+        android:layout_margin="@dimen/activity_default_margin"
         />
 
 </RelativeLayout>

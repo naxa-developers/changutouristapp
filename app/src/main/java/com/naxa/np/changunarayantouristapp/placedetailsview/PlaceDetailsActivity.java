@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.naxa.np.changunarayantouristapp.R;
+import com.naxa.np.changunarayantouristapp.audioplayer.AudioListActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
 import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
@@ -145,7 +146,9 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
                     return true;
 
                 case R.id.action_bottom_audios:
-                    toolbar.setTitle("Audios");
+                    HashMap<String, Object> hashMap2 = new HashMap<>();
+                    hashMap2.put(KEY_OBJECT, placesDetailsEntity);
+                    ActivityUtil.openActivity(AudioListActivity.class, PlaceDetailsActivity.this, hashMap2, false);
                     return true;
 
                 case R.id.action_bottom_map:
