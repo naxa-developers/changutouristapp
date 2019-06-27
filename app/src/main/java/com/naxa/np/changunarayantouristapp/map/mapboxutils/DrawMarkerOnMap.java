@@ -248,15 +248,22 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
 
     }
 
-    public void addSingleMarker (String imageName, String snippest, LatLng latLng){
+    public void addSingleMarker (String imageName, String snippest){
 
         Icon icon ;
 
-        if((LoadImageUtils.getImageBitmapFromDrawable(context, imageName)) == null){
+        if((LoadImageUtils.getImageBitmapFromStorage(imageName)) == null){
             icon = IconFactory.getInstance(context).fromResource(R.drawable.mapbox_marker_icon_default);
+            Log.d(TAG, "AddListOfMarkerOnMap: "+imageName);
         }else {
-            icon = IconFactory.getInstance(context).fromBitmap(LoadImageUtils.getImageBitmapFromDrawable(context, imageName));
+
+            icon = IconFactory.getInstance(context).fromBitmap(LoadImageUtils.getImageBitmapFromStorage(imageName));
+            Log.d(TAG, "AddListOfMarkerOnMap: else "+imageName);
         }
+
+        PlacesDetailsEntity placesDetailsEntity = gson.fromJson(snippest, PlacesDetailsEntity.class);
+
+        LatLng latLng = new LatLng(Double.parseDouble(placesDetailsEntity.getLatitude()), Double.parseDouble(placesDetailsEntity.getLongitude()));
 
 //        Add the custom icon marker to the map
         Marker marker = mapboxMap.addMarker(new MarkerOptions()

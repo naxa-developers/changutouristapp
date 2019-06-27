@@ -41,11 +41,11 @@ import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.SectionMu
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_MUNICIPAL_BOARDER;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_CHANGUNARAYAN_BOARDER;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_OPENSTREET;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_SATELLITE;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_STREET;
-import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_WARD;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_NAGARKOT_BOARDER;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.MAP_BASE_LAYER;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.MAP_OVERLAY_LAYER;
 
@@ -212,14 +212,14 @@ public final class DialogFactory {
         }
 
 
-        if (sharedPreferenceUtils.getIntValue(MAP_OVERLAY_LAYER, -1) == KEY_MUNICIPAL_BOARDER) {
+        if (sharedPreferenceUtils.getIntValue(MAP_OVERLAY_LAYER, -1) == KEY_CHANGUNARAYAN_BOARDER) {
             municipality.setChecked(true);
             ward.setChecked(false);
-            listner.onMetropolitanClick();
-        } else if (sharedPreferenceUtils.getIntValue(MAP_OVERLAY_LAYER, -1) == KEY_WARD) {
+            listner.onChangunarayanBoarderClick();
+        } else if (sharedPreferenceUtils.getIntValue(MAP_OVERLAY_LAYER, -1) == KEY_NAGARKOT_BOARDER) {
             ward.setChecked(true);
             municipality.setChecked(false);
-            listner.onWardClick();
+            listner.onNagarkotBoarderClick();
         }
 
 
@@ -271,8 +271,8 @@ public final class DialogFactory {
                 // do something, the isChecked will be
                 if (isChecked == true) {
                     ward.setChecked(false);
-                    listner.onMetropolitanClick();
-                    sharedPreferenceUtils.setValue(MAP_OVERLAY_LAYER, KEY_MUNICIPAL_BOARDER);
+                    listner.onChangunarayanBoarderClick();
+                    sharedPreferenceUtils.setValue(MAP_OVERLAY_LAYER, KEY_CHANGUNARAYAN_BOARDER);
 
                 }
             }
@@ -283,8 +283,8 @@ public final class DialogFactory {
                 // do something, the isChecked will be
                 if (isChecked == true) {
                     municipality.setChecked(false);
-                    listner.onWardClick();
-                    sharedPreferenceUtils.setValue(MAP_OVERLAY_LAYER, KEY_WARD);
+                    listner.onNagarkotBoarderClick();
+                    sharedPreferenceUtils.setValue(MAP_OVERLAY_LAYER, KEY_NAGARKOT_BOARDER);
                 }
             }
         });
@@ -302,9 +302,9 @@ public final class DialogFactory {
 
         void onOpenStreetClick();
 
-        void onMetropolitanClick();
+        void onChangunarayanBoarderClick();
 
-        void onWardClick();
+        void onNagarkotBoarderClick();
     }
 
 

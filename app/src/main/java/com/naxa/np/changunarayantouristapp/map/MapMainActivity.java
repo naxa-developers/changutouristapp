@@ -3,6 +3,7 @@ package com.naxa.np.changunarayantouristapp.map;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -82,8 +83,8 @@ import io.reactivex.subscribers.DisposableSubscriber;
 
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_OBJECT;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_VALUE;
-import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_MUNICIPAL_BOARDER;
-import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_WARD;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_CHANGUNARAYAN_BOARDER;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_NAGARKOT_BOARDER;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.MAP_OVERLAY_LAYER;
 
 public class MapMainActivity extends BaseActivity implements OnMapReadyCallback, PermissionsListener, MapboxMap.OnMapClickListener,
@@ -117,6 +118,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
     GeoJsonCategoryViewModel geoJsonCategoryViewModel;
     PlaceDetailsEntityViewModel placeDetailsEntityViewModel;
+    PlacesDetailsEntity placesDetailsEntity;
+    boolean isFromMainPlaceList = true;
 
 
     String filename = "";
@@ -151,6 +154,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
         setupToolbar("Explore", false);
         initUI(savedInstanceState);
+
+
     }
 
     private void initUI(Bundle savedInstanceState) {
@@ -206,6 +211,28 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 });
 
 
+        netIntent(getIntent());
+
+    }
+
+    boolean isFromIntent = false;
+    private void netIntent(Intent intent) {
+
+        try {
+
+            if (intent != null) {
+                HashMap<String, Object> hashMap = (HashMap<String, Object>) intent.getSerializableExtra("map");
+                isFromMainPlaceList = (boolean) hashMap.get(KEY_VALUE);
+                placesDetailsEntity = (PlacesDetailsEntity) hashMap.get(KEY_OBJECT);
+
+                if (placesDetailsEntity != null) {
+                    setupToolbar(placesDetailsEntity.getName(), false);
+                    isFromIntent = true;
+                }
+            }
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
     }
 
 
@@ -250,16 +277,16 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     private Dialog setupMapOptionsDialog() {
         // launch new intent instead of loading fragment
 
-        int MAP_OVERLAY_ID = sharedPreferenceUtils.getIntValue(MAP_OVERLAY_LAYER, -1);
+        int MAP_PLACE_BOUNDARY_ID = sharedPreferenceUtils.getIntValue(MAP_OVERLAY_LAYER, -1);
 
         return DialogFactory.createBaseLayerDialog(MapMainActivity.this, new DialogFactory.CustomBaseLayerDialogListner() {
             @Override
             public void onStreetClick() {
                 mapView.setStyleUrl(getResources().getString(R.string.mapbox_style_mapbox_streets));
-                if (MAP_OVERLAY_ID == KEY_MUNICIPAL_BOARDER) {
-                    onMetropolitanClick();
-                } else if (MAP_OVERLAY_ID == KEY_WARD) {
-                    onWardClick();
+                if (MAP_PLACE_BOUNDARY_ID == KEY_CHANGUNARAYAN_BOARDER) {
+                    onChangunarayanBoarderClick();
+                } else if (MAP_PLACE_BOUNDARY_ID == KEY_NAGARKOT_BOARDER) {
+                    onNagarkotBoarderClick();
                 }
 
             }
@@ -267,26 +294,26 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
             @Override
             public void onSatelliteClick() {
                 mapView.setStyleUrl(getResources().getString(R.string.mapbox_style_satellite));
-                if (MAP_OVERLAY_ID == KEY_MUNICIPAL_BOARDER) {
-                    onMetropolitanClick();
-                } else if (MAP_OVERLAY_ID == KEY_WARD) {
-                    onWardClick();
+                if (MAP_PLACE_BOUNDARY_ID == KEY_CHANGUNARAYAN_BOARDER) {
+                    onChangunarayanBoarderClick();
+                } else if (MAP_PLACE_BOUNDARY_ID == KEY_NAGARKOT_BOARDER) {
+                    onNagarkotBoarderClick();
                 }
 
             }
 
             @Override
             public void onOpenStreetClick() {
-                if (MAP_OVERLAY_ID == KEY_MUNICIPAL_BOARDER) {
-                    onMetropolitanClick();
-                } else if (MAP_OVERLAY_ID == KEY_WARD) {
-                    onWardClick();
+                if (MAP_PLACE_BOUNDARY_ID == KEY_CHANGUNARAYAN_BOARDER) {
+                    onChangunarayanBoarderClick();
+                } else if (MAP_PLACE_BOUNDARY_ID == KEY_NAGARKOT_BOARDER) {
+                    onNagarkotBoarderClick();
                 }
 
             }
 
             @Override
-            public void onMetropolitanClick() {
+            public void onChangunarayanBoarderClick() {
                 filename = "changunarayan_boundary.geojson";
                 drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
                 removeLayerFromMap("nagarkot_boundary.geojson");
@@ -294,7 +321,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
             }
 
             @Override
-            public void onWardClick() {
+            public void onNagarkotBoarderClick() {
                 filename = "nagarkot_boundary.geojson";
                 drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
                 removeLayerFromMap("changunarayan_boundary.geojson");
@@ -448,6 +475,13 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         setupMapOptionsDialog();
 
         setupMapDataLayerDialog(true).hide();
+
+
+        if(isFromIntent) {
+            if (!isFromMainPlaceList) {
+                drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity));
+            }
+        }
 
         mapView.invalidate();
     }
