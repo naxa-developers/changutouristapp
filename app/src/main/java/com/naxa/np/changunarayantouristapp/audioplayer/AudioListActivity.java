@@ -2,6 +2,7 @@ package com.naxa.np.changunarayantouristapp.audioplayer;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -19,12 +20,14 @@ import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenter;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenterImpl;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadView;
 import com.naxa.np.changunarayantouristapp.placedetailsview.FileNameAndUrlPojo;
+import com.naxa.np.changunarayantouristapp.utils.CreateAppMainFolderUtils;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.videoplayer.VideosAudiosListViewHolder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -107,7 +110,6 @@ public class AudioListActivity extends BaseActivity implements FileDownloadView 
                     @Override
                     public void onClick(View v) {
                         fileNameAndUrlPojo1 = fileNameAndUrlPojo;
-
                         dialog = DialogFactory.createProgressDialog(AudioListActivity.this , "Please wait!!! \nDownloading audio file"+fileNameAndUrlPojo.getName());
                         dialog.show();
 //                        fileDownloadPresenter.handleFileDownload("http://changu.naxa.com.np//assets//admin/SampleVideo_1280x720_1mb_(3).mp4", "Sample video file test");
@@ -132,15 +134,49 @@ public class AudioListActivity extends BaseActivity implements FileDownloadView 
 
     }
 
+
+    MediaPlayer mp;
     @Override
     public void fileDownloadSuccess(String fileName, String successMsg, boolean isAlreadyExists) {
         dialog.dismiss();
         Log.d(TAG, "fileDownloadSuccess: "+fileName + " , "+ successMsg + " , "+isAlreadyExists);
 
-//        HashMap<String, Object> hashMap = new HashMap<>();
-//        hashMap.put(KEY_VALUE, fileName);
-//        hashMap.put(KEY_OBJECT, fileNameAndUrlPojo1);
-//        ActivityUtil.openActivity(VideoPlayerActivity.class, VideoListActivity.this, hashMap, false);
+
+        mp = new MediaPlayer();
+//set up MediaPlayer
+        try {
+            mp.setDataSource(CreateAppMainFolderUtils.getAppMediaFolderName() + File.separator + fileName);
+            mp.prepare();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        DialogFactory dialogFactory = new DialogFactory();
+        dialogFactory.createAudioPlayerDialog(AudioListActivity.this, fileNameAndUrlPojo1.getName(), new DialogFactory.AudioPlayerDialogListner() {
+            @Override
+            public void onAudioPlay() {
+                mp.start();
+            }
+
+            @Override
+            public void onAudioPause() {
+                mp.pause();
+
+            }
+
+            @Override
+            public void onAudioStop() {
+                mp.stop();
+
+            }
+            
+
+            @Override
+            public void onDialogClose() {
+                mp.stop();
+            }
+        }).show();
+
     }
 
     @Override

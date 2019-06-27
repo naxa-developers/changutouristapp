@@ -14,14 +14,15 @@ import android.content.DialogInterface;
 
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
@@ -37,6 +38,7 @@ import com.naxa.np.changunarayantouristapp.map.mapboxutils.MapDataLayerDialogClo
 import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.SectionMultipleItem;
 import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.SectionMultipleItemAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_MUNICIPAL_BOARDER;
@@ -53,6 +55,9 @@ public final class DialogFactory {
     private static final String TAG = "DialogFactory";
 
     private ProgressDialog progressDialog;
+
+    public DialogFactory() {
+    }
 
     public static Dialog createSimpleOkErrorDialog(Context context, String title, String message) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context)
@@ -74,6 +79,8 @@ public final class DialogFactory {
                 });
         return alertDialog.create();
     }
+
+
 
     public interface onClickListner {
         public void onClick();
@@ -369,9 +376,85 @@ public final class DialogFactory {
 
 
 
+    public Dialog createAudioPlayerDialog(@NonNull Context context, @NonNull String audioName, @NonNull AudioPlayerDialogListner listner) {
+
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.audio_player_dialog_layout);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+
+        TextView textView = dialog.findViewById(R.id.tv_audio_title);
+        textView.setText(audioName);
+
+        ImageButton dialogButton =  dialog.findViewById(R.id.btn_close_dialog);
+        ToggleButton btnAudioPlay = dialog.findViewById(R.id.btn_audio_play);
+        ToggleButton btnAudioPause = dialog.findViewById(R.id.btn_audio_pause);
+        ToggleButton btnAudioStop = dialog.findViewById(R.id.btn_audio_stop);
+
+        setAudioButtonList();
+
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listner.onDialogClose();
+                dialog.dismiss();
+            }
+        });
+
+        btnAudioPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setButtonChecked(R.id.btn_audio_play, dialog);
+                listner.onAudioPlay();
+            }
+        });
+
+        btnAudioPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setButtonChecked(R.id.btn_audio_pause, dialog);
+                listner.onAudioPause();
+            }
+        });
+
+
+        btnAudioStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setButtonChecked(R.id.btn_audio_stop, dialog);
+                listner.onAudioStop();
+            }
+        });
 
 
 
+        dialog.getWindow().setAttributes(lp);
+        return dialog;
+    }
+
+    List<Integer> audioButtonList = new ArrayList<Integer>();
+    private  void setAudioButtonList(){
+        audioButtonList.add(R.id.btn_audio_play);
+        audioButtonList.add(R.id.btn_audio_pause);
+        audioButtonList.add(R.id.btn_audio_stop);
+    }
+
+
+    private void setButtonChecked(int buttonId, Dialog dialog){
+        for (int i = 0; i< audioButtonList.size(); i++){
+            ToggleButton toggleButton = (ToggleButton) dialog.findViewById(audioButtonList.get(i));
+            toggleButton.setChecked(false);
+        }
+        ToggleButton toggleButton = (ToggleButton) dialog.findViewById(buttonId);
+        toggleButton.setChecked(true);
+
+    }
 
     public interface AudioPlayerDialogListner {
         void onAudioPlay();
@@ -380,9 +463,7 @@ public final class DialogFactory {
 
         void onAudioStop();
 
-        void onAudioForward();
-
-        void onAudioBackward();
+        void onDialogClose();
     }
 
 }

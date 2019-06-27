@@ -74,5 +74,6 @@
     <string name="reverse">Reverse</string>
     <string name="stop">Stop</string>
     <string name="fast">Fast</string>
+    <string name="audio_title">Audio title</string>
 
 </resources>
