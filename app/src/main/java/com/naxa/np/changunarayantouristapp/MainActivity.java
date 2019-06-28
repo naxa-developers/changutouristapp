@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.lifecycle.ViewModelProviders;
@@ -34,6 +35,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
 
     TextView tvQRScan, tvVRImage, tvViewOnMap;
+    ImageButton btnScanQR, btnViewOnMap;
     GeoJsonCategoryViewModel geoJsonCategoryViewModel;
     GeoJsonListViewModel geoJsonListViewModel;
     PlaceDetailsEntityViewModel placeDetailsEntityViewModel;
@@ -69,6 +71,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         tvVRImage = findViewById(R.id.tv_view_vr_image);
         tvViewOnMap = findViewById(R.id.tv_view_map);
 
+        btnScanQR = findViewById(R.id.btn_qr_scan);
+        btnViewOnMap = findViewById(R.id.btn_view_on_map);
+        btnScanQR.setOnClickListener(this);
+        btnViewOnMap.setOnClickListener(this);
+
         tvQRScan.setOnClickListener(this);
         tvVRImage.setOnClickListener(this);
         tvViewOnMap.setOnClickListener(this);
@@ -90,6 +97,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.tv_view_map:
                 ActivityUtil.openActivity(MapMainActivity.class, MainActivity.this);
 
+                break;
+
+            case R.id.btn_qr_scan:
+                ActivityUtil.openActivity(QRCodeReaderActivity.class, MainActivity.this);
+                break;
+
+            case R.id.btn_view_on_map:
+                ActivityUtil.openActivity(MapMainActivity.class, MainActivity.this);
                 break;
 
         }

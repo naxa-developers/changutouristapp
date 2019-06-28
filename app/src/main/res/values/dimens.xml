@@ -17,6 +17,7 @@
     <dimen name="spacing_xlarge">32dp</dimen>
     <dimen name="spacing_xxlarge">36dp</dimen>
     <dimen name="spacing_xxxlarge">40dp</dimen>
+    <dimen name="spacing_home_button_margin">56dp</dimen>
 
     <dimen name="dp_10">10dp</dimen>
     <dimen name="dp_4">4dp</dimen>
@@ -45,9 +46,10 @@
     <dimen name="material_text_title2">18sp</dimen>
     <dimen name="material_text_headline">24sp</dimen>
     <dimen name="material_text_display1">34sp</dimen>
-    <dimen name="material_text_display2">45sp</dimen>
-    <dimen name="material_text_display3">56sp</dimen>
-    <dimen name="material_text_display4">112sp</dimen>
+    <dimen name="material_text_display2">34sp</dimen>
+    <dimen name="material_text_display3">45sp</dimen>
+    <dimen name="material_text_display4">56sp</dimen>
+    <dimen name="material_text_display5">112sp</dimen>
 
     <!--intro slider dimens start-->
     <dimen name="dots_height">30dp</dimen>
