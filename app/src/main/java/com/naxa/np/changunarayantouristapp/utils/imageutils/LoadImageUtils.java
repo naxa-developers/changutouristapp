@@ -73,6 +73,7 @@ public class LoadImageUtils {
         return  bitmap;
     }
 
+    @Nullable
     public static Bitmap getImageBitmapFromStorage(@NonNull String imageFileName){
 
         try {

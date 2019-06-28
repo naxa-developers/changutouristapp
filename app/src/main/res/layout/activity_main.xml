@@ -5,13 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/homepage_changu_bg_img"
     tools:context=".MainActivity">
 
-    <include layout="@layout/toolbar"
-        android:id="@+id/toolbar_layout"/>
 
     <TextView
-        android:layout_below="@id/toolbar_layout"
         android:id="@+id/tv_qr_scanner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
