@@ -10,6 +10,7 @@
 
 <com.sothree.slidinguppanel.SlidingUpPanelLayout
     android:layout_below="@id/toolbar_layout"
+    android:layout_above="@id/btn_layout"
     xmlns:sothree="http://schemas.android.com/apk/res-auto"
     android:id="@+id/sliding_layout"
     android:layout_width="match_parent"
@@ -41,12 +42,12 @@
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
     <LinearLayout
+        android:id="@+id/btn_layout"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/activity_default_margin"
-        android:layout_marginRight="@dimen/activity_default_margin"
+
         >
         <Button
             android:id="@+id/btn_route_to_map"
@@ -55,7 +56,8 @@
             android:layout_weight="1"
             android:background="@color/white_95"
             android:text="@string/map"
-            android:textColor="@color/textColorPrimary"/>
+            android:textColor="@color/textColorPrimary"
+            />
 
         <Button
             android:id="@+id/btn_route_to_main_places_list"

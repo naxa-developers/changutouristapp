@@ -106,7 +106,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     private SlidingUpPanelLayout mLayout;
     TextView tvMarkerTitle, tvMarkerDesc;
     ImageView ivMarkerPrimaryImage;
-    Button btnGoThere, btnViewMarkerDetails;
+    Button btnGoThere, btnViewMarkerDetails, btnPlacesDetailsList;
 
     Gson gson;
 
@@ -169,12 +169,14 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         tvMarkerDesc = findViewById(R.id.tv_marker_desc);
         ivMarkerPrimaryImage = findViewById(R.id.iv_marker_primary_image);
         btnViewMarkerDetails = findViewById(R.id.btn_view_marker_details);
+        btnViewMarkerDetails = findViewById(R.id.btn_route_to_main_places_list);
 
 
         btnNavigation.setOnClickListener(this);
         btnGoThere.setOnClickListener(this);
         btnMapLayerData.setOnClickListener(this);
         btnMapLayerSwitch.setOnClickListener(this);
+        btnPlacesDetailsList.setOnClickListener(this);
 
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);

@@ -13,6 +13,7 @@ public class Constant {
         public static final String KEY_LANGUAGE_LIST_DETAILS = "language_list_details";
         public static final String KEY_SELECTED_APP_LANGUAGE = "selected_app_language";
         public static final String IS_PLACES_DATA_ALREADY_EXISTS = "is_places_data_already_exists";
+        public static final String KEY_MAIN_PLACES_list_DETAILS = "main_places_list_details";
 
     }
 

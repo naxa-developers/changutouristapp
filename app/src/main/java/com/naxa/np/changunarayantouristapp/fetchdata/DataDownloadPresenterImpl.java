@@ -15,9 +15,12 @@ import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonCategoryVie
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonListViewModel;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntityViewModel;
 import com.naxa.np.changunarayantouristapp.network.NetworkApiInterface;
+import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlaceListDetailsResponse;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
@@ -80,6 +83,8 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                     LoadImageUtils.downloadAndSaveImageToStorage(appCompatActivity, categoryListEntity.getCategoryTable(), categoryListEntity.getCategoryMarker());
                     geoJsonDisplayName = categoryListEntity.getCategoryName();
                     String geoJsonName = categoryListEntity.getCategoryTable();
+
+                    downloadMainPlaceListDetails(apiInterface, apiKey, language);
 
                     return apiInterface.getGeoJsonDetails(Constant.Network.API_KEY, categoryListEntity.getCategoryTable())
                             .subscribeOn(Schedulers.io())
@@ -158,6 +163,31 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                     }
                 });
 
+
+    }
+
+    private void downloadMainPlaceListDetails (@NotNull NetworkApiInterface apiInterface, String apiKey, String language){
+
+        apiInterface.getMainPlacesListDetails(apiKey)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(new DisposableObserver<MainPlaceListDetailsResponse>() {
+                    @Override
+                    public void onNext(MainPlaceListDetailsResponse mainPlaceListDetailsResponse) {
+
+                        SharedPreferenceUtils.getInstance(appCompatActivity).setValue(Constant.SharedPrefKey.KEY_MAIN_PLACES_list_DETAILS, gson.toJson(mainPlaceListDetailsResponse));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
 
     }
 }
