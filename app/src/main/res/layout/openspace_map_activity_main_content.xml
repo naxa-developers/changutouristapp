@@ -12,12 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/toolbar"
-            android:id="@+id/toolbar_layout">
-        </include>
 
         <com.mapbox.mapboxsdk.maps.MapView
-            android:layout_below="@+id/toolbar_layout"
             android:id="@+id/mapView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

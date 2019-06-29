@@ -61,7 +61,7 @@ public class ImageSaveTask  extends AsyncTask< String, Void, Void> {
     private String saveImage(Bitmap image, String imageName, String storagePath) {
         String savedImagePath = null;
 
-        String imageFileName = imageName + ".png";
+        String imageFileName = imageName + ".jpg";
         File storageDir = new File(
                 storagePath);
 
