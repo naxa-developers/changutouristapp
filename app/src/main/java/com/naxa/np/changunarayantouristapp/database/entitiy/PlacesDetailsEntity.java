@@ -106,8 +106,8 @@ public class PlacesDetailsEntity implements Parcelable {
     private String theGeom;
 
     public PlacesDetailsEntity(String placeType, String categoryType, Integer FID, String name, String type, String description, String photo, String primaryImage, String images, String videos, String _360Images, String audio, String QRCode, String language, String latitude, String longitude, String theGeom) {
-        this.placeType = placeType;
-        this.categoryType = categoryType;
+        this.placeType = placeType.trim();
+        this.categoryType = categoryType.trim();
         this.FID = FID;
         this.name = name;
         this.type = type;
@@ -135,11 +135,11 @@ public class PlacesDetailsEntity implements Parcelable {
     }
 
     public String getPlaceType() {
-        return placeType;
+        return placeType.trim();
     }
 
     public void setPlaceType(String placeType) {
-        this.placeType = placeType;
+        this.placeType = placeType.trim();
     }
 
     public String getCategoryType() {

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
+import com.google.gson.Gson;
 import com.naxa.np.changunarayantouristapp.database.ISETRoomDatabase;
 import com.naxa.np.changunarayantouristapp.database.dao.PlaceDetailsDao;
 import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
@@ -51,7 +52,8 @@ public class PlaceDetailsEntityRepository {
                 .subscribe(new DisposableObserver<PlacesDetailsEntity>() {
                     @Override
                     public void onNext(PlacesDetailsEntity placesDetailsEntity1) {
-                        Log.d("PlaceDetailsEntity", "insert: "+ placesDetailsEntity1.getPlaceType());
+//                        Gson gson = new Gson();
+//                        Log.d("PlaceDetailsEntity", "insert: "+ gson.toJson(placesDetailsEntity1));
                         Log.d("PlaceDetailsEntity", "insert: "+ placesDetailsEntity1.getCategoryType());
                         placeDetailsDao.insert(placesDetailsEntity1);
                     }
