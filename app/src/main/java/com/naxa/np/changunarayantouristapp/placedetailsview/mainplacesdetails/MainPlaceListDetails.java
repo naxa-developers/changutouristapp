@@ -1,9 +1,12 @@
 package com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-class MainPlaceListDetails {
+public class MainPlaceListDetails implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -56,6 +59,87 @@ class MainPlaceListDetails {
     @SerializedName("slug")
     @Expose
     private String slug;
+
+    public MainPlaceListDetails(String id, String typeId, String locationId, String shortDesc, String description, String createdAt, String image, String language, String audio, String video, String sortOrder, String rating, String longitude, String latitude, String qrcode, String title, String slug) {
+        this.id = id;
+        this.typeId = typeId;
+        this.locationId = locationId;
+        this.shortDesc = shortDesc;
+        this.description = description;
+        this.createdAt = createdAt;
+        this.image = image;
+        this.language = language;
+        this.audio = audio;
+        this.video = video;
+        this.sortOrder = sortOrder;
+        this.rating = rating;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.qrcode = qrcode;
+        this.title = title;
+        this.slug = slug;
+    }
+
+    public MainPlaceListDetails() {
+    }
+
+    protected MainPlaceListDetails(Parcel in) {
+        id = in.readString();
+        typeId = in.readString();
+        locationId = in.readString();
+        shortDesc = in.readString();
+        description = in.readString();
+        createdAt = in.readString();
+        image = in.readString();
+        language = in.readString();
+        audio = in.readString();
+        video = in.readString();
+        sortOrder = in.readString();
+        rating = in.readString();
+        longitude = in.readString();
+        latitude = in.readString();
+        qrcode = in.readString();
+        title = in.readString();
+        slug = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(typeId);
+        dest.writeString(locationId);
+        dest.writeString(shortDesc);
+        dest.writeString(description);
+        dest.writeString(createdAt);
+        dest.writeString(image);
+        dest.writeString(language);
+        dest.writeString(audio);
+        dest.writeString(video);
+        dest.writeString(sortOrder);
+        dest.writeString(rating);
+        dest.writeString(longitude);
+        dest.writeString(latitude);
+        dest.writeString(qrcode);
+        dest.writeString(title);
+        dest.writeString(slug);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<MainPlaceListDetails> CREATOR = new Creator<MainPlaceListDetails>() {
+        @Override
+        public MainPlaceListDetails createFromParcel(Parcel in) {
+            return new MainPlaceListDetails(in);
+        }
+
+        @Override
+        public MainPlaceListDetails[] newArray(int size) {
+            return new MainPlaceListDetails[size];
+        }
+    };
 
     public String getId() {
         return id;

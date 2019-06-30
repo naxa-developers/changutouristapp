@@ -122,7 +122,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                                     PlacesDetailsEntity placesDetailsEntity = gson.fromJson(snippest, PlacesDetailsEntity.class);
                                     placesDetailsEntity.setCategoryType(geoJsonName);
                                     placeDetailsEntityViewModel.insert(placesDetailsEntity);
-                                    Timber.d("onNext: JSON Object %s", snippest+" "+geoJsonName);
+                                    Timber.d("accept: JSON Object %s", snippest+" "+geoJsonName);
 
 //                        LatLng location = new LatLng(0.0, 0.0);
 //                        try {
