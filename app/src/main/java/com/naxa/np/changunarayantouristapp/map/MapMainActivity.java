@@ -320,7 +320,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 filename = "changunarayan_boundary.geojson";
                 drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
                 removeLayerFromMap("nagarkot_boundary.geojson");
-                placeType = "changunarayan";
+//                placeType = "changunarayan";
+                placeType = "chagunarayan";
             }
 
             @Override

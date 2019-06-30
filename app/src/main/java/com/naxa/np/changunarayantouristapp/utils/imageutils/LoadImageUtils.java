@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Size;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -78,8 +79,9 @@ public class LoadImageUtils {
 
         try {
             Bitmap bitmap = null;
-            bitmap = BitmapFactory.decodeFile(CreateAppMainFolderUtils.getAppMapDataFolderName()+"/"+imageFileName+".jpg");
-            return bitmap;
+            bitmap = BitmapFactory.decodeFile(CreateAppMainFolderUtils.getAppMapDataFolderName()+"/"+imageFileName+".png");
+            Bitmap smallMarker = Bitmap.createScaledBitmap(bitmap, 60, 60, false);
+            return smallMarker;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
