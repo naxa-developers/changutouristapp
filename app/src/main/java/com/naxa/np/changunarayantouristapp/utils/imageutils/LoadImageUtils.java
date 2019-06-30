@@ -73,11 +73,12 @@ public class LoadImageUtils {
         return  bitmap;
     }
 
+    @Nullable
     public static Bitmap getImageBitmapFromStorage(@NonNull String imageFileName){
 
         try {
             Bitmap bitmap = null;
-            bitmap = BitmapFactory.decodeFile(CreateAppMainFolderUtils.getAppMapDataFolderName()+"/"+imageFileName+".png");
+            bitmap = BitmapFactory.decodeFile(CreateAppMainFolderUtils.getAppMapDataFolderName()+"/"+imageFileName+".jpg");
             return bitmap;
         } catch (Exception e) {
             e.printStackTrace();

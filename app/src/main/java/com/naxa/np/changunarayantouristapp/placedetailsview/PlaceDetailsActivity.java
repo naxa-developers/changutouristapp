@@ -30,6 +30,7 @@ import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenterImp
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadView;
 import com.naxa.np.changunarayantouristapp.imageviewer.ImageListGridViewActivity;
 import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
+import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlaceListDetails;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
@@ -58,7 +59,6 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
     RecyclerView recyclerViewnearByPlaces;
     LinearLayout llNearByPlacesLayout;
 
-    FileDownloadPresenter fileDownloadPresenter;
     PlacesDetailsEntity placesDetailsEntity;
     boolean isFromMainPlaceList;
 
@@ -86,18 +86,18 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         if(intent != null){
             HashMap<String, Object> hashMap = (HashMap<String, Object>) intent.getSerializableExtra("map");
             isFromMainPlaceList = (boolean) hashMap.get(KEY_VALUE);
+
             placesDetailsEntity = (PlacesDetailsEntity) hashMap.get(KEY_OBJECT);
 
             if(isFromMainPlaceList){
                 llNearByPlacesLayout.setVisibility(View.VISIBLE);
-
             }
 
             if(placesDetailsEntity != null) {
                 setValueOnView(placesDetailsEntity);
                 setupToolbar(placesDetailsEntity.getName(), false);
-
             }
+
         }
     }
 
@@ -107,6 +107,15 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         tvPlaceDesc.setText(placesDetailsEntity.getDescription());
 
         LoadImageUtils.loadImageToViewFromSrc(ivImageMain, placesDetailsEntity.getPrimaryImage());
+    }
+
+
+    private void setValueOnViewFromMainPlaces(@NotNull MainPlaceListDetails mainPlaceListDetails) {
+
+        tvPlaceTitle.setText(mainPlaceListDetails.getTitle());
+        tvPlaceDesc.setText(mainPlaceListDetails.getDescription());
+
+        LoadImageUtils.loadImageToViewFromSrc(ivImageMain, mainPlaceListDetails.getImage());
     }
 
     private void initUI() {

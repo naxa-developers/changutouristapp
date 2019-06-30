@@ -2,6 +2,7 @@ package com.naxa.np.changunarayantouristapp.network;
 
 import com.naxa.np.changunarayantouristapp.login.UserLoginResponse;
 import com.naxa.np.changunarayantouristapp.map.mapcategory.GeojsonCategoriesListResponse;
+import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlaceListDetailsResponse;
 import com.naxa.np.changunarayantouristapp.selectlanguage.LanguageDetailsResponse;
 
 import io.reactivex.Observable;
@@ -36,5 +37,5 @@ public interface NetworkApiInterface {
 
     @POST(UrlConstant.FETCH_PLACE_DETAILS)
     @FormUrlEncoded
-    Observable<ResponseBody> getMainPlacesDetails(@Field("api_key") String api_key);
+    Observable<MainPlaceListDetailsResponse> getMainPlacesListDetails(@Field("api_key") String api_key);
 }

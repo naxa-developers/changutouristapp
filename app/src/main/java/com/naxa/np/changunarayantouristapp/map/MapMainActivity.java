@@ -57,6 +57,7 @@ import com.naxa.np.changunarayantouristapp.map.mapboxutils.DrawRouteOnMap;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.MapDataLayerDialogCloseListen;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.MapboxBaseStyleUtils;
 import com.naxa.np.changunarayantouristapp.placedetailsview.PlaceDetailsActivity;
+import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlacesListActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
@@ -106,7 +107,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     private SlidingUpPanelLayout mLayout;
     TextView tvMarkerTitle, tvMarkerDesc;
     ImageView ivMarkerPrimaryImage;
-    Button btnGoThere, btnViewMarkerDetails;
+    Button btnGoThere, btnViewMarkerDetails, btnPlacesDetailsList;
 
     Gson gson;
 
@@ -169,12 +170,14 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         tvMarkerDesc = findViewById(R.id.tv_marker_desc);
         ivMarkerPrimaryImage = findViewById(R.id.iv_marker_primary_image);
         btnViewMarkerDetails = findViewById(R.id.btn_view_marker_details);
+        btnPlacesDetailsList = findViewById(R.id.btn_route_to_main_places_list);
 
 
         btnNavigation.setOnClickListener(this);
         btnGoThere.setOnClickListener(this);
         btnMapLayerData.setOnClickListener(this);
         btnMapLayerSwitch.setOnClickListener(this);
+        btnPlacesDetailsList.setOnClickListener(this);
 
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
@@ -841,6 +844,10 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
             case R.id.btnMapLayerSwitch:
                 setupMapOptionsDialog().show();
+                break;
+
+            case R.id.btn_route_to_main_places_list:
+                ActivityUtil.openActivity(MainPlacesListActivity.class, MapMainActivity.this);
                 break;
 
             case R.id.btnGoThere:
