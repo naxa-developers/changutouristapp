@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.naxa.np.changunarayantouristapp.R;
+import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 
 public class MainPlacesListViewHolder extends RecyclerView.ViewHolder  {
@@ -23,10 +24,10 @@ public class MainPlacesListViewHolder extends RecyclerView.ViewHolder  {
 
     }
 
-    public void bindView(MainPlaceListDetails mainPlaceListDetails) {
-        tvPlaceName.setText(mainPlaceListDetails.getTitle());
-        if(mainPlaceListDetails.getImage() != null){
-            LoadImageUtils.loadImageToViewFromSrc(ivPlaceImage, mainPlaceListDetails.getImage());
+    public void bindView(PlacesDetailsEntity placesDetailsEntity) {
+        tvPlaceName.setText(placesDetailsEntity.getName());
+        if(placesDetailsEntity.getPrimaryImage() != null){
+            LoadImageUtils.loadImageToViewFromSrc(ivPlaceImage, placesDetailsEntity.getPrimaryImage());
         }
     }
 }

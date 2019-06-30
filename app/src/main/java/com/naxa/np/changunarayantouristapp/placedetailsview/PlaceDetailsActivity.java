@@ -59,9 +59,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
     RecyclerView recyclerViewnearByPlaces;
     LinearLayout llNearByPlacesLayout;
 
-    FileDownloadPresenter fileDownloadPresenter;
     PlacesDetailsEntity placesDetailsEntity;
-    MainPlaceListDetails mainPlaceListDetails;
     boolean isFromMainPlaceList;
 
     private BaseRecyclerViewAdapter<NearByPlacesPojo, NearByPlacesViewHolder> adapter;
@@ -89,13 +87,10 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
             HashMap<String, Object> hashMap = (HashMap<String, Object>) intent.getSerializableExtra("map");
             isFromMainPlaceList = (boolean) hashMap.get(KEY_VALUE);
 
+            placesDetailsEntity = (PlacesDetailsEntity) hashMap.get(KEY_OBJECT);
+
             if(isFromMainPlaceList){
-                mainPlaceListDetails = (MainPlaceListDetails) hashMap.get(KEY_OBJECT);
                 llNearByPlacesLayout.setVisibility(View.VISIBLE);
-
-            }else {
-                placesDetailsEntity = (PlacesDetailsEntity) hashMap.get(KEY_OBJECT);
-
             }
 
             if(placesDetailsEntity != null) {
@@ -103,10 +98,6 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
                 setupToolbar(placesDetailsEntity.getName(), false);
             }
 
-            if(mainPlaceListDetails != null) {
-                setValueOnViewFromMainPlaces(mainPlaceListDetails);
-                setupToolbar(mainPlaceListDetails.getTitle(), false);
-            }
         }
     }
 

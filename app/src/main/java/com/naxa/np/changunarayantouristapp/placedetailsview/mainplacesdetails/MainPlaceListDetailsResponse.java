@@ -2,6 +2,7 @@ package com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class MainPlaceListDetailsResponse  {
     private String message;
     @SerializedName("data")
     @Expose
-    private List<MainPlaceListDetails> data = null;
+    private List<PlacesDetailsEntity> data = null;
 
     public Integer getError() {
         return error;
@@ -33,11 +34,11 @@ public class MainPlaceListDetailsResponse  {
         this.message = message;
     }
 
-    public List<MainPlaceListDetails> getData() {
+    public List<PlacesDetailsEntity> getData() {
         return data;
     }
 
-    public void setData(List<MainPlaceListDetails> data) {
+    public void setData(List<PlacesDetailsEntity> data) {
         this.data = data;
     }
 

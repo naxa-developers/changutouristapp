@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
+import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.PlaceDetailsActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
@@ -33,7 +34,7 @@ public class MainPlacesListActivity extends BaseActivity {
     RecyclerView recyclerView;
     Button btnRouteToMap;
     Gson gson;
-    private BaseRecyclerViewAdapter<MainPlaceListDetails, MainPlacesListViewHolder> adapter;
+    private BaseRecyclerViewAdapter<PlacesDetailsEntity, MainPlacesListViewHolder> adapter;
 
 
     @Override
@@ -61,31 +62,31 @@ public class MainPlacesListActivity extends BaseActivity {
 
 
         MainPlaceListDetailsResponse mainPlaceListDetailsResponse = gson.fromJson(SharedPreferenceUtils.getInstance(MainPlacesListActivity.this).getStringValue(Constant.SharedPrefKey.KEY_MAIN_PLACES_list_DETAILS, null), MainPlaceListDetailsResponse.class);
-        List<MainPlaceListDetails> mainPlaceListDetailsList = mainPlaceListDetailsResponse.getData();
+        List<PlacesDetailsEntity> placesDetailsEntities = mainPlaceListDetailsResponse.getData();
 
-        if(mainPlaceListDetailsList != null && mainPlaceListDetailsList.size() >0){
+        if(placesDetailsEntities != null && placesDetailsEntities.size() >0){
 
-            setUpRecyclerView(mainPlaceListDetailsList);
+            setUpRecyclerView(placesDetailsEntities);
         }
 
 
     }
 
-    private void setUpRecyclerView(List<MainPlaceListDetails> mainPlaceListDetailsList) {
+    private void setUpRecyclerView(List<PlacesDetailsEntity> placesDetailsEntities) {
         LinearLayoutManager manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        adapter = new BaseRecyclerViewAdapter<MainPlaceListDetails, MainPlacesListViewHolder>(mainPlaceListDetailsList, R.layout.main_places_item_row_layout) {
+        adapter = new BaseRecyclerViewAdapter<PlacesDetailsEntity, MainPlacesListViewHolder>(placesDetailsEntities, R.layout.main_places_item_row_layout) {
 
             @Override
-            public void viewBinded(MainPlacesListViewHolder mainPlacesListViewHolder, MainPlaceListDetails mainPlaceListDetails, int position) {
+            public void viewBinded(MainPlacesListViewHolder mainPlacesListViewHolder, PlacesDetailsEntity placesDetailsEntity, int position) {
                 Log.d(TAG, "viewBinded: " + position);
-                mainPlacesListViewHolder.bindView(mainPlaceListDetails);
+                mainPlacesListViewHolder.bindView(placesDetailsEntity);
                 mainPlacesListViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-if(mainPlaceListDetails.getSlug().equals("changu")) {
+if(placesDetailsEntity.getPlaceType().equals("changu")) {
     SharedPreferenceUtils.getInstance(MainPlacesListActivity.this).setValue(MAP_OVERLAY_LAYER, KEY_CHANGUNARAYAN_BOARDER);
 }else {
     SharedPreferenceUtils.getInstance(MainPlacesListActivity.this).setValue(MAP_OVERLAY_LAYER, KEY_NAGARKOT_BOARDER);
@@ -94,7 +95,7 @@ if(mainPlaceListDetails.getSlug().equals("changu")) {
 
                         HashMap<String, Object> hashMap = new HashMap<>();
                         hashMap.put(KEY_VALUE, true);
-                        hashMap.put(KEY_OBJECT, mainPlaceListDetails);
+                        hashMap.put(KEY_OBJECT, placesDetailsEntity);
                         ActivityUtil.openActivity(PlaceDetailsActivity.class, MainPlacesListActivity.this, hashMap, false);
                     }
                 });
