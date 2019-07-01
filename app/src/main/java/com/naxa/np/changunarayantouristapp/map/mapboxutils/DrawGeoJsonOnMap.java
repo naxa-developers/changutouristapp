@@ -22,6 +22,7 @@ import com.daasuu.bl.BubbleLayout;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.mapboxsdk.annotations.Marker;
+import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.geometry.LatLngBounds;
@@ -112,7 +113,6 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
     private String CALLOUT_LAYER_ID = "CALLOUT_LAYER_ID";
 
 
-
     private String PROPERTY_SELECTED = "selected";
     private String PROPERTY_NAME = "name";
     private String PROPERTY_CAPITAL = "Address";
@@ -122,7 +122,7 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
     private FeatureCollection featureCollection;
     private HashMap<String, View> viewMap;
 
-    List<String> filenameList ;
+    List<String> filenameList;
 
 //    boolean isChecked;
 
@@ -131,7 +131,7 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
         this.mapboxMap = mapboxMap;
         this.mapView = mapView;
 
-      filenameList = new ArrayList<String>();
+        filenameList = new ArrayList<String>();
     }
 
 
@@ -144,9 +144,9 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
         try {
             geojsonSourceId = geoJsonFileName;
             geojsonLayerId = geoJsonFileName;
-            MARKER_IMAGE_ID = markerImageId+geoJsonFileName;
-            MARKER_LAYER_ID = markerLayerId+geoJsonFileName;
-            CALLOUT_LAYER_ID = markerCalloutLayerId+geoJsonFileName;
+            MARKER_IMAGE_ID = markerImageId + geoJsonFileName;
+            MARKER_LAYER_ID = markerLayerId + geoJsonFileName;
+            CALLOUT_LAYER_ID = markerCalloutLayerId + geoJsonFileName;
 
 
 //            if(mapboxMap.getSource(geojsonSourceId)!= null) {
@@ -159,7 +159,6 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
 
 //                mapboxMap.removeSource(geojsonSourceId);
 //            }
-
 
 
         } catch (NullPointerException e) {
@@ -188,8 +187,7 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
                             inputStream.close();
 
 
-                                drawGeoJsonOnMap(geoJsonString, isChecked, imageName);
-
+                            drawGeoJsonOnMap(geoJsonString, isChecked, imageName);
 
 
                         } catch (IOException e) {
@@ -209,42 +207,42 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
                 });
     }
 
-    private void drawGeoJsonOnMap(StringBuilder geoJsonString, Boolean isChecked, String imageName)  {
+    private void drawGeoJsonOnMap(@NotNull StringBuilder geoJsonString, Boolean isChecked, String imageName) {
         GeoJsonSource source = new GeoJsonSource(geojsonSourceId, geoJsonString.toString());
         String type = "";
-            try {
+        try {
 
-                JSONObject json = new JSONObject(geoJsonString.toString());
-                JSONArray features = json.getJSONArray("features");
-                JSONObject geometry = (features.getJSONObject(0)).getJSONObject("geometry");
-                if (geometry != null) {
-                    type = geometry.getString("type");
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
+            JSONObject json = new JSONObject(geoJsonString.toString());
+            JSONArray features = json.getJSONArray("features");
+            JSONObject geometry = (features.getJSONObject(0)).getJSONObject("geometry");
+            if (geometry != null) {
+                type = geometry.getString("type");
             }
-            if (type.equals("Point") || type.equals("point") || type.equals("POINT")) {
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if (type.equals("Point") || type.equals("point") || type.equals("POINT")) {
 
-                DrawMarkerOnMap drawMarkerOnMap = new DrawMarkerOnMap(context, mapboxMap, mapView);
+            DrawMarkerOnMap drawMarkerOnMap = new DrawMarkerOnMap(context, mapboxMap, mapView);
 
-                if(isChecked) {
+            if (isChecked) {
 //                    plotMarkerOnMap(geoJsonString, context, imageName, isChecked);
 
-                    if(geoJsonString != null) {
-                        final Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                //Do something after 100ms
-                                drawMarkerOnMap.AddMarkerOnMap(filename, geoJsonString, imageName);
+                if (geoJsonString != null) {
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            //Do something after 100ms
+                            drawMarkerOnMap.AddMarkerOnMap(filename, geoJsonString, imageName);
 
-                            }
-                        }, 50);
-                    }
+                        }
+                    }, 50);
+                }
 
 
-                }else {
-                    if(geoJsonString != null) {
+            } else {
+                if (geoJsonString != null) {
 //                        final Handler handler = new Handler();
 //                        handler.postDelayed(new Runnable() {
 //                            @Override
@@ -255,66 +253,66 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
 //                            }
 //                        }, 50);
 //                        drawMarkerOnMap.RemoveMarkerOnMap(filename, geoJsonString, imageName);
-                    }
-                    mapboxMap.removeLayer(geojsonLayerId);
-                    mapboxMap.removeLayer(MARKER_LAYER_ID);
-                    mapboxMap.removeLayer(CALLOUT_LAYER_ID);
-                    mapboxMap.removeSource(geojsonSourceId);
-                    mapView.invalidate();
-                    return;
                 }
-
-
-
-            }else {
-
-                if(mapboxMap.getSource(geojsonSourceId) == null) {
-                    mapboxMap.addSource(source);
-                }
-
-                LineLayer lineLayer = new LineLayer(geojsonLayerId, geojsonSourceId);
-                lineLayer.setProperties(
-                        PropertyFactory.lineCap(Property.LINE_CAP_ROUND),
-                        PropertyFactory.lineJoin(Property.LINE_JOIN_ROUND),
-                        PropertyFactory.lineWidth(2f),
-                        PropertyFactory.lineColor(context.getResources().getColor(R.color.colorPrimary))
-                );
-
-                if(isChecked) {
-
-                    if(mapboxMap.getLayer(geojsonLayerId) == null){
-
-
-
-
-
-
-                        mapboxMap.addLayer(lineLayer);
-                        JSONObject geoJsonObj = null;
-                        try {
-                            geoJsonObj = new JSONObject(geoJsonString.toString());
-
-                            JSONObject jsonObject = geoJsonObj.optJSONArray("features").optJSONObject(0).optJSONObject("properties");
-                            if(geoJsonObj.optJSONArray("features").optJSONObject(0).has("bbox")) {
-                                JSONArray boundingBox = geoJsonObj.optJSONArray("features").optJSONObject(0).optJSONArray("bbox");
-                                LatLngBounds latLngBounds = new LatLngBounds.Builder()
-                                        .include(new LatLng(Double.parseDouble(boundingBox.getString(1)), Double.parseDouble(boundingBox.getString(0)))) // Northeast
-                                        .include(new LatLng(Double.parseDouble(boundingBox.getString(4)), Double.parseDouble(boundingBox.getString(3)))) // Southwest
-                                        .build();
-                                mapboxMap.setLatLngBoundsForCameraTarget(latLngBounds);
-                                mapboxMap.easeCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 60), 2000);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-                }else {
-                    mapboxMap.removeLayer(lineLayer);
-                }
+                mapboxMap.removeLayer(geojsonLayerId);
+                mapboxMap.removeLayer(MARKER_LAYER_ID);
+                mapboxMap.removeLayer(CALLOUT_LAYER_ID);
+                mapboxMap.removeSource(geojsonSourceId);
                 mapView.invalidate();
+                return;
             }
+
+
+        } else {
+
+            if (mapboxMap.getSource(geojsonSourceId) == null) {
+                mapboxMap.addSource(source);
+            }
+
+            LineLayer lineLayer = new LineLayer(geojsonLayerId, geojsonSourceId);
+            lineLayer.setProperties(
+                    PropertyFactory.lineCap(Property.LINE_CAP_ROUND),
+                    PropertyFactory.lineJoin(Property.LINE_JOIN_ROUND),
+                    PropertyFactory.lineWidth(2f),
+                    PropertyFactory.lineColor(context.getResources().getColor(R.color.colorPrimary))
+            );
+
+            if (isChecked) {
+
+                if (mapboxMap.getLayer(geojsonLayerId) == null) {
+
+
+                    mapboxMap.addLayer(lineLayer);
+                    JSONObject geoJsonObj = null;
+                    try {
+                        geoJsonObj = new JSONObject(geoJsonString.toString());
+
+                        JSONObject jsonObject = geoJsonObj.optJSONArray("features").optJSONObject(0).optJSONObject("properties");
+                        if (geoJsonObj.optJSONArray("features").optJSONObject(0).has("bbox")) {
+                            JSONArray boundingBox = geoJsonObj.optJSONArray("features").optJSONObject(0).optJSONArray("bbox");
+
+
+                            LatLngBounds latLngBounds = new LatLngBounds.Builder()
+                                    .include(new LatLng(Double.parseDouble(boundingBox.optString(1)), Double.parseDouble(boundingBox.optString(0)))) // Northeast
+                                    .include(new LatLng(Double.parseDouble(boundingBox.optString(4)), Double.parseDouble(boundingBox.optString(3)))) // Southwest
+                                    .build();
+                            mapboxMap.setLatLngBoundsForCameraTarget(latLngBounds);
+                            mapboxMap.easeCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 60), 2000);
+                            mapView.invalidate();
+
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            } else {
+                mapboxMap.removeLayer(lineLayer);
+            }
+            mapView.invalidate();
+        }
 
 
     }
@@ -322,8 +320,8 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
     private WeakReference<AppCompatActivity> activityRef;
     StringBuilder stringBuilderGeoJson;
 
-//    int featureCollectionCount = 0;
-    private void plotMarkerOnMap(StringBuilder geoJsonString, AppCompatActivity activity, String imageName , boolean isChecked) {
+    //    int featureCollectionCount = 0;
+    private void plotMarkerOnMap(StringBuilder geoJsonString, AppCompatActivity activity, String imageName, boolean isChecked) {
         this.activityRef = new WeakReference<>(activity);
 
 //        featureCollectionCount++;
@@ -363,7 +361,6 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
 
                     @Override
                     public void onComplete() {
-
 
 
 //                        OpenSpaceMapActivity activity = activityRef.get();
@@ -476,7 +473,7 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
 
     @Override
     public boolean onInfoWindowClick(@NonNull Marker marker) {
-        Log.d(TAG, "onInfoWindowClick: "+marker.getTitle());
+        Log.d(TAG, "onInfoWindowClick: " + marker.getTitle());
         return false;
     }
 
@@ -627,7 +624,7 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
      *
      * @param collection the FeatureCollection to set equal to the globally-declared FeatureCollection
      */
-    public void setUpData(final FeatureCollection collection, String imageName , boolean isChecked) {
+    public void setUpData(final FeatureCollection collection, String imageName, boolean isChecked) {
         if (mapboxMap == null) {
             return;
         }
@@ -646,10 +643,10 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
         try {
 
             source = new GeoJsonSource(geojsonSourceId, featureCollection);
-            if(mapboxMap.getSource(geojsonSourceId) == null) {
+            if (mapboxMap.getSource(geojsonSourceId) == null) {
                 mapboxMap.addSource(source);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -661,11 +658,11 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
 
         Bitmap icon = BitmapFactory.decodeResource(
                 context.getResources(), LoadImageUtils.getImageResIDFromDrawable(context, imageName));
-        if(imageName != null && !imageName.equals("")) {
+        if (imageName != null && !imageName.equals("")) {
             try {
 
                 mapboxMap.addImage(MARKER_IMAGE_ID, icon);
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 e.printStackTrace();
             }
         }
@@ -676,15 +673,15 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
      */
     private void setUpMarkerLayer(boolean isChecked) {
 //        mapboxMap.removeLayer(MARKER_LAYER_ID);
-        if(isChecked) {
-            if(mapboxMap.getLayer(MARKER_LAYER_ID) == null) {
+        if (isChecked) {
+            if (mapboxMap.getLayer(MARKER_LAYER_ID) == null) {
                 mapboxMap.addLayer(new SymbolLayer(MARKER_LAYER_ID, geojsonSourceId)
                         .withProperties(
                                 iconImage(MARKER_IMAGE_ID),
                                 iconAllowOverlap(true)
                         ));
             }
-        }else {
+        } else {
             mapboxMap.removeLayer(new SymbolLayer(MARKER_LAYER_ID, geojsonSourceId)
                     .withProperties(
                             iconImage(MARKER_IMAGE_ID),
@@ -702,22 +699,22 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
     private void setUpInfoWindowLayer() {
         mapboxMap.removeLayer(new SymbolLayer(CALLOUT_LAYER_ID, geojsonSourceId));
 
-            mapboxMap.addLayer(new SymbolLayer(CALLOUT_LAYER_ID, geojsonSourceId)
-                    .withProperties(
-                            /* show image with id title based on the value of the name feature property */
-                            iconImage("{name}"),
+        mapboxMap.addLayer(new SymbolLayer(CALLOUT_LAYER_ID, geojsonSourceId)
+                .withProperties(
+                        /* show image with id title based on the value of the name feature property */
+                        iconImage("{name}"),
 
-                            /* set anchor of icon to bottom-left */
-                            iconAnchor(ICON_ANCHOR_BOTTOM),
+                        /* set anchor of icon to bottom-left */
+                        iconAnchor(ICON_ANCHOR_BOTTOM),
 
-                            /* all info window and marker image to appear at the same time*/
-                            iconAllowOverlap(true),
+                        /* all info window and marker image to appear at the same time*/
+                        iconAllowOverlap(true),
 
-                            /* offset the info window to be above the marker */
-                            iconOffset(new Float[]{-2f, -25f})
-                    )
+                        /* offset the info window to be above the marker */
+                        iconOffset(new Float[]{-2f, -25f})
+                )
 /* add a filter to show only when selected feature property is true */
-                    .withFilter(eq((get(PROPERTY_SELECTED)), literal(true))));
+                .withFilter(eq((get(PROPERTY_SELECTED)), literal(true))));
     }
 
     /**

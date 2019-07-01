@@ -172,6 +172,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void downloadProgress(int progress, int totalCount, String geoJsonFileName, String categoryName, String markerImageUrl) {
+        Log.d(TAG, "downloadProgress: "+"Progress : "+progress);
+        Log.d(TAG, "downloadProgress: "+"GeoJsonFileName : "+geoJsonFileName);
         String alertMsg = getString(R.string.fetching_file, geoJsonFileName, String.valueOf(progress), String.valueOf(totalCount));
         if(!TextUtils.isEmpty(markerImageUrl)) {
             fileDownloadPresenter.handleFileDownload(markerImageUrl, categoryName, CreateAppMainFolderUtils.getAppMapDataFolderName());

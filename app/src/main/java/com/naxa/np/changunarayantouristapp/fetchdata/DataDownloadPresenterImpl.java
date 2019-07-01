@@ -25,6 +25,7 @@ import org.jetbrains.annotations.NotNull;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -78,6 +79,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                     return listResponse.getData();
                 })
                 .flatMapIterable((Function<List<GeoJsonCategoryListEntity>, Iterable<GeoJsonCategoryListEntity>>) entities -> entities)
+                .delay(50, TimeUnit.MILLISECONDS)
                 .flatMap((Function<GeoJsonCategoryListEntity, ObservableSource<Feature>>) categoryListEntity -> {
                     geoJsonCategoryViewModel.insert(categoryListEntity);
 //                    LoadImageUtils.downloadAndSaveImageToStorage(appCompatActivity, categoryListEntity.getCategoryTable(), categoryListEntity.getCategoryMarker());

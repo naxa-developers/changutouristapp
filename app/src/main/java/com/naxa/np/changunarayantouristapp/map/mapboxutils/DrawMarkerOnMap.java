@@ -208,7 +208,10 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
 
                         LatLng location = new LatLng(0.0, 0.0);
 
+                        if(placesDetailsEntity.getLatitude() != null && placesDetailsEntity.getLongitude() != null){
+
                             location = new LatLng(Double.parseDouble(placesDetailsEntity.getLatitude()), Double.parseDouble(placesDetailsEntity.getLongitude()));
+                        }
 
 
 

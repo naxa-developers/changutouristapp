@@ -321,7 +321,10 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
                 removeLayerFromMap("nagarkot_boundary.geojson");
 //                placeType = "changunarayan";
-                placeType = "chagunarayan";
+                placeType = "changunarayan";
+//                setMapCameraPosition();
+
+
             }
 
             @Override
@@ -330,6 +333,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
                 removeLayerFromMap("changunarayan_boundary.geojson");
                 placeType = "nagarkot";
+//                setMapCameraPosition();
+
             }
 
             private void removeLayerFromMap(String filename) {
@@ -346,6 +351,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                     }, 50);
                 }
             }
+
         });
 
 
@@ -477,7 +483,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         mapboxBaseStyleUtils = new MapboxBaseStyleUtils(MapMainActivity.this, mapboxMap, mapView);
         mapboxBaseStyleUtils.changeBaseColor();
 
-        setupMapOptionsDialog();
+        setupMapOptionsDialog().hide();
+
 
         setupMapDataLayerDialog(true).hide();
 
@@ -495,13 +502,14 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
         CameraPosition position = new CameraPosition.Builder()
                 .target(new LatLng(27.657531140175244, 85.46161651611328)) // Sets the new camera position
-                .zoom(11) // Sets the zoom
+                .zoom(14.0) // Sets the zoom
                 .bearing(0) // Rotate the camera
                 .tilt(30) // Set the camera tilt
                 .build(); // Creates a CameraPosition from the builder
 
         mapboxMap.animateCamera(CameraUpdateFactory
-                .newCameraPosition(position), 7000);
+                .newCameraPosition(position), 2000);
+        mapView.invalidate();
 
         enableLocationComponent();
     }
@@ -658,7 +666,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         CameraPosition position = new CameraPosition.Builder()
 //                .target(new LatLng(27.7033, 85.4324)) // Sets the new camera position
                 .target(new LatLng(location)) // Sets the new camera position
-                .zoom(11.5) // Sets the zoom
+                .zoom(14.5) // Sets the zoom
                 .bearing(0) // Rotate the camera
                 .tilt(30) // Set the camera tilt
                 .build(); // Creates a CameraPosition from the builder
@@ -667,7 +675,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
 
         mapboxMap.animateCamera(CameraUpdateFactory
-                .newCameraPosition(position), 3000);
+                .newCameraPosition(position), 2000);
     }
 
 
@@ -804,7 +812,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     @Override
     public void onLocationChanged(Location location) {
         originLocation = location;
-//        animateCameraPosition(location);
+        animateCameraPosition(location);
     }
 
     @Override
@@ -839,7 +847,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                     return;
                 }
                 mapboxMap.clear();
-                setupMapOptionsDialog();
+                setupMapOptionsDialog().hide();
                 mapDataLayerListCheckedEventList.clear();
                 setupMapDataLayerDialog(false).show();
                 break;

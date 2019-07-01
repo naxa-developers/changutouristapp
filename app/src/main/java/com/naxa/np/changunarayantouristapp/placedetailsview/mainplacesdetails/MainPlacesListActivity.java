@@ -89,7 +89,7 @@ public class MainPlacesListActivity extends BaseActivity {
                     public void onClick(View v) {
                         if (placesDetailsEntity.getPlaceType().equals("changu")) {
                             SharedPreferenceUtils.getInstance(MainPlacesListActivity.this).setValue(MAP_OVERLAY_LAYER, KEY_CHANGUNARAYAN_BOARDER);
-                            SharedPreferenceUtils.getInstance(MainPlacesListActivity.this).setValue(KEY_MAIN_PLACE_TYPE, "chagunarayan");
+                            SharedPreferenceUtils.getInstance(MainPlacesListActivity.this).setValue(KEY_MAIN_PLACE_TYPE, "changunarayan");
                         } else {
                             SharedPreferenceUtils.getInstance(MainPlacesListActivity.this).setValue(MAP_OVERLAY_LAYER, KEY_NAGARKOT_BOARDER);
                             SharedPreferenceUtils.getInstance(MainPlacesListActivity.this).setValue(KEY_MAIN_PLACE_TYPE, "nagarkot");
