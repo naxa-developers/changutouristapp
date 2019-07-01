@@ -23,10 +23,9 @@ public class NearByPlacesViewHolder extends RecyclerView.ViewHolder  {
         tvNearByPlaceName = itemView.findViewById(R.id.tv_nearby_place_name);
         ivNearByPlaceImage = itemView.findViewById(R.id.iv_nearby_place_image);
 
-
     }
 
-    void bindView(PlacesDetailsEntity placesDetailsEntity) {
+    public void bindView(PlacesDetailsEntity placesDetailsEntity) {
         tvNearByPlaceName.setText(placesDetailsEntity.getName());
 
         if(!TextUtils.isEmpty(placesDetailsEntity.getPrimaryImage())){

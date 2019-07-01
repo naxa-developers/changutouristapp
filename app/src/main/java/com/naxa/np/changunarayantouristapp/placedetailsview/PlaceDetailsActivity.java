@@ -33,6 +33,7 @@ import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadView;
 import com.naxa.np.changunarayantouristapp.imageviewer.ImageListGridViewActivity;
 import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlaceListDetails;
+import com.naxa.np.changunarayantouristapp.placedetailsview.nearbyplaces.NearByPlacesListActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
@@ -232,7 +233,10 @@ Constant constant = new Constant();
                 nearByPlacesViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(PlaceDetailsActivity.this, nearByPlacesPojo.getName(), Toast.LENGTH_SHORT).show();
+                        HashMap<String, Object> hashMap3 = new HashMap<>();
+                        hashMap3.put(KEY_VALUE, false);
+                        hashMap3.put(KEY_OBJECT, nearByPlacesPojo);
+                        ActivityUtil.openActivity(PlaceDetailsActivity.class, PlaceDetailsActivity.this, hashMap3, false);
                     }
                 });
 
@@ -257,7 +261,8 @@ Constant constant = new Constant();
                 break;
 
             case R.id.btn_view_all_nearby_places:
-               break;
+                ActivityUtil.openActivity(NearByPlacesListActivity.class, PlaceDetailsActivity.this);
+                break;
         }
     }
 
