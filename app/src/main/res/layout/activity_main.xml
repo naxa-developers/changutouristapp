@@ -107,16 +107,17 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="300dp"
+                        android:layout_width="320dp"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:layout_margin="@dimen/activity_default_margin"
-                        android:layout_alignParentBottom="true"
+                        android:layout_centerVertical="true"
                         >
 
                         <ImageView
+                            android:layout_marginTop="@dimen/activity_default_margin"
                             android:layout_width="match_parent"
-                            android:layout_height="200dp"
+                            android:layout_height="220dp"
                             android:src="@drawable/home_map_image"/>
 
                         <ImageButton
@@ -126,33 +127,13 @@
                             android:background="@drawable/home_btn_map"
                             android:visibility="visible"
                             android:layout_marginTop="@dimen/activity_default_margin"
-                            android:layout_marginBottom="@dimen/spacing_home_button_margin"
-                            android:layout_marginLeft="@dimen/spacing_home_button_margin"
+                            android:layout_marginStart="@dimen/spacing_home_button_margin"
                             />
 
                     </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
-
-
-
-
-
-
-
-
-
-        <ImageButton
-            android:layout_below="@id/btn_qr_scan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/home_icon_view_map"
-            android:layout_marginLeft="@dimen/spacing_home_button_margin"
-            android:layout_marginRight="@dimen/spacing_home_button_margin"
-            android:layout_marginBottom="@dimen/spacing_home_button_margin"
-            android:layout_centerHorizontal="true"
-            android:visibility="gone"/>
 
     </RelativeLayout>
 
