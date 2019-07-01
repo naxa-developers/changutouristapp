@@ -79,5 +79,6 @@
     <string name="nepal">Nepal</string>
     <string name="place_list">Places List</string>
     <string name="near_by_places_list">Nearby Places List</string>
+    <string name="submit_qrcode">Submit QR Code</string>
 
 </resources>

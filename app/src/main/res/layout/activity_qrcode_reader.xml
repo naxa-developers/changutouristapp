@@ -44,14 +44,25 @@
             app:frameThickness="2dp"
             app:maskColor="#77000000"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <EditText
         android:id="@+id/tv_qr_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/btn_scan_qr_code"
         android:text="@string/no_barcode_captured"
-        style="@style/LanguageSelectorTextStyle"
+        style="@style/headlineText"
         android:layout_margin="@dimen/activity_default_margin"/>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_submit_qr_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_qr_code"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/submit_qrcode"
+        android:textAllCaps="false"/>
 
 </RelativeLayout>
