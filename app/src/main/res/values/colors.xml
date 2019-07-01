@@ -11,7 +11,8 @@
     <color name="white">#fff</color>
     <color name="black">#000</color>
     <color name="textColorPrimary">#E6000000</color>
-    <color name="homeBackgroundColor">#F7008577</color>
+    <!--<color name="homeBackgroundColor">#F7008577</color>-->
+    <color name="homeBackgroundColor">#F76A817F</color>
     <color name="textColorSecondary">#393939</color>
     <color name="slate_black">#4B4A4C</color>
     <color name="divider_grey">#D4D4D4</color>

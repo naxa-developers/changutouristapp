@@ -8,71 +8,142 @@
     android:background="@drawable/homepage_changu_bg_img"
     tools:context=".MainActivity">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar_layout"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/homeBackgroundColor">
 
-        <TextView
-            android:id="@+id/tv_home_title"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Changunarayan Tourist"
-            android:layout_alignParentTop="true"
-            android:background="@color/transparent"
-            android:textColor="@color/white_80"
-            android:textSize="@dimen/material_text_display2"
-            android:paddingLeft="@dimen/default_padding"
-            android:paddingRight="@dimen/default_padding"
-            android:paddingTop="@dimen/default_padding"
-            android:layout_marginTop="@dimen/spacing_home_button_margin"
-            android:layout_marginLeft="@dimen/activity_default_margin"
-            android:layout_marginRight="@dimen/activity_default_margin"
-            android:layout_marginBottom="@dimen/spacing_medium"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_home_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Changunarayan Tourist"
+                    android:layout_alignParentTop="true"
+                    android:background="@color/transparent"
+                    android:textColor="@color/white_80"
+                    android:textSize="@dimen/material_text_display2"
+                    android:paddingLeft="@dimen/default_padding"
+                    android:paddingRight="@dimen/default_padding"
+                    android:paddingTop="@dimen/default_padding"
+                    android:layout_marginTop="@dimen/spacing_home_button_margin"
+                    android:layout_marginLeft="@dimen/activity_default_margin"
+                    android:layout_marginRight="@dimen/activity_default_margin"
+                    android:layout_marginBottom="@dimen/spacing_medium"
 
-            />
+                    />
 
-        <TextView
-            android:id="@+id/tv_home_address"
-            android:layout_below="@+id/tv_home_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/nepal"
-            android:textColor="@color/white_80"
-            android:textSize="@dimen/material_text_title"
-            android:padding="@dimen/default_padding"
-            android:layout_marginLeft="@dimen/activity_default_margin"
-            android:layout_marginRight="@dimen/activity_default_margin"
+                <TextView
+                    android:id="@+id/tv_home_address"
+                    android:layout_below="@+id/tv_home_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nepal"
+                    android:textColor="@color/white_80"
+                    android:textSize="@dimen/material_text_title"
+                    android:padding="@dimen/default_padding"
+                    android:layout_marginLeft="@dimen/activity_default_margin"
+                    android:layout_marginRight="@dimen/activity_default_margin"
 
-            />
+                    />
 
 
-        <TextView
-            android:id="@+id/tv_home_desc"
-            android:layout_below="@id/tv_home_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/see_the_majestic_himalayas_including_mt_everest_if_the_skies_are_clear_you_can_view_the_himalayan_mountains"
-            android:textColor="@color/white_80"
-            android:textSize="@dimen/material_text_subhead"
-            android:padding="@dimen/default_padding"
-            android:layout_marginLeft="@dimen/activity_default_margin"
-            android:layout_marginRight="@dimen/activity_default_margin"/>
+                <TextView
+                    android:id="@+id/tv_home_desc"
+                    android:layout_below="@id/tv_home_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/see_the_majestic_himalayas_including_mt_everest_if_the_skies_are_clear_you_can_view_the_himalayan_mountains"
+                    android:textColor="@color/white_80"
+                    android:textSize="@dimen/material_text_subhead"
+                    android:padding="@dimen/default_padding"
+                    android:layout_marginLeft="@dimen/activity_default_margin"
+                    android:layout_marginRight="@dimen/activity_default_margin"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/ic_home_bottom_curve"
+                    >
+                    
+                    <LinearLayout
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="@dimen/activity_default_margin"
+                        android:layout_alignParentEnd="true">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="180dp"
+                            android:src="@drawable/home_scan_image"/>
+
+                        <ImageButton
+                            android:id="@+id/btn_qr_scan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/home_btn_qr_scan"
+                            android:visibility="visible"
+                            android:layout_marginTop="@dimen/activity_default_margin"
+                            android:layout_gravity="center_horizontal"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="@dimen/activity_default_margin"
+                        android:layout_alignParentBottom="true"
+                        >
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:src="@drawable/home_map_image"/>
+
+                        <ImageButton
+                            android:id="@+id/btn_view_on_map"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/home_btn_map"
+                            android:visibility="visible"
+                            android:layout_marginTop="@dimen/activity_default_margin"
+                            android:layout_marginBottom="@dimen/spacing_home_button_margin"
+                            android:layout_marginLeft="@dimen/spacing_home_button_margin"
+                            />
+
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+
+
+
+
 
 
         <ImageButton
-            android:id="@+id/btn_qr_scan"
-            android:layout_below="@id/tv_home_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/home_icon_qr_scan"
-            android:layout_margin="@dimen/spacing_home_button_margin"
-            android:layout_centerHorizontal="true"/>
-
-        <ImageButton
-            android:id="@+id/btn_view_on_map"
             android:layout_below="@id/btn_qr_scan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -80,47 +151,8 @@
             android:layout_marginLeft="@dimen/spacing_home_button_margin"
             android:layout_marginRight="@dimen/spacing_home_button_margin"
             android:layout_marginBottom="@dimen/spacing_home_button_margin"
-            android:layout_centerHorizontal="true"/>
-
-<RelativeLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:visibility="gone">
-
-    <TextView
-        android:id="@+id/tv_qr_scanner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/LanguageSelectorTextStyle"
-        android:text="Scan QR Code"
-        android:layout_marginLeft="@dimen/activity_default_margin"
-        android:layout_marginRight="@dimen/activity_default_margin"
-        />
-
-
-    <TextView
-        android:layout_below="@id/tv_qr_scanner"
-        android:id="@+id/tv_view_vr_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/LanguageSelectorTextStyle"
-        android:text="View VR Image"
-        android:layout_marginLeft="@dimen/activity_default_margin"
-        android:layout_marginRight="@dimen/activity_default_margin"
-        />
-
-
-    <TextView
-        android:layout_below="@id/tv_view_vr_image"
-        android:id="@+id/tv_view_map"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/LanguageSelectorTextStyle"
-        android:text="View on Map"
-        android:layout_marginLeft="@dimen/activity_default_margin"
-        android:layout_marginRight="@dimen/activity_default_margin"
-        />
-</RelativeLayout>
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 
