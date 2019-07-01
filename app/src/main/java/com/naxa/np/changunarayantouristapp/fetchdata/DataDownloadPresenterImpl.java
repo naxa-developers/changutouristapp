@@ -80,7 +80,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                 .flatMapIterable((Function<List<GeoJsonCategoryListEntity>, Iterable<GeoJsonCategoryListEntity>>) entities -> entities)
                 .flatMap((Function<GeoJsonCategoryListEntity, ObservableSource<Feature>>) categoryListEntity -> {
                     geoJsonCategoryViewModel.insert(categoryListEntity);
-                    LoadImageUtils.downloadAndSaveImageToStorage(appCompatActivity, categoryListEntity.getCategoryTable(), categoryListEntity.getCategoryMarker());
+//                    LoadImageUtils.downloadAndSaveImageToStorage(appCompatActivity, categoryListEntity.getCategoryTable(), categoryListEntity.getCategoryMarker());
                     geoJsonDisplayName = categoryListEntity.getCategoryName();
                     String geoJsonName = categoryListEntity.getCategoryTable();
 
@@ -90,7 +90,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                             .subscribeOn(Schedulers.io())
                             .doOnNext(responseBody -> {
                                 progress++;
-                                dataDonwloadView.downloadProgress(progress, totalCount, geoJsonDisplayName);
+                                dataDonwloadView.downloadProgress(progress, totalCount, geoJsonDisplayName, categoryListEntity.getCategoryTable(), categoryListEntity.getCategoryMarker());
                             })
                             .map(responseBody -> {
                                 FeatureCollection featureCollection = FeatureCollection.fromJson(responseBody.string());

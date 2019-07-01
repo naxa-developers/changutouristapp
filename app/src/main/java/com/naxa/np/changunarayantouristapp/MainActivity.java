@@ -2,6 +2,7 @@ package com.naxa.np.changunarayantouristapp;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,9 +22,13 @@ import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntity
 import com.naxa.np.changunarayantouristapp.fetchdata.DataDonwloadView;
 import com.naxa.np.changunarayantouristapp.fetchdata.DataDownloadPresenter;
 import com.naxa.np.changunarayantouristapp.fetchdata.DataDownloadPresenterImpl;
+import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenter;
+import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenterImpl;
+import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadView;
 import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
+import com.naxa.np.changunarayantouristapp.utils.CreateAppMainFolderUtils;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.NetworkUtils;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
@@ -31,7 +36,7 @@ import com.naxa.np.changunarayantouristapp.vrimage.VRImageViewActivity;
 
 import static com.naxa.np.changunarayantouristapp.utils.Constant.Network.API_KEY;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener, DataDonwloadView {
+public class MainActivity extends BaseActivity implements View.OnClickListener, DataDonwloadView, FileDownloadView  {
 
 
     TextView tvQRScan, tvVRImage, tvViewOnMap;
@@ -41,6 +46,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     PlaceDetailsEntityViewModel placeDetailsEntityViewModel;
     ProgressDialog progressDialog;
     DataDownloadPresenter dataDownloadPresenter;
+    FileDownloadPresenter fileDownloadPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         placeDetailsEntityViewModel = ViewModelProviders.of(this).get(PlaceDetailsEntityViewModel.class);
 
         dataDownloadPresenter = new DataDownloadPresenterImpl(this, MainActivity.this, geoJsonListViewModel, geoJsonCategoryViewModel, placeDetailsEntityViewModel);
+        fileDownloadPresenter = new FileDownloadPresenterImpl(this, MainActivity.this);
 
 
         setupToolbar("Home Page", false);
@@ -164,9 +171,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
 
     @Override
-    public void downloadProgress(int progress, int totalCount, String geoJsonFileName) {
+    public void downloadProgress(int progress, int totalCount, String geoJsonFileName, String categoryName, String markerImageUrl) {
         String alertMsg = getString(R.string.fetching_file, geoJsonFileName, String.valueOf(progress), String.valueOf(totalCount));
-
+        if(!TextUtils.isEmpty(markerImageUrl)) {
+            fileDownloadPresenter.handleFileDownload(markerImageUrl, categoryName, CreateAppMainFolderUtils.getAppMapDataFolderName());
+        }
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -191,5 +200,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             progressDialog.dismiss();
         }
         DialogFactory.createSimpleOkErrorDialog(MainActivity.this, "Failed", failedMsg).show();
+    }
+
+
+
+    @Override
+    public void fileDownloadProgress(int progress, int total, String successMsg) {
+
+    }
+
+    @Override
+    public void fileDownloadSuccess(String fileName, String successMsg, boolean isAlreadyExists) {
+
+    }
+
+    @Override
+    public void fileDownloadFailed(String failedMsg) {
+
     }
 }

@@ -21,7 +21,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".placedetailsview.mainplacesdetails.MainPlacesListActivity"></activity>
+        <activity android:name=".placedetailsview.nearbyplaces.NearByPlacesListActivity"></activity>
+        <activity android:name=".placedetailsview.mainplacesdetails.MainPlacesListActivity" />
         <activity android:name=".audioplayer.AudioListActivity" />
         <activity android:name=".videoplayer.VideoListActivity" />
         <activity android:name=".imageviewer.ImageListGridViewActivity" />

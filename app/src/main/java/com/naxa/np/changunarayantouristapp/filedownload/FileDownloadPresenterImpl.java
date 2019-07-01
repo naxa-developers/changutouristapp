@@ -40,13 +40,13 @@ public class FileDownloadPresenterImpl implements FileDownloadPresenter {
 
 
     @Override
-    public void handleFileDownload(String fileSourceURL, String fileName) {
+    public void handleFileDownload(String fileSourceURL, String fileName, String folderPath) {
 
-        downloaFile(fileSourceURL, fileName);
+        downloaFile(fileSourceURL, fileName, folderPath);
     }
 
 
-    private void downloaFile(String fileSourceURL, String fileName) {
+    private void downloaFile(String fileSourceURL, String fileName, String folderPath) {
 
         if (TextUtils.isEmpty(fileSourceURL)) {
             Toast.makeText(ChangunarayanTouristApp.getInstance(), "FIle Source URL Found", Toast.LENGTH_SHORT).show();
@@ -56,7 +56,7 @@ public class FileDownloadPresenterImpl implements FileDownloadPresenter {
             fileType = fileUrl.substring(stringLength - 4, stringLength);
             downloadedFileName = fileName + fileType;
 
-            String folderPath = CreateAppMainFolderUtils.getAppMediaFolderName();
+//            String folderPath = CreateAppMainFolderUtils.getAppMediaFolderName();
             Log.d("PlaceDetailsActivity", "downloaFile: full file path  "+folderPath+ File.separator +  downloadedFileName);
             File targetFile = new File(folderPath+ File.separator +  downloadedFileName);
             if (targetFile.exists()) {
@@ -70,7 +70,7 @@ public class FileDownloadPresenterImpl implements FileDownloadPresenter {
 //                    ChangunarayanTouristApp.getInstance().registerReceiver(downloadReceiver, filter);
 
 
-                    downloadId = DownloadData(fileSourceURL, fileName);
+                    downloadId = DownloadData(fileSourceURL, fileName, folderPath);
                 } else {
                     fileDownloadView.fileDownloadFailed("No internet connection");
                 }
@@ -78,13 +78,12 @@ public class FileDownloadPresenterImpl implements FileDownloadPresenter {
         }
     }
 
-    private long DownloadData(@NonNull String fileSourceURL, String fileName) {
+    private long DownloadData(@NonNull String fileSourceURL, String fileName, String folderPath) {
 
         long downloadReference;
         DownloadManager.Request request = null;
 
         downloadManager = (DownloadManager) appCompatActivity.getSystemService(DOWNLOAD_SERVICE);
-//        downloadManager = (DownloadManager) ChangunarayanTouristApp.getInstance().getSystemService(DOWNLOAD_SERVICE);
         request = new DownloadManager.Request(Uri.parse(fileSourceURL));
 
         //Setting title of request
@@ -94,7 +93,14 @@ public class FileDownloadPresenterImpl implements FileDownloadPresenter {
         request.setDescription("Changunarayan Tourist App");
 
         //Set the local destination for the downloaded file to a path within the application's external files directory
-        request.setDestinationInExternalPublicDir(CreateAppMainFolderUtils.appmainFolderName + "/" + CreateAppMainFolderUtils.mediaFolderName, fileName + fileType);
+
+        if(TextUtils.equals(folderPath, CreateAppMainFolderUtils.getAppMapDataFolderName())){
+            request.setDestinationInExternalPublicDir(CreateAppMainFolderUtils.appmainFolderName + "/" + CreateAppMainFolderUtils.mapFolderName, fileName + fileType);
+        }else {
+            request.setDestinationInExternalPublicDir(CreateAppMainFolderUtils.appmainFolderName + "/" + CreateAppMainFolderUtils.mediaFolderName, fileName + fileType);
+        }
+
+//        request.setDestinationInExternalPublicDir(folderPath, fileName + fileType);
 
 //Enqueue download and save the referenceId
         downloadReference = downloadManager.enqueue(request);

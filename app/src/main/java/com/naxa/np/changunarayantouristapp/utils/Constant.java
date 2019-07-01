@@ -3,10 +3,16 @@ package com.naxa.np.changunarayantouristapp.utils;
 
 import android.Manifest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Constant {
     public static final String KEY_VALUE = "value";
     public static final String KEY_OBJECT = "object";
     public static final String KEY_EXTRA_OBJECT = "extra_object";
+
+    public Constant() {
+    }
 
     public class SharedPrefKey {
         public static final String IS_APP_FIRST_TIME_LAUNCH = "is_app_first_time_launch";
@@ -40,12 +46,23 @@ public class Constant {
     public class MapKey {
         public static final String MAP_BASE_LAYER = "base_layer";
         public static final String MAP_OVERLAY_LAYER = "overlay_layer";
-
         public static final int KEY_STREET = 0 ;
         public static final int KEY_SATELLITE = 1;
         public static final int KEY_OPENSTREET = 2;
         public static final int KEY_CHANGUNARAYAN_BOARDER = 3;
         public static final int KEY_NAGARKOT_BOARDER = 4;
+        public static final String KEY_MAIN_PLACE_TYPE = "main_place_type";
+
+
+    }
+
+    public List<String> getNearByPlacesTypeList (){
+        List<String> nearByPlaces = new ArrayList<>();
+        nearByPlaces.add("Tank");
+        nearByPlaces.add("Tap");
+        nearByPlaces.add("View point ");
+
+        return nearByPlaces;
     }
 
 }

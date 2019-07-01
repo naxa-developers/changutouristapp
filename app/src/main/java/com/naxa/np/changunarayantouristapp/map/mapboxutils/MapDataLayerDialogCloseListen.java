@@ -2,7 +2,7 @@ package com.naxa.np.changunarayantouristapp.map.mapboxutils;
 
 public interface MapDataLayerDialogCloseListen {
 
-    public void onDialogClose();
+     void onDialogClose();
 
-    public void isFirstTime();
+    void isFirstTime();
 }

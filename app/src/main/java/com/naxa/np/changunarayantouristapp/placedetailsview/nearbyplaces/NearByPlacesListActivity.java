@@ -1,27 +1,34 @@
-package com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails;
+package com.naxa.np.changunarayantouristapp.placedetailsview.nearbyplaces;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
 import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
-import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
+import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntityViewModel;
+import com.naxa.np.changunarayantouristapp.placedetailsview.NearByPlacesViewHolder;
 import com.naxa.np.changunarayantouristapp.placedetailsview.PlaceDetailsActivity;
+import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlacesListActivity;
+import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlacesListViewHolder;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 
 import java.util.HashMap;
 import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subscribers.DisposableSubscriber;
 
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_OBJECT;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_VALUE;
@@ -30,47 +37,66 @@ import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_MAIN
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_NAGARKOT_BOARDER;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.MAP_OVERLAY_LAYER;
 
-public class MainPlacesListActivity extends BaseActivity {
+public class NearByPlacesListActivity extends BaseActivity {
 
-    RecyclerView recyclerView;
-    Button btnRouteToMap;
-    Gson gson;
     private BaseRecyclerViewAdapter<PlacesDetailsEntity, MainPlacesListViewHolder> adapter;
+    RecyclerView recyclerView;
+    PlaceDetailsEntityViewModel placeDetailsEntityViewModel;
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_places_list);
+        setContentView(R.layout.activity_near_by_places_list);
+        placeDetailsEntityViewModel = ViewModelProviders.of(this).get(PlaceDetailsEntityViewModel.class);
 
-        gson = new Gson();
-        setupToolbar(getString(R.string.place_list), false);
 
+        setupToolbar(getString(R.string.nearby_places), false);
 
         initUI();
 
+
     }
 
+
+
     private void initUI() {
-        recyclerView = findViewById(R.id.rv_main_places_list);
-        btnRouteToMap = findViewById(R.id.btn_route_to_map);
-        btnRouteToMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ActivityUtil.openActivity(MapMainActivity.class, MainPlacesListActivity.this);
-            }
-        });
+        recyclerView = findViewById(R.id.rv_near_by_places_list);
 
+        initRecyclerView(SharedPreferenceUtils.getInstance(NearByPlacesListActivity.this).getStringValue(KEY_MAIN_PLACE_TYPE, null));
+    }
 
-        MainPlaceListDetailsResponse mainPlaceListDetailsResponse = gson.fromJson(SharedPreferenceUtils.getInstance(MainPlacesListActivity.this).getStringValue(Constant.SharedPrefKey.KEY_MAIN_PLACES_list_DETAILS, null), MainPlaceListDetailsResponse.class);
-        List<PlacesDetailsEntity> placesDetailsEntities = mainPlaceListDetailsResponse.getData();
+    private void initRecyclerView(String mainPlaceType) {
 
-        if (placesDetailsEntities != null && placesDetailsEntities.size() > 0) {
-
-            setUpRecyclerView(placesDetailsEntities);
+        if(mainPlaceType == null){
+            return;
         }
 
+        Constant constant = new Constant();
+        placeDetailsEntityViewModel.getNearByPlacesListByPlaceTypeAndNearByTypeList(mainPlaceType,
+                constant.getNearByPlacesTypeList())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableSubscriber<List<PlacesDetailsEntity>>() {
+                    @Override
+                    public void onNext(List<PlacesDetailsEntity> placesDetailsEntities) {
+                        if(placesDetailsEntities != null && placesDetailsEntities.size()>0) {
+                            setUpRecyclerView(placesDetailsEntities);
+                        }
+                    }
 
+                    @Override
+                    public void onError(Throwable t) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     private void setUpRecyclerView(List<PlacesDetailsEntity> placesDetailsEntities) {
@@ -87,18 +113,11 @@ public class MainPlacesListActivity extends BaseActivity {
                 mainPlacesListViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (placesDetailsEntity.getPlaceType().equals("changu")) {
-                            SharedPreferenceUtils.getInstance(MainPlacesListActivity.this).setValue(MAP_OVERLAY_LAYER, KEY_CHANGUNARAYAN_BOARDER);
-                            SharedPreferenceUtils.getInstance(MainPlacesListActivity.this).setValue(KEY_MAIN_PLACE_TYPE, "chagunarayan");
-                        } else {
-                            SharedPreferenceUtils.getInstance(MainPlacesListActivity.this).setValue(MAP_OVERLAY_LAYER, KEY_NAGARKOT_BOARDER);
-                            SharedPreferenceUtils.getInstance(MainPlacesListActivity.this).setValue(KEY_MAIN_PLACE_TYPE, "nagarkot");
-                        }
+                        HashMap<String, Object> hashMap3 = new HashMap<>();
+                        hashMap3.put(KEY_VALUE, false);
+                        hashMap3.put(KEY_OBJECT, placesDetailsEntity);
+                        ActivityUtil.openActivity(PlaceDetailsActivity.class, NearByPlacesListActivity.this, hashMap3, false);
 
-                        HashMap<String, Object> hashMap = new HashMap<>();
-                        hashMap.put(KEY_VALUE, true);
-                        hashMap.put(KEY_OBJECT, placesDetailsEntity);
-                        ActivityUtil.openActivity(PlaceDetailsActivity.class, MainPlacesListActivity.this, hashMap, false);
                     }
                 });
 
@@ -111,4 +130,8 @@ public class MainPlacesListActivity extends BaseActivity {
         };
         recyclerView.setAdapter(adapter);
     }
+
+
+
+
 }

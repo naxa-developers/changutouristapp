@@ -114,7 +114,7 @@ public class AudioListActivity extends BaseActivity implements FileDownloadView 
                         dialog = DialogFactory.createProgressDialog(AudioListActivity.this, "Please wait!!! \nDownloading audio file" + fileNameAndUrlPojo.getName());
                         dialog.show();
 //                        fileDownloadPresenter.handleFileDownload("http://changu.naxa.com.np//assets//admin/SampleVideo_1280x720_1mb_(3).mp4", "Sample video file test");
-                        fileDownloadPresenter.handleFileDownload(fileNameAndUrlPojo.getFileUrl(), fileNameAndUrlPojo.getName());
+                        fileDownloadPresenter.handleFileDownload(fileNameAndUrlPojo.getFileUrl(), fileNameAndUrlPojo.getName(), CreateAppMainFolderUtils.getAppMediaFolderName());
 
                     }
                 });
