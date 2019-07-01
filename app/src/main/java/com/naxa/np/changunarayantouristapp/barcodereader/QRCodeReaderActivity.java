@@ -2,10 +2,12 @@ package com.naxa.np.changunarayantouristapp.barcodereader;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
@@ -14,8 +16,22 @@ import com.google.android.material.button.MaterialButton;
 import com.google.zxing.Result;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
+import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
+import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntityViewModel;
+import com.naxa.np.changunarayantouristapp.placedetailsview.PlaceDetailsActivity;
+import com.naxa.np.changunarayantouristapp.placedetailsview.nearbyplaces.NearByPlacesListActivity;
+import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
+import com.naxa.np.changunarayantouristapp.utils.FieldValidatorUtils;
 import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 
+import java.util.HashMap;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subscribers.DisposableSubscriber;
+
+import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_OBJECT;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_VALUE;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.Permission.CAMERA;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.PermissionID.RC_CAMERA;
 
@@ -23,8 +39,10 @@ public class QRCodeReaderActivity extends BaseActivity {
     
     private static final String TAG = "QRCodeReaderActivity";
 
-    TextView tvQRCode;
-    MaterialButton btnScanQrCode;
+    PlaceDetailsEntityViewModel placeDetailsEntityViewModel;
+
+    EditText tvQRCode;
+    MaterialButton btnScanQrCode, btnSubmitQRCode;
     private CodeScanner mCodeScanner;
     CodeScannerView scannerView;
 
@@ -33,6 +51,8 @@ public class QRCodeReaderActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode_reader);
 
+        placeDetailsEntityViewModel = ViewModelProviders.of(this).get(PlaceDetailsEntityViewModel.class);
+
         setupToolbar("QR Code Scan", false);
         initUI();
     }
@@ -40,7 +60,18 @@ public class QRCodeReaderActivity extends BaseActivity {
     private void initUI() {
         tvQRCode = findViewById(R.id.tv_qr_code);
         btnScanQrCode = findViewById(R.id.btn_scan_qr_code);
+        btnSubmitQRCode = findViewById(R.id.btn_submit_qr_code);
         btnScanQrCode.setEnabled(false);
+        btnSubmitQRCode.setEnabled(false);
+
+        btnSubmitQRCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPlaceDetails();
+            }
+        });
+
+
 
         checkPermission(RC_CAMERA, new String[]{CAMERA},
                 getString(R.string.camera_rationale),new PermissionRequestListener() {
@@ -57,6 +88,40 @@ public class QRCodeReaderActivity extends BaseActivity {
 
     }
 
+    private void getPlaceDetails() {
+        if(FieldValidatorUtils.validateEditText(tvQRCode)){
+            placeDetailsEntityViewModel.getPlacesDetailsEntityBYQRCode(tvQRCode.getText().toString())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new DisposableSubscriber<PlacesDetailsEntity>() {
+                        @Override
+                        public void onNext(PlacesDetailsEntity placesDetailsEntity) {
+                            if(placesDetailsEntity != null){
+                                HashMap<String, Object> hashMap3 = new HashMap<>();
+                                hashMap3.put(KEY_VALUE, false);
+                                hashMap3.put(KEY_OBJECT, placesDetailsEntity);
+                                ActivityUtil.openActivity(PlaceDetailsActivity.class, QRCodeReaderActivity.this, hashMap3, false);
+
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable t) {
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        }
+
+    }
+
+
+
+
     private void setupQRCodeReader() {
         scannerView = findViewById(R.id.scanner_view);
         mCodeScanner = new CodeScanner(this, scannerView);
@@ -70,6 +135,7 @@ public class QRCodeReaderActivity extends BaseActivity {
                     public void run() {
                         Toast.makeText(QRCodeReaderActivity.this, result.getText(), Toast.LENGTH_SHORT).show();
                         tvQRCode.setText(result.getText());
+                        btnSubmitQRCode.setEnabled(true);
                     }
                 });
             }

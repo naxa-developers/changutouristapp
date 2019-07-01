@@ -18,6 +18,7 @@ public class PlaceDetailsEntityViewModel extends AndroidViewModel {
 
     private Flowable<List<PlacesDetailsEntity>> mAllEntityList;
     private Flowable<List<PlacesDetailsEntity>> mAllSpecificEntityList;
+    private Flowable<PlacesDetailsEntity> mSpecificEntity;
 
     public PlaceDetailsEntityViewModel(Application application) {
         super(application);
@@ -33,6 +34,11 @@ public class PlaceDetailsEntityViewModel extends AndroidViewModel {
     public Flowable<List<PlacesDetailsEntity>> getPlacesDetailsEntityBYPlaceAndCategoryType(String placeType, String categoryType) {
         mAllSpecificEntityList = mRepository.getPlacesDetailsEntityBYPlaceAndCategoryType(placeType, categoryType);
         return mAllSpecificEntityList;
+    }
+
+    public Flowable<PlacesDetailsEntity> getPlacesDetailsEntityBYQRCode(String qrCode) {
+        mSpecificEntity = mRepository.getPlacesDetailsEntityBYQRCode(qrCode);
+        return mSpecificEntity;
     }
 
     public Flowable<List<PlacesDetailsEntity>> getNearByPlacesListByPlaceTypeAndNearByTypeList(String placeType, List<String> nearByPlacesTypeList) {

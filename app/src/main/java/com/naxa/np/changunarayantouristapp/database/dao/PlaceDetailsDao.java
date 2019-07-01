@@ -26,6 +26,9 @@ public interface PlaceDetailsDao {
     @Query("SELECT * from PlacesDetailsEntity WHERE place_type LIKE :placeType AND type IN (:nearbyTypeList)")
     Flowable<List<PlacesDetailsEntity>> getNearByPlacesListByPlaceTypeAndNearByTypeList(String placeType, List<String> nearbyTypeList);
 
+    @Query("SELECT * from PlacesDetailsEntity WHERE qr_code LIKE :qrcODE")
+    Flowable<PlacesDetailsEntity> getPlacesDetailsEntityBYQRCode(String qrcODE);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(PlacesDetailsEntity placesDetailsEntity);
 

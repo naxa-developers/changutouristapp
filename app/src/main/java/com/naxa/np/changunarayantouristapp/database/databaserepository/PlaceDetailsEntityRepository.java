@@ -20,7 +20,8 @@ import io.reactivex.schedulers.Schedulers;
 public class PlaceDetailsEntityRepository {
     private PlaceDetailsDao placeDetailsDao;
     private Flowable<List<PlacesDetailsEntity>> mAllPlacesDetailsEntity;
-    private Flowable<List<PlacesDetailsEntity>> mSpecificPlacesDetailsEntity;
+    private Flowable<List<PlacesDetailsEntity>> mSpecificPlacesDetailsEntityList;
+    private Flowable<PlacesDetailsEntity> mSpecificPlacesDetailsEntity;
 
     // Note that in order to unit test the WordRepository, you have to remove the Application
     // dependency. This adds complexity and much more code, and this sample is not about testing.
@@ -39,13 +40,18 @@ public class PlaceDetailsEntityRepository {
     }
 
     public Flowable<List<PlacesDetailsEntity>> getPlacesDetailsEntityBYPlaceAndCategoryType(String placeType, String categoryType) {
-        mSpecificPlacesDetailsEntity = placeDetailsDao.getPlacesDetailsEntityBYPlaceAndCategoryType(placeType, categoryType);
+        mSpecificPlacesDetailsEntityList = placeDetailsDao.getPlacesDetailsEntityBYPlaceAndCategoryType(placeType, categoryType);
+        return mSpecificPlacesDetailsEntityList;
+    }
+
+    public Flowable<PlacesDetailsEntity> getPlacesDetailsEntityBYQRCode(String qrCode) {
+        mSpecificPlacesDetailsEntity = placeDetailsDao.getPlacesDetailsEntityBYQRCode(qrCode);
         return mSpecificPlacesDetailsEntity;
     }
 
     public Flowable<List<PlacesDetailsEntity>> getNearByPlacesListByPlaceTypeAndNearByTypeList(String placeType, List<String> nearByPlacesTypeList) {
-        mSpecificPlacesDetailsEntity = placeDetailsDao.getNearByPlacesListByPlaceTypeAndNearByTypeList(placeType, nearByPlacesTypeList);
-        return mSpecificPlacesDetailsEntity;
+        mSpecificPlacesDetailsEntityList = placeDetailsDao.getNearByPlacesListByPlaceTypeAndNearByTypeList(placeType, nearByPlacesTypeList);
+        return mSpecificPlacesDetailsEntityList;
     }
 
     // You must call this on a non-UI thread or your app will crash.
