@@ -1,6 +1,8 @@
 package com.naxa.np.changunarayantouristapp.barcodereader;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -64,6 +66,8 @@ public class QRCodeReaderActivity extends BaseActivity {
         btnScanQrCode.setEnabled(false);
         btnSubmitQRCode.setEnabled(false);
 
+        tvQRCodeTextChangeListner();
+
         btnSubmitQRCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,6 +90,27 @@ public class QRCodeReaderActivity extends BaseActivity {
                     }
                 });
 
+    }
+
+    private void tvQRCodeTextChangeListner() {
+        tvQRCode.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                if(s.length() != 0) {
+                    btnSubmitQRCode.setEnabled(true);
+                }
+            }
+        });
     }
 
     private void getPlaceDetails() {
