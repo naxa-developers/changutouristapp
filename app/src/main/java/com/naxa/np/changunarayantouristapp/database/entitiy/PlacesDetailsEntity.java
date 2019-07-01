@@ -110,7 +110,7 @@ public class PlacesDetailsEntity implements Parcelable {
         this.categoryType = categoryType.trim();
         this.FID = FID;
         this.name = name;
-        this.type = type;
+        this.type = type.trim();
         this.description = description;
         this.photo = photo;
         this.primaryImage = primaryImage;
@@ -160,11 +160,11 @@ public class PlacesDetailsEntity implements Parcelable {
     }
 
     public String getType() {
-        return type;
+        return type.trim();
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.type = type.trim();
     }
 
     public String getDescription() {

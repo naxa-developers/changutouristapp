@@ -1,5 +1,6 @@
 package com.naxa.np.changunarayantouristapp.placedetailsview;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -8,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.naxa.np.changunarayantouristapp.R;
+import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
+import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 
 public class NearByPlacesViewHolder extends RecyclerView.ViewHolder  {
 
@@ -23,12 +26,12 @@ public class NearByPlacesViewHolder extends RecyclerView.ViewHolder  {
 
     }
 
-    void bindView(NearByPlacesPojo nearByPlacesPojo) {
-        tvNearByPlaceName.setText(nearByPlacesPojo.getCategoryName());
-        ivNearByPlaceImage.setImageDrawable(nearByPlacesPojo.drawablecategoryIcon);
+    void bindView(PlacesDetailsEntity placesDetailsEntity) {
+        tvNearByPlaceName.setText(placesDetailsEntity.getName());
 
-//        Glide.with(ChangunarayanTouristApp.getInstance())
-//                .load(nearByPlacesPojo.drawablecategoryIcon)
-//                .into(ivNearByPlaceImage);
+        if(!TextUtils.isEmpty(placesDetailsEntity.getPrimaryImage())){
+            LoadImageUtils.loadImageToViewFromSrc(ivNearByPlaceImage, placesDetailsEntity.getPrimaryImage());
+        }
+
     }
 }

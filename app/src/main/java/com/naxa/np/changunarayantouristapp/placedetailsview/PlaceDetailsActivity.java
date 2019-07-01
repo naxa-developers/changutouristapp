@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +26,7 @@ import com.naxa.np.changunarayantouristapp.audioplayer.AudioListActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
 import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
+import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntityViewModel;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenter;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenterImpl;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadView;
@@ -32,7 +34,9 @@ import com.naxa.np.changunarayantouristapp.imageviewer.ImageListGridViewActivity
 import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlaceListDetails;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
+import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
+import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 import com.naxa.np.changunarayantouristapp.videoplayer.VideoListActivity;
 import com.naxa.np.changunarayantouristapp.videoplayer.VideoPlayerActivity;
@@ -44,8 +48,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subscribers.DisposableSubscriber;
+
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_OBJECT;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_VALUE;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_MAIN_PLACE_TYPE;
 
 public class PlaceDetailsActivity extends BaseActivity implements View.OnClickListener {
 
@@ -61,8 +70,11 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
 
     PlacesDetailsEntity placesDetailsEntity;
     boolean isFromMainPlaceList;
+    String mainPlaceType = "";
 
-    private BaseRecyclerViewAdapter<NearByPlacesPojo, NearByPlacesViewHolder> adapter;
+    PlaceDetailsEntityViewModel placeDetailsEntityViewModel;
+
+    private BaseRecyclerViewAdapter<PlacesDetailsEntity, NearByPlacesViewHolder> adapter;
 
 
     @Override
@@ -70,6 +82,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_details);
 
+        placeDetailsEntityViewModel = ViewModelProviders.of(this).get(PlaceDetailsEntityViewModel.class);
 
         setupToolbar("Place Details", false);
         initUI();
@@ -91,6 +104,8 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
 
             if(isFromMainPlaceList){
                 llNearByPlacesLayout.setVisibility(View.VISIBLE);
+                mainPlaceType = SharedPreferenceUtils.getInstance(PlaceDetailsActivity.this).getStringValue(KEY_MAIN_PLACE_TYPE, null);
+                initRecyclerView();
             }
 
             if(placesDetailsEntity != null) {
@@ -99,6 +114,32 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
             }
 
         }
+    }
+
+    private void initRecyclerView() {
+Constant constant = new Constant();
+        placeDetailsEntityViewModel.getNearByPlacesListByPlaceTypeAndNearByTypeList(mainPlaceType,
+                constant.getNearByPlacesTypeList())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableSubscriber<List<PlacesDetailsEntity>>() {
+                    @Override
+                    public void onNext(List<PlacesDetailsEntity> placesDetailsEntities) {
+                        if(placesDetailsEntities != null && placesDetailsEntities.size()>0) {
+                            setuprecyclerView(placesDetailsEntities);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     private void setValueOnView(@NotNull PlacesDetailsEntity placesDetailsEntity) {
@@ -135,7 +176,6 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         btnViewAllNearByPlaces.setOnClickListener(this);
         btnView360Image.setOnClickListener(this);
 
-        setuprecyclerView(loadDataToList());
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -173,7 +213,9 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         }
     };
 
-    private void setuprecyclerView(List<NearByPlacesPojo> nearByPlacesPojoList) {
+
+
+    private void setuprecyclerView(List<PlacesDetailsEntity> nearByPlacesPojoList) {
 
         if(nearByPlacesPojoList == null){
             return;
@@ -182,15 +224,15 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewnearByPlaces.setLayoutManager(manager);
         recyclerViewnearByPlaces.setItemAnimator(new DefaultItemAnimator());
-        adapter = new BaseRecyclerViewAdapter<NearByPlacesPojo, NearByPlacesViewHolder>(nearByPlacesPojoList, R.layout.nearby_places_recycler_item_row_layout){
+        adapter = new BaseRecyclerViewAdapter<PlacesDetailsEntity, NearByPlacesViewHolder>(nearByPlacesPojoList, R.layout.nearby_places_recycler_item_row_layout){
 
             @Override
-            public void viewBinded(NearByPlacesViewHolder nearByPlacesViewHolder, final NearByPlacesPojo nearByPlacesPojo, int position) {
+            public void viewBinded(NearByPlacesViewHolder nearByPlacesViewHolder, final PlacesDetailsEntity nearByPlacesPojo, int position) {
                 nearByPlacesViewHolder.bindView(nearByPlacesPojo);
                 nearByPlacesViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(PlaceDetailsActivity.this, nearByPlacesPojo.getCategoryName(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PlaceDetailsActivity.this, nearByPlacesPojo.getName(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -204,20 +246,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         recyclerViewnearByPlaces.setAdapter(adapter);
     }
 
-    private List<NearByPlacesPojo> loadDataToList() {
 
-        ArrayList<NearByPlacesPojo> mapCategoryModelArrayList = new ArrayList<>();
-
-        mapCategoryModelArrayList.add(new NearByPlacesPojo("Hospital", getResources().getDrawable(R.drawable.ic_bottom_menu_image_24dp)));
-        mapCategoryModelArrayList.add(new NearByPlacesPojo("College", getResources().getDrawable(R.drawable.ic_bottom_menu_video_24dp)));
-        mapCategoryModelArrayList.add(new NearByPlacesPojo("Gas Station", getResources().getDrawable(R.drawable.ic_bottom_menu_audio_24dp)));
-        mapCategoryModelArrayList.add(new NearByPlacesPojo("Bus Station", getResources().getDrawable(R.drawable.ic_bottom_menu_map_24dp)));
-        mapCategoryModelArrayList.add(new NearByPlacesPojo("Restaurant", getResources().getDrawable(R.drawable.ic_bottom_menu_image_24dp)));
-        mapCategoryModelArrayList.add(new NearByPlacesPojo("Airport", getResources().getDrawable(R.drawable.ic_bottom_menu_video_24dp)));
-
-        return mapCategoryModelArrayList;
-
-    }
 
     @Override
     public void onClick(View v) {

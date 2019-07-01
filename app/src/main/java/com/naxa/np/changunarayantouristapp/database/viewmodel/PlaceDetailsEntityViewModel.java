@@ -35,6 +35,11 @@ public class PlaceDetailsEntityViewModel extends AndroidViewModel {
         return mAllSpecificEntityList;
     }
 
+    public Flowable<List<PlacesDetailsEntity>> getNearByPlacesListByPlaceTypeAndNearByTypeList(String placeType, List<String> nearByPlacesTypeList) {
+        mAllSpecificEntityList = mRepository.getNearByPlacesListByPlaceTypeAndNearByTypeList(placeType, nearByPlacesTypeList);
+        return mAllSpecificEntityList;
+    }
+
     public void insert(PlacesDetailsEntity placesDetailsEntity) {
         mRepository.insert(placesDetailsEntity);
 

@@ -26,6 +26,7 @@ import java.util.List;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_OBJECT;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_VALUE;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_CHANGUNARAYAN_BOARDER;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_MAIN_PLACE_TYPE;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_NAGARKOT_BOARDER;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.MAP_OVERLAY_LAYER;
 
@@ -88,9 +89,10 @@ public class MainPlacesListActivity extends BaseActivity {
                     public void onClick(View v) {
 if(placesDetailsEntity.getPlaceType().equals("changu")) {
     SharedPreferenceUtils.getInstance(MainPlacesListActivity.this).setValue(MAP_OVERLAY_LAYER, KEY_CHANGUNARAYAN_BOARDER);
+    SharedPreferenceUtils.getInstance(MainPlacesListActivity.this).setValue(KEY_MAIN_PLACE_TYPE, "chagunarayan");
 }else {
     SharedPreferenceUtils.getInstance(MainPlacesListActivity.this).setValue(MAP_OVERLAY_LAYER, KEY_NAGARKOT_BOARDER);
-
+    SharedPreferenceUtils.getInstance(MainPlacesListActivity.this).setValue(KEY_MAIN_PLACE_TYPE, "nagarkot");
 }
 
                         HashMap<String, Object> hashMap = new HashMap<>();

@@ -22,6 +22,10 @@ public interface PlaceDetailsDao {
     @Query("SELECT * from PlacesDetailsEntity WHERE place_type LIKE :placeType AND category_type LIKE :categoryType")
     Flowable<List<PlacesDetailsEntity>> getPlacesDetailsEntityBYPlaceAndCategoryType(String placeType, String categoryType);
 
+
+    @Query("SELECT * from PlacesDetailsEntity WHERE place_type LIKE :placeType AND type IN (:nearbyTypeList)")
+    Flowable<List<PlacesDetailsEntity>> getNearByPlacesListByPlaceTypeAndNearByTypeList(String placeType, List<String> nearbyTypeList);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(PlacesDetailsEntity placesDetailsEntity);
 
