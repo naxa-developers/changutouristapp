@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -32,14 +31,12 @@ import com.naxa.np.changunarayantouristapp.utils.CreateAppMainFolderUtils;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.NetworkUtils;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
-import com.naxa.np.changunarayantouristapp.vrimage.VRImageViewActivity;
 
 import static com.naxa.np.changunarayantouristapp.utils.Constant.Network.API_KEY;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, DataDonwloadView, FileDownloadView  {
 
 
-    TextView tvQRScan, tvVRImage, tvViewOnMap;
     ImageButton btnScanQR, btnViewOnMap;
     GeoJsonCategoryViewModel geoJsonCategoryViewModel;
     GeoJsonListViewModel geoJsonListViewModel;
@@ -74,18 +71,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
 
     private void initUI() {
-        tvQRScan = findViewById(R.id.tv_qr_scanner);
-        tvVRImage = findViewById(R.id.tv_view_vr_image);
-        tvViewOnMap = findViewById(R.id.tv_view_map);
+
 
         btnScanQR = findViewById(R.id.btn_qr_scan);
         btnViewOnMap = findViewById(R.id.btn_view_on_map);
         btnScanQR.setOnClickListener(this);
         btnViewOnMap.setOnClickListener(this);
-
-        tvQRScan.setOnClickListener(this);
-        tvVRImage.setOnClickListener(this);
-        tvViewOnMap.setOnClickListener(this);
 
     }
 
@@ -93,19 +84,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.tv_qr_scanner:
-                ActivityUtil.openActivity(QRCodeReaderActivity.class, MainActivity.this);
-                break;
-
-            case R.id.tv_view_vr_image:
-                ActivityUtil.openActivity(VRImageViewActivity.class, MainActivity.this);
-                break;
-
-            case R.id.tv_view_map:
-                ActivityUtil.openActivity(MapMainActivity.class, MainActivity.this);
-
-                break;
-
             case R.id.btn_qr_scan:
                 ActivityUtil.openActivity(QRCodeReaderActivity.class, MainActivity.this);
                 break;

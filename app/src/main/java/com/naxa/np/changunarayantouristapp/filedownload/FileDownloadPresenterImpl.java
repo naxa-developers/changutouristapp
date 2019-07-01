@@ -126,7 +126,10 @@ public class FileDownloadPresenterImpl implements FileDownloadPresenter {
                 fileDownloadView.fileDownloadFailed("Unable to download file");
             }
 
+            appCompatActivity.unregisterReceiver(downloadReceiver);
         }
     };
+
+
 
 }
