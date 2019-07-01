@@ -368,6 +368,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                         drawCategoryWiseMarkersOnMap();
 
                     }
+
                 }
         );
     }

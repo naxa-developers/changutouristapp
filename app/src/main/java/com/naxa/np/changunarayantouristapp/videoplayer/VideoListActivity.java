@@ -20,6 +20,7 @@ import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenterImp
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadView;
 import com.naxa.np.changunarayantouristapp.placedetailsview.FileNameAndUrlPojo;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
+import com.naxa.np.changunarayantouristapp.utils.CreateAppMainFolderUtils;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 
 import org.json.JSONArray;
@@ -113,7 +114,7 @@ public class VideoListActivity extends BaseActivity implements FileDownloadView 
                         dialog = DialogFactory.createProgressDialog(VideoListActivity.this , "Please wait!!! \nDownloading video file"+fileNameAndUrlPojo.getName());
                         dialog.show();
 //                        fileDownloadPresenter.handleFileDownload("http://changu.naxa.com.np//assets//admin/SampleVideo_1280x720_1mb_(3).mp4", "Sample video file test");
-                        fileDownloadPresenter.handleFileDownload(fileNameAndUrlPojo.getFileUrl(), fileNameAndUrlPojo.getName());
+                        fileDownloadPresenter.handleFileDownload(fileNameAndUrlPojo.getFileUrl(), fileNameAndUrlPojo.getName(), CreateAppMainFolderUtils.getAppMediaFolderName());
 
                     }
                 });
