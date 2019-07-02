@@ -112,4 +112,15 @@
         <item name="colorAccent">#f9a825</item>
     </style>
 
+
+
+    <style name="HeaderImage">
+        <item name="android:layout_margin">8dp</item>
+
+    </style>
+
+    <style name="Text.Title.Bold" parent="Base.TextAppearance.AppCompat.Title">
+        <item name="android:textSize">14dp</item>
+    </style>
+
 </resources>
