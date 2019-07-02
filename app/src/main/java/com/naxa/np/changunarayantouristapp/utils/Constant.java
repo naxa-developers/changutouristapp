@@ -16,6 +16,7 @@ public class Constant {
 
     public class SharedPrefKey {
         public static final String IS_APP_FIRST_TIME_LAUNCH = "is_app_first_time_launch";
+        public static final String IS_MAYOR_MESSAGE_FIRST_TIME = "is_mayor_message_first_time";
         public static final String KEY_LANGUAGE_LIST_DETAILS = "language_list_details";
         public static final String KEY_SELECTED_APP_LANGUAGE = "selected_app_language";
         public static final String IS_PLACES_DATA_ALREADY_EXISTS = "is_places_data_already_exists";

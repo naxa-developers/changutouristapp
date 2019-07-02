@@ -126,6 +126,7 @@ public class SelectlanguageActivity extends BaseActivity {
                     public void onClick(View v) {
                         Log.d(TAG, "onClick: " + languageDetails.getName());
                         SharedPreferenceUtils.getInstance(SelectlanguageActivity.this).setValue(Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE, languageDetails.getLanguage());
+
                         launchLoginScreen();
                     }
                 });
@@ -139,6 +140,7 @@ public class SelectlanguageActivity extends BaseActivity {
         };
         recyclerView.setAdapter(adapter);
     }
+
 
 
     private void launchLoginScreen() {

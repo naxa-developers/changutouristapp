@@ -21,9 +21,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.selectlanguage.SelectlanguageActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
-import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
-
-import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_APP_FIRST_TIME_LAUNCH;
 
 public class WalkThroughSliderActivity extends AppCompatActivity {
 
