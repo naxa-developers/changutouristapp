@@ -16,5 +16,6 @@ public class UrlConstant {
         public static final String FETCH_GEOJSON_CATEGORIES_LIST = "mobileapi/mobapi/categoryApi";
         public static final String FETCH_GEOJSON_FILES= "mobileapi/mobapi/geojson";
         public static final String FETCH_PLACE_DETAILS= "mobileapi/mobapi/place_details_api";
+        public static final String FETCH_MAYOR_MESSAGE_DETAILS= "mobileapi/mobapi/mayerMessage";
 
 }

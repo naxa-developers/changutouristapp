@@ -99,4 +99,17 @@
         <item name="android:textOn"></item>
     </style>
 
+
+
+    <style name="AppThemeRatingBar" parent="ThemeOverlay.MaterialComponents">
+        <item name="ratingBarStyle">@style/placeRatingBar</item>
+    </style>
+
+    <style name="placeRatingBar" parent="Widget.AppCompat.RatingBar.Small">
+        <!--<item name="android:progressDrawable">@drawable/food_rating_bar_full</item>-->
+        <item name="android:minHeight">32dp</item>
+        <item name="android:maxHeight">32dp</item>
+        <item name="colorAccent">#f9a825</item>
+    </style>
+
 </resources>

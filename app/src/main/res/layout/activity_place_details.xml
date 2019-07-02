@@ -65,7 +65,11 @@
                         android:id="@+id/rating_bar_place"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:rating="3.7"
+                        style="@style/placeRatingBar"
+                        android:rating="3.5"
+                        android:layout_marginTop="@dimen/spacing_medium"
+                        android:layout_marginBottom="@dimen/activity_default_margin"
+                        android:focusable="true"
                       />
 
                     <TextView

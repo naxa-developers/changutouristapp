@@ -38,4 +38,8 @@ public interface NetworkApiInterface {
     @POST(UrlConstant.FETCH_PLACE_DETAILS)
     @FormUrlEncoded
     Observable<MainPlaceListDetailsResponse> getMainPlacesListDetails(@Field("api_key") String api_key);
+
+    @POST(UrlConstant.FETCH_MAYOR_MESSAGE_DETAILS)
+    @FormUrlEncoded
+    Observable<MainPlaceListDetailsResponse> getMaoyorMessagesListDetails(@Field("api_key") String api_key);
 }
