@@ -14,9 +14,12 @@ import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonCategoryViewModel;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonListViewModel;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntityViewModel;
+import com.naxa.np.changunarayantouristapp.mayormessage.MayorMessageActivity;
+import com.naxa.np.changunarayantouristapp.mayormessage.MayorMessagesListResponse;
 import com.naxa.np.changunarayantouristapp.network.NetworkApiInterface;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlaceListDetailsResponse;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
+import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 
@@ -37,6 +40,8 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import timber.log.Timber;
+
+import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_MAYOR_MESSAGE_FIRST_TIME;
 
 
 public class DataDownloadPresenterImpl implements DataDownloadPresenter {
@@ -179,8 +184,10 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
 
                     @Override
                     public void onComplete() {
+                        fetchMayorMessage(apiInterface, apiKey, language);
                         dataDonwloadView.downloadSuccess("All Data Downloaded Successfully");
                         SharedPreferenceUtils.getInstance(ChangunarayanTouristApp.getInstance()).setValue(Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS, true);
+
                     }
                 });
 
@@ -197,6 +204,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                     public void onNext(MainPlaceListDetailsResponse mainPlaceListDetailsResponse) {
 
                         SharedPreferenceUtils.getInstance(appCompatActivity).setValue(Constant.SharedPrefKey.KEY_MAIN_PLACES_list_DETAILS, gson.toJson(mainPlaceListDetailsResponse));
+
                     }
 
                     @Override
@@ -211,4 +219,30 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                 });
 
     }
+
+
+    private void fetchMayorMessage(@NotNull NetworkApiInterface apiInterface, String apiKey, String language) {
+            apiInterface.getMaoyorMessagesListDetails(apiKey)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new DisposableObserver<MayorMessagesListResponse>() {
+                        @Override
+                        public void onNext(MayorMessagesListResponse mayorMessagesListResponse) {
+
+                            SharedPreferenceUtils.getInstance(appCompatActivity).setValue(Constant.SharedPrefKey.KEY_MAYOR_MESSAGE_DETAILS, gson.toJson(mayorMessagesListResponse));
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+                        }
+                    });
+
+    }
+
 }

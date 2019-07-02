@@ -83,6 +83,7 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
                                 dialog.dismiss();
                                 if (mayorMessagesListResponse.getData() != null) {
                                     SharedPreferenceUtils.getInstance(MayorMessageActivity.this).setValue(Constant.SharedPrefKey.KEY_MAYOR_MESSAGE_DETAILS, gson.toJson(mayorMessagesListResponse));
+                                    SharedPreferenceUtils.getInstance(MayorMessageActivity.this).setValue(IS_MAYOR_MESSAGE_FIRST_TIME, false);
                                     mayorMessageDetails = mayorMessagesListResponse.getData().get(0);
 
                                     downloadVideo(mayorMessageDetails);
