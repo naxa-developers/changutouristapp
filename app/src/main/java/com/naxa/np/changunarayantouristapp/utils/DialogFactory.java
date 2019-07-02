@@ -315,6 +315,8 @@ public final class DialogFactory {
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
+        Window window = dialog.getWindow();
+        window.setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setContentView(R.layout.map_data_filter_custom_dialog_layout);
 
 //        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();

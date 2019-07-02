@@ -14,11 +14,7 @@ import com.google.gson.Gson;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
-import com.naxa.np.changunarayantouristapp.fetchdata.DataDonwloadView;
-import com.naxa.np.changunarayantouristapp.fetchdata.DataDownloadPresenter;
-import com.naxa.np.changunarayantouristapp.fetchdata.DataDownloadPresenterImpl;
-import com.naxa.np.changunarayantouristapp.login.LoginActivity;
-import com.naxa.np.changunarayantouristapp.splashscreen.WalkThroughSliderActivity;
+import com.naxa.np.changunarayantouristapp.mayormessage.MayorMessageActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
@@ -30,7 +26,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
-import static android.Manifest.permission_group.STORAGE;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.Network.API_KEY;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.Permission.STORAGE_READ;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.Permission.STORAGE_WRITE;
@@ -131,6 +126,7 @@ public class SelectlanguageActivity extends BaseActivity {
                     public void onClick(View v) {
                         Log.d(TAG, "onClick: " + languageDetails.getName());
                         SharedPreferenceUtils.getInstance(SelectlanguageActivity.this).setValue(Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE, languageDetails.getLanguage());
+
                         launchLoginScreen();
                     }
                 });
@@ -146,6 +142,7 @@ public class SelectlanguageActivity extends BaseActivity {
     }
 
 
+
     private void launchLoginScreen() {
 
         checkPermission(RC_STORAGE, new String[]{STORAGE_READ, STORAGE_WRITE}, getString(R.string.storage_rationale),
@@ -154,7 +151,7 @@ public class SelectlanguageActivity extends BaseActivity {
                     public void onPermissionGranted() {
                         SharedPreferenceUtils.getInstance(SelectlanguageActivity.this).setValue(IS_APP_FIRST_TIME_LAUNCH, false);
 
-                        ActivityUtil.openActivity(LoginActivity.class, SelectlanguageActivity.this);
+                        ActivityUtil.openActivity(MayorMessageActivity.class, SelectlanguageActivity.this);
                         finish();
                     }
 

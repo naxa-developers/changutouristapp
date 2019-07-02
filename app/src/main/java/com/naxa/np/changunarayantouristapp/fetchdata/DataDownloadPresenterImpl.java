@@ -14,14 +14,19 @@ import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonCategoryViewModel;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonListViewModel;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntityViewModel;
+import com.naxa.np.changunarayantouristapp.mayormessage.MayorMessageActivity;
+import com.naxa.np.changunarayantouristapp.mayormessage.MayorMessagesListResponse;
 import com.naxa.np.changunarayantouristapp.network.NetworkApiInterface;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlaceListDetailsResponse;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
+import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +40,8 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import timber.log.Timber;
+
+import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_MAYOR_MESSAGE_FIRST_TIME;
 
 
 public class DataDownloadPresenterImpl implements DataDownloadPresenter {
@@ -74,28 +81,45 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                 .map(listResponse -> {
                     totalCount = listResponse.getData().size();
                     if(listResponse.getData() != null){
+                        downloadMainPlaceListDetails(apiInterface, apiKey, language);
                         new ISETRoomDatabase.DeleteAllDbTableAsync(ISETRoomDatabase.getDatabase(appCompatActivity)).execute();
                     }
                     return listResponse.getData();
                 })
                 .flatMapIterable((Function<List<GeoJsonCategoryListEntity>, Iterable<GeoJsonCategoryListEntity>>) entities -> entities)
-                .delay(50, TimeUnit.MILLISECONDS)
                 .flatMap((Function<GeoJsonCategoryListEntity, ObservableSource<Feature>>) categoryListEntity -> {
                     geoJsonCategoryViewModel.insert(categoryListEntity);
 //                    LoadImageUtils.downloadAndSaveImageToStorage(appCompatActivity, categoryListEntity.getCategoryTable(), categoryListEntity.getCategoryMarker());
                     geoJsonDisplayName = categoryListEntity.getCategoryName();
                     String geoJsonName = categoryListEntity.getCategoryTable();
 
-                    downloadMainPlaceListDetails(apiInterface, apiKey, language);
-
                     return apiInterface.getGeoJsonDetails(Constant.Network.API_KEY, categoryListEntity.getCategoryTable())
                             .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .delay(50, TimeUnit.MILLISECONDS)
                             .doOnNext(responseBody -> {
                                 progress++;
-                                dataDonwloadView.downloadProgress(progress, totalCount, geoJsonDisplayName, categoryListEntity.getCategoryTable(), categoryListEntity.getCategoryMarker());
+                                dataDonwloadView.downloadProgress(progress, totalCount, categoryListEntity.getCategoryName(), categoryListEntity.getCategoryTable(), categoryListEntity.getCategoryMarker());
                             })
                             .map(responseBody -> {
-                                FeatureCollection featureCollection = FeatureCollection.fromJson(responseBody.string());
+
+                                BufferedReader reader = new BufferedReader(new InputStreamReader(responseBody.byteStream()));
+                                StringBuilder sb = new StringBuilder();
+                                String line = null;
+                                try {
+
+                                    while ((line = reader.readLine()) != null) {
+                                        sb.append(line).append("\n");
+                                    }
+                                    reader.close();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    throw  new Exception();
+                                }
+
+                                String geoJsonToString = sb.toString();
+//                                FeatureCollection featureCollection = FeatureCollection.fromJson(responseBody.string());
+                                FeatureCollection featureCollection = FeatureCollection.fromJson(geoJsonToString);
                                 return featureCollection.features();
                             })
                             .toList()
@@ -160,8 +184,10 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
 
                     @Override
                     public void onComplete() {
+                        fetchMayorMessage(apiInterface, apiKey, language);
                         dataDonwloadView.downloadSuccess("All Data Downloaded Successfully");
                         SharedPreferenceUtils.getInstance(ChangunarayanTouristApp.getInstance()).setValue(Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS, true);
+
                     }
                 });
 
@@ -178,6 +204,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                     public void onNext(MainPlaceListDetailsResponse mainPlaceListDetailsResponse) {
 
                         SharedPreferenceUtils.getInstance(appCompatActivity).setValue(Constant.SharedPrefKey.KEY_MAIN_PLACES_list_DETAILS, gson.toJson(mainPlaceListDetailsResponse));
+
                     }
 
                     @Override
@@ -192,4 +219,30 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                 });
 
     }
+
+
+    private void fetchMayorMessage(@NotNull NetworkApiInterface apiInterface, String apiKey, String language) {
+            apiInterface.getMaoyorMessagesListDetails(apiKey)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new DisposableObserver<MayorMessagesListResponse>() {
+                        @Override
+                        public void onNext(MayorMessagesListResponse mayorMessagesListResponse) {
+
+                            SharedPreferenceUtils.getInstance(appCompatActivity).setValue(Constant.SharedPrefKey.KEY_MAYOR_MESSAGE_DETAILS, gson.toJson(mayorMessagesListResponse));
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+                        }
+                    });
+
+    }
+
 }

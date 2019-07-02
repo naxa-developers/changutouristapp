@@ -10,6 +10,6 @@
         </shape>
     </item>
     <item android:drawable="@drawable/direction_icon"
-        android:height="100dp"
-        android:width="100dp" />
+        android:height="60dp"
+        android:width="60dp" />
 </layer-list>

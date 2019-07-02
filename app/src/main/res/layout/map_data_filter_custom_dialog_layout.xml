@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<!--<RelativeLayout
+xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--android:background="@color/transparent"-->
+    <!--&gt;-->
+
+
+<androidx.cardview.widget.CardView android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/transparent"
-    >
-
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="5dp"
-        android:layout_marginTop="@dimen/activity_default_margin"
-        android:background="@color/white"
-        >
+    app:cardCornerRadius="5dp"
+    android:layout_marginTop="@dimen/activity_default_margin"
+    android:backgroundTint="@color/transparent"
+    app:cardElevation="0dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/spacing_xxsmall">
+            android:layout_margin="@dimen/spacing_xxsmall"
+            android:background="@color/transparent"
+            >
 
     <LinearLayout
         android:layout_marginTop="@dimen/activity_default_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="@color/white_95"
         >
 
         <TextView
@@ -35,10 +40,11 @@
             android:textColor="@color/white"
             android:text="@string/icon_explanation"
             android:gravity="center"
-            android:textSize="@dimen/material_text_headline"/>
+            android:textSize="@dimen/material_text_title"/>
 
 
         <View
+
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:background="@drawable/dotted_line">
@@ -68,5 +74,5 @@
 
 
 
-</RelativeLayout>
+<!--</RelativeLayout>-->
 

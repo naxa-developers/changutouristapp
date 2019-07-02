@@ -34,7 +34,7 @@
             android:layout_marginTop="20dp"
             android:paddingLeft="@dimen/desc_padding"
             android:paddingRight="@dimen/desc_padding"
-            android:text="Tourist ApPP"
+            android:text="Tourist App"
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_material_header1" />

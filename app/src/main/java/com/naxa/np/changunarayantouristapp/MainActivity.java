@@ -9,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import androidx.lifecycle.ViewModelProviders;
 
@@ -34,7 +33,7 @@ import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 
 import static com.naxa.np.changunarayantouristapp.utils.Constant.Network.API_KEY;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener, DataDonwloadView, FileDownloadView  {
+public class MainActivity extends BaseActivity implements View.OnClickListener, DataDonwloadView, FileDownloadView {
 
 
     ImageButton btnScanQR, btnViewOnMap;
@@ -49,7 +48,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
 
         geoJsonCategoryViewModel = ViewModelProviders.of(this).get(GeoJsonCategoryViewModel.class);
@@ -69,7 +67,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
 
-
     private void initUI() {
 
 
@@ -83,7 +80,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_qr_scan:
                 ActivityUtil.openActivity(QRCodeReaderActivity.class, MainActivity.this);
                 break;
@@ -96,12 +93,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void fetchAllData() {
-        if(SharedPreferenceUtils.getInstance(MainActivity.this).getBoolanValue(Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS,false)){
+        if (SharedPreferenceUtils.getInstance(MainActivity.this).getBoolanValue(Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS, false)) {
 
-        }else {
-            if(NetworkUtils.isNetworkAvailable()) {
+        } else {
+            if (NetworkUtils.isNetworkAvailable()) {
                 fetctDataFromServerAndSave();
-            }else {
+            } else {
                 if (progressDialog != null && progressDialog.isShowing()) {
                     progressDialog.dismiss();
                 }
@@ -113,7 +110,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                             }
                         }).show();
             }
-                }
+        }
 
 
     }
@@ -128,8 +125,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.action_select_language:
                 break;
             case R.id.action_refresh_data:
@@ -150,8 +146,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void downloadProgress(int progress, int totalCount, String geoJsonFileName, String categoryName, String markerImageUrl) {
-        Log.d(TAG, "downloadProgress: "+"Progress : "+progress);
-        Log.d(TAG, "downloadProgress: "+"GeoJsonFileName : "+geoJsonFileName);
+
         String alertMsg = getString(R.string.fetching_file, geoJsonFileName, String.valueOf(progress), String.valueOf(totalCount));
         if(!TextUtils.isEmpty(markerImageUrl)) {
             fileDownloadPresenter.handleFileDownload(markerImageUrl, categoryName, CreateAppMainFolderUtils.getAppMapDataFolderName());
@@ -179,9 +174,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
-        DialogFactory.createSimpleOkErrorDialog(MainActivity.this, "Failed", failedMsg).show();
+//        DialogFactory.createSimpleOkErrorDialog(MainActivity.this, "Failed", failedMsg).show();
     }
-
 
 
     @Override
@@ -197,5 +191,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void fileDownloadFailed(String failedMsg) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        if ( progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        if ( progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+        super.onPause();
     }
 }

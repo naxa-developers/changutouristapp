@@ -16,10 +16,12 @@ public class Constant {
 
     public class SharedPrefKey {
         public static final String IS_APP_FIRST_TIME_LAUNCH = "is_app_first_time_launch";
+        public static final String IS_MAYOR_MESSAGE_FIRST_TIME = "is_mayor_message_first_time";
         public static final String KEY_LANGUAGE_LIST_DETAILS = "language_list_details";
         public static final String KEY_SELECTED_APP_LANGUAGE = "selected_app_language";
         public static final String IS_PLACES_DATA_ALREADY_EXISTS = "is_places_data_already_exists";
         public static final String KEY_MAIN_PLACES_list_DETAILS = "main_places_list_details";
+        public static final String KEY_MAYOR_MESSAGE_DETAILS = "mayor_message_details";
 
     }
 
@@ -60,7 +62,15 @@ public class Constant {
         List<String> nearByPlaces = new ArrayList<>();
         nearByPlaces.add("Tank");
         nearByPlaces.add("Tap");
-        nearByPlaces.add("View point ");
+        nearByPlaces.add("View point");
+        nearByPlaces.add("Pond");
+        nearByPlaces.add("Dam");
+        nearByPlaces.add("Picnic spot");
+        nearByPlaces.add("Museum");
+        nearByPlaces.add("Stone tap");
+        nearByPlaces.add("Viewpoint");
+        nearByPlaces.add("Peace garden");
+        nearByPlaces.add("Waterfall");
 
         return nearByPlaces;
     }

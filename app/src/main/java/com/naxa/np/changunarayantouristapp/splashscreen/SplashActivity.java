@@ -8,9 +8,7 @@ import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.naxa.np.changunarayantouristapp.R;
-import com.naxa.np.changunarayantouristapp.login.LoginActivity;
-import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlacesListActivity;
-import com.naxa.np.changunarayantouristapp.selectlanguage.SelectlanguageActivity;
+import com.naxa.np.changunarayantouristapp.mayormessage.MayorMessageActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.CreateAppMainFolderUtils;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
@@ -40,7 +38,7 @@ public class SplashActivity extends AppCompatActivity {
                     SharedPreferenceUtils.getInstance(SplashActivity.this).setValue(MAP_OVERLAY_LAYER, KEY_CHANGUNARAYAN_BOARDER);
                     ActivityUtil.openActivity(WalkThroughSliderActivity.class, SplashActivity.this);
                 } else {
-                    ActivityUtil.openActivity(LoginActivity.class, SplashActivity.this);
+                    ActivityUtil.openActivity(MayorMessageActivity.class, SplashActivity.this);
                 }
                 finish();
             }
