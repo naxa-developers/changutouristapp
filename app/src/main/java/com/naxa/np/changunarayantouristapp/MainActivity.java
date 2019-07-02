@@ -1,6 +1,7 @@
 package com.naxa.np.changunarayantouristapp;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -9,9 +10,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.material.navigation.NavigationView;
 import com.naxa.np.changunarayantouristapp.barcodereader.QRCodeReaderActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonCategoryViewModel;
@@ -47,7 +54,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity_with_nav_drawer_layout);
 
 
         geoJsonCategoryViewModel = ViewModelProviders.of(this).get(GeoJsonCategoryViewModel.class);
@@ -62,21 +69,48 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         initUI();
 
 
+
         fetchAllData();
 
     }
 
 
     private void initUI() {
-
-
         btnScanQR = findViewById(R.id.btn_qr_scan);
         btnViewOnMap = findViewById(R.id.btn_view_on_map);
         btnScanQR.setOnClickListener(this);
         btnViewOnMap.setOnClickListener(this);
 
+        setupNavigationDrawer();
     }
 
+
+    private void setupNavigationDrawer() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) drawer.findViewById(R.id.nav_view);
+
+
+        View headerLayout = navigationView.getHeaderView(0);
+        ImageView profileIageView = (ImageView) headerLayout.findViewById(R.id.nav_user_profile_image_view);
+        TextView tvUserName = (TextView) headerLayout.findViewById(R.id.nav_user_username);
+        TextView tvUserEmail = (TextView) headerLayout.findViewById(R.id.nav_user_email);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     @Override
     public void onClick(View v) {

@@ -62,4 +62,7 @@
     <dimen name="details_page_img_height">250dp</dimen>
     <!--intro slider dimens end-->
 
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">200dp</dimen>
+
 </resources>
