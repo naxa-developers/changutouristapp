@@ -135,11 +135,19 @@ public class PlacesDetailsEntity implements Parcelable {
     }
 
     public String getPlaceType() {
-        return placeType.trim();
+        if(placeType == null){
+            return placeType;
+        }else {
+            return placeType.trim();
+        }
     }
 
     public void setPlaceType(String placeType) {
-        this.placeType = placeType.trim();
+        if(placeType == null){
+            this.placeType = placeType;
+        }else {
+            this.placeType = placeType.trim();
+        }
     }
 
     public String getCategoryType() {
@@ -160,12 +168,19 @@ public class PlacesDetailsEntity implements Parcelable {
     }
 
     public String getType() {
-        return type.trim();
+        if(type == null){
+            return type;
+        }else {
+            return type.trim();
+        }
     }
 
     public void setType(String type) {
-        this.type = type.trim();
-    }
+        if(type == null){
+            this.type = type;
+        }else {
+            this.type = type.trim();
+        }    }
 
     public String getDescription() {
         return description;

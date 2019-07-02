@@ -109,7 +109,7 @@ public class FileDownloadPresenterImpl implements FileDownloadPresenter {
         return downloadReference;
     }
 
-    private BroadcastReceiver downloadReceiver = new BroadcastReceiver() {
+    public BroadcastReceiver downloadReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, @NonNull Intent intent) {
