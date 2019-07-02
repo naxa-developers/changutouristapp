@@ -33,7 +33,7 @@ import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.MAP_OVER
 public class MainPlacesListActivity extends BaseActivity {
 
     RecyclerView recyclerView;
-    Button btnRouteToMap;
+    Button btnRouteToMap, btnRouteToPlaces;
     Gson gson;
     private BaseRecyclerViewAdapter<PlacesDetailsEntity, MainPlacesListViewHolder> adapter;
 
@@ -54,6 +54,8 @@ public class MainPlacesListActivity extends BaseActivity {
     private void initUI() {
         recyclerView = findViewById(R.id.rv_main_places_list);
         btnRouteToMap = findViewById(R.id.btn_route_to_map);
+        btnRouteToPlaces = findViewById(R.id.btn_route_to_main_places_list);
+        btnRouteToPlaces.setEnabled(false);
         btnRouteToMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

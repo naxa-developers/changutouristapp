@@ -94,7 +94,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                             .delay(50, TimeUnit.MILLISECONDS)
                             .doOnNext(responseBody -> {
                                 progress++;
-                                dataDonwloadView.downloadProgress(progress, totalCount, geoJsonDisplayName, categoryListEntity.getCategoryTable(), categoryListEntity.getCategoryMarker());
+                                dataDonwloadView.downloadProgress(progress, totalCount, categoryListEntity.getCategoryName(), categoryListEntity.getCategoryTable(), categoryListEntity.getCategoryMarker());
                             })
                             .map(responseBody -> {
 
