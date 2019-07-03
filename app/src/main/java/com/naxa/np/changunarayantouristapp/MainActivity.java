@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -31,6 +32,7 @@ import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenter;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenterImpl;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadView;
 import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
+import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlacesListActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.CreateAppMainFolderUtils;
@@ -40,7 +42,7 @@ import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 
 import static com.naxa.np.changunarayantouristapp.utils.Constant.Network.API_KEY;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener, DataDonwloadView, FileDownloadView {
+public class MainActivity extends BaseActivity implements View.OnClickListener, DataDonwloadView, FileDownloadView, NavigationView.OnNavigationItemSelectedListener {
 
 
     ImageButton btnScanQR, btnViewOnMap;
@@ -67,7 +69,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         setupToolbar("Home Page", false);
         initUI();
-
 
 
         fetchAllData();
@@ -100,6 +101,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         TextView tvUserName = (TextView) headerLayout.findViewById(R.id.nav_user_username);
         TextView tvUserEmail = (TextView) headerLayout.findViewById(R.id.nav_user_email);
 
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -182,7 +184,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public void downloadProgress(int progress, int totalCount, String geoJsonFileName, String categoryName, String markerImageUrl) {
 
         String alertMsg = getString(R.string.fetching_file, geoJsonFileName, String.valueOf(progress), String.valueOf(totalCount));
-        if(!TextUtils.isEmpty(markerImageUrl)) {
+        if (!TextUtils.isEmpty(markerImageUrl)) {
             fileDownloadPresenter.handleFileDownload(markerImageUrl, categoryName, CreateAppMainFolderUtils.getAppMapDataFolderName());
         }
         runOnUiThread(new Runnable() {
@@ -229,7 +231,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     protected void onDestroy() {
-        if ( progressDialog != null && progressDialog.isShowing()) {
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
         super.onDestroy();
@@ -237,9 +239,46 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     protected void onPause() {
-        if ( progressDialog != null && progressDialog.isShowing()) {
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
         super.onPause();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        // Handle navigation view item clicks here.
+        int id = menuItem.getItemId();
+
+        switch (id) {
+            case R.id.nav_home:
+                break;
+
+            case R.id.nav_qrcode_scanner:
+                ActivityUtil.openActivity(QRCodeReaderActivity.class, this);
+                break;
+
+            case R.id.nav_map:
+                ActivityUtil.openActivity(MapMainActivity.class, this);
+                break;
+
+            case R.id.nav_places_list:
+                ActivityUtil.openActivity(MainPlacesListActivity.class, this);
+                break;
+
+            case R.id.nav_refresh_data:
+                fetctDataFromServerAndSave();
+                break;
+
+            case R.id.nav_settings:
+                break;
+
+            case R.id.nav_about_us:
+                break;
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
