@@ -52,6 +52,7 @@ public class Constant {
         public static final int KEY_SATELLITE = 1;
         public static final int KEY_OPENSTREET = 2;
         public static final int KEY_CHANGUNARAYAN_BOARDER = 3;
+        public static final int GPS_REQUEST = 101;
         public static final int KEY_NAGARKOT_BOARDER = 4;
         public static final String KEY_MAIN_PLACE_TYPE = "main_place_type";
 

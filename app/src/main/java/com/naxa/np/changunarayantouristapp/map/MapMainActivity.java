@@ -107,6 +107,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     ImageView ivSlidingLayoutIndicator;
     ImageButton btnMapLayerData;
     ImageButton btnMapLayerSwitch;
+    ImageButton btnUsersCurrentLocation;
 
     private SlidingUpPanelLayout mLayout;
     TextView tvMarkerTitle, tvMarkerDesc;
@@ -168,6 +169,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         ivSlidingLayoutIndicator = findViewById(R.id.iv_sliding_layout_indicator);
         btnMapLayerData = findViewById(R.id.btnMapLayerData);
         btnMapLayerSwitch = findViewById(R.id.btnMapLayerSwitch);
+        btnUsersCurrentLocation = findViewById(R.id.btn_users_current_location);
         btnGoThere = findViewById(R.id.btnGoThere);
 
         tvMarkerTitle = findViewById(R.id.tv_marker_title);
@@ -184,6 +186,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         btnMapLayerData.setOnClickListener(this);
         btnMapLayerSwitch.setOnClickListener(this);
         btnPlacesDetailsList.setOnClickListener(this);
+        btnUsersCurrentLocation.setOnClickListener(this);
 
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
@@ -477,7 +480,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     public void onMapReady(MapboxMap mapboxMap) {
 
         this.mapboxMap = mapboxMap;
-        setMapCameraPosition();
+//        setMapCameraPosition();
+        enableLocationComponent();
         mapboxMap.addOnMapClickListener(this);
         mapboxMap.getUiSettings().setCompassFadeFacingNorth(false);
         mapboxMap.getUiSettings().setCompassImage(getResources().getDrawable(R.drawable.direction_compas_icon));
@@ -585,7 +589,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
 
             // Set the component's camera mode
-            locationComponent.setCameraMode(CameraMode.TRACKING);
+            locationComponent.setCameraMode(CameraMode.NONE_GPS);
             locationComponent.setRenderMode(RenderMode.COMPASS);
 
 
@@ -672,7 +676,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         CameraPosition position = new CameraPosition.Builder()
 //                .target(new LatLng(27.7033, 85.4324)) // Sets the new camera position
                 .target(new LatLng(location)) // Sets the new camera position
-                .zoom(14.5) // Sets the zoom
+                .zoom(11) // Sets the zoom
                 .bearing(0) // Rotate the camera
                 .tilt(30) // Set the camera tilt
                 .build(); // Creates a CameraPosition from the builder
@@ -876,6 +880,14 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
             case R.id.btnMapLayerSwitch:
                 setupMapOptionsDialog().show();
+                break;
+
+            case R.id.btn_users_current_location:
+                if(originLocation != null){
+                    animateCameraPosition(originLocation);
+                }else {
+                    Toast.makeText(this, "Searching Your Current Location", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             case R.id.btn_route_to_main_places_list:
