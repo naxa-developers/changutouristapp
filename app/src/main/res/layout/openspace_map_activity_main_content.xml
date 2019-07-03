@@ -69,5 +69,16 @@
                 android:background="@drawable/ic_map_layer_purple_24dp" />
         </androidx.cardview.widget.CardView>
 
+        <ImageButton
+            android:id="@+id/btn_users_current_location"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:background="@color/transparent"
+            mapbox:srcCompat="@drawable/ic_users_current_location_24dp"
+            android:layout_margin="@dimen/activity_default_margin"
+            />
+
     </RelativeLayout>
 </FrameLayout>
