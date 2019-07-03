@@ -2,6 +2,7 @@ package com.naxa.np.changunarayantouristapp.placedetailsview;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -36,6 +37,8 @@ import com.naxa.np.changunarayantouristapp.videoplayer.VideoListActivity;
 import com.naxa.np.changunarayantouristapp.vrimage.VRImageViewActivity;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -81,26 +84,26 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
 
         try {
             getnewIntent(getIntent());
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
 
     }
 
     private void getnewIntent(Intent intent) {
-        if(intent != null){
+        if (intent != null) {
             HashMap<String, Object> hashMap = (HashMap<String, Object>) intent.getSerializableExtra("map");
             isFromMainPlaceList = (boolean) hashMap.get(KEY_VALUE);
 
             placesDetailsEntity = (PlacesDetailsEntity) hashMap.get(KEY_OBJECT);
 
-            if(isFromMainPlaceList){
+            if (isFromMainPlaceList) {
                 llNearByPlacesLayout.setVisibility(View.VISIBLE);
                 mainPlaceType = SharedPreferenceUtils.getInstance(PlaceDetailsActivity.this).getStringValue(KEY_MAIN_PLACE_TYPE, null);
                 initRecyclerView();
             }
 
-            if(placesDetailsEntity != null) {
+            if (placesDetailsEntity != null) {
                 setValueOnView(placesDetailsEntity);
                 setupToolbar(placesDetailsEntity.getName(), false);
             }
@@ -109,7 +112,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initRecyclerView() {
-Constant constant = new Constant();
+        Constant constant = new Constant();
         placeDetailsEntityViewModel.getNearByPlacesListByPlaceTypeAndNearByTypeList(mainPlaceType,
                 constant.getNearByPlacesTypeList())
                 .subscribeOn(Schedulers.io())
@@ -117,7 +120,7 @@ Constant constant = new Constant();
                 .subscribe(new DisposableSubscriber<List<PlacesDetailsEntity>>() {
                     @Override
                     public void onNext(List<PlacesDetailsEntity> placesDetailsEntities) {
-                        if(placesDetailsEntities != null && placesDetailsEntities.size()>0) {
+                        if (placesDetailsEntities != null && placesDetailsEntities.size() > 0) {
                             setuprecyclerView(placesDetailsEntities);
                         }
                     }
@@ -139,9 +142,27 @@ Constant constant = new Constant();
         tvPlaceTitle.setText(placesDetailsEntity.getName());
         tvPlaceDesc.setText(placesDetailsEntity.getDescription());
 
-        LoadImageUtils.loadImageToViewFromSrc(ivImageMain, placesDetailsEntity.getPrimaryImage());
+        if (!TextUtils.isEmpty(fetchPromaryImageFromList(placesDetailsEntity))) {
+            LoadImageUtils.loadImageToViewFromSrc(ivImageMain, fetchPromaryImageFromList(placesDetailsEntity));
+        }
     }
 
+    private synchronized String fetchPromaryImageFromList(@NotNull PlacesDetailsEntity placesDetailsEntity) {
+        String primaryImage = null;
+
+        if (!TextUtils.isEmpty(placesDetailsEntity.getImages())) {
+            try {
+                JSONArray jsonArray = new JSONArray(placesDetailsEntity.getImages());
+                if (jsonArray.length() > 0) {
+                    primaryImage = jsonArray.optString(0);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return primaryImage;
+    }
 
     private void setValueOnViewFromMainPlaces(@NotNull MainPlaceListDetails mainPlaceListDetails) {
 
@@ -206,17 +227,16 @@ Constant constant = new Constant();
     };
 
 
-
     private void setuprecyclerView(List<PlacesDetailsEntity> nearByPlacesPojoList) {
 
-        if(nearByPlacesPojoList == null){
+        if (nearByPlacesPojoList == null) {
             return;
         }
 
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewnearByPlaces.setLayoutManager(manager);
         recyclerViewnearByPlaces.setItemAnimator(new DefaultItemAnimator());
-        adapter = new BaseRecyclerViewAdapter<PlacesDetailsEntity, NearByPlacesViewHolder>(nearByPlacesPojoList, R.layout.nearby_places_recycler_item_row_layout){
+        adapter = new BaseRecyclerViewAdapter<PlacesDetailsEntity, NearByPlacesViewHolder>(nearByPlacesPojoList, R.layout.nearby_places_recycler_item_row_layout) {
 
             @Override
             public void viewBinded(NearByPlacesViewHolder nearByPlacesViewHolder, final PlacesDetailsEntity nearByPlacesPojo, int position) {
@@ -242,11 +262,10 @@ Constant constant = new Constant();
     }
 
 
-
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_view_vr_image:
                 ActivityUtil.openActivity(VRImageViewActivity.class, PlaceDetailsActivity.this);
                 break;
@@ -256,7 +275,6 @@ Constant constant = new Constant();
                 break;
         }
     }
-
 
 
 }
