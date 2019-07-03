@@ -834,7 +834,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     @Override
     public void onLocationChanged(Location location) {
         originLocation = location;
-        animateCameraPosition(location);
+//        animateCameraPosition(location);
     }
 
     @Override

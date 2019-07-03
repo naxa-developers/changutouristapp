@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Size;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.ChangunarayanTouristApp;
 import com.naxa.np.changunarayantouristapp.utils.CreateAppMainFolderUtils;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -80,12 +82,16 @@ public class LoadImageUtils {
         try {
             Bitmap bitmap = null;
             bitmap = BitmapFactory.decodeFile(CreateAppMainFolderUtils.getAppMapDataFolderName()+"/"+imageFileName+".png");
-            Bitmap smallMarker = Bitmap.createScaledBitmap(bitmap, 60, 60, false);
+            Bitmap smallMarker = Bitmap.createScaledBitmap(bitmap, convertDpToPixel(35), convertDpToPixel(43), false);
             return smallMarker;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    private static int convertDpToPixel(int dp){
+        return dp * ( ChangunarayanTouristApp.getInstance().getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 
     @Nullable

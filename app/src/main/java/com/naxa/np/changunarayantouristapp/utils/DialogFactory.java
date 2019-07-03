@@ -352,12 +352,10 @@ public final class DialogFactory {
                                 Log.d(TAG, "onItemChildClick: null value ");
                                 return;
                             }
-                            Toast.makeText(context, item.getMultiItemSectionModel().getData_key(), Toast.LENGTH_LONG).show();
 
                         }
                         break;
                     default:
-                        Toast.makeText(context, "OnItemChildClickListener " + position, Toast.LENGTH_LONG).show();
                         break;
 
                 }
@@ -368,9 +366,7 @@ public final class DialogFactory {
         if (isFirsttime) {
             listner.isFirstTime();
         }
-
-//        Toast.makeText(context, "createMapDataLayerDialog set adapter", Toast.LENGTH_SHORT).show();
-//        dialog.getWindow().setAttributes(lp);
+        //        dialog.getWindow().setAttributes(lp);
         return dialog;
     }
 

@@ -111,15 +111,14 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
             MayorMessagesListResponse mayorMessagesListResponse = gson.fromJson(SharedPreferenceUtils.getInstance(MayorMessageActivity.this).getStringValue(Constant.SharedPrefKey.KEY_MAYOR_MESSAGE_DETAILS, null), MayorMessagesListResponse.class);
             mayorMessageDetails = mayorMessagesListResponse.getData().get(0);
             downloadVideo(mayorMessageDetails);
-
-
         }
 
     }
 
     private void downloadVideo(@NotNull MayorMessageDetails mayorMessageDetails) {
         if (!TextUtils.isEmpty(mayorMessageDetails.getVideo())) {
-            fileDownloadPresenter.handleFileDownload(mayorMessageDetails.getVideo(), mayorMessageDetails.getTitle(), CreateAppMainFolderUtils.getAppMapDataFolderName());
+
+            fileDownloadPresenter.handleFileDownload(mayorMessageDetails.getVideo(), mayorMessageDetails.getTitle(), CreateAppMainFolderUtils.getAppMediaFolderName());
 
         }
     }
@@ -147,6 +146,7 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
 
     private void playMayorVideo(String fileName) {
 
+        Log.d(TAG, "playMayorVideo: "+fileName);
 
         String folderPath = CreateAppMainFolderUtils.getAppMediaFolderName();
         Log.d("PlaceDetailsActivity", "downloaFile: full file path  " + folderPath + File.separator + fileName);

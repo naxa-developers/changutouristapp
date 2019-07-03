@@ -136,7 +136,7 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
                         mapboxMap.setOnMarkerClickListener(new MapboxMap.OnMarkerClickListener() {
                             @Override
                             public boolean onMarkerClick(@NonNull Marker marker) {
-                                Toast.makeText(context, "Marker tapped: " + marker.getTitle(), Toast.LENGTH_LONG).show();
+//                                Toast.makeText(context, "Marker tapped: " + marker.getTitle(), Toast.LENGTH_LONG).show();
                                 onInfoWindowClick(marker);
                                 animateCameraPosition(marker.getPosition());
                                 return true;
