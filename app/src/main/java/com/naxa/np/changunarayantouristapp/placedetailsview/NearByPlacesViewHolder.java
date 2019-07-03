@@ -12,6 +12,10 @@ import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
+
 public class NearByPlacesViewHolder extends RecyclerView.ViewHolder  {
 
     private TextView tvNearByPlaceName;
@@ -28,9 +32,27 @@ public class NearByPlacesViewHolder extends RecyclerView.ViewHolder  {
     public void bindView(PlacesDetailsEntity placesDetailsEntity) {
         tvNearByPlaceName.setText(placesDetailsEntity.getName());
 
-        if(!TextUtils.isEmpty(placesDetailsEntity.getPrimaryImage())){
-            LoadImageUtils.loadImageToViewFromSrc(ivNearByPlaceImage, placesDetailsEntity.getPrimaryImage());
+        if(!TextUtils.isEmpty(fetchPromaryImageFromList(placesDetailsEntity))){
+            LoadImageUtils.loadImageToViewFromSrc(ivNearByPlaceImage, fetchPromaryImageFromList(placesDetailsEntity));
         }
 
     }
+
+    private synchronized String  fetchPromaryImageFromList(@NotNull PlacesDetailsEntity placesDetailsEntity) {
+        String primaryImage = null;
+
+        if(!TextUtils.isEmpty(placesDetailsEntity.getImages())) {
+            try {
+                JSONArray jsonArray = new JSONArray(placesDetailsEntity.getImages());
+                if (jsonArray.length() > 0) {
+                    primaryImage = jsonArray.optString(0);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return primaryImage;
+    }
+
 }

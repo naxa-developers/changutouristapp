@@ -56,6 +56,7 @@ import com.naxa.np.changunarayantouristapp.map.mapboxutils.DrawMarkerOnMap;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.DrawRouteOnMap;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.MapDataLayerDialogCloseListen;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.MapboxBaseStyleUtils;
+import com.naxa.np.changunarayantouristapp.placedetailsview.FileNameAndUrlPojo;
 import com.naxa.np.changunarayantouristapp.placedetailsview.PlaceDetailsActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlacesListActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
@@ -70,6 +71,9 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -781,8 +785,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
             tvMarkerTitle.setText(placesDetailsEntity.getName());
             tvMarkerDesc.setText(placesDetailsEntity.getDescription());
 
-            if(!TextUtils.isEmpty(placesDetailsEntity.getPrimaryImage())) {
-                LoadImageUtils.loadImageToViewFromSrc(ivMarkerPrimaryImage, placesDetailsEntity.getPrimaryImage());
+            if(!TextUtils.isEmpty(fetchPromaryImageFromList(placesDetailsEntity))) {
+                LoadImageUtils.loadImageToViewFromSrc(ivMarkerPrimaryImage, fetchPromaryImageFromList(placesDetailsEntity));
             }
 
 
@@ -806,6 +810,22 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
     }
 
+    private synchronized String  fetchPromaryImageFromList(@NotNull PlacesDetailsEntity placesDetailsEntity) {
+        String primaryImage = null;
+
+        if(!TextUtils.isEmpty(placesDetailsEntity.getImages())) {
+            try {
+                JSONArray jsonArray = new JSONArray(placesDetailsEntity.getImages());
+                if (jsonArray.length() > 0) {
+                    primaryImage = jsonArray.optString(0);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return primaryImage;
+    }
 
     protected LocationManager locationManager;
     protected LocationListener locationListener;
