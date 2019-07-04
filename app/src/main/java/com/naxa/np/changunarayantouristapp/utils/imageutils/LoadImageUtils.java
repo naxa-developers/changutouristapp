@@ -186,7 +186,7 @@ public class LoadImageUtils {
             Glide
                     .with(imageView.getContext())
                     .load(imageSrc)
-                    .fitCenter()
+                    .centerCrop()
                     .into(imageView);
         }
     }

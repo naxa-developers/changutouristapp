@@ -12,9 +12,13 @@ public class CreateAppMainFolderUtils {
     public static final String appmainFolderName = "Changunarayan Tourist App";
     Context context;
     static String mainFolderName ;
-    public static final String databaseFolderName  = "data" ;
-    public static final String mediaFolderName = "media" ;
-    public static final String mapFolderName = "mapdata" ;
+    private   final String databaseFolderName  = "data" ;
+    private   final String mediaFolderName = "media" ;
+    private  final String mapFolderName = "mapdata" ;
+
+    public  static final String databaseFolderNameStatic  = "data" ;
+    public  static final String mediaFolderNameStatic = "media" ;
+    public static final String mapFolderNameStatic = "mapdata" ;
 
     public CreateAppMainFolderUtils(Context context, String mainFolderName) {
         this.context = context;
@@ -45,17 +49,17 @@ public class CreateAppMainFolderUtils {
 
     @NotNull
     public static String getAppDataFolderName(){
-        return Environment.getExternalStorageDirectory()+"/"+appmainFolderName+"/"+databaseFolderName;
+        return Environment.getExternalStorageDirectory()+"/"+appmainFolderName+"/"+databaseFolderNameStatic;
     }
 
     @NotNull
     public static String getAppMediaFolderName(){
-        return Environment.getExternalStorageDirectory()+"/"+appmainFolderName+"/"+mediaFolderName;
+        return Environment.getExternalStorageDirectory()+"/"+appmainFolderName+"/"+mediaFolderNameStatic;
     }
 
     @NotNull
     public static String getAppMapDataFolderName(){
-        return Environment.getExternalStorageDirectory()+"/"+appmainFolderName+"/"+mapFolderName;
+        return Environment.getExternalStorageDirectory()+"/"+appmainFolderName+"/"+mapFolderNameStatic;
     }
 
     public void createDatabaseFolder(){
