@@ -95,9 +95,9 @@ public class FileDownloadPresenterImpl implements FileDownloadPresenter {
         //Set the local destination for the downloaded file to a path within the application's external files directory
 
         if(TextUtils.equals(folderPath, CreateAppMainFolderUtils.getAppMapDataFolderName())){
-            request.setDestinationInExternalPublicDir(CreateAppMainFolderUtils.appmainFolderName + "/" + CreateAppMainFolderUtils.mapFolderName, fileName + fileType);
+            request.setDestinationInExternalPublicDir(CreateAppMainFolderUtils.appmainFolderName + "/" + CreateAppMainFolderUtils.mapFolderNameStatic, fileName + fileType);
         }else {
-            request.setDestinationInExternalPublicDir(CreateAppMainFolderUtils.appmainFolderName + "/" + CreateAppMainFolderUtils.mediaFolderName, fileName + fileType);
+            request.setDestinationInExternalPublicDir(CreateAppMainFolderUtils.appmainFolderName + "/" + CreateAppMainFolderUtils.mediaFolderNameStatic, fileName + fileType);
         }
 
 //        request.setDestinationInExternalPublicDir(folderPath, fileName + fileType);

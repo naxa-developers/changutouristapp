@@ -31,8 +31,8 @@ public class MainPlacesListViewHolder extends RecyclerView.ViewHolder  {
 
     public void bindView(PlacesDetailsEntity placesDetailsEntity) {
         tvPlaceName.setText(placesDetailsEntity.getName());
-        if(!TextUtils.isEmpty(fetchPromaryImageFromList(placesDetailsEntity))){
-            LoadImageUtils.loadImageToViewFromSrc(ivPlaceImage, fetchPromaryImageFromList(placesDetailsEntity));
+        if(!TextUtils.isEmpty(placesDetailsEntity.getPrimaryImage())){
+            LoadImageUtils.loadImageToViewFromSrc(ivPlaceImage, placesDetailsEntity.getPrimaryImage());
         }
     }
 
