@@ -72,7 +72,6 @@ public class Constant {
         nearByPlaces.add("Viewpoint");
         nearByPlaces.add("Peace garden");
         nearByPlaces.add("Waterfall");
-
         return nearByPlaces;
     }
 
