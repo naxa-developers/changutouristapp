@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProviders;
@@ -55,6 +56,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     ProgressDialog progressDialog;
     DataDownloadPresenter dataDownloadPresenter;
     FileDownloadPresenter fileDownloadPresenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
