@@ -3,6 +3,8 @@ package com.naxa.np.changunarayantouristapp.common;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 import com.facebook.stetho.Stetho;
 
 public class ChangunarayanTouristApp  extends Application {
@@ -12,6 +14,8 @@ public class ChangunarayanTouristApp  extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+
         instance = getApplicationContext();
         Stetho.initializeWithDefaults(this);
     }
