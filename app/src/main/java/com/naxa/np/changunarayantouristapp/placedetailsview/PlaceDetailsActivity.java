@@ -143,16 +143,16 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         tvPlaceDesc.setText(placesDetailsEntity.getDescription());
 
 
-        if(isFromMainPlaceList){
-            if(!TextUtils.isEmpty(placesDetailsEntity.getPrimaryImage())){
-                LoadImageUtils.loadImageToViewFromSrc(ivImageMain, placesDetailsEntity.getPrimaryImage());
-            }
-        }else {
+//        if(isFromMainPlaceList){
+//            if(!TextUtils.isEmpty(placesDetailsEntity.getPrimaryImage())){
+//                LoadImageUtils.loadImageToViewFromSrc(ivImageMain, placesDetailsEntity.getPrimaryImage());
+//            }
+//        }else {
 
             if (!TextUtils.isEmpty(fetchPromaryImageFromList(placesDetailsEntity))) {
                 LoadImageUtils.loadImageToViewFromSrc(ivImageMain, fetchPromaryImageFromList(placesDetailsEntity));
             }
-        }
+//        }
     }
 
     private synchronized String fetchPromaryImageFromList(@NotNull PlacesDetailsEntity placesDetailsEntity) {
