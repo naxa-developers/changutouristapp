@@ -181,7 +181,7 @@ public final class DialogFactory {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-//        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
 
         Button dialogButton = (Button) dialog.findViewById(R.id.btn_closeDialog);

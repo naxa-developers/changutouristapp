@@ -43,7 +43,6 @@
                 android:gravity="center"
                 android:textSize="@dimen/text_material_header"
                 tools:ignore="RtlCompat"
-                android:layout_marginTop="@dimen/spacing_large"
                 />
 
             <Switch
@@ -76,7 +75,8 @@
                 android:gravity="center"
                 android:textSize="@dimen/text_material_header"
                 android:layout_marginTop="@dimen/spacing_mlarge"
-                tools:ignore="RtlCompat" />
+                tools:ignore="RtlCompat"
+                android:visibility="gone"/>
 
         </RadioGroup>
 
@@ -98,7 +98,7 @@
             android:textSize="@dimen/text_material_header"
             android:textStyle="bold"
             android:textColor="@color/slate_black"
-            android:layout_marginTop="@dimen/spacing_xxxlarge"
+            android:layout_marginTop="@dimen/spacing_xxlarge"
             />
 
         <RadioGroup android:id="@+id/toggleGroupOverlaysLayer"
@@ -122,7 +122,7 @@
                 android:gravity="center"
                 android:textSize="@dimen/text_material_header"
                 tools:ignore="RtlCompat"
-                android:layout_marginTop="@dimen/spacing_mlarge"/>
+                />
 
             <Switch
                 android:id="@+id/switchWardBoundary"
