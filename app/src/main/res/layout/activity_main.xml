@@ -5,16 +5,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/homepage_changu_bg_img"
     tools:context=".MainActivity">
 
     <include layout="@layout/toolbar"
         android:id="@+id/toolbar_layout"/>
 
+    <ImageView
+        android:layout_below="@id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/changu_image_red"
+        android:scaleType="centerCrop"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/homeBackgroundColor">
+        android:background="@color/transparentBackgroundColor">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,7 +35,7 @@
                     android:id="@+id/tv_home_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Changunarayan Tourist"
+                    android:text="@string/changunarayan"
                     android:layout_alignParentTop="true"
                     android:background="@color/transparent"
                     android:textColor="@color/white_80"
