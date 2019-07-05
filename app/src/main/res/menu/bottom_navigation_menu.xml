@@ -14,7 +14,8 @@
         android:enabled="true"
         android:icon="@drawable/ic_bottom_menu_video_24dp"
         android:title="@string/videos"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"
+        android:visible="false"/>
 
     <item
         android:id="@+id/action_bottom_audios"

@@ -80,7 +80,6 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
                             }
 
                             if (mayorMessagesListResponse.getError() == 0) {
-                                dialog.dismiss();
                                 if (mayorMessagesListResponse.getData() != null) {
                                     SharedPreferenceUtils.getInstance(MayorMessageActivity.this).setValue(Constant.SharedPrefKey.KEY_MAYOR_MESSAGE_DETAILS, gson.toJson(mayorMessagesListResponse));
                                     SharedPreferenceUtils.getInstance(MayorMessageActivity.this).setValue(IS_MAYOR_MESSAGE_FIRST_TIME, false);
@@ -172,11 +171,21 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
 
     @Override
     public void fileDownloadSuccess(String fileName, String successMsg, boolean isAlreadyExists) {
+
+       if(dialog!= null && dialog.isShowing()){
+           dialog.dismiss();
+       }
+
         playMayorVideo(fileName);
     }
 
     @Override
     public void fileDownloadFailed(String failedMsg) {
+        if(dialog!= null && dialog.isShowing()){
+            dialog.dismiss();
 
+            dialog = DialogFactory.createSimpleOkErrorDialog(MayorMessageActivity.this, "Video Downloading Error", failedMsg);
+            dialog.show();
+        }
     }
 }
