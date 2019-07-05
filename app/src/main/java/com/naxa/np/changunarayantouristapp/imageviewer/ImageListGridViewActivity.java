@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -33,6 +34,7 @@ public class ImageListGridViewActivity extends BaseActivity {
     RecyclerView recyclerView;
     private List<FileNameAndUrlPojo> images;
     private GalleryAdapter mAdapter;
+    TextView tvNoDataFound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class ImageListGridViewActivity extends BaseActivity {
 
     private void initUI(Intent intent) {
         recyclerView = findViewById(R.id.recycler_view_Images);
+        tvNoDataFound = findViewById(R.id.tv_no_data_found);
         images = new ArrayList<>();
         mAdapter = new GalleryAdapter(getApplicationContext(), images);
 
@@ -68,6 +71,8 @@ public class ImageListGridViewActivity extends BaseActivity {
 
         if(!TextUtils.isEmpty(placesDetailsEntity.getImages())) {
             fetchImagesList();
+        }else {
+            tvNoDataFound.setVisibility(View.VISIBLE);
         }
 
            recyclerView.addOnItemTouchListener(new GalleryAdapter.RecyclerTouchListener(getApplicationContext(), recyclerView, new GalleryAdapter.ClickListener() {

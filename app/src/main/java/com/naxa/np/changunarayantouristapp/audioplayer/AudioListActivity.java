@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,6 +41,7 @@ public class AudioListActivity extends BaseActivity implements FileDownloadView 
     RecyclerView recyclerView;
     FileDownloadPresenter fileDownloadPresenter;
     Dialog dialog;
+    TextView tvNoDataFound;
 
     private BaseRecyclerViewAdapter<FileNameAndUrlPojo, VideosAudiosListViewHolder> adapter;
 
@@ -59,6 +61,7 @@ public class AudioListActivity extends BaseActivity implements FileDownloadView 
 
     private void initUI(Intent intent) {
         recyclerView = findViewById(R.id.recycler_view_audios);
+        tvNoDataFound = findViewById(R.id.tv_no_data_found);
 
         if (intent != null) {
             HashMap<String, Object> hashMap = (HashMap<String, Object>) intent.getSerializableExtra("map");
@@ -68,6 +71,9 @@ public class AudioListActivity extends BaseActivity implements FileDownloadView 
                 setupToolbar(placesDetailsEntity.getName(), false);
                 if (!TextUtils.isEmpty(placesDetailsEntity.getAudio())) {
                     fetchAudioList();
+                }else {
+                        tvNoDataFound.setVisibility(View.VISIBLE);
+
                 }
             }
         }
@@ -78,9 +84,10 @@ public class AudioListActivity extends BaseActivity implements FileDownloadView 
         List<FileNameAndUrlPojo> audios;
         audios = new ArrayList<>();
 
-
         try {
             JSONArray jsonArray = new JSONArray(placesDetailsEntity.getAudio());
+
+
             for (int i = 0; i < jsonArray.length(); i++) {
                 Log.d(TAG, "fetchAudioList: " + jsonArray.getString(i));
                 int imageCount = i + 1;
