@@ -900,6 +900,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                         connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
 
                     generateRouteToGoThere(selectedMarkerPosition);
+                    mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                 } else {
                     Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
                 }

@@ -73,7 +73,7 @@ public class DrawRouteOnMap {
     }
 
     public void enableNavigationUiLauncher (AppCompatActivity activity){
-        boolean simulateRoute = true;
+        boolean simulateRoute = false;
         NavigationLauncherOptions options = NavigationLauncherOptions.builder()
                 .directionsRoute(currentRoute)
                 .shouldSimulateRoute(simulateRoute)
