@@ -61,17 +61,19 @@ public class Constant {
 
     public List<String> getNearByPlacesTypeList (){
         List<String> nearByPlaces = new ArrayList<>();
-        nearByPlaces.add("Tank");
-        nearByPlaces.add("Tap");
+        nearByPlaces.add("Museum");
+        nearByPlaces.add("Staue");
+        nearByPlaces.add("Hindu temple");
+        nearByPlaces.add("Viewpoint");
+        nearByPlaces.add("Waterfall");
         nearByPlaces.add("View point");
+        nearByPlaces.add("Tap");
         nearByPlaces.add("Pond");
         nearByPlaces.add("Dam");
-        nearByPlaces.add("Picnic spot");
-        nearByPlaces.add("Museum");
         nearByPlaces.add("Stone tap");
-        nearByPlaces.add("Viewpoint");
         nearByPlaces.add("Peace garden");
-        nearByPlaces.add("Waterfall");
+        nearByPlaces.add("Tank");
+        nearByPlaces.add("Picnic spot");
         return nearByPlaces;
     }
 
