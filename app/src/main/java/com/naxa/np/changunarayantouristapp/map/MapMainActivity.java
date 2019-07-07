@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -178,7 +179,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         btnViewMarkerDetails = findViewById(R.id.btn_view_marker_details);
         btnPlacesDetailsList = findViewById(R.id.btn_route_to_main_places_list);
         btnRouteToMap = findViewById(R.id.btn_route_to_map);
-        btnRouteToMap.setEnabled(false);
+
+
 
 
         btnNavigation.setOnClickListener(this);

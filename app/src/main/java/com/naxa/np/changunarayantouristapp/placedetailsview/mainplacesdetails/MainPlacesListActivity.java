@@ -55,7 +55,7 @@ public class MainPlacesListActivity extends BaseActivity {
         recyclerView = findViewById(R.id.rv_main_places_list);
         btnRouteToMap = findViewById(R.id.btn_route_to_map);
         btnRouteToPlaces = findViewById(R.id.btn_route_to_main_places_list);
-        btnRouteToPlaces.setEnabled(false);
+        btnRouteToPlaces.setEnabled(true);
         btnRouteToMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

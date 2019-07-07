@@ -21,33 +21,36 @@
         >
     </androidx.recyclerview.widget.RecyclerView>
 
-
     <LinearLayout
         android:id="@+id/btn_layout"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:orientation="horizontal"
+        android:background="@color/transparent"
 
         >
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
+            app:backgroundTint="@android:color/darker_gray"
             android:id="@+id/btn_route_to_map"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/white_95"
+            android:textColor="@color/white"
             android:text="@string/map"
             />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/Widget.MaterialComponents.Button"
+
+            android:textColor="@color/white"
             android:id="@+id/btn_route_to_main_places_list"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/place_list"
-            android:textAllCaps="false"
-            android:textColor="@color/textColorPrimary"
-            />
+            android:textAllCaps="false"/>
     </LinearLayout>
+
 
 </RelativeLayout>
