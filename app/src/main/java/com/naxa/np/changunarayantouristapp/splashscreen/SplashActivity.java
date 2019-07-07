@@ -33,7 +33,7 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
 
 
-checkStoragePermission();
+        checkStoragePermission();
     }
 
 
@@ -50,7 +50,7 @@ checkStoragePermission();
                     @Override
                     public void onPermissionGranted() {
 
-                        createAppMainFolderUtils =  new CreateAppMainFolderUtils(SplashActivity.this, CreateAppMainFolderUtils.appmainFolderName);
+                        createAppMainFolderUtils = new CreateAppMainFolderUtils(SplashActivity.this, CreateAppMainFolderUtils.appmainFolderName);
                         createAppMainFolderUtils.createMainFolder();
 
                         launchNextScreen();
@@ -64,7 +64,7 @@ checkStoragePermission();
                 });
     }
 
-    private void launchNextScreen(){
+    private void launchNextScreen() {
 
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

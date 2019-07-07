@@ -53,7 +53,7 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
         fileDownloadPresenter = new FileDownloadPresenterImpl(this, MayorMessageActivity.this);
 
 
-        setupToolbar("Mayor Message", false);
+        setupToolbar("Welcome to Chagunarayan ", false);
 
         initUI();
 
