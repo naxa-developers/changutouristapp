@@ -3,7 +3,6 @@ package com.naxa.np.changunarayantouristapp.database.viewmodel;
 import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 
 
 import com.naxa.np.changunarayantouristapp.database.databaserepository.PlaceDetailsEntityRepository;
@@ -12,13 +11,14 @@ import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 public class PlaceDetailsEntityViewModel extends AndroidViewModel {
     private PlaceDetailsEntityRepository mRepository;
 
     private Flowable<List<PlacesDetailsEntity>> mAllEntityList;
     private Flowable<List<PlacesDetailsEntity>> mAllSpecificEntityList;
-    private Flowable<PlacesDetailsEntity> mSpecificEntity;
+    private Single<PlacesDetailsEntity> mSpecificEntity;
 
     public PlaceDetailsEntityViewModel(Application application) {
         super(application);
@@ -36,7 +36,7 @@ public class PlaceDetailsEntityViewModel extends AndroidViewModel {
         return mAllSpecificEntityList;
     }
 
-    public Flowable<PlacesDetailsEntity> getPlacesDetailsEntityBYQRCode(String qrCode) {
+    public Single<PlacesDetailsEntity> getPlacesDetailsEntityBYQRCode(String qrCode) {
         mSpecificEntity = mRepository.getPlacesDetailsEntityBYQRCode(qrCode);
         return mSpecificEntity;
     }

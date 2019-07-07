@@ -29,8 +29,10 @@ import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 import java.util.HashMap;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
+import timber.log.Timber;
 
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_OBJECT;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_VALUE;
@@ -118,26 +120,19 @@ public class QRCodeReaderActivity extends BaseActivity {
             placeDetailsEntityViewModel.getPlacesDetailsEntityBYQRCode(tvQRCode.getText().toString())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new DisposableSubscriber<PlacesDetailsEntity>() {
+                    .subscribe(new DisposableSingleObserver<PlacesDetailsEntity>() {
                         @Override
-                        public void onNext(PlacesDetailsEntity placesDetailsEntity) {
-                            if(placesDetailsEntity != null){
-                                HashMap<String, Object> hashMap3 = new HashMap<>();
-                                hashMap3.put(KEY_VALUE, false);
-                                hashMap3.put(KEY_OBJECT, placesDetailsEntity);
-                                ActivityUtil.openActivity(PlaceDetailsActivity.class, QRCodeReaderActivity.this, hashMap3, false);
-
-                            }
-                        }
-
-                        @Override
-                        public void onError(Throwable t) {
+                        public void onSuccess(PlacesDetailsEntity placesDetailsEntity) {
+                            HashMap<String, Object> hashMap3 = new HashMap<>();
+                            hashMap3.put(KEY_VALUE, false);
+                            hashMap3.put(KEY_OBJECT, placesDetailsEntity);
+                            ActivityUtil.openActivity(PlaceDetailsActivity.class, QRCodeReaderActivity.this, hashMap3, false);
 
                         }
 
                         @Override
-                        public void onComplete() {
-
+                        public void onError(Throwable e) {
+                            Timber.e(e);
                         }
                     });
         }
@@ -158,7 +153,7 @@ public class QRCodeReaderActivity extends BaseActivity {
                 QRCodeReaderActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(QRCodeReaderActivity.this, result.getText(), Toast.LENGTH_SHORT).show();
+
                         tvQRCode.setText(result.getText());
                         btnSubmitQRCode.setEnabled(true);
                     }

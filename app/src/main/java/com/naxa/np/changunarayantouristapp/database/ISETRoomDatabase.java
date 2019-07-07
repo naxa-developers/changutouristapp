@@ -26,14 +26,16 @@ import java.io.File;
  * Created by samir on 4/22/2018.
  */
 
-@Database(entities = { GeoJsonCategoryListEntity.class, GeoJsonListEntity.class, PlacesDetailsEntity.class
+@Database(entities = {GeoJsonCategoryListEntity.class, GeoJsonListEntity.class, PlacesDetailsEntity.class
 }, version = 1, exportSchema = false)
 //@TypeConverters({Converters.class})
 
 public abstract class ISETRoomDatabase extends RoomDatabase {
 
     public abstract GeoJsonCategoryDao geoJsonCategoryDao();
+
     public abstract GeoJsonListDao geoJsonListDao();
+
     public abstract PlaceDetailsDao placeDetailsDao();
 
 
@@ -45,7 +47,7 @@ public abstract class ISETRoomDatabase extends RoomDatabase {
             synchronized (ISETRoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            ISETRoomDatabase.class, createAppMainFolderUtils.getAppDataFolderName()+File.separator+"changunarayan_tourist_app")
+                            ISETRoomDatabase.class, CreateAppMainFolderUtils.getAppDataFolderName() + File.separator + "changunarayan_tourist_app")
                             // Wipes and rebuilds instead of migrating if no Migration object.
                             // Migration is not part of this codelab.
                             .fallbackToDestructiveMigration()

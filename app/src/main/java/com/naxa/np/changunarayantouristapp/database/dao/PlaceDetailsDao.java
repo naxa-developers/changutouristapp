@@ -10,6 +10,7 @@ import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 @Dao
 public interface PlaceDetailsDao {
@@ -26,8 +27,8 @@ public interface PlaceDetailsDao {
     @Query("SELECT * from PlacesDetailsEntity WHERE place_type LIKE :placeType AND type IN (:nearbyTypeList)")
     Flowable<List<PlacesDetailsEntity>> getNearByPlacesListByPlaceTypeAndNearByTypeList(String placeType, List<String> nearbyTypeList);
 
-    @Query("SELECT * from PlacesDetailsEntity WHERE qr_code LIKE :qrcODE")
-    Flowable<PlacesDetailsEntity> getPlacesDetailsEntityBYQRCode(String qrcODE);
+    @Query("SELECT * from PlacesDetailsEntity WHERE qr_code  LIKE '%' || :qrcODE || '%' ")
+    Single<PlacesDetailsEntity> getPlacesDetailsEntityBYQRCode(String qrcODE);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(PlacesDetailsEntity placesDetailsEntity);

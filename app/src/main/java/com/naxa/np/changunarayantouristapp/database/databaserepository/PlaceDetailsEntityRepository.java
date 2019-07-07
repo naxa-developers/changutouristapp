@@ -3,9 +3,6 @@ package com.naxa.np.changunarayantouristapp.database.databaserepository;
 import android.app.Application;
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
-
-import com.google.gson.Gson;
 import com.naxa.np.changunarayantouristapp.database.ISETRoomDatabase;
 import com.naxa.np.changunarayantouristapp.database.dao.PlaceDetailsDao;
 import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
@@ -14,6 +11,7 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -21,7 +19,7 @@ public class PlaceDetailsEntityRepository {
     private PlaceDetailsDao placeDetailsDao;
     private Flowable<List<PlacesDetailsEntity>> mAllPlacesDetailsEntity;
     private Flowable<List<PlacesDetailsEntity>> mSpecificPlacesDetailsEntityList;
-    private Flowable<PlacesDetailsEntity> mSpecificPlacesDetailsEntity;
+    private Single<PlacesDetailsEntity> mSpecificPlacesDetailsEntity;
 
     // Note that in order to unit test the WordRepository, you have to remove the Application
     // dependency. This adds complexity and much more code, and this sample is not about testing.
@@ -44,7 +42,7 @@ public class PlaceDetailsEntityRepository {
         return mSpecificPlacesDetailsEntityList;
     }
 
-    public Flowable<PlacesDetailsEntity> getPlacesDetailsEntityBYQRCode(String qrCode) {
+    public Single<PlacesDetailsEntity> getPlacesDetailsEntityBYQRCode(String qrCode) {
         mSpecificPlacesDetailsEntity = placeDetailsDao.getPlacesDetailsEntityBYQRCode(qrCode);
         return mSpecificPlacesDetailsEntity;
     }
