@@ -77,4 +77,17 @@ public class Constant {
         return nearByPlaces;
     }
 
+
+    public List<String> getDefaultPlacesTypeListToPlotMarker (){
+        List<String> nearByPlaces = new ArrayList<>();
+        nearByPlaces.add("Museum");
+        nearByPlaces.add("Staue");
+        nearByPlaces.add("Hindu temple");
+        nearByPlaces.add("Viewpoint");
+        nearByPlaces.add("View point");
+
+        return nearByPlaces;
+    }
+
+
 }

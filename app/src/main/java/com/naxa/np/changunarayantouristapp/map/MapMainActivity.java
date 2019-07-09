@@ -61,6 +61,7 @@ import com.naxa.np.changunarayantouristapp.placedetailsview.FileNameAndUrlPojo;
 import com.naxa.np.changunarayantouristapp.placedetailsview.PlaceDetailsActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlacesListActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
+import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 import com.naxa.np.changunarayantouristapp.utils.ToastUtils;
@@ -131,6 +132,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
     String filename = "";
     String placeType = "";
+    private boolean isMapFirstTime = false;
+
 
 
     // variables for adding a marker
@@ -159,7 +162,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         geoJsonCategoryViewModel = ViewModelProviders.of(this).get(GeoJsonCategoryViewModel.class);
         placeDetailsEntityViewModel = ViewModelProviders.of(this).get(PlaceDetailsEntityViewModel.class);
 
-        setupToolbar("Explore", false);
+        setupToolbar(getResources().getString(R.string.explore_changunarayan_area), false);
         initUI(savedInstanceState);
 
 
@@ -290,6 +293,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
     private Dialog setupMapOptionsDialog() {
         // launch new intent instead of loading fragment
+        isMapFirstTime = true;
 
         int MAP_PLACE_BOUNDARY_ID = sharedPreferenceUtils.getIntValue(MAP_OVERLAY_LAYER, -1);
 
@@ -331,9 +335,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 filename = "changunarayan_boundary.geojson";
                 drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
                 removeLayerFromMap("nagarkot_boundary.geojson");
-//                placeType = "changunarayan";
                 placeType = "changunarayan";
-//                setMapCameraPosition();
+                plotDefaultMarkerOnMap(placeType);
 
 
             }
@@ -344,7 +347,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
                 removeLayerFromMap("changunarayan_boundary.geojson");
                 placeType = "nagarkot";
-//                setMapCameraPosition();
+                plotDefaultMarkerOnMap(placeType);
 
             }
 
@@ -908,6 +911,42 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 }
                 break;
         }
+
+    }
+
+
+    private void plotDefaultMarkerOnMap(String placeType) {
+        Log.d(TAG, "plotDefaultMarkerOnMap: "+isMapFirstTime);
+        if(!isMapFirstTime){
+            return;
+        }
+
+        Constant constant = new Constant();
+        placeDetailsEntityViewModel.getNearByPlacesListByPlaceTypeAndNearByTypeList(placeType,
+                constant.getDefaultPlacesTypeListToPlotMarker())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableSubscriber<List<PlacesDetailsEntity>>() {
+                    @Override
+                    public void onNext(List<PlacesDetailsEntity> placesDetailsEntities) {
+                        if (placesDetailsEntities != null && placesDetailsEntities.size() > 0) {
+                            drawMarkerOnMap.AddListOfMarkerOnMap(placesDetailsEntities, placesDetailsEntities.get(0).getCategoryType());
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+        isMapFirstTime = false;
 
     }
 
