@@ -293,7 +293,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
     private Dialog setupMapOptionsDialog() {
         // launch new intent instead of loading fragment
-        isMapFirstTime = true;
 
         int MAP_PLACE_BOUNDARY_ID = sharedPreferenceUtils.getIntValue(MAP_OVERLAY_LAYER, -1);
 
@@ -498,6 +497,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         mapboxBaseStyleUtils = new MapboxBaseStyleUtils(MapMainActivity.this, mapboxMap, mapView);
         mapboxBaseStyleUtils.changeBaseColor();
 
+
+        isMapFirstTime = true;
         setupMapOptionsDialog().hide();
 
 
