@@ -24,15 +24,18 @@ import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
+import com.mapbox.mapboxsdk.constants.Style;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.geometry.LatLngBounds;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.style.expressions.Expression;
 import com.mapbox.mapboxsdk.style.layers.CircleLayer;
+import com.mapbox.mapboxsdk.style.layers.FillLayer;
 import com.mapbox.mapboxsdk.style.layers.LineLayer;
 import com.mapbox.mapboxsdk.style.layers.Property;
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory;
+import com.mapbox.mapboxsdk.style.layers.PropertyValue;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonOptions;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
@@ -95,6 +98,7 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
     AppCompatActivity context;
     MapboxMap mapboxMap;
     MapView mapView;
+    private Style style;
 
 
     ArrayList<LatLng> points = null;
@@ -147,18 +151,6 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
             MARKER_IMAGE_ID = markerImageId + geoJsonFileName;
             MARKER_LAYER_ID = markerLayerId + geoJsonFileName;
             CALLOUT_LAYER_ID = markerCalloutLayerId + geoJsonFileName;
-
-
-//            if(mapboxMap.getSource(geojsonSourceId)!= null) {
-//                mapboxMap.removeLayer(geojsonLayerId);
-//                mapboxMap.removeLayer(MARKER_LAYER_ID);
-//            mapboxMap.removeLayer(CALLOUT_LAYER_ID);
-
-//            }
-//            if(mapboxMap.getLayer(geojsonLayerId) != null){
-
-//                mapboxMap.removeSource(geojsonSourceId);
-//            }
 
 
         } catch (NullPointerException e) {
@@ -242,18 +234,6 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
 
 
             } else {
-                if (geoJsonString != null) {
-//                        final Handler handler = new Handler();
-//                        handler.postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                //Do something after 100ms
-//                                drawMarkerOnMap.RemoveMarkerOnMap(filename, geoJsonString, imageName);
-//
-//                            }
-//                        }, 50);
-//                        drawMarkerOnMap.RemoveMarkerOnMap(filename, geoJsonString, imageName);
-                }
                 mapboxMap.removeLayer(geojsonLayerId);
                 mapboxMap.removeLayer(MARKER_LAYER_ID);
                 mapboxMap.removeLayer(CALLOUT_LAYER_ID);
@@ -269,10 +249,15 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
                 mapboxMap.addSource(source);
             }
 
+
+
             LineLayer lineLayer = new LineLayer(geojsonLayerId, geojsonSourceId);
             lineLayer.setProperties(
                     PropertyFactory.lineCap(Property.LINE_CAP_ROUND),
                     PropertyFactory.lineJoin(Property.LINE_JOIN_ROUND),
+                    PropertyFactory.backgroundOpacity(.5f),
+                    PropertyFactory.backgroundPattern(Property.FILL_TRANSLATE_ANCHOR_MAP),
+                    PropertyFactory.circleColor(context.getResources().getColor(R.color.homeBackgroundColor)),
                     PropertyFactory.lineWidth(2f),
                     PropertyFactory.lineColor(context.getResources().getColor(R.color.colorPrimary))
             );
@@ -312,6 +297,7 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
                 mapboxMap.removeLayer(lineLayer);
             }
             mapView.invalidate();
+
         }
 
 

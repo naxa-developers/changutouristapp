@@ -35,6 +35,7 @@ import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
+import com.mapbox.mapboxsdk.constants.Style;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.location.LocationComponent;
 import com.mapbox.mapboxsdk.location.LocationComponentOptions;
@@ -918,7 +919,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
     private void plotDefaultMarkerOnMap(String placeType) {
         Log.d(TAG, "plotDefaultMarkerOnMap: "+isMapFirstTime);
-        if(!isMapFirstTime){
+        if(!isMapFirstTime || !isFromMainPlaceList){
             return;
         }
 
