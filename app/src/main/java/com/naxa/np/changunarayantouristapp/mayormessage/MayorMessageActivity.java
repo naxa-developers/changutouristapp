@@ -13,6 +13,7 @@ import android.widget.VideoView;
 import com.google.gson.Gson;
 import com.naxa.np.changunarayantouristapp.MainActivity;
 import com.naxa.np.changunarayantouristapp.R;
+import com.naxa.np.changunarayantouristapp.audioplayer.AudioListActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenter;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenterImpl;
@@ -80,6 +81,7 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
                             }
 
                             if (mayorMessagesListResponse.getError() == 0) {
+                                dialog.dismiss();
                                 if (mayorMessagesListResponse.getData() != null) {
                                     SharedPreferenceUtils.getInstance(MayorMessageActivity.this).setValue(Constant.SharedPrefKey.KEY_MAYOR_MESSAGE_DETAILS, gson.toJson(mayorMessagesListResponse));
                                     SharedPreferenceUtils.getInstance(MayorMessageActivity.this).setValue(IS_MAYOR_MESSAGE_FIRST_TIME, false);
@@ -116,7 +118,8 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
 
     private void downloadVideo(@NotNull MayorMessageDetails mayorMessageDetails) {
         if (!TextUtils.isEmpty(mayorMessageDetails.getVideo())) {
-
+            dialog = DialogFactory.createProgressDialog(MayorMessageActivity.this, "Please wait!!! \nDownloading " + mayorMessageDetails.getTitle()+" video file");
+            dialog.show();
             fileDownloadPresenter.handleFileDownload(mayorMessageDetails.getVideo(), mayorMessageDetails.getTitle(), CreateAppMainFolderUtils.getAppMediaFolderName());
 
         }
