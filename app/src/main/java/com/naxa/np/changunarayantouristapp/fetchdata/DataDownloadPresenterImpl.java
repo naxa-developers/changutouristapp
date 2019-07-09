@@ -82,7 +82,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                     totalCount = listResponse.getData().size();
                     if(listResponse.getData() != null){
                         downloadMainPlaceListDetails(apiInterface, apiKey, language);
-                        new ISETRoomDatabase.DeleteAllDbTableAsync(ISETRoomDatabase.getDatabase(appCompatActivity)).execute();
+//                        new ISETRoomDatabase.DeleteAllDbTableAsync(ISETRoomDatabase.getDatabase(appCompatActivity)).execute();
                     }
                     return listResponse.getData();
                 })
