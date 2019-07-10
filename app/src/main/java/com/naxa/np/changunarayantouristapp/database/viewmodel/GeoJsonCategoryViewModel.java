@@ -30,6 +30,11 @@ public class GeoJsonCategoryViewModel extends AndroidViewModel {
     public Flowable<List<GeoJsonCategoryListEntity>> getAllGeoJsonCategoryEntity() {
         return mAllGeoJsonCategoryEntity; }
 
+    public Maybe<List<GeoJsonCategoryListEntity>> getAllGeoJsonCategoryEntityByLanguage(String language) {
+        mSpecificTypeGeoJsonCategoryEntity = mRepository.getAllGeoJsonCategoryEntityByLanguage(language);
+        return mSpecificTypeGeoJsonCategoryEntity;
+    }
+
 
     public void insert(GeoJsonCategoryListEntity geoJsonCategoryListEntity) {
         mRepository.insert(geoJsonCategoryListEntity);

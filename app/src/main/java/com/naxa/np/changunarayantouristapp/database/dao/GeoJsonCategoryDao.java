@@ -24,6 +24,9 @@ public interface GeoJsonCategoryDao {
     void insert(GeoJsonCategoryListEntity geoJsonCategoryListEntity);
 
 
+    @Query("SELECT * from GeoJsonCategoryListEntity WHERE language LIKE :language ORDER BY id ASC ")
+    Maybe<List<GeoJsonCategoryListEntity>> getGeoJsonCategoryListByLanguage(String language);
+
     @Query("DELETE FROM GeoJsonCategoryListEntity")
     void deleteAll();
 }

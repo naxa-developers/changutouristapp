@@ -28,7 +28,7 @@ public interface NetworkApiInterface {
 
     @POST(UrlConstant.FETCH_GEOJSON_CATEGORIES_LIST)
     @FormUrlEncoded
-    Observable<GeojsonCategoriesListResponse> getGeoJsonCategoriesListResponse(@Field("api_key") String key);
+    Observable<GeojsonCategoriesListResponse> getGeoJsonCategoriesListResponse(@Field("api_key") String key, @Field("language") String language);
 
 
     @POST(UrlConstant.FETCH_GEOJSON_FILES)
@@ -38,7 +38,7 @@ public interface NetworkApiInterface {
 
     @POST(UrlConstant.FETCH_PLACE_DETAILS)
     @FormUrlEncoded
-    Observable<MainPlaceListDetailsResponse> getMainPlacesListDetails(@Field("api_key") String api_key);
+    Observable<MainPlaceListDetailsResponse> getMainPlacesListDetails(@Field("api_key") String api_key, @Field("language") String language);
 
     @POST(UrlConstant.FETCH_MAYOR_MESSAGE_DETAILS)
     @FormUrlEncoded

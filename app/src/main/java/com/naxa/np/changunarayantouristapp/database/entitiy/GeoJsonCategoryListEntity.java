@@ -38,6 +38,12 @@ public class GeoJsonCategoryListEntity implements Parcelable {
     @Expose
     private String categoryMarker;
 
+
+    @SerializedName("language")
+    @ColumnInfo(name = "language")
+    @Expose
+    private String language;
+
     @SerializedName("summary_list")
     @ColumnInfo(name = "summary_list")
     @Expose
@@ -48,10 +54,12 @@ public class GeoJsonCategoryListEntity implements Parcelable {
     @Expose
     private String summaryName;
 
-    public GeoJsonCategoryListEntity(String categoryName, String categoryTable, String categoryMarker, String summaryList, String summaryName) {
+
+    public GeoJsonCategoryListEntity(String categoryName, String categoryTable, String categoryMarker, String language, String summaryList, String summaryName) {
         this.categoryName = categoryName;
         this.categoryTable = categoryTable;
         this.categoryMarker = categoryMarker;
+        this.language = language;
         this.summaryList = summaryList;
         this.summaryName = summaryName;
     }
@@ -116,6 +124,7 @@ public class GeoJsonCategoryListEntity implements Parcelable {
         dest.writeString(this.categoryName);
         dest.writeString(this.categoryTable);
         dest.writeString(this.categoryMarker);
+        dest.writeString(this.language);
         dest.writeString(this.summaryList);
         dest.writeString(this.summaryName);
     }
@@ -125,6 +134,7 @@ public class GeoJsonCategoryListEntity implements Parcelable {
         this.categoryName = in.readString();
         this.categoryTable = in.readString();
         this.categoryMarker = in.readString();
+        this.language = in.readString();
         this.summaryList = in.readString();
         this.summaryName = in.readString();
     }
@@ -140,4 +150,12 @@ public class GeoJsonCategoryListEntity implements Parcelable {
             return new GeoJsonCategoryListEntity[size];
         }
     };
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
 }

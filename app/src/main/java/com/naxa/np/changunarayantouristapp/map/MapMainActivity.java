@@ -85,6 +85,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
+import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
@@ -205,12 +206,12 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
         mapDataLayerList = new ArrayList<>();
 
-        geoJsonCategoryViewModel.getAllGeoJsonCategoryEntity()
+        geoJsonCategoryViewModel.getAllGeoJsonCategoryEntityByLanguage(SharedPreferenceUtils.getInstance(MapMainActivity.this).getStringValue(Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE, null))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableSubscriber<List<GeoJsonCategoryListEntity>>() {
+                .subscribe(new DisposableMaybeObserver<List<GeoJsonCategoryListEntity>>() {
                     @Override
-                    public void onNext(List<GeoJsonCategoryListEntity> geoJsonCategoryListEntities) {
+                    public void onSuccess(List<GeoJsonCategoryListEntity> geoJsonCategoryListEntities) {
                         for (GeoJsonCategoryListEntity geoJsonCategoryListEntity : geoJsonCategoryListEntities) {
                             mapDataLayerList.add(new SectionMultipleItem(SectionMultipleItem.MAP_DATA_LIST, new MultiItemSectionModel(
                                     geoJsonCategoryListEntity.getCategoryMarker(), geoJsonCategoryListEntity.getCategoryName(), geoJsonCategoryListEntity.getCategoryTable())));
@@ -218,7 +219,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                     }
 
                     @Override
-                    public void onError(Throwable t) {
+                    public void onError(Throwable e) {
 
                     }
 

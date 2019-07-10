@@ -19,6 +19,8 @@ import com.naxa.np.changunarayantouristapp.mayormessage.MayorMessageActivity;
 import com.naxa.np.changunarayantouristapp.mayormessage.MayorMessagesListResponse;
 import com.naxa.np.changunarayantouristapp.network.NetworkApiInterface;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlaceListDetailsResponse;
+import com.naxa.np.changunarayantouristapp.selectlanguage.LanguageDetailsResponse;
+import com.naxa.np.changunarayantouristapp.selectlanguage.SelectlanguageActivity;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
@@ -45,6 +47,7 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import timber.log.Timber;
 
+import static com.naxa.np.changunarayantouristapp.utils.Constant.Network.API_KEY;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_MAYOR_MESSAGE_FIRST_TIME;
 
 
@@ -79,7 +82,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
         totalCount = 0;
         progress = 0;
 
-        apiInterface.getGeoJsonCategoriesListResponse(Constant.Network.API_KEY)
+        apiInterface.getGeoJsonCategoriesListResponse(Constant.Network.API_KEY, language)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(listResponse -> {
@@ -145,6 +148,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                                     LatLng latLng = getLocationFromGeometry(feature);
                                     placesDetailsEntity.setLatitude(latLng.getLatitude()+"");
                                     placesDetailsEntity.setLongitude(latLng.getLongitude()+"");
+                                    placesDetailsEntity.setQrLanguage(placesDetailsEntity.getLanguage()+"_"+placesDetailsEntity.getQRCode());
 
                                     placeDetailsEntityViewModel.insert(placesDetailsEntity);
                                     Timber.d("accept: JSON Object %s", snippest + " " + geoJsonName);
@@ -214,7 +218,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
 
     private void downloadMainPlaceListDetails(@NotNull NetworkApiInterface apiInterface, String apiKey, String language) {
 
-        apiInterface.getMainPlacesListDetails(apiKey)
+        apiInterface.getMainPlacesListDetails(apiKey, language)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(Schedulers.computation())
                 .retryWhen(observable -> Observable.timer(5, TimeUnit.SECONDS))
@@ -264,5 +268,32 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                 });
 
     }
+
+    private void fetchLanguageListFromServer(@NotNull NetworkApiInterface apiInterface) {
+        apiInterface.getLanguages(API_KEY)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<LanguageDetailsResponse>() {
+                    @Override
+                    public void onNext(LanguageDetailsResponse languageDetailsResponse) {
+
+                        if (languageDetailsResponse.getError() == 0) {
+                            if (languageDetailsResponse.getData() != null) {
+                                SharedPreferenceUtils.getInstance(appCompatActivity).setValue(Constant.SharedPrefKey.KEY_LANGUAGE_LIST_DETAILS, gson.toJson(languageDetailsResponse));
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
 
 }
