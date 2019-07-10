@@ -66,7 +66,6 @@ public class SelectlanguageActivity extends BaseActivity {
             HashMap<String, Object> hashMap = (HashMap<String, Object>) intent.getSerializableExtra("map");
             isFromMainActivity = (boolean) hashMap.get(KEY_VALUE);
 
-            initlanguagesList();
         }
     }
 
@@ -87,7 +86,7 @@ public class SelectlanguageActivity extends BaseActivity {
         toolbar = findViewById(R.id.toolbar);
         recyclerView = findViewById(R.id.rv_language_selector);
 
-        fetchLanguageListFromServer();
+        initlanguagesList();
     }
 
     Dialog dialog;
@@ -140,6 +139,9 @@ public class SelectlanguageActivity extends BaseActivity {
 
         if (languageDetailsList == null) {
             return;
+        }
+        if(dialog != null && dialog.isShowing()){
+            dialog.dismiss();
         }
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -202,8 +204,14 @@ public class SelectlanguageActivity extends BaseActivity {
                     @Override
                     public void onPermissionGranted() {
                         SharedPreferenceUtils.getInstance(SelectlanguageActivity.this).setValue(Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS, false);
-                        ActivityUtil.openActivity(MainActivity.class, SelectlanguageActivity.this);
-                        finish();
+
+                       if(NetworkUtils.isNetworkAvailable()) {
+                           ActivityUtil.openActivity(MainActivity.class, SelectlanguageActivity.this);
+                           finish();
+                       }else {
+                           dialog = DialogFactory.createSimpleOkErrorDialog(SelectlanguageActivity.this, getResources().getString(R.string.no_internet_connection), getResources().getString(R.string.check_internet_retry_again));
+                           dialog.show();
+                       }
                     }
 
                     @Override
