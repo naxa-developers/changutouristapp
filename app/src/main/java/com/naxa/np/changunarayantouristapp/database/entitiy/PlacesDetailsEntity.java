@@ -11,6 +11,8 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.jetbrains.annotations.NotNull;
+
 @Entity(tableName = "PlacesDetailsEntity",
         indices = {@Index(value = "qr_code",
                 unique = true)})
@@ -105,7 +107,7 @@ public class PlacesDetailsEntity implements Parcelable {
     @Expose
     private String theGeom;
 
-    public PlacesDetailsEntity(String placeType, String categoryType, Integer FID, String name, String type, String description, String photo, String primaryImage, String images, String videos, String _360Images, String audio, String QRCode, String language, String latitude, String longitude, String theGeom) {
+    public PlacesDetailsEntity(@NotNull String placeType, @NotNull String categoryType, Integer FID, String name, @NotNull String type, String description, String photo, String primaryImage, String images, String videos, String _360Images, String audio, String QRCode, String language, String latitude, String longitude, String theGeom) {
         this.placeType = placeType.trim();
         this.categoryType = categoryType.trim();
         this.FID = FID;

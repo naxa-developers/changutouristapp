@@ -20,7 +20,6 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.plugins.cluster.clustering.ClusterItem;
 import com.naxa.np.changunarayantouristapp.R;
-import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListEntity;
 import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.events.MarkerClickEvent;
 import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
@@ -136,7 +135,6 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
                         mapboxMap.setOnMarkerClickListener(new MapboxMap.OnMarkerClickListener() {
                             @Override
                             public boolean onMarkerClick(@NonNull Marker marker) {
-//                                Toast.makeText(context, "Marker tapped: " + marker.getTitle(), Toast.LENGTH_LONG).show();
                                 onInfoWindowClick(marker);
                                 animateCameraPosition(marker.getPosition());
                                 return true;
@@ -229,7 +227,6 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
                         mapboxMap.setOnMarkerClickListener(new MapboxMap.OnMarkerClickListener() {
                             @Override
                             public boolean onMarkerClick(@NonNull Marker marker) {
-                                Toast.makeText(context, "Marker tapped: " + marker.getTitle(), Toast.LENGTH_LONG).show();
                                 onInfoWindowClick(marker);
                                 animateCameraPosition(marker.getPosition());
                                 return true;
@@ -279,7 +276,6 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
         mapboxMap.setOnMarkerClickListener(new MapboxMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(@NonNull Marker marker) {
-                Toast.makeText(context, "Marker tapped: " + marker.getTitle(), Toast.LENGTH_LONG).show();
                 onInfoWindowClick(marker);
                 animateCameraPosition(marker.getPosition());
                 return true;
