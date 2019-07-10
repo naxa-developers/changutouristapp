@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -39,7 +40,7 @@ public class VideoListActivity extends BaseActivity implements FileDownloadView 
     RecyclerView recyclerView;
     FileDownloadPresenter fileDownloadPresenter;
     Dialog dialog;
-
+    TextView tvNoDataFound;
 
     private BaseRecyclerViewAdapter<FileNameAndUrlPojo, VideosAudiosListViewHolder> adapter;
 
@@ -59,6 +60,7 @@ public class VideoListActivity extends BaseActivity implements FileDownloadView 
 
     private void initUI(Intent intent) {
         recyclerView = findViewById(R.id.recycler_view_videos);
+        tvNoDataFound = findViewById(R.id.tv_no_data_found);
 
         if (intent != null) {
             HashMap<String, Object> hashMap = (HashMap<String, Object>) intent.getSerializableExtra("map");
@@ -68,6 +70,8 @@ public class VideoListActivity extends BaseActivity implements FileDownloadView 
                 setupToolbar(placesDetailsEntity.getName(), false);
                 if(!TextUtils.isEmpty(placesDetailsEntity.getVideos())) {
                     fetchVideosList();
+                }else {
+                    tvNoDataFound.setVisibility(View.VISIBLE);
                 }
             }
         }
