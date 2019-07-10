@@ -13,6 +13,6 @@
         android:id="@+id/action_select_language"
         android:title="@string/select_language"
         android:icon="@drawable/ic_language_24dp"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 
 </menu>
