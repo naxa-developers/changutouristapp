@@ -28,6 +28,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_CHANGUNARAYAN_BOARDER;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_NAGARKOT_BOARDER;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.MAP_OVERLAY_LAYER;
+
 public class TourishInformationGuideActivity extends BaseActivity {
 
     RecyclerView recyclerView;
@@ -51,14 +55,20 @@ public class TourishInformationGuideActivity extends BaseActivity {
     private void initUI() {
         recyclerView = findViewById(R.id.rv_tourist_guide_info);
 
-        fetchData();
+        if (SharedPreferenceUtils.getInstance(TourishInformationGuideActivity.this).getIntValue(MAP_OVERLAY_LAYER, -1) == KEY_CHANGUNARAYAN_BOARDER) {
+            fetchData("changunarayan");
+
+        } else if (SharedPreferenceUtils.getInstance(TourishInformationGuideActivity.this).getIntValue(MAP_OVERLAY_LAYER, -1) == KEY_NAGARKOT_BOARDER) {
+            fetchData("nagarkot");
+
+        }
     }
 
-    private void fetchData() {
+    private void fetchData(String placeType) {
         if (NetworkUtils.isNetworkAvailable()) {
             dialog = DialogFactory.createProgressDialog(this, "Please wait!!!\nfetching data.");
             dialog.show();
-            fetchDatFromServer();
+            fetchDatFromServer(placeType);
         } else {
             fetchDataFromSharedPrefs();
         }
@@ -73,7 +83,7 @@ public class TourishInformationGuideActivity extends BaseActivity {
 
     }
 
-    private void fetchDatFromServer() {
+    private void fetchDatFromServer(String placeType) {
         apiInterface.getTouristInformationGuideListResponse(Constant.Network.API_KEY)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())

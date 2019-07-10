@@ -29,6 +29,7 @@ import com.naxa.np.changunarayantouristapp.imageviewer.ImageListGridViewActivity
 import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlaceListDetails;
 import com.naxa.np.changunarayantouristapp.placedetailsview.nearbyplaces.NearByPlacesListActivity;
+import com.naxa.np.changunarayantouristapp.touristinformationguide.TourishInformationGuideActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
@@ -57,7 +58,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
     private static final String TAG = "PlaceDetailsActivity";
     ImageView ivImageMain;
     TextView tvPlaceTitle, tvPlaceDesc;
-    ImageButton btnView360Image;
+    ImageButton btnView360Image, btnTouristInfoGuide;
     Button btnViewAllNearByPlaces;
     RatingBar ratingBar;
     BottomNavigationView bottomNavigationView;
@@ -197,9 +198,11 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         btnView360Image = findViewById(R.id.btn_view_vr_image);
+        btnTouristInfoGuide = findViewById(R.id.btn_tourist_info_guide);
         btnViewAllNearByPlaces = findViewById(R.id.btn_view_all_nearby_places);
         btnViewAllNearByPlaces.setOnClickListener(this);
         btnView360Image.setOnClickListener(this);
+        btnTouristInfoGuide.setOnClickListener(this);
 
 
     }
@@ -285,6 +288,10 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
 
             case R.id.btn_view_all_nearby_places:
                 ActivityUtil.openActivity(NearByPlacesListActivity.class, PlaceDetailsActivity.this);
+                break;
+
+            case R.id.btn_tourist_info_guide:
+                ActivityUtil.openActivity(TourishInformationGuideActivity.class, PlaceDetailsActivity.this);
                 break;
         }
     }
