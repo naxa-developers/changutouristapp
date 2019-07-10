@@ -1,6 +1,7 @@
 package com.naxa.np.changunarayantouristapp.selectlanguage;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
+import com.naxa.np.changunarayantouristapp.MainActivity;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
@@ -18,14 +20,17 @@ import com.naxa.np.changunarayantouristapp.mayormessage.MayorMessageActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
+import com.naxa.np.changunarayantouristapp.utils.NetworkUtils;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_VALUE;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.Network.API_KEY;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.Permission.STORAGE_READ;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.Permission.STORAGE_WRITE;
@@ -41,6 +46,7 @@ public class SelectlanguageActivity extends BaseActivity {
     private BaseRecyclerViewAdapter<LanguageDetails, SelectLanguageViewHolder> adapter;
 
     Gson gson;
+    boolean isFromMainActivity = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +57,36 @@ public class SelectlanguageActivity extends BaseActivity {
         setupToolbar("Select Language", false);
         initUI();
 
+        newGetIntent(getIntent());
+
     }
+
+    private void newGetIntent(Intent intent) {
+        if (intent != null) {
+            HashMap<String, Object> hashMap = (HashMap<String, Object>) intent.getSerializableExtra("map");
+            isFromMainActivity = (boolean) hashMap.get(KEY_VALUE);
+
+        }
+    }
+
+    private void initlanguagesList() {
+        if (NetworkUtils.isNetworkAvailable()) {
+            fetchLanguageListFromServer();
+        } else {
+            LanguageDetailsResponse languageDetailsResponse = gson.fromJson(SharedPreferenceUtils.getInstance(SelectlanguageActivity.this).getStringValue(Constant.SharedPrefKey.KEY_LANGUAGE_LIST_DETAILS, null), LanguageDetailsResponse.class);
+            if (languageDetailsResponse.getData() != null) {
+                setuprecyclerView(languageDetailsResponse.getData());
+            }
+        }
+    }
+
 
     private void initUI() {
 
         toolbar = findViewById(R.id.toolbar);
         recyclerView = findViewById(R.id.rv_language_selector);
 
-        fetchLanguageListFromServer();
+        initlanguagesList();
     }
 
     Dialog dialog;
@@ -112,6 +140,9 @@ public class SelectlanguageActivity extends BaseActivity {
         if (languageDetailsList == null) {
             return;
         }
+        if(dialog != null && dialog.isShowing()){
+            dialog.dismiss();
+        }
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
@@ -125,9 +156,13 @@ public class SelectlanguageActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         Log.d(TAG, "onClick: " + languageDetails.getName());
-                        SharedPreferenceUtils.getInstance(SelectlanguageActivity.this).setValue(Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE, languageDetails.getLanguage());
+                        SharedPreferenceUtils.getInstance(SelectlanguageActivity.this).setValue(Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE, languageDetails.getAlias());
 
-                        launchLoginScreen();
+                        if (isFromMainActivity) {
+                            launchMainActivity();
+                        } else {
+                            launchLoginScreen();
+                        }
                     }
                 });
 
@@ -140,7 +175,6 @@ public class SelectlanguageActivity extends BaseActivity {
         };
         recyclerView.setAdapter(adapter);
     }
-
 
 
     private void launchLoginScreen() {
@@ -161,6 +195,29 @@ public class SelectlanguageActivity extends BaseActivity {
                 });
 
 
+    }
+
+
+    private void launchMainActivity() {
+        checkPermission(RC_STORAGE, new String[]{STORAGE_READ, STORAGE_WRITE}, getString(R.string.storage_rationale),
+                new PermissionRequestListener() {
+                    @Override
+                    public void onPermissionGranted() {
+                        SharedPreferenceUtils.getInstance(SelectlanguageActivity.this).setValue(Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS, false);
+
+                       if(NetworkUtils.isNetworkAvailable()) {
+                           ActivityUtil.openActivity(MainActivity.class, SelectlanguageActivity.this);
+                           finish();
+                       }else {
+                           dialog = DialogFactory.createSimpleOkErrorDialog(SelectlanguageActivity.this, getResources().getString(R.string.no_internet_connection), getResources().getString(R.string.check_internet_retry_again));
+                           dialog.show();
+                       }
+                    }
+
+                    @Override
+                    public void onPermissionDenied() {
+                    }
+                });
     }
 
 }

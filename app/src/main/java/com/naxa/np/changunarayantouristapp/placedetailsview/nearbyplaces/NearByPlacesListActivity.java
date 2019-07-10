@@ -15,6 +15,7 @@ import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
 import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntityViewModel;
+import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.NearByPlacesViewHolder;
 import com.naxa.np.changunarayantouristapp.placedetailsview.PlaceDetailsActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlacesListActivity;
@@ -36,6 +37,7 @@ import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_CHAN
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_MAIN_PLACE_TYPE;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_NAGARKOT_BOARDER;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.MAP_OVERLAY_LAYER;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE;
 
 public class NearByPlacesListActivity extends BaseActivity {
 
@@ -76,7 +78,7 @@ public class NearByPlacesListActivity extends BaseActivity {
 
         Constant constant = new Constant();
         placeDetailsEntityViewModel.getNearByPlacesListByPlaceTypeAndNearByTypeList(mainPlaceType,
-                constant.getNearByPlacesTypeList())
+                constant.getNearByPlacesTypeList(), SharedPreferenceUtils.getInstance(NearByPlacesListActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSubscriber<List<PlacesDetailsEntity>>() {

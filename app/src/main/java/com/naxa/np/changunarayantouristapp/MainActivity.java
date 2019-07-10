@@ -35,7 +35,9 @@ import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenter;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenterImpl;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadView;
 import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
+import com.naxa.np.changunarayantouristapp.placedetailsview.PlaceDetailsActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlacesListActivity;
+import com.naxa.np.changunarayantouristapp.selectlanguage.SelectlanguageActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.CreateAppMainFolderUtils;
@@ -44,6 +46,10 @@ import com.naxa.np.changunarayantouristapp.utils.GpsUtils;
 import com.naxa.np.changunarayantouristapp.utils.NetworkUtils;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 
+import java.util.HashMap;
+
+import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_OBJECT;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_VALUE;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.Network.API_KEY;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, DataDonwloadView, FileDownloadView, NavigationView.OnNavigationItemSelectedListener {
@@ -193,7 +199,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_select_language:
+                HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put(KEY_VALUE, true);
+                ActivityUtil.openActivity(SelectlanguageActivity.class, MainActivity.this, hashMap, false);
                 break;
+
             case R.id.action_refresh_data:
                 fetctDataFromServerAndSave();
                 break;

@@ -20,15 +20,15 @@ public interface PlaceDetailsDao {
     Flowable<List<PlacesDetailsEntity>> getAllPlacesDetailsEntity();
 
 
-    @Query("SELECT * from PlacesDetailsEntity WHERE place_type LIKE :placeType AND category_type LIKE :categoryType")
-    Flowable<List<PlacesDetailsEntity>> getPlacesDetailsEntityBYPlaceAndCategoryType(String placeType, String categoryType);
+    @Query("SELECT * from PlacesDetailsEntity WHERE place_type LIKE :placeType AND category_type LIKE :categoryType AND language LIKE :language")
+    Flowable<List<PlacesDetailsEntity>> getPlacesDetailsEntityBYPlaceAndCategoryType(String placeType, String categoryType, String language);
 
 
-    @Query("SELECT * from PlacesDetailsEntity WHERE place_type LIKE :placeType AND type IN (:nearbyTypeList)")
-    Flowable<List<PlacesDetailsEntity>> getNearByPlacesListByPlaceTypeAndNearByTypeList(String placeType, List<String> nearbyTypeList);
+    @Query("SELECT * from PlacesDetailsEntity WHERE place_type LIKE :placeType AND type IN (:nearbyTypeList) AND language LIKE :language")
+    Flowable<List<PlacesDetailsEntity>> getNearByPlacesListByPlaceTypeAndNearByTypeList(String placeType, List<String> nearbyTypeList,  String language);
 
-    @Query("SELECT * from PlacesDetailsEntity WHERE qr_code  LIKE '%' || :qrcODE || '%' ")
-    Single<PlacesDetailsEntity> getPlacesDetailsEntityBYQRCode(String qrcODE);
+    @Query("SELECT * from PlacesDetailsEntity WHERE qr_code  LIKE '%' || :qrcODE || '%' AND language LIKE :language")
+    Single<PlacesDetailsEntity> getPlacesDetailsEntityBYQRCode(String qrcODE,  String language);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(PlacesDetailsEntity placesDetailsEntity);

@@ -14,7 +14,7 @@ import com.google.gson.annotations.SerializedName;
 import org.jetbrains.annotations.NotNull;
 
 @Entity(tableName = "PlacesDetailsEntity",
-        indices = {@Index(value = "qr_code",
+        indices = {@Index(value = "qr_language",
                 unique = true)})
 public class PlacesDetailsEntity implements Parcelable {
 
@@ -107,7 +107,13 @@ public class PlacesDetailsEntity implements Parcelable {
     @Expose
     private String theGeom;
 
-    public PlacesDetailsEntity(@NotNull String placeType, @NotNull String categoryType, Integer FID, String name, @NotNull String type, String description, String photo, String primaryImage, String images, String videos, String _360Images, String audio, String QRCode, String language, String latitude, String longitude, String theGeom) {
+    @SerializedName("qr_language")
+    @ColumnInfo(name = "qr_language")
+    @Expose
+    private String qrLanguage;
+
+
+    public PlacesDetailsEntity(@NotNull String placeType, @NotNull String categoryType, Integer FID, String name, @NotNull String type, String description, String photo, String primaryImage, String images, String videos, String _360Images, String audio, String QRCode, String language, String latitude, String longitude, String theGeom, String qrLanguage) {
         this.placeType = placeType.trim();
         this.categoryType = categoryType.trim();
         this.FID = FID;
@@ -125,6 +131,7 @@ public class PlacesDetailsEntity implements Parcelable {
         this.latitude = latitude;
         this.longitude = longitude;
         this.theGeom = theGeom;
+        this.qrLanguage = qrLanguage;
     }
 
 
@@ -314,6 +321,7 @@ public class PlacesDetailsEntity implements Parcelable {
         dest.writeString(this.latitude);
         dest.writeString(this.longitude);
         dest.writeString(this.theGeom);
+        dest.writeString(this.qrLanguage);
     }
 
     protected PlacesDetailsEntity(Parcel in) {
@@ -335,6 +343,7 @@ public class PlacesDetailsEntity implements Parcelable {
         this.latitude = in.readString();
         this.longitude = in.readString();
         this.theGeom = in.readString();
+        this.qrLanguage = in.readString();
     }
 
     public static final Parcelable.Creator<PlacesDetailsEntity> CREATOR = new Parcelable.Creator<PlacesDetailsEntity>() {
@@ -348,4 +357,12 @@ public class PlacesDetailsEntity implements Parcelable {
             return new PlacesDetailsEntity[size];
         }
     };
+
+    public String getQrLanguage() {
+        return qrLanguage;
+    }
+
+    public void setQrLanguage(String qrLanguage) {
+        this.qrLanguage = qrLanguage;
+    }
 }

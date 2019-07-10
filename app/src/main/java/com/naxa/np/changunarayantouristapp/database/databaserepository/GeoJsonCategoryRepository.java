@@ -40,6 +40,11 @@ public class GeoJsonCategoryRepository {
     }
 
 
+    public Maybe<List<GeoJsonCategoryListEntity>> getAllGeoJsonCategoryEntityByLanguage(String language) {
+        mSpecificTypeGeoJsonCategoryEntity = mGeoJsonCategoryDao.getGeoJsonCategoryListByLanguage(language);
+        return mSpecificTypeGeoJsonCategoryEntity;
+    }
+
     // You must call this on a non-UI thread or your app will crash.
     // Like this, Room ensures that you're not doing any long running operations on the main
     // thread, blocking the UI.

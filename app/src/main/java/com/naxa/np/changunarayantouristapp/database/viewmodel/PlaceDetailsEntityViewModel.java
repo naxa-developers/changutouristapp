@@ -31,18 +31,18 @@ public class PlaceDetailsEntityViewModel extends AndroidViewModel {
         return mAllEntityList;
     }
 
-    public Flowable<List<PlacesDetailsEntity>> getPlacesDetailsEntityBYPlaceAndCategoryType(String placeType, String categoryType) {
-        mAllSpecificEntityList = mRepository.getPlacesDetailsEntityBYPlaceAndCategoryType(placeType, categoryType);
+    public Flowable<List<PlacesDetailsEntity>> getPlacesDetailsEntityBYPlaceAndCategoryType(String placeType, String categoryType, String language) {
+        mAllSpecificEntityList = mRepository.getPlacesDetailsEntityBYPlaceAndCategoryType(placeType, categoryType,language);
         return mAllSpecificEntityList;
     }
 
-    public Single<PlacesDetailsEntity> getPlacesDetailsEntityBYQRCode(String qrCode) {
-        mSpecificEntity = mRepository.getPlacesDetailsEntityBYQRCode(qrCode);
+    public Single<PlacesDetailsEntity> getPlacesDetailsEntityBYQRCode(String qrCode, String language) {
+        mSpecificEntity = mRepository.getPlacesDetailsEntityBYQRCode(qrCode, language);
         return mSpecificEntity;
     }
 
-    public Flowable<List<PlacesDetailsEntity>> getNearByPlacesListByPlaceTypeAndNearByTypeList(String placeType, List<String> nearByPlacesTypeList) {
-        mAllSpecificEntityList = mRepository.getNearByPlacesListByPlaceTypeAndNearByTypeList(placeType, nearByPlacesTypeList);
+    public Flowable<List<PlacesDetailsEntity>> getNearByPlacesListByPlaceTypeAndNearByTypeList(String placeType, List<String> nearByPlacesTypeList, String language) {
+        mAllSpecificEntityList = mRepository.getNearByPlacesListByPlaceTypeAndNearByTypeList(placeType, nearByPlacesTypeList, language);
         return mAllSpecificEntityList;
     }
 

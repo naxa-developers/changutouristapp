@@ -85,6 +85,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
+import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
@@ -94,6 +95,7 @@ import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_VALUE;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_CHANGUNARAYAN_BOARDER;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_NAGARKOT_BOARDER;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.MAP_OVERLAY_LAYER;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE;
 
 public class MapMainActivity extends BaseActivity implements OnMapReadyCallback, PermissionsListener, MapboxMap.OnMapClickListener,
         LocationListener, View.OnClickListener {
@@ -205,12 +207,12 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
         mapDataLayerList = new ArrayList<>();
 
-        geoJsonCategoryViewModel.getAllGeoJsonCategoryEntity()
+        geoJsonCategoryViewModel.getAllGeoJsonCategoryEntityByLanguage(SharedPreferenceUtils.getInstance(MapMainActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableSubscriber<List<GeoJsonCategoryListEntity>>() {
+                .subscribe(new DisposableMaybeObserver<List<GeoJsonCategoryListEntity>>() {
                     @Override
-                    public void onNext(List<GeoJsonCategoryListEntity> geoJsonCategoryListEntities) {
+                    public void onSuccess(List<GeoJsonCategoryListEntity> geoJsonCategoryListEntities) {
                         for (GeoJsonCategoryListEntity geoJsonCategoryListEntity : geoJsonCategoryListEntities) {
                             mapDataLayerList.add(new SectionMultipleItem(SectionMultipleItem.MAP_DATA_LIST, new MultiItemSectionModel(
                                     geoJsonCategoryListEntity.getCategoryMarker(), geoJsonCategoryListEntity.getCategoryName(), geoJsonCategoryListEntity.getCategoryTable())));
@@ -218,7 +220,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                     }
 
                     @Override
-                    public void onError(Throwable t) {
+                    public void onError(Throwable e) {
 
                     }
 
@@ -418,7 +420,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                         Log.d(TAG, "onNext: filter " + placeType);
                         if (mapDataLayerListCheckedEvent.getChecked()) {
 
-                            placeDetailsEntityViewModel.getPlacesDetailsEntityBYPlaceAndCategoryType(placeType, mapDataLayerListCheckedEvent.getMultiItemSectionModel().getData_value())
+                            placeDetailsEntityViewModel.getPlacesDetailsEntityBYPlaceAndCategoryType(placeType, mapDataLayerListCheckedEvent.getMultiItemSectionModel().getData_value(),
+                                    SharedPreferenceUtils.getInstance(MapMainActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null))
 //                        placeDetailsEntityViewModel.getAllPlacesDetailsEntity()
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
@@ -925,7 +928,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
         Constant constant = new Constant();
         placeDetailsEntityViewModel.getNearByPlacesListByPlaceTypeAndNearByTypeList(placeType,
-                constant.getDefaultPlacesTypeListToPlotMarker())
+                constant.getDefaultPlacesTypeListToPlotMarker(),
+                SharedPreferenceUtils.getInstance(MapMainActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSubscriber<List<PlacesDetailsEntity>>() {

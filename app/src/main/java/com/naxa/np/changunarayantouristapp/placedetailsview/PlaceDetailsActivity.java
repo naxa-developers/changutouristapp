@@ -50,6 +50,7 @@ import io.reactivex.subscribers.DisposableSubscriber;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_OBJECT;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_VALUE;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_MAIN_PLACE_TYPE;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE;
 
 public class PlaceDetailsActivity extends BaseActivity implements View.OnClickListener {
 
@@ -117,7 +118,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
     private void initRecyclerView() {
         Constant constant = new Constant();
         placeDetailsEntityViewModel.getNearByPlacesListByPlaceTypeAndNearByTypeList(mainPlaceType,
-                constant.getNearByPlacesTypeList())
+                constant.getNearByPlacesTypeList(), SharedPreferenceUtils.getInstance(PlaceDetailsActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSubscriber<List<PlacesDetailsEntity>>() {
