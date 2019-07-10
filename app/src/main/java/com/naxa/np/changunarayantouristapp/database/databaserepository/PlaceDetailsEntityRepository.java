@@ -37,18 +37,18 @@ public class PlaceDetailsEntityRepository {
         return mAllPlacesDetailsEntity;
     }
 
-    public Flowable<List<PlacesDetailsEntity>> getPlacesDetailsEntityBYPlaceAndCategoryType(String placeType, String categoryType) {
-        mSpecificPlacesDetailsEntityList = placeDetailsDao.getPlacesDetailsEntityBYPlaceAndCategoryType(placeType, categoryType);
+    public Flowable<List<PlacesDetailsEntity>> getPlacesDetailsEntityBYPlaceAndCategoryType(String placeType, String categoryType,  String language) {
+        mSpecificPlacesDetailsEntityList = placeDetailsDao.getPlacesDetailsEntityBYPlaceAndCategoryType(placeType, categoryType, language);
         return mSpecificPlacesDetailsEntityList;
     }
 
-    public Single<PlacesDetailsEntity> getPlacesDetailsEntityBYQRCode(String qrCode) {
-        mSpecificPlacesDetailsEntity = placeDetailsDao.getPlacesDetailsEntityBYQRCode(qrCode);
+    public Single<PlacesDetailsEntity> getPlacesDetailsEntityBYQRCode(String qrCode, String language) {
+        mSpecificPlacesDetailsEntity = placeDetailsDao.getPlacesDetailsEntityBYQRCode(qrCode, language);
         return mSpecificPlacesDetailsEntity;
     }
 
-    public Flowable<List<PlacesDetailsEntity>> getNearByPlacesListByPlaceTypeAndNearByTypeList(String placeType, List<String> nearByPlacesTypeList) {
-        mSpecificPlacesDetailsEntityList = placeDetailsDao.getNearByPlacesListByPlaceTypeAndNearByTypeList(placeType, nearByPlacesTypeList);
+    public Flowable<List<PlacesDetailsEntity>> getNearByPlacesListByPlaceTypeAndNearByTypeList(String placeType, List<String> nearByPlacesTypeList, String language) {
+        mSpecificPlacesDetailsEntityList = placeDetailsDao.getNearByPlacesListByPlaceTypeAndNearByTypeList(placeType, nearByPlacesTypeList, language);
         return mSpecificPlacesDetailsEntityList;
     }
 

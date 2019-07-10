@@ -20,10 +20,12 @@ import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntityViewModel;
+import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.PlaceDetailsActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.nearbyplaces.NearByPlacesListActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.FieldValidatorUtils;
+import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 
 import java.util.HashMap;
@@ -38,6 +40,7 @@ import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_OBJECT;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_VALUE;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.Permission.CAMERA;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.PermissionID.RC_CAMERA;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE;
 
 public class QRCodeReaderActivity extends BaseActivity {
     
@@ -117,7 +120,8 @@ public class QRCodeReaderActivity extends BaseActivity {
 
     private void getPlaceDetails() {
         if(FieldValidatorUtils.validateEditText(tvQRCode)){
-            placeDetailsEntityViewModel.getPlacesDetailsEntityBYQRCode(tvQRCode.getText().toString())
+            placeDetailsEntityViewModel.getPlacesDetailsEntityBYQRCode(tvQRCode.getText().toString(),
+                    SharedPreferenceUtils.getInstance(QRCodeReaderActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new DisposableSingleObserver<PlacesDetailsEntity>() {

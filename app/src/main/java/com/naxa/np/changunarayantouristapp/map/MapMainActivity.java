@@ -95,6 +95,7 @@ import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_VALUE;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_CHANGUNARAYAN_BOARDER;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_NAGARKOT_BOARDER;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.MAP_OVERLAY_LAYER;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE;
 
 public class MapMainActivity extends BaseActivity implements OnMapReadyCallback, PermissionsListener, MapboxMap.OnMapClickListener,
         LocationListener, View.OnClickListener {
@@ -206,7 +207,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
         mapDataLayerList = new ArrayList<>();
 
-        geoJsonCategoryViewModel.getAllGeoJsonCategoryEntityByLanguage(SharedPreferenceUtils.getInstance(MapMainActivity.this).getStringValue(Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE, null))
+        geoJsonCategoryViewModel.getAllGeoJsonCategoryEntityByLanguage(SharedPreferenceUtils.getInstance(MapMainActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableMaybeObserver<List<GeoJsonCategoryListEntity>>() {
@@ -419,7 +420,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                         Log.d(TAG, "onNext: filter " + placeType);
                         if (mapDataLayerListCheckedEvent.getChecked()) {
 
-                            placeDetailsEntityViewModel.getPlacesDetailsEntityBYPlaceAndCategoryType(placeType, mapDataLayerListCheckedEvent.getMultiItemSectionModel().getData_value())
+                            placeDetailsEntityViewModel.getPlacesDetailsEntityBYPlaceAndCategoryType(placeType, mapDataLayerListCheckedEvent.getMultiItemSectionModel().getData_value(),
+                                    SharedPreferenceUtils.getInstance(MapMainActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null))
 //                        placeDetailsEntityViewModel.getAllPlacesDetailsEntity()
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
@@ -926,7 +928,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
         Constant constant = new Constant();
         placeDetailsEntityViewModel.getNearByPlacesListByPlaceTypeAndNearByTypeList(placeType,
-                constant.getDefaultPlacesTypeListToPlotMarker())
+                constant.getDefaultPlacesTypeListToPlotMarker(),
+                SharedPreferenceUtils.getInstance(MapMainActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSubscriber<List<PlacesDetailsEntity>>() {
