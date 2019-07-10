@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.Gson;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
+import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.naxa.np.changunarayantouristapp.common.ChangunarayanTouristApp;
 import com.naxa.np.changunarayantouristapp.database.ISETRoomDatabase;
 import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListEntity;
@@ -24,6 +25,8 @@ import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -32,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -76,11 +80,11 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
         progress = 0;
 
         apiInterface.getGeoJsonCategoriesListResponse(Constant.Network.API_KEY)
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(listResponse -> {
                     totalCount = listResponse.getData().size();
-                    if(listResponse.getData() != null){
+                    if (listResponse.getData() != null) {
                         downloadMainPlaceListDetails(apiInterface, apiKey, language);
 //                        new ISETRoomDatabase.DeleteAllDbTableAsync(ISETRoomDatabase.getDatabase(appCompatActivity)).execute();
                     }
@@ -89,41 +93,31 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                 .flatMapIterable((Function<List<GeoJsonCategoryListEntity>, Iterable<GeoJsonCategoryListEntity>>) entities -> entities)
                 .flatMap((Function<GeoJsonCategoryListEntity, ObservableSource<Feature>>) categoryListEntity -> {
                     geoJsonCategoryViewModel.insert(categoryListEntity);
-//                    LoadImageUtils.downloadAndSaveImageToStorage(appCompatActivity, categoryListEntity.getCategoryTable(), categoryListEntity.getCategoryMarker());
                     geoJsonDisplayName = categoryListEntity.getCategoryName();
                     String geoJsonName = categoryListEntity.getCategoryTable();
 
                     return apiInterface.getGeoJsonDetails(Constant.Network.API_KEY, categoryListEntity.getCategoryTable())
-                            .subscribeOn(Schedulers.io())
+                            .subscribeOn(Schedulers.computation())
                             .observeOn(AndroidSchedulers.mainThread())
-                            .delay(50, TimeUnit.MILLISECONDS)
+                            .retryWhen(observable -> Observable.timer(5, TimeUnit.SECONDS))
                             .doOnNext(responseBody -> {
                                 progress++;
+                                Log.d(TAG, "handleDataDownload: doOnNext " + categoryListEntity.getCategoryTable());
                                 dataDonwloadView.downloadProgress(progress, totalCount, categoryListEntity.getCategoryName(), categoryListEntity.getCategoryTable(), categoryListEntity.getCategoryMarker());
                             })
                             .map(responseBody -> {
-
-                                BufferedReader reader = new BufferedReader(new InputStreamReader(responseBody.byteStream()));
-                                StringBuilder sb = new StringBuilder();
-                                String line = null;
                                 try {
+                                    FeatureCollection featureCollection = FeatureCollection.fromJson(getJsonStringFromResponseBody(responseBody));
+                                    return featureCollection.features();
 
-                                    while ((line = reader.readLine()) != null) {
-                                        sb.append(line).append("\n");
-                                    }
-                                    reader.close();
                                 } catch (Exception e) {
-                                    e.printStackTrace();
-                                    throw  new Exception();
+                                    Log.d(TAG, "handleDataDownload: catch " + " type : " + categoryListEntity.getCategoryTable() + " , " + responseBody.string());
+                                    return new ArrayList<Feature>();
                                 }
-
-                                String geoJsonToString = sb.toString();
-//                                FeatureCollection featureCollection = FeatureCollection.fromJson(responseBody.string());
-                                FeatureCollection featureCollection = FeatureCollection.fromJson(geoJsonToString);
-                                return featureCollection.features();
                             })
                             .toList()
                             .map(lists -> {
+                                Log.d(TAG, "handleDataDownload: mapLists : " + categoryListEntity.getCategoryTable() + " : " + lists.size());
                                 List<Feature> features = new ArrayList<>();
                                 for (List<Feature> list : lists) {
                                     features.addAll(list);
@@ -147,20 +141,13 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                                     String snippest = feature.properties().toString();
                                     PlacesDetailsEntity placesDetailsEntity = gson.fromJson(snippest, PlacesDetailsEntity.class);
                                     placesDetailsEntity.setCategoryType(geoJsonName);
+
+                                    LatLng latLng = getLocationFromGeometry(feature);
+                                    placesDetailsEntity.setLatitude(latLng.getLatitude()+"");
+                                    placesDetailsEntity.setLongitude(latLng.getLongitude()+"");
+
                                     placeDetailsEntityViewModel.insert(placesDetailsEntity);
-                                    Timber.d("accept: JSON Object %s", snippest+" "+geoJsonName);
-
-//                        LatLng location = new LatLng(0.0, 0.0);
-//                        try {
-//                            JSONObject jsonObject = new JSONObject(feature.geometry().toJson());
-//                            Log.d(TAG, "onNext: JSON Object Co-ordinates " + jsonObject.getJSONArray("coordinates").getString(0));
-//                            String Lon = jsonObject.getJSONArray("coordinates").getString(0);
-//                            String Lat = jsonObject.getJSONArray("coordinates").getString(1);
-//                            location = new LatLng(Double.parseDouble(Lat), Double.parseDouble(Lon));
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-
+                                    Timber.d("accept: JSON Object %s", snippest + " " + geoJsonName);
                                 }
                             });
 
@@ -187,18 +174,50 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                         fetchMayorMessage(apiInterface, apiKey, language);
                         dataDonwloadView.downloadSuccess("All Data Downloaded Successfully");
                         SharedPreferenceUtils.getInstance(ChangunarayanTouristApp.getInstance()).setValue(Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS, true);
-
+                        Log.d(TAG, "onComplete: ");
                     }
                 });
 
 
     }
 
-    private void downloadMainPlaceListDetails (@NotNull NetworkApiInterface apiInterface, String apiKey, String language){
+
+    private String getJsonStringFromResponseBody (@NotNull ResponseBody responseBody) throws Exception{
+        BufferedReader reader = new BufferedReader(new InputStreamReader(responseBody.byteStream()));
+        StringBuilder sb = new StringBuilder();
+        String line = null;
+
+        while ((line = reader.readLine()) != null) {
+            sb.append(line).append("\n");
+        }
+        reader.close();
+        String geoJsonToString = sb.toString();
+
+        return geoJsonToString;
+    }
+
+    private LatLng getLocationFromGeometry (@NotNull Feature feature){
+                                LatLng location = new LatLng(0.0, 0.0);
+                        try {
+                            JSONObject jsonObject = new JSONObject(feature.geometry().toJson());
+                            Log.d(TAG, "onNext: JSON Object Co-ordinates " + jsonObject.getJSONArray("coordinates").getString(0));
+                            String Lon = jsonObject.getJSONArray("coordinates").getString(0);
+                            String Lat = jsonObject.getJSONArray("coordinates").getString(1);
+                            location = new LatLng(Double.parseDouble(Lat), Double.parseDouble(Lon));
+                            return  location;
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            return location;
+                        }
+    }
+
+
+    private void downloadMainPlaceListDetails(@NotNull NetworkApiInterface apiInterface, String apiKey, String language) {
 
         apiInterface.getMainPlacesListDetails(apiKey)
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.computation())
+                .observeOn(Schedulers.computation())
+                .retryWhen(observable -> Observable.timer(5, TimeUnit.SECONDS))
                 .subscribe(new DisposableObserver<MainPlaceListDetailsResponse>() {
                     @Override
                     public void onNext(MainPlaceListDetailsResponse mainPlaceListDetailsResponse) {
@@ -222,26 +241,27 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
 
 
     private void fetchMayorMessage(@NotNull NetworkApiInterface apiInterface, String apiKey, String language) {
-            apiInterface.getMaoyorMessagesListDetails(apiKey)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new DisposableObserver<MayorMessagesListResponse>() {
-                        @Override
-                        public void onNext(MayorMessagesListResponse mayorMessagesListResponse) {
+        apiInterface.getMaoyorMessagesListDetails(apiKey)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(Schedulers.computation())
+                .retryWhen(observable -> Observable.timer(5, TimeUnit.SECONDS))
+                .subscribe(new DisposableObserver<MayorMessagesListResponse>() {
+                    @Override
+                    public void onNext(MayorMessagesListResponse mayorMessagesListResponse) {
 
-                            SharedPreferenceUtils.getInstance(appCompatActivity).setValue(Constant.SharedPrefKey.KEY_MAYOR_MESSAGE_DETAILS, gson.toJson(mayorMessagesListResponse));
+                        SharedPreferenceUtils.getInstance(appCompatActivity).setValue(Constant.SharedPrefKey.KEY_MAYOR_MESSAGE_DETAILS, gson.toJson(mayorMessagesListResponse));
 
-                        }
+                    }
 
-                        @Override
-                        public void onError(Throwable e) {
+                    @Override
+                    public void onError(Throwable e) {
 
-                        }
+                    }
 
-                        @Override
-                        public void onComplete() {
-                        }
-                    });
+                    @Override
+                    public void onComplete() {
+                    }
+                });
 
     }
 
