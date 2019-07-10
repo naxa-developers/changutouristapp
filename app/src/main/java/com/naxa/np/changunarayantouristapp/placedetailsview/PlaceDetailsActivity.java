@@ -101,7 +101,6 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
                 llNearByPlacesLayout.setVisibility(View.VISIBLE);
                 mainPlaceType = SharedPreferenceUtils.getInstance(PlaceDetailsActivity.this).getStringValue(KEY_MAIN_PLACE_TYPE, null);
                 initRecyclerView();
-
                 bottomNavigationView.findViewById(R.id.action_bottom_videos).setVisibility(View.VISIBLE);
             }else {
                 bottomNavigationView.getMenu().removeItem(R.id.action_bottom_videos);
