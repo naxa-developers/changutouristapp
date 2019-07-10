@@ -64,7 +64,9 @@ public class SelectlanguageActivity extends BaseActivity {
     private void newGetIntent(Intent intent) {
         if (intent != null) {
             HashMap<String, Object> hashMap = (HashMap<String, Object>) intent.getSerializableExtra("map");
-            isFromMainActivity = (boolean) hashMap.get(KEY_VALUE);
+            if(hashMap != null) {
+                isFromMainActivity = (boolean) hashMap.get(KEY_VALUE);
+            }
 
         }
     }
