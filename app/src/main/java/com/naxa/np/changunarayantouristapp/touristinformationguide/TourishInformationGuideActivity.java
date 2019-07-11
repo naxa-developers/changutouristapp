@@ -11,12 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
-import com.mapbox.geojson.Feature;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
-import com.naxa.np.changunarayantouristapp.selectlanguage.LanguageDetailsResponse;
-import com.naxa.np.changunarayantouristapp.selectlanguage.SelectlanguageActivity;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.NetworkUtils;
@@ -28,7 +25,6 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Function;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 

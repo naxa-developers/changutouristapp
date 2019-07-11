@@ -23,8 +23,7 @@ public class TouristGuideListViewHolder extends RecyclerView.ViewHolder  {
     }
 
     public void bindView(TouristInformationGuideDetails touristInformationGuideDetails, int pos) {
-        tvTouristGuideCount.setText(pos+ ". ");
+        tvTouristGuideCount.setText(pos+ ".");
         tvTouristGuideDesc.setText(touristInformationGuideDetails.getDescription());
-//        tvTouristGuideDesc.setText(tvTouristGuideDesc.getContext().getResources().getString(R.string.loremipsum));
     }
 }
