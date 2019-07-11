@@ -83,6 +83,7 @@ public class Constant {
         List<String> nearByPlaces = new ArrayList<>();
         nearByPlaces.add("Museum");
         nearByPlaces.add("Staue");
+        nearByPlaces.add("Statue");
         nearByPlaces.add("Hindu temple");
         nearByPlaces.add("Viewpoint");
         nearByPlaces.add("View point");

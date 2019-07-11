@@ -70,13 +70,12 @@ public class TourishInformationGuideActivity extends BaseActivity {
     }
 
     private void fetchData() {
-        if (NetworkUtils.isNetworkAvailable()) {
-
-
-            dialog = DialogFactory.createProgressDialog(this, "Please wait!!!\nfetching data.");
-            dialog.show();
-            fetchDatFromServer();
-
+        if (TextUtils.isEmpty(SharedPreferenceUtils.getInstance(TourishInformationGuideActivity.this).getStringValue(Constant.SharedPrefKey.KEY_TOURIST_INFORMATION_GUIDE_DETAILS, null))) {
+            if (NetworkUtils.isNetworkAvailable()) {
+                dialog = DialogFactory.createProgressDialog(this, "Please wait!!!\nfetching data.");
+                dialog.show();
+                fetchDatFromServer();
+            }
         } else {
             fetchDataFromSharedPrefs();
         }
@@ -91,14 +90,14 @@ public class TourishInformationGuideActivity extends BaseActivity {
 
     }
 
-    private void filterGuideAsPerPlaceType (List<TouristInformationGuideDetails> touristInformationGuideDetailsList){
+    private void filterGuideAsPerPlaceType(List<TouristInformationGuideDetails> touristInformationGuideDetailsList) {
         Observable.just(touristInformationGuideDetailsList)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(lists -> {
                     List<TouristInformationGuideDetails> touristInformationGuideDetailsArrayList = new ArrayList<>();
                     for (TouristInformationGuideDetails list : lists) {
-                        if(TextUtils.equals(placeType, list.getName().trim())){
+                        if (TextUtils.equals(placeType, list.getName().trim())) {
                             touristInformationGuideDetailsArrayList.add(list);
                         }
                     }
@@ -107,7 +106,7 @@ public class TourishInformationGuideActivity extends BaseActivity {
                 .subscribe(new DisposableObserver<List<TouristInformationGuideDetails>>() {
                     @Override
                     public void onNext(List<TouristInformationGuideDetails> touristInformationGuideDetailsList) {
-                        if(touristInformationGuideDetailsList != null){
+                        if (touristInformationGuideDetailsList != null) {
                             setupRecyclerView(touristInformationGuideDetailsList);
                         }
                     }
@@ -124,8 +123,6 @@ public class TourishInformationGuideActivity extends BaseActivity {
                 });
 
     }
-
-
 
 
     private void fetchDatFromServer() {
