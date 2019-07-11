@@ -53,4 +53,18 @@
         android:layout_marginLeft="@dimen/activity_default_margin"
         />
 
+    <Button
+        android:id="@+id/btn_get_started"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@null"
+        android:text="@string/get_started"
+        android:textColor="@android:color/white"
+        android:layout_marginLeft="@dimen/activity_default_margin"
+        android:layout_marginRight="@dimen/activity_default_margin"
+        android:visibility="gone"
+
+        />
+
 </RelativeLayout>

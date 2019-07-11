@@ -39,19 +39,35 @@
     <color name="bg_screen4">#c873f4</color>
     <color name="bg_screen5">#F3BC68</color>
 
+    <!--&lt;!&ndash; dots inactive colors &ndash;&gt;-->
+    <!--<color name="dot_dark_screen1">#d1395c</color>-->
+    <!--<color name="dot_dark_screen2">#14a895</color>-->
+    <!--<color name="dot_dark_screen3">#2278d4</color>-->
+    <!--<color name="dot_dark_screen4">#a854d4</color>-->
+    <!--<color name="dot_dark_screen5">#F8A731</color>-->
+
+    <!--&lt;!&ndash; dots active colors &ndash;&gt;-->
+    <!--<color name="dot_light_screen1">#f98da5</color>-->
+    <!--<color name="dot_light_screen2">#8cf9eb</color>-->
+    <!--<color name="dot_light_screen3">#93c6fd</color>-->
+    <!--<color name="dot_light_screen4">#e4b5fc</color>-->
+    <!--<color name="dot_light_screen5">#FACA83</color>-->
+    <!--<color name="home_grid_card_bg_volor">#E3F2FD</color>-->
+
+
     <!-- dots inactive colors -->
-    <color name="dot_dark_screen1">#d1395c</color>
-    <color name="dot_dark_screen2">#14a895</color>
-    <color name="dot_dark_screen3">#2278d4</color>
-    <color name="dot_dark_screen4">#a854d4</color>
-    <color name="dot_dark_screen5">#F8A731</color>
+    <color name="dot_dark_screen1">@color/sectionrecyclerHeadBG</color>
+    <color name="dot_dark_screen2">@color/sectionrecyclerHeadBG</color>
+    <color name="dot_dark_screen3">@color/sectionrecyclerHeadBG</color>
+    <color name="dot_dark_screen4">@color/sectionrecyclerHeadBG</color>
+    <color name="dot_dark_screen5">@color/sectionrecyclerHeadBG</color>
 
     <!-- dots active colors -->
-    <color name="dot_light_screen1">#f98da5</color>
-    <color name="dot_light_screen2">#8cf9eb</color>
-    <color name="dot_light_screen3">#93c6fd</color>
-    <color name="dot_light_screen4">#e4b5fc</color>
-    <color name="dot_light_screen5">#FACA83</color>
+    <color name="dot_light_screen1">@color/colorAccent</color>
+    <color name="dot_light_screen2">@color/colorAccent</color>
+    <color name="dot_light_screen3">@color/colorAccent</color>
+    <color name="dot_light_screen4">@color/colorAccent</color>
+    <color name="dot_light_screen5">@color/colorAccent</color>
     <color name="home_grid_card_bg_volor">#E3F2FD</color>
 
     <array name="array_dot_active">

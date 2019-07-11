@@ -61,10 +61,10 @@ public class WalkThroughSliderActivity extends AppCompatActivity {
         layouts = new int[]{
                 R.layout.walk_through_slide1_layout,
                 R.layout.walk_through_slide2_layout,
-                R.layout.walk_through_slide3_layout,
                 R.layout.walk_through_slide4_layout,
                 R.layout.walk_through_slide5_layout
         };
+//        R.layout.walk_through_slide3_layout,
 
         // adding bottom dots
         addBottomDots(0);
