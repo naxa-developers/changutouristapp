@@ -51,15 +51,35 @@
                     android:orientation="vertical"
                     android:padding="@dimen/activity_default_margin">
 
-                    <TextView
-                        android:id="@+id/tv_place_title"
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/slate_black"
-                        android:text="@string/place_name"
                         android:layout_marginTop="@dimen/spacing_medium"
-                        android:textSize="@dimen/material_text_title"
-                        android:textStyle="bold"/>
+                        >
+                        <TextView
+                            android:id="@+id/tv_place_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/slate_black"
+                            android:text="@string/place_name"
+                            android:textSize="@dimen/material_text_title"
+                            android:textStyle="bold"
+                            android:gravity="center_vertical"
+                            android:layout_toLeftOf="@id/btn_tourist_info_guide"/>
+
+                        <ImageButton
+                            android:id="@+id/btn_tourist_info_guide"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:scaleType="fitXY"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentEnd="true"
+                            app:srcCompat="@drawable/ic_info_24dp"
+                            android:backgroundTint="@color/transparent"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:layout_marginStart="@dimen/spacing_medium"/>
+                    </RelativeLayout>
+
 
                     <RatingBar
                         android:id="@+id/rating_bar_place"

@@ -5,6 +5,7 @@ import com.naxa.np.changunarayantouristapp.map.mapcategory.GeojsonCategoriesList
 import com.naxa.np.changunarayantouristapp.mayormessage.MayorMessagesListResponse;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlaceListDetailsResponse;
 import com.naxa.np.changunarayantouristapp.selectlanguage.LanguageDetailsResponse;
+import com.naxa.np.changunarayantouristapp.touristinformationguide.TouristInformationGuideListResponse;
 
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
@@ -43,4 +44,8 @@ public interface NetworkApiInterface {
     @POST(UrlConstant.FETCH_MAYOR_MESSAGE_DETAILS)
     @FormUrlEncoded
     Observable<MayorMessagesListResponse> getMaoyorMessagesListDetails(@Field("api_key") String api_key);
+
+    @POST(UrlConstant.FETCH_TOURIST_INFORMATION_GUIDE_DETAILS)
+    @FormUrlEncoded
+    Observable<TouristInformationGuideListResponse> getTouristInformationGuideListResponse(@Field("api_key") String api_key, @Field("language") String language);
 }

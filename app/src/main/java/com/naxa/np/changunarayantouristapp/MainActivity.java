@@ -38,6 +38,7 @@ import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.PlaceDetailsActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlacesListActivity;
 import com.naxa.np.changunarayantouristapp.selectlanguage.SelectlanguageActivity;
+import com.naxa.np.changunarayantouristapp.touristinformationguide.TourishInformationGuideActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.CreateAppMainFolderUtils;
@@ -308,6 +309,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
             case R.id.nav_refresh_data:
                 fetctDataFromServerAndSave();
+                break;
+
+            case R.id.nav_tourist_info_guide:
+                ActivityUtil.openActivity(TourishInformationGuideActivity.class, this);
                 break;
 
             case R.id.nav_settings:

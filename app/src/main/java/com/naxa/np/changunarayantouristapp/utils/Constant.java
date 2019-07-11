@@ -22,6 +22,7 @@ public class Constant {
         public static final String IS_PLACES_DATA_ALREADY_EXISTS = "is_places_data_already_exists";
         public static final String KEY_MAIN_PLACES_list_DETAILS = "main_places_list_details";
         public static final String KEY_MAYOR_MESSAGE_DETAILS = "mayor_message_details";
+        public static final String KEY_TOURIST_INFORMATION_GUIDE_DETAILS = "tourist_information_guide_details";
 
     }
 
@@ -82,6 +83,7 @@ public class Constant {
         List<String> nearByPlaces = new ArrayList<>();
         nearByPlaces.add("Museum");
         nearByPlaces.add("Staue");
+        nearByPlaces.add("Statue");
         nearByPlaces.add("Hindu temple");
         nearByPlaces.add("Viewpoint");
         nearByPlaces.add("View point");

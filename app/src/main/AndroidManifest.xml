@@ -21,7 +21,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".mayormessage.MayorMessageActivity"></activity>
+        <activity android:name=".touristinformationguide.TourishInformationGuideActivity"></activity>
+        <activity android:name=".mayormessage.MayorMessageActivity" />
         <activity android:name=".placedetailsview.nearbyplaces.NearByPlacesListActivity" />
         <activity android:name=".placedetailsview.mainplacesdetails.MainPlacesListActivity" />
         <activity android:name=".audioplayer.AudioListActivity" />
@@ -55,7 +56,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity android:name=".splashscreen.WalkThroughSliderActivity" />
     </application>
 
