@@ -39,6 +39,7 @@ public class TourishInformationGuideActivity extends BaseActivity {
 
     Dialog dialog;
     Gson gson;
+    String placeType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +69,7 @@ public class TourishInformationGuideActivity extends BaseActivity {
         if (NetworkUtils.isNetworkAvailable()) {
             dialog = DialogFactory.createProgressDialog(this, "Please wait!!!\nfetching data.");
             dialog.show();
-            fetchDatFromServer(placeType);
+            fetchDatFromServer();
         } else {
             fetchDataFromSharedPrefs();
         }
@@ -83,8 +84,9 @@ public class TourishInformationGuideActivity extends BaseActivity {
 
     }
 
-    private void fetchDatFromServer(String placeType) {
-        apiInterface.getTouristInformationGuideListResponse(Constant.Network.API_KEY)
+    private void fetchDatFromServer() {
+        apiInterface.getTouristInformationGuideListResponse(Constant.Network.API_KEY,
+                SharedPreferenceUtils.getInstance(this).getStringValue(Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE, null))
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .retryWhen(observable -> Observable.timer(5, TimeUnit.SECONDS))
@@ -135,7 +137,7 @@ public class TourishInformationGuideActivity extends BaseActivity {
             @Override
             public void viewBinded(TouristGuideListViewHolder touristGuideListViewHolder, TouristInformationGuideDetails touristInformationGuideDetails, int position) {
                 Log.d(TAG, "viewBinded: " + position);
-                touristGuideListViewHolder.bindView(touristInformationGuideDetails);
+                touristGuideListViewHolder.bindView(touristInformationGuideDetails, position);
                 touristGuideListViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

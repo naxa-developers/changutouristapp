@@ -47,5 +47,5 @@ public interface NetworkApiInterface {
 
     @POST(UrlConstant.FETCH_TOURIST_INFORMATION_GUIDE_DETAILS)
     @FormUrlEncoded
-    Observable<TouristInformationGuideListResponse> getTouristInformationGuideListResponse(@Field("api_key") String api_key);
+    Observable<TouristInformationGuideListResponse> getTouristInformationGuideListResponse(@Field("api_key") String api_key, @Field("language") String language);
 }

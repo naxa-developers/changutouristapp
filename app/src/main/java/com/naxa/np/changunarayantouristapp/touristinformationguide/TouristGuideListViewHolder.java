@@ -6,22 +6,25 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.naxa.np.changunarayantouristapp.R;
-import com.naxa.np.changunarayantouristapp.utils.textviewutils.ExpandableTextView;
 
 public class TouristGuideListViewHolder extends RecyclerView.ViewHolder  {
 
     private ExpandableTextView tvTouristGuideDesc;
-    private TextView tvTouristGuideTitle;
+    private TextView tvTouristGuideCount;
 
 
     public TouristGuideListViewHolder(@NonNull View itemView) {
         super(itemView);
         tvTouristGuideDesc = itemView.findViewById(R.id.tv_tourist_guide_expand_text_view);
+        tvTouristGuideCount = itemView.findViewById(R.id.tv_expandable_text_count);
 
     }
 
-    public void bindView(TouristInformationGuideDetails touristInformationGuideDetails) {
+    public void bindView(TouristInformationGuideDetails touristInformationGuideDetails, int pos) {
+        tvTouristGuideCount.setText(pos+ ". ");
         tvTouristGuideDesc.setText(touristInformationGuideDetails.getDescription());
+//        tvTouristGuideDesc.setText(tvTouristGuideDesc.getContext().getResources().getString(R.string.loremipsum));
     }
 }
