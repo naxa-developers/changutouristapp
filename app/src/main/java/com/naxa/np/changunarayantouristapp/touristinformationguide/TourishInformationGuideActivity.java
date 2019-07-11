@@ -2,6 +2,7 @@ package com.naxa.np.changunarayantouristapp.touristinformationguide;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
+import com.mapbox.geojson.Feature;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
@@ -20,11 +22,13 @@ import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.NetworkUtils;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -57,19 +61,22 @@ public class TourishInformationGuideActivity extends BaseActivity {
         recyclerView = findViewById(R.id.rv_tourist_guide_info);
 
         if (SharedPreferenceUtils.getInstance(TourishInformationGuideActivity.this).getIntValue(MAP_OVERLAY_LAYER, -1) == KEY_CHANGUNARAYAN_BOARDER) {
-            fetchData("changunarayan");
-
+            fetchData();
+            placeType = "changu";
         } else if (SharedPreferenceUtils.getInstance(TourishInformationGuideActivity.this).getIntValue(MAP_OVERLAY_LAYER, -1) == KEY_NAGARKOT_BOARDER) {
-            fetchData("nagarkot");
-
+            fetchData();
+            placeType = "nagarkot";
         }
     }
 
-    private void fetchData(String placeType) {
+    private void fetchData() {
         if (NetworkUtils.isNetworkAvailable()) {
+
+
             dialog = DialogFactory.createProgressDialog(this, "Please wait!!!\nfetching data.");
             dialog.show();
             fetchDatFromServer();
+
         } else {
             fetchDataFromSharedPrefs();
         }
@@ -79,10 +86,47 @@ public class TourishInformationGuideActivity extends BaseActivity {
 
         TouristInformationGuideListResponse touristInformationGuideListResponse = gson.fromJson(SharedPreferenceUtils.getInstance(TourishInformationGuideActivity.this).getStringValue(Constant.SharedPrefKey.KEY_TOURIST_INFORMATION_GUIDE_DETAILS, null), TouristInformationGuideListResponse.class);
         if (touristInformationGuideListResponse.getData() != null) {
-            setupRecyclerView(touristInformationGuideListResponse.getData());
+            filterGuideAsPerPlaceType(touristInformationGuideListResponse.getData());
         }
 
     }
+
+    private void filterGuideAsPerPlaceType (List<TouristInformationGuideDetails> touristInformationGuideDetailsList){
+        Observable.just(touristInformationGuideDetailsList)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(lists -> {
+                    List<TouristInformationGuideDetails> touristInformationGuideDetailsArrayList = new ArrayList<>();
+                    for (TouristInformationGuideDetails list : lists) {
+                        if(TextUtils.equals(placeType, list.getName().trim())){
+                            touristInformationGuideDetailsArrayList.add(list);
+                        }
+                    }
+                    return touristInformationGuideDetailsArrayList;
+                })
+                .subscribe(new DisposableObserver<List<TouristInformationGuideDetails>>() {
+                    @Override
+                    public void onNext(List<TouristInformationGuideDetails> touristInformationGuideDetailsList) {
+                        if(touristInformationGuideDetailsList != null){
+                            setupRecyclerView(touristInformationGuideDetailsList);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+    }
+
+
+
 
     private void fetchDatFromServer() {
         apiInterface.getTouristInformationGuideListResponse(Constant.Network.API_KEY,
@@ -104,7 +148,7 @@ public class TourishInformationGuideActivity extends BaseActivity {
                             dialog.dismiss();
                             if (touristInformationGuideListResponse.getData() != null) {
                                 SharedPreferenceUtils.getInstance(TourishInformationGuideActivity.this).setValue(Constant.SharedPrefKey.KEY_TOURIST_INFORMATION_GUIDE_DETAILS, gson.toJson(touristInformationGuideListResponse));
-                                setupRecyclerView(touristInformationGuideListResponse.getData());
+                                filterGuideAsPerPlaceType(touristInformationGuideListResponse.getData());
                             }
                         } else {
                             dialog = DialogFactory.createSimpleOkErrorDialog(TourishInformationGuideActivity.this, "Data Fetch Error", touristInformationGuideListResponse.getMessage());

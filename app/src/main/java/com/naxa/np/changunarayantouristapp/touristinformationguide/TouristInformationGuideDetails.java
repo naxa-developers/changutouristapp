@@ -6,12 +6,13 @@ import com.google.gson.annotations.SerializedName;
 
 public class TouristInformationGuideDetails {
 
+
     @SerializedName("id")
     @Expose
     private String id;
-    @SerializedName("title")
+    @SerializedName("name")
     @Expose
-    private String title;
+    private String name;
     @SerializedName("description")
     @Expose
     private String description;
@@ -27,12 +28,12 @@ public class TouristInformationGuideDetails {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
