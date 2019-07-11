@@ -29,7 +29,7 @@ public class WalkThroughSliderActivity extends AppCompatActivity {
     private LinearLayout dotsLayout;
     private TextView[] dots;
     private int[] layouts;
-    private Button btnSkip, btnNext;
+    private Button btnSkip, btnNext, btnGetStarted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +54,7 @@ public class WalkThroughSliderActivity extends AppCompatActivity {
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         btnSkip = (Button) findViewById(R.id.btn_skip);
         btnNext = (Button) findViewById(R.id.btn_next);
+        btnGetStarted = (Button) findViewById(R.id.btn_get_started);
 
 
         // layouts of all welcome sliders
@@ -61,10 +62,10 @@ public class WalkThroughSliderActivity extends AppCompatActivity {
         layouts = new int[]{
                 R.layout.walk_through_slide1_layout,
                 R.layout.walk_through_slide2_layout,
-                R.layout.walk_through_slide3_layout,
                 R.layout.walk_through_slide4_layout,
                 R.layout.walk_through_slide5_layout
         };
+//        R.layout.walk_through_slide3_layout,
 
         // adding bottom dots
         addBottomDots(0);
@@ -95,6 +96,13 @@ public class WalkThroughSliderActivity extends AppCompatActivity {
                 } else {
                     launchLanguageSelectorScreen();
                 }
+            }
+        });
+
+        btnGetStarted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchLanguageSelectorScreen();
             }
         });
     }
@@ -136,12 +144,16 @@ public class WalkThroughSliderActivity extends AppCompatActivity {
             // changing the next button text 'NEXT' / 'GOT IT'
             if (position == layouts.length - 1) {
                 // last page. make button text to GOT IT
+                btnGetStarted.setVisibility(View.VISIBLE);
                 btnNext.setText(getString(R.string.got_it));
+                btnNext.setVisibility(View.GONE);
                 btnSkip.setVisibility(View.GONE);
             } else {
                 // still pages are left
                 btnNext.setText(getString(R.string.next));
                 btnSkip.setVisibility(View.VISIBLE);
+                btnNext.setVisibility(View.VISIBLE);
+                btnGetStarted.setVisibility(View.GONE);
             }
         }
 

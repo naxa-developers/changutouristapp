@@ -87,6 +87,7 @@ public class Constant {
         nearByPlaces.add("Hindu temple");
         nearByPlaces.add("Viewpoint");
         nearByPlaces.add("View point");
+        nearByPlaces.add("Cave");
 
         return nearByPlaces;
     }

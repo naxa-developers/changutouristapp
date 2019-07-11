@@ -7,6 +7,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/white_95</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
+        <item name="fontFamily">@font/opensans_regular</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -39,6 +42,8 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:ellipsize">end</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+        <item name="fontFamily">@font/opensans_semibold</item>
         <item name="android:layout_marginTop">@dimen/margin_small</item>
     </style>
 
@@ -49,6 +54,8 @@
         <item name="android:padding">@dimen/activity_default_padding</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:gravity">center_vertical</item>
+        <item name="android:fontFamily">@font/opensans_light</item>
+        <item name="fontFamily">@font/opensans_light</item>
         <item name="android:ellipsize">end</item>
         <item name="android:layout_marginTop">@dimen/margin_small</item>
     </style>
