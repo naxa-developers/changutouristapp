@@ -33,13 +33,11 @@
             android:id="@+id/tv_main_place_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/headlineText"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:textStyle="bold"
             android:gravity="center"
             android:text="Place Name"
             android:layout_alignParentBottom="true"
-            android:padding="@dimen/default_padding"
             />
 
     </RelativeLayout>

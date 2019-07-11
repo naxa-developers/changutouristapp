@@ -22,6 +22,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/spacing_small"
                 >
 
                 <ImageView
@@ -49,20 +50,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="@dimen/activity_default_margin">
+                    >
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_medium"
                         >
                         <TextView
                             android:id="@+id/tv_place_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/slate_black"
-                            android:text="@string/place_name"
-                            android:textSize="@dimen/material_text_title"
+                            style="@style/headlineText"
                             android:textStyle="bold"
                             android:gravity="center_vertical"
                             android:layout_toLeftOf="@id/btn_tourist_info_guide"/>
@@ -77,7 +75,8 @@
                             app:srcCompat="@drawable/ic_info_24dp"
                             android:backgroundTint="@color/transparent"
                             android:background="?android:attr/selectableItemBackground"
-                            android:layout_marginStart="@dimen/spacing_medium"/>
+                            android:layout_marginStart="@dimen/spacing_medium"
+                            android:layout_marginEnd="@dimen/activity_default_margin"/>
                     </RelativeLayout>
 
 
@@ -87,8 +86,7 @@
                         android:layout_height="wrap_content"
                         style="@style/placeRatingBar"
                         android:rating="3.5"
-                        android:layout_marginTop="@dimen/spacing_medium"
-                        android:layout_marginBottom="@dimen/activity_default_margin"
+                        android:layout_marginStart="@dimen/default_padding"
                         android:focusable="true"
                       />
 
@@ -96,8 +94,7 @@
                         android:id="@+id/tv_place_desc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/textColorSecondary"
-                        android:textSize="@dimen/material_text_body1"
+                        style="@style/bodyText"
                         android:text="@string/loremipsum"/>
 
 
@@ -105,18 +102,17 @@
                         android:id="@+id/ll_nearby_places_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        >
 
                     <TextView
                         android:id="@+id/tv_nearby_place_LBL"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/slate_black"
                         android:text="@string/nearby_places"
-                        android:layout_marginTop="@dimen/activity_default_margin"
-                        android:textSize="@dimen/material_text_title"
-                        android:textStyle="bold"/>
+                       style="@style/headlineText"/>
                         <androidx.recyclerview.widget.RecyclerView
+                            android:padding="@dimen/activity_default_margin"
                             android:id="@+id/rv_nearby_places"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -128,6 +124,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:text="@string/view_all"
+                        android:layout_marginEnd="@dimen/default_padding"
                         />
                     </LinearLayout>
 

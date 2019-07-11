@@ -43,10 +43,12 @@
                     android:id="@+id/tv_expandable_text_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/bodyText"
-                    android:textStyle="bold"
+                    style="@style/headlineText"
+                    android:paddingEnd="0dp"
+                    android:paddingStart="0dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
+                    android:layout_centerVertical="false"
                     android:textColor="@color/colorAccent"
                     />
                 <TextView
