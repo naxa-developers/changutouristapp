@@ -178,7 +178,7 @@ public class TourishInformationGuideActivity extends BaseActivity {
             @Override
             public void viewBinded(TouristGuideListViewHolder touristGuideListViewHolder, TouristInformationGuideDetails touristInformationGuideDetails, int position) {
                 Log.d(TAG, "viewBinded: " + position);
-                touristGuideListViewHolder.bindView(touristInformationGuideDetails, position);
+                touristGuideListViewHolder.bindView(touristInformationGuideDetails, position+1);
                 touristGuideListViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
