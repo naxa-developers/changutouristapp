@@ -27,7 +27,10 @@ import android.os.Bundle;
 import android.provider.Settings;
 
 import android.text.format.DateUtils;
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -219,17 +222,18 @@ public class GeoPointActivity extends AppCompatActivity implements LocationListe
                             case DialogInterface.BUTTON_POSITIVE:
                                 returnLocation();
                                 break;
-                            case DialogInterface.BUTTON_NEGATIVE:
+                            case DialogInterface.BUTTON_NEUTRAL:
                                 location = null;
                                 finish();
                                 break;
                         }
                     }
                 };
+
         locationDialog.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.save_point),
                 geoPointButtonListener);
-        locationDialog.setButton(DialogInterface.BUTTON_NEGATIVE,
-                getString(R.string.cancel_location),
+
+        locationDialog.setButton(DialogInterface.BUTTON_NEUTRAL, getString(R.string.cancel_location),
                 geoPointButtonListener);
     }
 
