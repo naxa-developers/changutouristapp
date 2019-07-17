@@ -49,7 +49,7 @@
 
     <style name="bodyText" parent="TextAppearance.AppCompat.Display4">
         <item name="android:textColor">@color/textColorSecondary</item>
-        <item name="android:textSize">@dimen/abc_text_size_medium_material</item>
+        <item name="android:textSize">@dimen/abc_text_size_menu_material</item>
         <item name="android:textStyle">normal</item>
         <item name="android:padding">@dimen/activity_default_padding</item>
         <item name="android:layout_centerVertical">true</item>
