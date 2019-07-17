@@ -3,6 +3,7 @@ package com.naxa.np.changunarayantouristapp.placedetailsview.nearbyplaces;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -100,24 +101,32 @@ public class NearByPlacesListActivity extends BaseActivity {
                     String split_lat = parts[0]; // 004
                     String split_lon = parts[1]; // 034556
 
-                    if (!split_lat.equals("") && !split_lon.equals("")) {
+                    if (!TextUtils.isEmpty(split_lat) && !TextUtils.isEmpty(split_lon)) {
                         myLat = Double.parseDouble(split_lat);
                         myLong = Double.parseDouble(split_lon);
                         showLoading("Please wait ... \nCalculating distance");
                         if(placesDetailsEntityList != null){
-
                             sortNearbyPlaces(placesDetailsEntityList);
+                        }else {
+                            Toast.makeText(this, "No nearby places found", Toast.LENGTH_SHORT).show();
                         }
+
                     } else {
 //                        showInfoToast("Cannot calculate distance");
                         Toast.makeText(this, "Cannot get location", Toast.LENGTH_SHORT).show();
-
                         if(placesDetailsEntityList != null){
-                            setUpRecyclerView(placesDetailsEntityList, sortedNearbyPlacesDistanceList);
+                            setUpRecyclerView(placesDetailsEntityList, null);
                         }
+
 
                     }
 
+                    break;
+
+                case RESULT_CANCELED:
+                    if(placesDetailsEntityList != null){
+                        setUpRecyclerView(placesDetailsEntityList, null);
+                    }
                     break;
             }
         }
