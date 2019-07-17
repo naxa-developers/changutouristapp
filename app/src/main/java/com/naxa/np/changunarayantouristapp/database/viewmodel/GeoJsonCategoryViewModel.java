@@ -3,7 +3,6 @@ package com.naxa.np.changunarayantouristapp.database.viewmodel;
 import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 
 
 import com.naxa.np.changunarayantouristapp.database.databaserepository.GeoJsonCategoryRepository;

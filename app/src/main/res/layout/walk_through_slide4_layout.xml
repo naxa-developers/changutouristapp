@@ -15,7 +15,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="350dp"
-            app:srcCompat="@drawable/walkthrough_listen_for_more" />
+            app:srcCompat="@drawable/walkthrough_better_with_audio_image" />
 
         <TextView
             android:layout_width="wrap_content"

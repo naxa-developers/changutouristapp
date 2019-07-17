@@ -21,8 +21,6 @@ import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-import static com.chad.library.adapter.base.listener.SimpleClickListener.TAG;
-
 public class GpsUtils {
     private static String TAG = "SimpleClickListener";
 

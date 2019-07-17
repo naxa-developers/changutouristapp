@@ -3,8 +3,6 @@ package com.naxa.np.changunarayantouristapp.database.databaserepository;
 import android.app.Application;
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
-
 import com.naxa.np.changunarayantouristapp.database.ISETRoomDatabase;
 import com.naxa.np.changunarayantouristapp.database.dao.GeoJsonCategoryDao;
 import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListEntity;
