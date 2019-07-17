@@ -85,7 +85,7 @@ public class MainPlacesListActivity extends BaseActivity {
             @Override
             public void viewBinded(MainPlacesListViewHolder mainPlacesListViewHolder, PlacesDetailsEntity placesDetailsEntity, int position) {
                 Log.d(TAG, "viewBinded: " + position);
-                mainPlacesListViewHolder.bindView(placesDetailsEntity);
+                mainPlacesListViewHolder.bindView(placesDetailsEntity, null);
                 mainPlacesListViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

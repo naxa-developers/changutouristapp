@@ -98,4 +98,17 @@
     <string name="welcome_to_changunarayan">Welcome to Changunarayan</string>
     <string name="your_virtual_guide">Your virtual guide.</string>
 
+
+    <string name="get_location">Record Location</string>
+    <string name="getting_location">Loading Location</string>
+    <string name="please_wait_long">Please wait. This could take a few minutes.</string>
+    <string name="save_point">Save GeoPoint</string>
+    <string name="get_point">Start GeoPoint</string>
+    <string name="geopoint_view_read_only">View GeoPoint</string>
+    <string name="cancel_location">Cancel</string>
+    <string name="provider_disabled_error">Sorry, Location providers are disabled!</string>
+    <string name="location_provider_accuracy">Using %1$s. Accuracy is %2$s m.</string>
+    <string name="location_accuracy">Accuracy is %f$s m</string>
+    <string name="location_metadata">Satellites available: %1$d/24\n\nTime elapsed: %2$s</string>
+
 </resources>

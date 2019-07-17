@@ -21,6 +21,8 @@ import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import org.jetbrains.annotations.NotNull;
+
 public class GpsUtils {
     private static String TAG = "SimpleClickListener";
 
@@ -30,7 +32,7 @@ public class GpsUtils {
     private LocationManager locationManager;
     private LocationRequest locationRequest;
 
-    public GpsUtils(Context context) {
+    public GpsUtils(@NotNull Context context) {
         this.context = context;
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         mSettingsClient = LocationServices.getSettingsClient(context);
