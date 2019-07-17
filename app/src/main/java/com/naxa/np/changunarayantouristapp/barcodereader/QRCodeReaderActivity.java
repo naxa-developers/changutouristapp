@@ -5,8 +5,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
@@ -20,20 +18,16 @@ import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntityViewModel;
-import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.PlaceDetailsActivity;
-import com.naxa.np.changunarayantouristapp.placedetailsview.nearbyplaces.NearByPlacesListActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.FieldValidatorUtils;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
-import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 
 import java.util.HashMap;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subscribers.DisposableSubscriber;
 import timber.log.Timber;
 
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_OBJECT;

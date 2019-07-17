@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <de.hdodenhof.circleimageview.CircleImageView
 
@@ -24,28 +25,45 @@
             app:civ_border_width="2dp"
             app:civ_border_color="#FF000000"/>
 
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white_95">
 
-        <TextView
-            android:layout_marginTop="@dimen/dp_10"
-            android:textAlignment="center"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:text="Welcome to Changunarayan"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/slide_title"
-            android:textStyle="bold" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:src="@drawable/changunarayan_temple_image"
+            android:scaleType="centerCrop"
+            android:layout_weight="5"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingLeft="@dimen/desc_padding"
-            android:paddingRight="@dimen/desc_padding"
-            android:text=" Your virtual guide"
-            android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_material_header1" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginTop="@dimen/dp_10"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/welcome_to_changunarayan"
+                style="@style/headlineText"
+                android:textSize="@dimen/slide_title"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/your_virtual_guide"
+                style="@style/bodyText"
+                android:gravity="center"
+                android:textSize="@dimen/text_material_header1" />
+        </LinearLayout>
 
     </LinearLayout>
 

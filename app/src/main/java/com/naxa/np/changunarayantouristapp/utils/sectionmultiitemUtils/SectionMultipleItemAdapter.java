@@ -6,7 +6,6 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseSectionMultiItemQuickAdapter;
@@ -14,7 +13,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.events.MapDataLayerListCheckEvent;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
-import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -129,11 +127,11 @@ public class SectionMultipleItemAdapter extends BaseSectionMultiItemQuickAdapter
                         if(isChecked){
                             EventBus.getDefault().post(new MapDataLayerListCheckEvent.MapDataLayerListCheckedEvent(item.getMultiItemSectionModel(), true));
                             sharedPreferenceUtils.setValue(item.getMultiItemSectionModel().data_key, true);
-                            Toast.makeText(mContext, item.getMultiItemSectionModel().data_key +" Checked", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(mContext, item.getMultiItemSectionModel().data_key +" Checked", Toast.LENGTH_SHORT).show();
                         }else {
                             EventBus.getDefault().post(new MapDataLayerListCheckEvent.MapDataLayerListCheckedEvent(item.getMultiItemSectionModel(), false));
                             sharedPreferenceUtils.setValue(item.getMultiItemSectionModel().data_key, false);
-                            Toast.makeText(mContext, item.getMultiItemSectionModel().data_key +" Unchecked", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(mContext, item.getMultiItemSectionModel().data_key +" Unchecked", Toast.LENGTH_SHORT).show();
 
                         }
                     }

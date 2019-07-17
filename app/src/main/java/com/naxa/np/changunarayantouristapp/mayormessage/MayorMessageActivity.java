@@ -11,9 +11,7 @@ import android.widget.MediaController;
 import android.widget.VideoView;
 
 import com.google.gson.Gson;
-import com.naxa.np.changunarayantouristapp.MainActivity;
 import com.naxa.np.changunarayantouristapp.R;
-import com.naxa.np.changunarayantouristapp.audioplayer.AudioListActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenter;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenterImpl;
@@ -41,6 +39,7 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
     VideoView videoView;
     Button btnSkipMayorMessage;
     Gson gson;
+    Dialog dialog;
 
     FileDownloadPresenter fileDownloadPresenter;
 
@@ -61,7 +60,6 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
         fetchMayorMessage();
     }
 
-    Dialog dialog;
     MayorMessageDetails mayorMessageDetails = new MayorMessageDetails();
 
     private void fetchMayorMessage() {
@@ -81,8 +79,8 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
                             }
 
                             if (mayorMessagesListResponse.getError() == 0) {
-                                dialog.dismiss();
                                 if (mayorMessagesListResponse.getData() != null) {
+                                    dialog.dismiss();
                                     SharedPreferenceUtils.getInstance(MayorMessageActivity.this).setValue(Constant.SharedPrefKey.KEY_MAYOR_MESSAGE_DETAILS, gson.toJson(mayorMessagesListResponse));
                                     SharedPreferenceUtils.getInstance(MayorMessageActivity.this).setValue(IS_MAYOR_MESSAGE_FIRST_TIME, false);
                                     mayorMessageDetails = mayorMessagesListResponse.getData().get(0);
@@ -169,6 +167,7 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
 
     @Override
     public void fileDownloadProgress(int progress, int total, String successMsg) {
+
 
     }
 

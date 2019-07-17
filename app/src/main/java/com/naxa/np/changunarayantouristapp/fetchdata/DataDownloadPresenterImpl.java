@@ -9,24 +9,18 @@ import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.naxa.np.changunarayantouristapp.common.ChangunarayanTouristApp;
-import com.naxa.np.changunarayantouristapp.database.ISETRoomDatabase;
 import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListEntity;
 import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonCategoryViewModel;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonListViewModel;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntityViewModel;
-import com.naxa.np.changunarayantouristapp.mayormessage.MayorMessageActivity;
 import com.naxa.np.changunarayantouristapp.mayormessage.MayorMessagesListResponse;
 import com.naxa.np.changunarayantouristapp.network.NetworkApiInterface;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlaceListDetailsResponse;
 import com.naxa.np.changunarayantouristapp.selectlanguage.LanguageDetailsResponse;
-import com.naxa.np.changunarayantouristapp.selectlanguage.SelectlanguageActivity;
-import com.naxa.np.changunarayantouristapp.touristinformationguide.TourishInformationGuideActivity;
 import com.naxa.np.changunarayantouristapp.touristinformationguide.TouristInformationGuideListResponse;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
-import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
-import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -50,7 +44,6 @@ import okhttp3.ResponseBody;
 import timber.log.Timber;
 
 import static com.naxa.np.changunarayantouristapp.utils.Constant.Network.API_KEY;
-import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_MAYOR_MESSAGE_FIRST_TIME;
 
 
 public class DataDownloadPresenterImpl implements DataDownloadPresenter {

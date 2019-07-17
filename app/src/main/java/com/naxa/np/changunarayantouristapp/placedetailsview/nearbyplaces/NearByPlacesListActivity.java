@@ -1,6 +1,5 @@
 package com.naxa.np.changunarayantouristapp.placedetailsview.nearbyplaces;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,10 +14,7 @@ import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
 import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntityViewModel;
-import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
-import com.naxa.np.changunarayantouristapp.placedetailsview.NearByPlacesViewHolder;
 import com.naxa.np.changunarayantouristapp.placedetailsview.PlaceDetailsActivity;
-import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlacesListActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlacesListViewHolder;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
@@ -33,10 +29,7 @@ import io.reactivex.subscribers.DisposableSubscriber;
 
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_OBJECT;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_VALUE;
-import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_CHANGUNARAYAN_BOARDER;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_MAIN_PLACE_TYPE;
-import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_NAGARKOT_BOARDER;
-import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.MAP_OVERLAY_LAYER;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE;
 
 public class NearByPlacesListActivity extends BaseActivity {

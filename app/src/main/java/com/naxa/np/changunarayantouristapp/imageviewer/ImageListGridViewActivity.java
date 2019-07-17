@@ -3,7 +3,6 @@ package com.naxa.np.changunarayantouristapp.imageviewer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -22,7 +21,6 @@ import org.json.JSONException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 

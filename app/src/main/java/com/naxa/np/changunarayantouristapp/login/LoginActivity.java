@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.gson.JsonObject;
 import com.naxa.np.changunarayantouristapp.MainActivity;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
