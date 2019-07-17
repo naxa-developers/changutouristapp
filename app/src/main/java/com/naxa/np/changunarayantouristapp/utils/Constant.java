@@ -47,6 +47,7 @@ public class Constant {
     }
 
     public class MapKey {
+        public static final int GEOPOINT_RESULT_CODE = 1994;
         public static final String MAP_BASE_LAYER = "base_layer";
         public static final String MAP_OVERLAY_LAYER = "overlay_layer";
         public static final int KEY_STREET = 0 ;

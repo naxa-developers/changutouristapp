@@ -23,6 +23,7 @@ import androidx.core.content.ContextCompat;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.network.NetworkApiClient;
 import com.naxa.np.changunarayantouristapp.network.NetworkApiInterface;
+import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 
 import java.util.ArrayList;
 
@@ -106,18 +107,18 @@ public class BaseActivity extends AppCompatActivity {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    protected void createProgressDialog(String message) {
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage(message);
+
+    public void showLoading(String msg) {
+
+        progressDialog = DialogFactory.createProgressDialog(this, msg);
         progressDialog.show();
     }
 
-    protected void hideProgressDialog() {
+    public void hideLoading() {
         if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
+            progressDialog.cancel();
         }
     }
-
 
     PermissionRequestListener listener;
     int REQUEST_CODE;

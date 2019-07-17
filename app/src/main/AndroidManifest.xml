@@ -58,6 +58,7 @@
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity android:name="com.naxa.np.changunarayantouristapp.splashscreen.WalkThroughSliderActivity" />
+        <activity android:name=".gps.GeoPointActivity" />
     </application>
 
 </manifest>

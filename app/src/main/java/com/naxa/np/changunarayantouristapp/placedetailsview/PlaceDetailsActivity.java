@@ -1,7 +1,9 @@
 package com.naxa.np.changunarayantouristapp.placedetailsview;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.naxa.np.changunarayantouristapp.MainActivity;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.audioplayer.AudioListActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
@@ -32,6 +35,7 @@ import com.naxa.np.changunarayantouristapp.placedetailsview.nearbyplaces.NearByP
 import com.naxa.np.changunarayantouristapp.touristinformationguide.TourishInformationGuideActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
+import com.naxa.np.changunarayantouristapp.utils.GpsUtils;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 import com.naxa.np.changunarayantouristapp.videoplayer.VideoListActivity;
@@ -287,12 +291,35 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
                 break;
 
             case R.id.btn_view_all_nearby_places:
-                ActivityUtil.openActivity(NearByPlacesListActivity.class, PlaceDetailsActivity.this);
+                new GpsUtils(this).turnGPSOn(new GpsUtils.onGpsListener() {
+                    @Override
+                    public void gpsStatus(boolean isGPSEnable) {
+                        // turn on GPS
+                        if(isGPSEnable){
+                            ActivityUtil.openActivity(NearByPlacesListActivity.class, PlaceDetailsActivity.this);
+                        }else {
+                            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                            startActivity(intent);
+                        }
+                    }
+                });
+
                 break;
 
             case R.id.btn_tourist_info_guide:
                 ActivityUtil.openActivity(TourishInformationGuideActivity.class, PlaceDetailsActivity.this);
                 break;
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == Constant.MapKey.GPS_REQUEST) {
+                ActivityUtil.openActivity(NearByPlacesListActivity.class, PlaceDetailsActivity.this);
+            }
         }
     }
 
