@@ -192,6 +192,22 @@ public class LoadImageUtils {
         }
     }
 
+    public static void loadImageToViewFromSrcWithoutCenterCrop(@NonNull ImageView imageView, String imageSrc){
+
+        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(imageView.getContext());
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
+
+        if(!TextUtils.isEmpty(imageSrc)) {
+            Glide
+                    .with(imageView.getContext())
+                    .load(imageSrc)
+                    .placeholder(circularProgressDrawable)
+                    .fitCenter()
+                    .into(imageView);
+        }
+    }
 
     public static void loadImageToCircleViewFromDrawable(@NonNull ImageView imageView, int resourceID){
 //        if(resourceID  null) {
