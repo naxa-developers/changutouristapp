@@ -115,7 +115,7 @@ public class SlideshowDialogFragment extends DialogFragment {
 
             FileNameAndUrlPojo image = images.get(position);
 
-            LoadImageUtils.loadImageToViewFromSrc(imageViewPreview, image.getFileUrl());
+            LoadImageUtils.loadImageToViewFromSrcWithoutCenterCrop(imageViewPreview, image.getFileUrl());
 
             container.addView(view);
 
