@@ -429,6 +429,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
                     //                                          int[] grantResults)
                     // to handle the case where the user grants the permission. See the documentation
                     // for Activity#requestPermissions for more details.
+                    onLocationChanged(null);
                     return;
                 }
             }
