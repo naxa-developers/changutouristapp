@@ -35,27 +35,34 @@
 
                 <ImageButton
                     android:id="@+id/btn_view_vr_image"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:src="@drawable/ic_vr_image"
                     android:background="@drawable/ripple_effect_circular_button"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="222dp"
+                    android:layout_toLeftOf="@id/btn_tourist_info_guide"
+                    android:layout_marginTop="226dp"
                     android:layout_marginEnd="@dimen/activity_default_margin"
                     android:visibility="gone"
                     />
 
+                <ImageButton
+                    android:id="@+id/btn_tourist_info_guide"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:scaleType="fitXY"
+                    android:layout_marginTop="226dp"
+                    android:layout_alignParentEnd="true"
+                    app:srcCompat="@drawable/ic_info_24dp"
+                    android:background="@drawable/ripple_effect_circular_button"
+                    android:layout_marginEnd="@dimen/activity_default_margin"/>
+
                 <LinearLayout
-                    android:layout_below="@id/iv_place_details_main"
+                    android:layout_below="@id/btn_tourist_info_guide"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     >
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        >
                         <TextView
                             android:id="@+id/tv_place_title"
                             android:layout_width="match_parent"
@@ -63,22 +70,7 @@
                             style="@style/headlineText"
                             android:textStyle="bold"
                             android:gravity="center_vertical"
-                            android:layout_toLeftOf="@id/btn_tourist_info_guide"/>
-
-                        <ImageButton
-                            android:id="@+id/btn_tourist_info_guide"
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:scaleType="fitXY"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentEnd="true"
-                            app:srcCompat="@drawable/ic_info_24dp"
-                            android:backgroundTint="@color/transparent"
-                            android:background="?android:attr/selectableItemBackground"
-                            android:layout_marginStart="@dimen/spacing_medium"
-                            android:layout_marginEnd="@dimen/activity_default_margin"/>
-                    </RelativeLayout>
-
+                            />
 
                     <RatingBar
                         android:id="@+id/rating_bar_place"

@@ -177,6 +177,10 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         tvPlaceTitle.setText(placesDetailsEntity.getName());
         tvPlaceDesc.setText(placesDetailsEntity.getDescription());
 
+        if(placesDetailsEntity.get_360Images() != null){
+            btnView360Image.setVisibility(View.VISIBLE);
+        }
+
 
 //        if(isFromMainPlaceList){
 //            if(!TextUtils.isEmpty(placesDetailsEntity.getPrimaryImage())){
