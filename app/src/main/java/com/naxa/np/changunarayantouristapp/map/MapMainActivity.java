@@ -162,7 +162,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         geoJsonCategoryViewModel = ViewModelProviders.of(this).get(GeoJsonCategoryViewModel.class);
         placeDetailsEntityViewModel = ViewModelProviders.of(this).get(PlaceDetailsEntityViewModel.class);
 
-        setupToolbar(getResources().getString(R.string.explore_changunarayan_area), false);
+        setupToolbar(getResources().getString(R.string.explore_changunarayan_area, "Changunarayan"), false);
         initUI(savedInstanceState);
 
 
@@ -335,6 +335,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
                 removeLayerFromMap("nagarkot_boundary.geojson");
                 placeType = "changunarayan";
+                setupToolbar(getResources().getString(R.string.explore_changunarayan_area, "Changunarayan"), false);
                 plotDefaultMarkerOnMap(placeType);
 
 
@@ -346,6 +347,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
                 removeLayerFromMap("changunarayan_boundary.geojson");
                 placeType = "nagarkot";
+                setupToolbar(getResources().getString(R.string.explore_changunarayan_area, "Nagarkot"), false);
+
                 plotDefaultMarkerOnMap(placeType);
 
             }
