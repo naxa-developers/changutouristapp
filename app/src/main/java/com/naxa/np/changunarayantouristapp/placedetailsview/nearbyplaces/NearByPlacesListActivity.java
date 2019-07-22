@@ -20,6 +20,7 @@ import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
 import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntityViewModel;
 import com.naxa.np.changunarayantouristapp.gps.GeoPointActivity;
+import com.naxa.np.changunarayantouristapp.map.mapboxutils.SortByDistance;
 import com.naxa.np.changunarayantouristapp.placedetailsview.PlaceDetailsActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlacesListViewHolder;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
@@ -106,7 +107,10 @@ public class NearByPlacesListActivity extends BaseActivity {
                         myLong = Double.parseDouble(split_lon);
                         showLoading("Please wait ... \nCalculating distance");
                         if(placesDetailsEntityList != null){
-                            sortNearbyPlaces(placesDetailsEntityList);
+//                            sortNearbyPlaces(placesDetailsEntityList);
+
+                            sortingNearByPlaces(placesDetailsEntityList, myLat, myLong);
+
                         }else {
                             Toast.makeText(this, "No nearby places found", Toast.LENGTH_SHORT).show();
                         }
@@ -206,81 +210,27 @@ public class NearByPlacesListActivity extends BaseActivity {
         };
         recyclerView.setAdapter(adapter);
     }
+    
 
-
-
-    Map<PlacesDetailsEntity, Float> hashMapWithDistance;
-    public void sortNearbyPlaces(List<PlacesDetailsEntity> placesDetailsEntityList) {
-
-        hashMapWithDistance = new HashMap<PlacesDetailsEntity, Float>();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (placesDetailsEntityList.size() > 1) {
-//                    sortServiceData(servicesData, myLat, myLon);
-                    for (int i = 0; i < placesDetailsEntityList.size(); i++) {
-                        double latfirst = Double.parseDouble(placesDetailsEntityList.get(i).getLatitude());
-                        double longfirst = Double.parseDouble(placesDetailsEntityList.get(i).getLongitude());
-
-                        float[] result1 = new float[3];
-                        Location.distanceBetween(myLat, myLong, latfirst, longfirst, result1);
-                        Float distance1 = result1[0];
-
-                        hashMapWithDistance.put(placesDetailsEntityList.get(i), distance1);
-                    }
-                    sortMapByValuesWithDuplicates(hashMapWithDistance);
-                }
-            }
-        }).start();
-    }
-
-    private void sortMapByValuesWithDuplicates(@NotNull Map passedMap) {
-        List mapKeys = new ArrayList(passedMap.keySet());
-        List mapValues = new ArrayList(passedMap.values());
-        Collections.sort(mapValues);
-//        Collections.sort(mapKeys);
-
+    public void sortingNearByPlaces(List<PlacesDetailsEntity> placesDetailsEntityList, double myLat, double myLong){
         LinkedHashMap sortedMap = new LinkedHashMap();
 
-        Iterator valueIt = mapValues.iterator();
-        while (valueIt.hasNext()) {
-            Object val = valueIt.next();
-            Iterator keyIt = mapKeys.iterator();
+        SortByDistance sortByDistance = new SortByDistance(myLat, myLong);
+        sortedMap = sortByDistance.sortNearbyPlaces(placesDetailsEntityList);
 
-            while (keyIt.hasNext()) {
-                Object key = keyIt.next();
-                Object comp1 = passedMap.get(key);
-                Float comp2 = Float.parseFloat(val.toString());
-
-                if (comp1.equals(comp2)) {
-                    passedMap.remove(key);
-                    mapKeys.remove(key);
-                    sortedMap.put((PlacesDetailsEntity) key, (Float) val);
-                    break;
-                }
-            }
-        }
         //Getting Set of keys from HashMap
         Set<PlacesDetailsEntity> keySet = sortedMap.keySet();
-        //Creating an ArrayList of keys by passing the keySet
         sortedNearbyPlacesList = new ArrayList<>(keySet);
 
 
         //Getting Collection of values from HashMap
         Collection<Float> values = sortedMap.values();
-        //Creating an ArrayList of values
         sortedNearbyPlacesDistanceList = new ArrayList<>(values);
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                setUpRecyclerView(sortedNearbyPlacesList, sortedNearbyPlacesDistanceList);
-                hideLoading();
-            }
-        });
-
+        if(sortedNearbyPlacesList != null) {
+            setUpRecyclerView(sortedNearbyPlacesList, sortedNearbyPlacesDistanceList);
+            hideLoading();
+        }
     }
-
 
 }
