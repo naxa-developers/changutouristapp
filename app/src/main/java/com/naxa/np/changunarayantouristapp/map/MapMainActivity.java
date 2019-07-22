@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
@@ -103,6 +104,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     Button btnNavigation;
 //    RecyclerView recyclerViewMapCategory;
 
+    boolean isBtnGetRoutePressed = false;
 
 
 
@@ -115,6 +117,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     TextView tvMarkerTitle, tvMarkerDesc;
     ImageView ivMarkerPrimaryImage;
     Button btnGoThere, btnViewMarkerDetails, btnPlacesDetailsList,  btnRouteToMap;
+    CardView btnLayoutMapList;
 
     Gson gson;
 
@@ -182,6 +185,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         btnViewMarkerDetails = findViewById(R.id.btn_view_marker_details);
         btnPlacesDetailsList = findViewById(R.id.btn_route_to_main_places_list);
         btnRouteToMap = findViewById(R.id.btn_route_to_map);
+        btnLayoutMapList = findViewById(R.id.btn_layout);
 
 
 
@@ -269,14 +273,21 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
                     case "COLLAPSED":
                         ivSlidingLayoutIndicator.setBackground(getResources().getDrawable(R.drawable.ic_keyboard_arrow_up_white_24dp));
+                        btnLayoutMapList.setVisibility(View.VISIBLE);
+                        if(isBtnGetRoutePressed){
+                            btnLayoutMapList.setVisibility(View.GONE);
+                        }
+
                         break;
 
                     case "DRAGGING":
                         ivSlidingLayoutIndicator.setBackground(getResources().getDrawable(R.drawable.ic_sliding_neutral_white_24dp));
+                        btnLayoutMapList.setVisibility(View.GONE);
                         break;
 
                     case "EXPANDED":
                         ivSlidingLayoutIndicator.setBackground(getResources().getDrawable(R.drawable.ic_keyboard_arrow_down_white_24dp));
+                        btnLayoutMapList.setVisibility(View.GONE);
                         break;
                 }
 
@@ -729,6 +740,10 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
             }
             drawRouteOnMap.getRoute(originPosition, destinationPosition);
             btnNavigation.setVisibility(View.VISIBLE);
+            btnLayoutMapList.setVisibility(View.GONE);
+            isBtnGetRoutePressed = true;
+            mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+
         } catch (NullPointerException e) {
             Toast.makeText(this, "Searching current location \nMake sure your GPS provider is enabled.", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
@@ -873,8 +888,9 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
             case R.id.navigation:
                 drawRouteOnMap.enableNavigationUiLauncher(MapMainActivity.this);
-
                 btnNavigation.setVisibility(View.GONE);
+                isBtnGetRoutePressed = false;
+                btnLayoutMapList.setVisibility(View.VISIBLE);
                 break;
 
             case R.id.btnMapLayerData:
@@ -910,7 +926,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                         connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
 
                     generateRouteToGoThere(selectedMarkerPosition);
-                    mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                 } else {
                     Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
                 }
