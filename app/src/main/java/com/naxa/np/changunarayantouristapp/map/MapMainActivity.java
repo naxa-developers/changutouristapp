@@ -889,8 +889,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
             case R.id.navigation:
                 drawRouteOnMap.enableNavigationUiLauncher(MapMainActivity.this);
                 btnNavigation.setVisibility(View.GONE);
-                btnLayoutMapList.setVisibility(View.VISIBLE);
                 isBtnGetRoutePressed = false;
+                btnLayoutMapList.setVisibility(View.VISIBLE);
                 break;
 
             case R.id.btnMapLayerData:
