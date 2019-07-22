@@ -13,10 +13,10 @@ xmlns:android="http://schemas.android.com/apk/res/android"-->
 <androidx.cardview.widget.CardView android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="5dp"
+    app:cardCornerRadius="10dp"
     android:layout_marginTop="@dimen/activity_default_margin"
     android:backgroundTint="@color/transparent"
-    app:cardElevation="0dp"
+    app:cardElevation="5dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -27,10 +27,11 @@ xmlns:android="http://schemas.android.com/apk/res/android"-->
 
     <LinearLayout
         android:layout_marginTop="@dimen/activity_default_margin"
+        android:layout_marginEnd="@dimen/activity_default_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/white_95"
+        android:background="@color/white"
         >
 
         <TextView
@@ -47,15 +48,18 @@ xmlns:android="http://schemas.android.com/apk/res/android"-->
 
             android:layout_width="match_parent"
             android:layout_height="10dp"
-            android:background="@drawable/dotted_line">
+            android:background="@drawable/dotted_line"
+            android:visibility="gone">
         </View>
 
 
 
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="@dimen/spacing_medium"
             android:id="@+id/recyclerViewDialogMapDataCategory"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/white">
         </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
             <ImageButton
@@ -64,7 +68,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"-->
                 android:layout_height="34dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
-                android:background="@drawable/ic_circlular_purple_close_button"
+                android:background="@drawable/ic_circular_white_close_button_bg"
 
                 />
 
