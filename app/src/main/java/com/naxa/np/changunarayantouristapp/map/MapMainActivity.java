@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
@@ -115,6 +116,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     TextView tvMarkerTitle, tvMarkerDesc;
     ImageView ivMarkerPrimaryImage;
     Button btnGoThere, btnViewMarkerDetails, btnPlacesDetailsList,  btnRouteToMap;
+    CardView btn_layout_map_list;
 
     Gson gson;
 
@@ -182,6 +184,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         btnViewMarkerDetails = findViewById(R.id.btn_view_marker_details);
         btnPlacesDetailsList = findViewById(R.id.btn_route_to_main_places_list);
         btnRouteToMap = findViewById(R.id.btn_route_to_map);
+        btn_layout_map_list = findViewById(R.id.btn_layout);
 
 
 
@@ -269,14 +272,17 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
                     case "COLLAPSED":
                         ivSlidingLayoutIndicator.setBackground(getResources().getDrawable(R.drawable.ic_keyboard_arrow_up_white_24dp));
+                        btn_layout_map_list.setVisibility(View.VISIBLE);
                         break;
 
                     case "DRAGGING":
                         ivSlidingLayoutIndicator.setBackground(getResources().getDrawable(R.drawable.ic_sliding_neutral_white_24dp));
+                        btn_layout_map_list.setVisibility(View.GONE);
                         break;
 
                     case "EXPANDED":
                         ivSlidingLayoutIndicator.setBackground(getResources().getDrawable(R.drawable.ic_keyboard_arrow_down_white_24dp));
+                        btn_layout_map_list.setVisibility(View.GONE);
                         break;
                 }
 

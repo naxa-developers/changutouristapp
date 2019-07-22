@@ -89,6 +89,8 @@
         </RelativeLayout>
 
 
+        
+
         <Button
             android:id="@+id/btn_view_marker_details"
             android:layout_width="match_parent"
@@ -98,8 +100,8 @@
             android:textAllCaps="false"
             android:background="@drawable/button_rounded_bg"
             android:textColor="@color/white"
-            android:layout_marginRight="@dimen/activity_default_margin"
-            android:layout_marginLeft="@dimen/activity_default_margin"/>
+            android:layout_margin="@dimen/activity_default_margin"
+        />
 
     </LinearLayout>
 

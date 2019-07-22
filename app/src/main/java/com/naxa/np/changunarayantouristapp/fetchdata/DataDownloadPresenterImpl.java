@@ -1,5 +1,6 @@
 package com.naxa.np.changunarayantouristapp.fetchdata;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -143,7 +144,11 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                                     LatLng latLng = getLocationFromGeometry(feature);
                                     placesDetailsEntity.setLatitude(latLng.getLatitude()+"");
                                     placesDetailsEntity.setLongitude(latLng.getLongitude()+"");
-                                    placesDetailsEntity.setQrLanguage(placesDetailsEntity.getLanguage()+"_"+placesDetailsEntity.getQRCode());
+                                    if(TextUtils.isEmpty(placesDetailsEntity.getQRCode())){
+                                        placesDetailsEntity.setQrLanguage(placesDetailsEntity.getLanguage() + "_" + placesDetailsEntity.getName());
+                                    }else {
+                                        placesDetailsEntity.setQrLanguage(placesDetailsEntity.getLanguage() + "_" + placesDetailsEntity.getQRCode());
+                                    }
 
                                     placeDetailsEntityViewModel.insert(placesDetailsEntity);
                                     Timber.d("accept: JSON Object %s", snippest + " " + geoJsonName);
