@@ -15,9 +15,11 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -91,12 +93,13 @@ import io.reactivex.subscribers.DisposableSubscriber;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_OBJECT;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_VALUE;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_CHANGUNARAYAN_BOARDER;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_MAIN_PLACE_TYPE;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_NAGARKOT_BOARDER;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.MAP_OVERLAY_LAYER;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE;
 
 public class MapMainActivity extends BaseActivity implements OnMapReadyCallback, PermissionsListener,
-        LocationListener, View.OnClickListener {
+        LocationListener, View.OnClickListener, AdapterView.OnItemSelectedListener {
 
 
     private static final String TAG = "DemoActivity";
@@ -107,7 +110,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     boolean isBtnGetRoutePressed = false;
 
 
-
     ImageView ivSlidingLayoutIndicator;
     ImageButton btnMapLayerData;
     ImageButton btnMapLayerSwitch;
@@ -116,11 +118,12 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     private SlidingUpPanelLayout mLayout;
     TextView tvMarkerTitle, tvMarkerDesc;
     ImageView ivMarkerPrimaryImage;
-    Button btnGoThere, btnViewMarkerDetails, btnPlacesDetailsList,  btnRouteToMap;
+    Button btnGoThere, btnViewMarkerDetails, btnPlacesDetailsList, btnRouteToMap;
     CardView btnLayoutMapList;
 
     Gson gson;
 
+    Spinner mapPlaceListSpinner;
 
 
     private PermissionsManager permissionsManager;
@@ -136,7 +139,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     String filename = "";
     String placeType = "";
     private boolean isMapFirstTime = false;
-
+    private boolean isMapPlaceLayerFromDialog = false;
 
 
     // variables for adding a marker
@@ -188,8 +191,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         btnLayoutMapList = findViewById(R.id.btn_layout);
 
 
-
-
         btnNavigation.setOnClickListener(this);
         btnGoThere.setOnClickListener(this);
         btnMapLayerData.setOnClickListener(this);
@@ -237,6 +238,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     }
 
     boolean isFromIntent = false;
+
     private void netIntent(Intent intent) {
 
         try {
@@ -251,7 +253,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                     isFromIntent = true;
                 }
             }
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
     }
@@ -274,7 +276,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                     case "COLLAPSED":
                         ivSlidingLayoutIndicator.setBackground(getResources().getDrawable(R.drawable.ic_keyboard_arrow_up_white_24dp));
                         btnLayoutMapList.setVisibility(View.VISIBLE);
-                        if(isBtnGetRoutePressed){
+                        if (isBtnGetRoutePressed) {
                             btnLayoutMapList.setVisibility(View.GONE);
                         }
 
@@ -342,6 +344,11 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
             @Override
             public void onChangunarayanBoarderClick() {
+
+                if(isMapPlaceLayerFromDialog){
+                    mapPlaceListSpinner.setSelection(0);
+                }
+
                 filename = "changunarayan_boundary.geojson";
                 drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
                 removeLayerFromMap("nagarkot_boundary.geojson");
@@ -354,6 +361,11 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
             @Override
             public void onNagarkotBoarderClick() {
+
+                if(isMapPlaceLayerFromDialog){
+                    mapPlaceListSpinner.setSelection(1);
+                }
+
                 filename = "nagarkot_boundary.geojson";
                 drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
                 removeLayerFromMap("changunarayan_boundary.geojson");
@@ -445,7 +457,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                                                 try {
 
                                                     drawMarkerOnMap.AddListOfMarkerOnMap(placesDetailsEntities, placesDetailsEntities.get(0).getCategoryType());
-                                                }catch (IndexOutOfBoundsException | NullPointerException e){
+                                                } catch (IndexOutOfBoundsException | NullPointerException e) {
                                                     e.printStackTrace();
                                                 }
                                             }
@@ -515,17 +527,34 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         isMapFirstTime = true;
         setupMapOptionsDialog().hide();
 
+        initSpinner();
+
 
         setupMapDataLayerDialog(true).hide();
 
 
-        if(isFromIntent) {
+        if (isFromIntent) {
             if (!isFromMainPlaceList) {
                 drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity));
             }
         }
 
         mapView.invalidate();
+    }
+
+    private void initSpinner() {
+        mapPlaceListSpinner = findViewById(R.id.spinner_map_places);
+
+        int MAP_PLACE_BOUNDARY_ID = sharedPreferenceUtils.getIntValue(MAP_OVERLAY_LAYER, -1);
+
+        mapView.setStyleUrl(getResources().getString(R.string.mapbox_style_mapbox_streets));
+        if (MAP_PLACE_BOUNDARY_ID == KEY_CHANGUNARAYAN_BOARDER) {
+            mapPlaceListSpinner.setSelection(0);
+        } else if (MAP_PLACE_BOUNDARY_ID == KEY_NAGARKOT_BOARDER) {
+            mapPlaceListSpinner.setSelection(1);
+        }
+
+        mapPlaceListSpinner.setOnItemSelectedListener(this);
     }
 
     public void setMapCameraPosition() {
@@ -764,13 +793,13 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
             btnGoThere.setVisibility(View.VISIBLE);
         }
 
-        if(!TextUtils.isEmpty(itemClick.getMarkerProperties())) {
+        if (!TextUtils.isEmpty(itemClick.getMarkerProperties())) {
             PlacesDetailsEntity placesDetailsEntity = gson.fromJson(itemClick.getMarkerProperties(), PlacesDetailsEntity.class);
 
             tvMarkerTitle.setText(placesDetailsEntity.getName());
             tvMarkerDesc.setText(placesDetailsEntity.getDescription());
 
-            if(!TextUtils.isEmpty(fetchPromaryImageFromList(placesDetailsEntity))) {
+            if (!TextUtils.isEmpty(fetchPromaryImageFromList(placesDetailsEntity))) {
                 LoadImageUtils.loadImageToViewFromSrc(ivMarkerPrimaryImage, fetchPromaryImageFromList(placesDetailsEntity));
             }
 
@@ -795,10 +824,10 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
     }
 
-    private synchronized String  fetchPromaryImageFromList(@NotNull PlacesDetailsEntity placesDetailsEntity) {
+    private synchronized String fetchPromaryImageFromList(@NotNull PlacesDetailsEntity placesDetailsEntity) {
         String primaryImage = null;
 
-        if(!TextUtils.isEmpty(placesDetailsEntity.getImages())) {
+        if (!TextUtils.isEmpty(placesDetailsEntity.getImages())) {
             try {
                 JSONArray jsonArray = new JSONArray(placesDetailsEntity.getImages());
                 if (jsonArray.length() > 0) {
@@ -861,13 +890,14 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 break;
 
             case R.id.btnMapLayerSwitch:
+                isMapPlaceLayerFromDialog = true;
                 setupMapOptionsDialog().show();
                 break;
 
             case R.id.btn_users_current_location:
-                if(originLocation != null){
+                if (originLocation != null) {
                     animateCameraPosition(originLocation);
-                }else {
+                } else {
                     Toast.makeText(this, "Searching Your Current Location", Toast.LENGTH_SHORT).show();
                 }
                 break;
@@ -892,8 +922,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
 
     private void plotDefaultMarkerOnMap(String placeType) {
-        Log.d(TAG, "plotDefaultMarkerOnMap: "+isMapFirstTime);
-        if(!isMapFirstTime || !isFromMainPlaceList){
+        Log.d(TAG, "plotDefaultMarkerOnMap: " + isMapFirstTime);
+        if (!isMapFirstTime || !isFromMainPlaceList) {
             return;
         }
 
@@ -928,7 +958,25 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     }
 
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (position == 0) {
+            SharedPreferenceUtils.getInstance(MapMainActivity.this).setValue(MAP_OVERLAY_LAYER, KEY_CHANGUNARAYAN_BOARDER);
+            SharedPreferenceUtils.getInstance(MapMainActivity.this).setValue(KEY_MAIN_PLACE_TYPE, "changunarayan");
+        } else if (position == 1) {
+            SharedPreferenceUtils.getInstance(MapMainActivity.this).setValue(MAP_OVERLAY_LAYER, KEY_NAGARKOT_BOARDER);
+            SharedPreferenceUtils.getInstance(MapMainActivity.this).setValue(KEY_MAIN_PLACE_TYPE, "nagarkot");
+        }
 
-    
+        isMapFirstTime = true;
+        if(!isMapPlaceLayerFromDialog) {
+            setupMapOptionsDialog().hide();
+        }
+        isMapPlaceLayerFromDialog = false;
+    }
 
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }
