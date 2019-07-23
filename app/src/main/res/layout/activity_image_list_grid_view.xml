@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".imageviewer.ImageListGridViewActivity">
+    tools:context=".imageviewer.ImageListGridViewActivity"
+    >
 
     <include layout="@layout/toolbar"
         android:id="@+id/toolbar_layout"/>
@@ -16,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
+        android:layout_margin="@dimen/spacing_xsmall"
         />
 
     <TextView
