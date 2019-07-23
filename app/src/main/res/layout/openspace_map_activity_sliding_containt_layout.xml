@@ -31,39 +31,15 @@
         android:orientation="vertical"
         >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginLeft="@dimen/spacing_medium"
-            android:layout_marginRight="@dimen/spacing_medium"
-            >
-
         <TextView
             android:id="@+id/tv_marker_title"
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:layout_height="65dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="Detailed Information \n Information"
             android:maxLines="2"
-            style="@style/LanguageSelectorTextStyle"
+            style="@style/headlineText"
             />
 
-
-            <Button
-                android:id="@+id/btnGoThere"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="@dimen/spacing_xxxlarge"
-                android:text="@string/go_there"
-                android:textSize="12dp"
-                android:layout_gravity="center_vertical"
-                android:textAllCaps="false"
-                android:background="@drawable/button_rounded_bg"
-                android:textColor="@color/white" />
-
-
-    </LinearLayout>
 
         <TextView
             android:id="@+id/tv_marker_desc"
@@ -74,10 +50,6 @@
             android:maxLines="3"
             />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="200dp">
-
             <ImageView
                 android:id="@+id/iv_marker_primary_image"
                 app:srcCompat="@drawable/ic_bottom_menu_map_24dp"
@@ -86,22 +58,41 @@
                 android:layout_marginRight="@dimen/activity_default_margin"
                 android:layout_marginLeft="@dimen/activity_default_margin"
                 />
-        </RelativeLayout>
 
 
-
-
-        <Button
-            android:id="@+id/btn_view_marker_details"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/view_details"
-            android:layout_gravity="center_vertical"
-            android:textAllCaps="false"
-            android:background="@drawable/button_rounded_bg"
-            android:textColor="@color/white"
-            android:layout_margin="@dimen/activity_default_margin"
-        />
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/activity_default_margin">
+
+            <Button
+                android:id="@+id/btnGoThere"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/go_there"
+                android:layout_gravity="center_vertical"
+                android:textAllCaps="false"
+                android:background="@drawable/button_rounded_bg"
+                android:textColor="@color/white"
+                android:layout_marginEnd="@dimen/spacing_medium"/>
+
+            <Button
+                android:id="@+id/btn_view_marker_details"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/view_details"
+                android:layout_gravity="center_vertical"
+                android:textAllCaps="false"
+                android:background="@drawable/button_rounded_bg"
+                android:textColor="@color/white"
+                android:layout_marginStart="@dimen/spacing_medium"
+                />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
