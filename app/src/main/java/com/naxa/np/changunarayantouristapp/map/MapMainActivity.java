@@ -922,10 +922,14 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
 
     private void plotDefaultMarkerOnMap(String placeType) {
+
         Log.d(TAG, "plotDefaultMarkerOnMap: " + isMapFirstTime);
         if (!isMapFirstTime || !isFromMainPlaceList) {
             return;
         }
+
+        mapboxMap.clear();
+        mapView.invalidate();
 
         Constant constant = new Constant();
         placeDetailsEntityViewModel.getNearByPlacesListByPlaceTypeAndNearByTypeList(placeType,
@@ -933,12 +937,23 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 SharedPreferenceUtils.getInstance(MapMainActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableSubscriber<List<PlacesDetailsEntity>>() {
+                .flatMapIterable(new Function<List<PlacesDetailsEntity>, List<PlacesDetailsEntity>>() {
                     @Override
-                    public void onNext(List<PlacesDetailsEntity> placesDetailsEntities) {
-                        if (placesDetailsEntities != null && placesDetailsEntities.size() > 0) {
-                            drawMarkerOnMap.AddListOfMarkerOnMap(placesDetailsEntities, placesDetailsEntities.get(0).getCategoryType());
-
+                    public List<PlacesDetailsEntity> apply(List<PlacesDetailsEntity> placesDetailsEntities) throws Exception {
+                        return placesDetailsEntities;
+                    }
+                })
+                .map(new Function<PlacesDetailsEntity, PlacesDetailsEntity>() {
+                    @Override
+                    public PlacesDetailsEntity apply(PlacesDetailsEntity placesDetailsEntity) throws Exception {
+                        return placesDetailsEntity;
+                    }
+                })
+                .subscribe(new DisposableSubscriber<PlacesDetailsEntity>() {
+                    @Override
+                    public void onNext(PlacesDetailsEntity placesDetailsEntity) {
+                        if (placesDetailsEntity != null) {
+                            drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity));
                         }
                     }
 
