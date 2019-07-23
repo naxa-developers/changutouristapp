@@ -323,6 +323,10 @@
         <item>Udayapur</item>
     </string-array>
 
+    <string-array name="places_list">
+        <item>Changunarayan</item>
+        <item>Nagarkot</item>
+    </string-array>
 
 
 </resources>

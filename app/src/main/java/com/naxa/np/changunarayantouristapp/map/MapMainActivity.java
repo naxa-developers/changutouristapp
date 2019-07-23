@@ -95,7 +95,7 @@ import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.KEY_NAGA
 import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.MAP_OVERLAY_LAYER;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE;
 
-public class MapMainActivity extends BaseActivity implements OnMapReadyCallback, PermissionsListener, MapboxMap.OnMapClickListener,
+public class MapMainActivity extends BaseActivity implements OnMapReadyCallback, PermissionsListener,
         LocationListener, View.OnClickListener {
 
 
@@ -501,7 +501,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         this.mapboxMap = mapboxMap;
 //        setMapCameraPosition();
         enableLocationComponent();
-        mapboxMap.addOnMapClickListener(this);
         mapboxMap.getUiSettings().setCompassFadeFacingNorth(false);
         mapboxMap.getUiSettings().setCompassImage(getResources().getDrawable(R.drawable.direction_compas_icon));
 
@@ -543,49 +542,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         mapView.invalidate();
 
         enableLocationComponent();
-    }
-
-
-    @Override
-    public void onMapClick(@NonNull LatLng latLngPoint) {
-
-        if (point) {
-            return;
-        }
-
-        if (destinationMarker != null) {
-            mapboxMap.removeMarker(destinationMarker);
-        }
-        destinationCoord = latLngPoint;
-
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            Toast.makeText(this, "Location Permission Required", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        try {
-
-            originCoord = new LatLng(originLocation.getLatitude(), originLocation.getLongitude());
-            originLocation = mapboxMap.getLocationComponent().getLocationEngine().getLastLocation();
-
-            destinationPosition = Point.fromLngLat(destinationCoord.getLongitude(), destinationCoord.getLatitude());
-            originPosition = Point.fromLngLat(originCoord.getLongitude(), originCoord.getLatitude());
-
-            if (originPosition == null) {
-                return;
-            }
-            if (destinationPosition == null) {
-                return;
-            }
-//            drawRouteOnMap.getRoute(originPosition, destinationPosition);
-//            navigation.setVisibility(View.VISIBLE);
-        } catch (NullPointerException e) {
-            Toast.makeText(this, "Searching current location \nMake sure your GPS provider is enabled.", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        }
-
     }
 
 
@@ -970,5 +926,9 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         isMapFirstTime = false;
 
     }
+
+
+
+    
 
 }
