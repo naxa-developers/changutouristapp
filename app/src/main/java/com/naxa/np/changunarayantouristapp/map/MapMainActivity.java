@@ -954,7 +954,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                     public void onNext(PlacesDetailsEntity placesDetailsEntity) {
                         if (placesDetailsEntity != null) {
                             drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity));
-
                         }
                     }
 
