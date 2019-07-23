@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Changunarayan Tourist App</string>
+    <string name="app_name">Changunarayan Tourist Guide</string>
 
     <string name="next">Next</string>
     <string name="skip">Skip</string>
@@ -83,7 +83,6 @@
     <string name="home">Home</string>
     <string name="qrcode_scanner">QRCode Scanner</string>
     <string name="settings">Settings</string>
-    <string name="about_us">About Us</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -110,5 +109,6 @@
     <string name="location_provider_accuracy">Using %1$s. Accuracy is %2$s m.</string>
     <string name="location_accuracy">Accuracy is %f$s m</string>
     <string name="location_metadata">Satellites available: %1$d/24\n\nTime elapsed: %2$s</string>
+    <string name="about_us">About Us</string>
 
 </resources>

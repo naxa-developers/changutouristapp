@@ -13,7 +13,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
-        android:name="com.naxa.np.changunarayantouristapp.common.ChangunarayanTouristApp"
+        android:name=".common.ChangunarayanTouristApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -21,32 +21,33 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.naxa.np.changunarayantouristapp.touristinformationguide.TourishInformationGuideActivity"></activity>
-        <activity android:name="com.naxa.np.changunarayantouristapp.mayormessage.MayorMessageActivity" />
-        <activity android:name="com.naxa.np.changunarayantouristapp.placedetailsview.nearbyplaces.NearByPlacesListActivity" />
-        <activity android:name="com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlacesListActivity" />
-        <activity android:name="com.naxa.np.changunarayantouristapp.audioplayer.AudioListActivity" />
-        <activity android:name="com.naxa.np.changunarayantouristapp.videoplayer.VideoListActivity" />
-        <activity android:name="com.naxa.np.changunarayantouristapp.imageviewer.ImageListGridViewActivity" />
-        <activity android:name="com.naxa.np.changunarayantouristapp.videoplayer.VideoPlayerActivity" />
+        <activity android:name=".common.AboutUsActivity"></activity>
+        <activity android:name=".touristinformationguide.TourishInformationGuideActivity" />
+        <activity android:name=".mayormessage.MayorMessageActivity" />
+        <activity android:name=".placedetailsview.nearbyplaces.NearByPlacesListActivity" />
+        <activity android:name=".placedetailsview.mainplacesdetails.MainPlacesListActivity" />
+        <activity android:name=".audioplayer.AudioListActivity" />
+        <activity android:name=".videoplayer.VideoListActivity" />
+        <activity android:name=".imageviewer.ImageListGridViewActivity" />
+        <activity android:name=".videoplayer.VideoPlayerActivity" />
         <activity
-            android:name="com.naxa.np.changunarayantouristapp.placedetailsview.PlaceDetailsActivity"
+            android:name=".placedetailsview.PlaceDetailsActivity"
             android:exported="true" />
-        <activity android:name="com.naxa.np.changunarayantouristapp.map.MapMainActivity" />
-        <activity android:name="com.naxa.np.changunarayantouristapp.map.markerdetailspage.MarkerDetailsDisplayActivity" />
-        <activity android:name="com.naxa.np.changunarayantouristapp.login.LoginActivity" />
+        <activity android:name=".map.MapMainActivity" />
+        <activity android:name=".map.markerdetailspage.MarkerDetailsDisplayActivity" />
+        <activity android:name=".login.LoginActivity" />
         <activity
-            android:name="com.naxa.np.changunarayantouristapp.login.RequestForAccessActivity"
-            android:exported="true" />
-        <activity
-            android:name="com.naxa.np.changunarayantouristapp.vrimage.VRImageViewActivity"
+            android:name=".login.RequestForAccessActivity"
             android:exported="true" />
         <activity
-            android:name="com.naxa.np.changunarayantouristapp.barcodereader.QRCodeReaderActivity"
+            android:name=".vrimage.VRImageViewActivity"
             android:exported="true" />
-        <activity android:name="com.naxa.np.changunarayantouristapp.common.BaseActivity" />
-        <activity android:name="com.naxa.np.changunarayantouristapp.selectlanguage.SelectlanguageActivity" />
-        <activity android:name="com.naxa.np.changunarayantouristapp.splashscreen.SplashActivity">
+        <activity
+            android:name=".barcodereader.QRCodeReaderActivity"
+            android:exported="true" />
+        <activity android:name=".common.BaseActivity" />
+        <activity android:name=".selectlanguage.SelectlanguageActivity" />
+        <activity android:name=".splashscreen.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -54,10 +55,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.naxa.np.changunarayantouristapp.MainActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
-        <activity android:name="com.naxa.np.changunarayantouristapp.splashscreen.WalkThroughSliderActivity" />
+        <activity android:name=".splashscreen.WalkThroughSliderActivity" />
         <activity android:name=".gps.GeoPointActivity" />
     </application>
 

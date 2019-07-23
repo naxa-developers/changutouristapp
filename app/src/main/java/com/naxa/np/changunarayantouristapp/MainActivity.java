@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.navigation.NavigationView;
 import com.naxa.np.changunarayantouristapp.barcodereader.QRCodeReaderActivity;
+import com.naxa.np.changunarayantouristapp.common.AboutUsActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonCategoryViewModel;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonListViewModel;
@@ -316,6 +317,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
 
             case R.id.nav_about_us:
+                ActivityUtil.openActivity(AboutUsActivity.class, MainActivity.this);
                 break;
         }
 

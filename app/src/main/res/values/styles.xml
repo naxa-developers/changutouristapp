@@ -122,7 +122,7 @@
 
 
     <style name="HeaderImage">
-        <item name="android:layout_margin">8dp</item>
+        <item name="android:layout_margin">0dp</item>
 
     </style>
 
