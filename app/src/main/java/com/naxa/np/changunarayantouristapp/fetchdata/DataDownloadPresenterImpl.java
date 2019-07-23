@@ -176,7 +176,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                     @Override
                     public void onComplete() {
                         fetchMayorMessage(apiInterface, apiKey, language);
-                        fetchDatFromServer(apiInterface, apiKey, language);
+                        fetchTouristInfoDatFromServer(apiInterface, apiKey, language);
                         dataDonwloadView.downloadSuccess("All Data Downloaded Successfully");
                         SharedPreferenceUtils.getInstance(ChangunarayanTouristApp.getInstance()).setValue(Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS, true);
                         Log.d(TAG, "onComplete: ");
@@ -296,7 +296,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                 });
     }
 
-    private void fetchDatFromServer(@NotNull NetworkApiInterface apiInterface, String apiKey, String language) {
+    private void fetchTouristInfoDatFromServer(@NotNull NetworkApiInterface apiInterface, String apiKey, String language) {
         apiInterface.getTouristInformationGuideListResponse(apiKey, language)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())

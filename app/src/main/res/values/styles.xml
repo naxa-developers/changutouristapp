@@ -130,4 +130,9 @@
         <item name="android:textSize">14dp</item>
     </style>
 
+
+    <style name="SpinnerTheme" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/bg_spinner</item>
+    </style>
+
 </resources>
