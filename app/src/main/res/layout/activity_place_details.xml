@@ -104,7 +104,7 @@
                         android:text="@string/nearby_places"
                        style="@style/headlineText"/>
                         <androidx.recyclerview.widget.RecyclerView
-                            android:padding="@dimen/activity_default_margin"
+                            android:padding="@dimen/default_padding"
                             android:id="@+id/rv_nearby_places"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -120,11 +120,8 @@
                         />
                     </LinearLayout>
 
-
                 </LinearLayout>
-
-
-
+                
             </RelativeLayout>
         </ScrollView>
 
