@@ -31,7 +31,7 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:ellipsize">end</item>
-        <item name="android:layout_marginTop">@dimen/margin_small</item>
+
 
     </style>
 
@@ -44,7 +44,7 @@
         <item name="android:ellipsize">end</item>
         <item name="android:fontFamily">@font/opensans_semibold</item>
         <item name="fontFamily">@font/opensans_semibold</item>
-        <item name="android:layout_marginTop">@dimen/margin_small</item>
+
     </style>
 
     <style name="bodyText" parent="TextAppearance.AppCompat.Display4">
@@ -57,7 +57,7 @@
         <item name="android:fontFamily">@font/opensans_light</item>
         <item name="fontFamily">@font/opensans_light</item>
         <item name="android:ellipsize">end</item>
-        <item name="android:layout_marginTop">@dimen/margin_small</item>
+
     </style>
 
 
