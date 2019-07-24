@@ -35,7 +35,7 @@ public class PlacesDetailsEntity implements Parcelable {
     @SerializedName("FID")
     @ColumnInfo(name = "fid")
     @Expose
-    private Integer FID;
+    private String FID;
 
     @SerializedName("Name")
     @ColumnInfo(name = "name")
@@ -113,7 +113,7 @@ public class PlacesDetailsEntity implements Parcelable {
     private String qrLanguage;
 
 
-    public PlacesDetailsEntity(@NotNull String placeType, @NotNull String categoryType, Integer FID, String name, @NotNull String type, String description, String photo, String primaryImage, String images, String videos, String _360Images, String audio, String QRCode, String language, String latitude, String longitude, String theGeom, String qrLanguage) {
+    public PlacesDetailsEntity(@NotNull String placeType, @NotNull String categoryType, String FID, String name, @NotNull String type, String description, String photo, String primaryImage, String images, String videos, String _360Images, String audio, String QRCode, String language, String latitude, String longitude, String theGeom, String qrLanguage) {
         this.placeType = placeType.trim();
         this.categoryType = categoryType.trim();
         this.FID = FID;
@@ -280,7 +280,7 @@ public class PlacesDetailsEntity implements Parcelable {
         this.theGeom = theGeom;
     }
 
-    public Integer getFID() {
+    public String getFID() {
         return FID;
     }
 
@@ -288,7 +288,7 @@ public class PlacesDetailsEntity implements Parcelable {
         return QRCode;
     }
 
-    public void setFID(Integer FID) {
+    public void setFID(String FID) {
         this.FID = FID;
     }
 
@@ -306,7 +306,7 @@ public class PlacesDetailsEntity implements Parcelable {
         dest.writeInt(this.pid);
         dest.writeString(this.placeType);
         dest.writeString(this.categoryType);
-        dest.writeValue(this.FID);
+        dest.writeString(this.FID);
         dest.writeString(this.name);
         dest.writeString(this.type);
         dest.writeString(this.description);
@@ -328,7 +328,7 @@ public class PlacesDetailsEntity implements Parcelable {
         this.pid = in.readInt();
         this.placeType = in.readString();
         this.categoryType = in.readString();
-        this.FID = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.FID = in.readString();
         this.name = in.readString();
         this.type = in.readString();
         this.description = in.readString();

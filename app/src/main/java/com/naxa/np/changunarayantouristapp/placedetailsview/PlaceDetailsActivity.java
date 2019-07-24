@@ -181,12 +181,12 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
             btnView360Image.setVisibility(View.VISIBLE);
         }
 
+        if(placesDetailsEntity.getFID() != null && !TextUtils.isEmpty(placesDetailsEntity.getFID())){
+            ratingBar.setRating(Float.parseFloat(placesDetailsEntity.getFID()));
+        }else {
+            ratingBar.setRating(0f);
+        }
 
-//        if(isFromMainPlaceList){
-//            if(!TextUtils.isEmpty(placesDetailsEntity.getPrimaryImage())){
-//                LoadImageUtils.loadImageToViewFromSrc(ivImageMain, placesDetailsEntity.getPrimaryImage());
-//            }
-//        }else {
 
         if (!TextUtils.isEmpty(fetchPromaryImageFromList(placesDetailsEntity))) {
             LoadImageUtils.loadImageToViewFromSrc(ivImageMain, fetchPromaryImageFromList(placesDetailsEntity));
@@ -237,6 +237,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         btnViewAllNearByPlaces.setOnClickListener(this);
         btnView360Image.setOnClickListener(this);
         btnTouristInfoGuide.setOnClickListener(this);
+        ratingBar.setOnClickListener(this);
 
 
     }
@@ -339,8 +340,13 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
             case R.id.btn_tourist_info_guide:
                 ActivityUtil.openActivity(TourishInformationGuideActivity.class, PlaceDetailsActivity.this);
                 break;
+
+            case R.id.rating_bar_place:
+                submitRationDialogShow();
+                break;
         }
     }
+
 
 
     @Override
@@ -443,6 +449,13 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
             onLocationChanged(null);
         }
     }
+
+
+    private void submitRationDialogShow() {
+
+    }
+
+
 
 
 }
