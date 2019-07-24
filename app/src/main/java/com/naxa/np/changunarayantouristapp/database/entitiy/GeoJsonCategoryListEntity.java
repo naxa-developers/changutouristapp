@@ -49,18 +49,30 @@ public class GeoJsonCategoryListEntity implements Parcelable {
     @Expose
     private String summaryList;
 
+    @SerializedName("subcategories")
+    @ColumnInfo(name = "subcategories")
+    @Expose
+    private String subCategories;
+
+    @SerializedName("slug")
+    @ColumnInfo(name = "slug")
+    @Expose
+    private String slug;
+
     @SerializedName("summary_name")
     @ColumnInfo(name = "summary_name")
     @Expose
     private String summaryName;
 
 
-    public GeoJsonCategoryListEntity(String categoryName, String categoryTable, String categoryMarker, String language, String summaryList, String summaryName) {
+    public GeoJsonCategoryListEntity(String categoryName, String categoryTable, String categoryMarker, String language, String summaryList, String subCategories, String slug, String summaryName) {
         this.categoryName = categoryName;
         this.categoryTable = categoryTable;
         this.categoryMarker = categoryMarker;
         this.language = language;
         this.summaryList = summaryList;
+        this.subCategories = subCategories;
+        this.slug = slug;
         this.summaryName = summaryName;
     }
 
@@ -126,6 +138,8 @@ public class GeoJsonCategoryListEntity implements Parcelable {
         dest.writeString(this.categoryMarker);
         dest.writeString(this.language);
         dest.writeString(this.summaryList);
+        dest.writeString(this.subCategories);
+        dest.writeString(this.slug);
         dest.writeString(this.summaryName);
     }
 
@@ -136,6 +150,8 @@ public class GeoJsonCategoryListEntity implements Parcelable {
         this.categoryMarker = in.readString();
         this.language = in.readString();
         this.summaryList = in.readString();
+        this.subCategories = in.readString();
+        this.slug = in.readString();
         this.summaryName = in.readString();
     }
 
@@ -157,5 +173,21 @@ public class GeoJsonCategoryListEntity implements Parcelable {
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    public String getSubCategories() {
+        return subCategories;
+    }
+
+    public void setSubCategories(String subCategories) {
+        this.subCategories = subCategories;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 }

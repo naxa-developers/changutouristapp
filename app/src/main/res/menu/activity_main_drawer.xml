@@ -35,5 +35,33 @@
 
     </group>
 
+    <group android:checkableBehavior="all">
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:clickable="true"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:padding="16dp"
+                style="@style/TextAppearance.AppCompat.Subhead.Inverse"
+                android:id="@+id/footer_item_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Developed at" />
+
+            <ImageView
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/naxa_logo"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+
+        </LinearLayout>
+    </group>
+
 
 </menu>

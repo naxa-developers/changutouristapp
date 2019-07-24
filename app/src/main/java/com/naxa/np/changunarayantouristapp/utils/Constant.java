@@ -50,6 +50,7 @@ public class Constant {
         public static final int GEOPOINT_RESULT_CODE = 1994;
         public static final String MAP_BASE_LAYER = "base_layer";
         public static final String MAP_OVERLAY_LAYER = "overlay_layer";
+        public static final String MAP_BOARDER_OVERLAY_LAYER_ID = "boarder_overlay_layer";
         public static final int KEY_STREET = 0 ;
         public static final int KEY_SATELLITE = 1;
         public static final int KEY_OPENSTREET = 2;
@@ -57,6 +58,8 @@ public class Constant {
         public static final int GPS_REQUEST = 101;
         public static final int KEY_NAGARKOT_BOARDER = 4;
         public static final String KEY_MAIN_PLACE_TYPE = "main_place_type";
+
+
 
 
     }

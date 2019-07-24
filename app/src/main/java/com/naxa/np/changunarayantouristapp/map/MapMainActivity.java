@@ -356,7 +356,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 setupToolbar(getResources().getString(R.string.explore_changunarayan_area, "Changunarayan"), false);
                 plotDefaultMarkerOnMap(placeType);
 
-
+                mapboxBaseStyleUtils = new MapboxBaseStyleUtils(MapMainActivity.this, mapboxMap, mapView);
+                mapboxBaseStyleUtils.changeBaseColor();
             }
 
             @Override
@@ -373,6 +374,9 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 setupToolbar(getResources().getString(R.string.explore_changunarayan_area, "Nagarkot"), false);
 
                 plotDefaultMarkerOnMap(placeType);
+
+                mapboxBaseStyleUtils = new MapboxBaseStyleUtils(MapMainActivity.this, mapboxMap, mapView);
+                mapboxBaseStyleUtils.changeBaseColor();
 
             }
 
@@ -391,7 +395,10 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 }
             }
 
-        });
+
+        }
+        );
+
 
 
     }
@@ -520,8 +527,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         drawGeoJsonOnMap = new DrawGeoJsonOnMap(MapMainActivity.this, mapboxMap, mapView);
         drawMarkerOnMap = new DrawMarkerOnMap(MapMainActivity.this, mapboxMap, mapView);
         drawRouteOnMap = new DrawRouteOnMap(MapMainActivity.this, mapboxMap, mapView);
-        mapboxBaseStyleUtils = new MapboxBaseStyleUtils(MapMainActivity.this, mapboxMap, mapView);
-        mapboxBaseStyleUtils.changeBaseColor();
+
 
 
         isMapFirstTime = true;
