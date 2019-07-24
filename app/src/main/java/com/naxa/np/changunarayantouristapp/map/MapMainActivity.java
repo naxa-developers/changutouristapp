@@ -77,15 +77,17 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.reactivestreams.Publisher;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
-import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
@@ -209,33 +211,88 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
         mapDataLayerList = new ArrayList<>();
 
-        geoJsonCategoryViewModel.getAllGeoJsonCategoryEntityByLanguage(SharedPreferenceUtils.getInstance(MapMainActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableMaybeObserver<List<GeoJsonCategoryListEntity>>() {
-                    @Override
-                    public void onSuccess(List<GeoJsonCategoryListEntity> geoJsonCategoryListEntities) {
-                        for (GeoJsonCategoryListEntity geoJsonCategoryListEntity : geoJsonCategoryListEntities) {
-                            mapDataLayerList.add(new SectionMultipleItem(SectionMultipleItem.MAP_DATA_LIST, new MultiItemSectionModel(
-                                    geoJsonCategoryListEntity.getCategoryMarker(), geoJsonCategoryListEntity.getCategoryName(), geoJsonCategoryListEntity.getCategoryTable())));
-                        }
-                    }
 
-                    @Override
-                    public void onError(Throwable e) {
+//        geoJsonCategoryViewModel.getAllGeoJsonCategoryEntityByLanguage(SharedPreferenceUtils.getInstance(MapMainActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null), "food")
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new DisposableMaybeObserver<List<GeoJsonCategoryListEntity>>() {
+//                    @Override
+//                    public void onSuccess(List<GeoJsonCategoryListEntity> geoJsonCategoryListEntities) {
+//                        for (GeoJsonCategoryListEntity geoJsonCategoryListEntity : geoJsonCategoryListEntities) {
+//                            mapDataLayerList.add(new SectionMultipleItem(SectionMultipleItem.MAP_DATA_LIST, new MultiItemSectionModel(
+//                                    geoJsonCategoryListEntity.getCategoryMarker(), geoJsonCategoryListEntity.getCategoryName(), geoJsonCategoryListEntity.getCategoryTable())));
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
 
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-
+        getMapFilterLayerCategoryList();
 
         netIntent(getIntent());
 
     }
+
+    private void getMapFilterLayerCategoryList() {
+        geoJsonCategoryViewModel.getGeoJsonSubCategorySlugByLanguage(SharedPreferenceUtils.getInstance(MapMainActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null))
+                .observeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.computation())
+                .flatMapIterable(new Function<List<String>, List<String>>() {
+                    @Override
+                    public List<String> apply(List<String> stringList) throws Exception {
+                        return stringList;
+                    }
+                })
+                .map(new Function<String, String>() {
+                    @Override
+                    public String apply(String slug) throws Exception {
+
+                        geoJsonCategoryViewModel.getAllGeoJsonCategoryEntityByLanguage(SharedPreferenceUtils.getInstance(MapMainActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null), slug)
+                                .subscribeOn(Schedulers.computation())
+                                .observeOn(Schedulers.computation())
+                                .subscribe(new DisposableSubscriber<List<GeoJsonCategoryListEntity>>() {
+                                    @Override
+                                    public void onNext(List<GeoJsonCategoryListEntity> geoJsonCategoryListEntities) {
+
+                                        if (geoJsonCategoryListEntities != null && geoJsonCategoryListEntities.size() > 0) {
+                                            for (int index = 0; index < geoJsonCategoryListEntities.size(); index++) {
+                                                GeoJsonCategoryListEntity geoJsonCategoryListEntity = geoJsonCategoryListEntities.get(index);
+                                                if (index == 0) {
+                                                    mapDataLayerList.add(new SectionMultipleItem(true, geoJsonCategoryListEntity.getSubCategories(), false, false));
+                                                }
+                                                mapDataLayerList.add(new SectionMultipleItem(SectionMultipleItem.MAP_DATA_LIST, new MultiItemSectionModel(
+                                                        geoJsonCategoryListEntity.getCategoryMarker(), geoJsonCategoryListEntity.getCategoryName(), geoJsonCategoryListEntity.getCategoryTable())));
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable t) {
+
+                                    }
+
+                                    @Override
+                                    public void onComplete() {
+
+                                    }
+                                });
+
+                        return slug;
+                    }
+                })
+                .subscribe();
+
+
+    }
+
 
     boolean isFromIntent = false;
 
@@ -310,88 +367,94 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         int MAP_PLACE_BOUNDARY_ID = sharedPreferenceUtils.getIntValue(MAP_OVERLAY_LAYER, -1);
 
         return DialogFactory.createBaseLayerDialog(MapMainActivity.this, new DialogFactory.CustomBaseLayerDialogListner() {
-            @Override
-            public void onStreetClick() {
-                mapView.setStyleUrl(getResources().getString(R.string.mapbox_style_mapbox_streets));
-                if (MAP_PLACE_BOUNDARY_ID == KEY_CHANGUNARAYAN_BOARDER) {
-                    onChangunarayanBoarderClick();
-                } else if (MAP_PLACE_BOUNDARY_ID == KEY_NAGARKOT_BOARDER) {
-                    onNagarkotBoarderClick();
-                }
-
-            }
-
-            @Override
-            public void onSatelliteClick() {
-                mapView.setStyleUrl(getResources().getString(R.string.mapbox_style_satellite));
-                if (MAP_PLACE_BOUNDARY_ID == KEY_CHANGUNARAYAN_BOARDER) {
-                    onChangunarayanBoarderClick();
-                } else if (MAP_PLACE_BOUNDARY_ID == KEY_NAGARKOT_BOARDER) {
-                    onNagarkotBoarderClick();
-                }
-
-            }
-
-            @Override
-            public void onOpenStreetClick() {
-                if (MAP_PLACE_BOUNDARY_ID == KEY_CHANGUNARAYAN_BOARDER) {
-                    onChangunarayanBoarderClick();
-                } else if (MAP_PLACE_BOUNDARY_ID == KEY_NAGARKOT_BOARDER) {
-                    onNagarkotBoarderClick();
-                }
-
-            }
-
-            @Override
-            public void onChangunarayanBoarderClick() {
-
-                if(isMapPlaceLayerFromDialog){
-                    mapPlaceListSpinner.setSelection(0);
-                }
-
-                filename = "changunarayan_boundary.geojson";
-                drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
-                removeLayerFromMap("nagarkot_boundary.geojson");
-                placeType = "changunarayan";
-                setupToolbar(getResources().getString(R.string.explore_changunarayan_area, "Changunarayan"), false);
-                plotDefaultMarkerOnMap(placeType);
-
-
-            }
-
-            @Override
-            public void onNagarkotBoarderClick() {
-
-                if(isMapPlaceLayerFromDialog){
-                    mapPlaceListSpinner.setSelection(1);
-                }
-
-                filename = "nagarkot_boundary.geojson";
-                drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
-                removeLayerFromMap("changunarayan_boundary.geojson");
-                placeType = "nagarkot";
-                setupToolbar(getResources().getString(R.string.explore_changunarayan_area, "Nagarkot"), false);
-
-                plotDefaultMarkerOnMap(placeType);
-
-            }
-
-            private void removeLayerFromMap(String filename) {
-
-                if (filename != null) {
-                    final Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            //Do something after 100ms
-                            drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, false, "");
-
+                    @Override
+                    public void onStreetClick() {
+                        mapView.setStyleUrl(getResources().getString(R.string.mapbox_style_mapbox_streets));
+                        if (MAP_PLACE_BOUNDARY_ID == KEY_CHANGUNARAYAN_BOARDER) {
+                            onChangunarayanBoarderClick();
+                        } else if (MAP_PLACE_BOUNDARY_ID == KEY_NAGARKOT_BOARDER) {
+                            onNagarkotBoarderClick();
                         }
-                    }, 50);
-                }
-            }
 
-        });
+                    }
+
+                    @Override
+                    public void onSatelliteClick() {
+                        mapView.setStyleUrl(getResources().getString(R.string.mapbox_style_satellite));
+                        if (MAP_PLACE_BOUNDARY_ID == KEY_CHANGUNARAYAN_BOARDER) {
+                            onChangunarayanBoarderClick();
+                        } else if (MAP_PLACE_BOUNDARY_ID == KEY_NAGARKOT_BOARDER) {
+                            onNagarkotBoarderClick();
+                        }
+
+                    }
+
+                    @Override
+                    public void onOpenStreetClick() {
+                        if (MAP_PLACE_BOUNDARY_ID == KEY_CHANGUNARAYAN_BOARDER) {
+                            onChangunarayanBoarderClick();
+                        } else if (MAP_PLACE_BOUNDARY_ID == KEY_NAGARKOT_BOARDER) {
+                            onNagarkotBoarderClick();
+                        }
+
+                    }
+
+                    @Override
+                    public void onChangunarayanBoarderClick() {
+
+                        if (isMapPlaceLayerFromDialog) {
+                            mapPlaceListSpinner.setSelection(0);
+                        }
+
+                        filename = "changunarayan_boundary.geojson";
+                        drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
+                        removeLayerFromMap("nagarkot_boundary.geojson");
+                        placeType = "changunarayan";
+                        setupToolbar(getResources().getString(R.string.explore_changunarayan_area, "Changunarayan"), false);
+                        plotDefaultMarkerOnMap(placeType);
+
+                        mapboxBaseStyleUtils = new MapboxBaseStyleUtils(MapMainActivity.this, mapboxMap, mapView);
+                        mapboxBaseStyleUtils.changeBaseColor();
+                    }
+
+                    @Override
+                    public void onNagarkotBoarderClick() {
+
+                        if (isMapPlaceLayerFromDialog) {
+                            mapPlaceListSpinner.setSelection(1);
+                        }
+
+                        filename = "nagarkot_boundary.geojson";
+                        drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
+                        removeLayerFromMap("changunarayan_boundary.geojson");
+                        placeType = "nagarkot";
+                        setupToolbar(getResources().getString(R.string.explore_changunarayan_area, "Nagarkot"), false);
+
+                        plotDefaultMarkerOnMap(placeType);
+
+                        mapboxBaseStyleUtils = new MapboxBaseStyleUtils(MapMainActivity.this, mapboxMap, mapView);
+                        mapboxBaseStyleUtils.changeBaseColor();
+
+                    }
+
+                    private void removeLayerFromMap(String filename) {
+
+                        if (filename != null) {
+                            final Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //Do something after 100ms
+                                    drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, false, "");
+
+                                }
+                            }, 50);
+                        }
+                    }
+
+
+                }
+        );
 
 
     }
@@ -520,8 +583,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         drawGeoJsonOnMap = new DrawGeoJsonOnMap(MapMainActivity.this, mapboxMap, mapView);
         drawMarkerOnMap = new DrawMarkerOnMap(MapMainActivity.this, mapboxMap, mapView);
         drawRouteOnMap = new DrawRouteOnMap(MapMainActivity.this, mapboxMap, mapView);
-        mapboxBaseStyleUtils = new MapboxBaseStyleUtils(MapMainActivity.this, mapboxMap, mapView);
-        mapboxBaseStyleUtils.changeBaseColor();
 
 
         isMapFirstTime = true;
@@ -984,7 +1045,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         }
 
         isMapFirstTime = true;
-        if(!isMapPlaceLayerFromDialog) {
+        if (!isMapPlaceLayerFromDialog) {
             setupMapOptionsDialog().hide();
         }
         isMapPlaceLayerFromDialog = false;

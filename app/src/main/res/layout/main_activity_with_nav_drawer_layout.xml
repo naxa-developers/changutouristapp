@@ -14,44 +14,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="250dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/homeBackgroundColor"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_main"
-        app:itemIconTint="@color/white_80"
-        app:itemTextColor="@color/white_80"
-
-        app:menu="@menu/activity_main_drawer">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:clickable="true"
-            android:orientation="vertical">
 
 
-            <TextView
-                android:padding="16dp"
-                style="@style/TextAppearance.AppCompat.Subhead.Inverse"
-                android:id="@+id/footer_item_1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Developed at" />
+            <com.google.android.material.navigation.NavigationView
+                android:id="@+id/nav_view"
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:fitsSystemWindows="true"
+                app:headerLayout="@layout/nav_header_main"
+                android:background="@color/homeBackgroundColor"
+                app:itemIconTint="@color/white_80"
+                app:itemTextColor="@color/white_80"
 
-            <ImageView
-                android:layout_marginBottom="16dp"
-                android:src="@drawable/naxa_logo"
-                android:layout_width="match_parent"
-                android:layout_height="40dp" />
+                app:menu="@menu/activity_main_drawer">
 
-        </LinearLayout>
 
-    </com.google.android.material.navigation.NavigationView>
+
+            </com.google.android.material.navigation.NavigationView>
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

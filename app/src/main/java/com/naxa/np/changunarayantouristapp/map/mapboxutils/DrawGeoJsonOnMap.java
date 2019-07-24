@@ -37,6 +37,7 @@ import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonOptions;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 import com.naxa.np.changunarayantouristapp.R;
+import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -87,6 +88,7 @@ import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.textColor;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.textField;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.textIgnorePlacement;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.textSize;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.MapKey.MAP_BOARDER_OVERLAY_LAYER_ID;
 
 public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap.OnInfoWindowClickListener {
 
@@ -145,9 +147,11 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
         try {
             geojsonSourceId = geoJsonFileName;
             geojsonLayerId = geoJsonFileName;
+            SharedPreferenceUtils.getInstance(context).setValue(MAP_BOARDER_OVERLAY_LAYER_ID,geojsonLayerId);
             MARKER_IMAGE_ID = markerImageId + geoJsonFileName;
             MARKER_LAYER_ID = markerLayerId + geoJsonFileName;
             CALLOUT_LAYER_ID = markerCalloutLayerId + geoJsonFileName;
+
 
 
         } catch (NullPointerException e) {
@@ -256,8 +260,12 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
                     PropertyFactory.backgroundPattern(Property.FILL_TRANSLATE_ANCHOR_MAP),
                     PropertyFactory.circleColor(context.getResources().getColor(R.color.homeBackgroundColor)),
                     PropertyFactory.lineWidth(2f),
-                    PropertyFactory.lineColor(context.getResources().getColor(R.color.colorPrimary))
+                    PropertyFactory.lineColor(context.getResources().getColor(R.color.colorPrimary)),
+                    PropertyFactory.circleColor(context.getResources().getColor(R.color.divider_grey))
+
+
             );
+
 
             if (isChecked) {
 
