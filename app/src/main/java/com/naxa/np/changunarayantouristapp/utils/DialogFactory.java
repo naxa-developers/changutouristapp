@@ -34,6 +34,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.DrawGeoJsonOnMap;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.MapDataLayerDialogCloseListen;
+import com.naxa.np.changunarayantouristapp.network.NetworkApiInterface;
 import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.SectionMultipleItem;
 import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.SectionMultipleItemAdapter;
 
@@ -461,6 +462,15 @@ public final class DialogFactory {
         void onAudioStop();
 
         void onDialogClose();
+    }
+
+
+    public Dialog createPlaceRatingDialog(Context context, NetworkApiInterface apiInterface, PlaceRatingDialogListner listner){
+
+    }
+
+    public interface PlaceRatingDialogListner{
+        void onRating(float starRating);
     }
 
 }

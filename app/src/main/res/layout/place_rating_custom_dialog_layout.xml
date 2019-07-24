@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/activity_default_margin"
+    android:orientation="vertical"
+    android:background="@color/transparent">
+
+
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/activity_default_margin"
+        android:layout_marginEnd="@dimen/activity_default_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white_80">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/headlineText"
+            android:text="@string/rate_place"
+            android:gravity="center"/>
+
+        <RatingBar
+            android:layout_marginTop="@dimen/activity_default_margin"
+            android:id="@+id/ratingbar_dialog"
+            android:numStars="5"
+            android:isIndicator="true"
+            android:clickable="true"
+            android:focusable="true"
+            style="@style/placeRatingBarDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circle_bg"
+            android:layout_marginTop="@dimen/activity_default_margin"
+            android:layout_marginBottom="@dimen/activity_default_margin"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/submit_rating"
+            style="@style/bodyText"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btn_close_dialog"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/ic_circlular_green_close_button"
+
+        />
+
+</RelativeLayout>
