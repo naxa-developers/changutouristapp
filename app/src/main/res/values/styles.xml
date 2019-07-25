@@ -119,6 +119,14 @@
         <item name="colorAccent">#f9a825</item>
     </style>
 
+    <style name="placeRatingBarDialog" parent="Widget.AppCompat.RatingBar">
+        <!--<item name="android:progressDrawable">@drawable/custom_rating_bar_star_drawable</item>-->
+        <item name="android:max">5</item>
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+        <item name="colorAccent">#f9a825</item>
+    </style>
+
 
 
     <style name="HeaderImage">

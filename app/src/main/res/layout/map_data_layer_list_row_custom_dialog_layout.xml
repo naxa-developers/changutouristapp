@@ -19,8 +19,8 @@
         card_view:cardBackgroundColor="@color/white"
         android:outlineAmbientShadowColor="@color/colorPrimaryDark"
         android:outlineSpotShadowColor="@color/colorPrimaryDark"
-        card_view:cardCornerRadius="@dimen/spacing_xsmall"
-        card_view:cardElevation="1dp"
+        card_view:cardCornerRadius="@dimen/spacing_small"
+        card_view:cardElevation="2dp"
         card_view:cardUseCompatPadding="true"
         tools:ignore="UnusedAttribute">
 
@@ -40,11 +40,6 @@
         android:scaleType="fitCenter"
         android:padding="@dimen/spacing_small"/>
 
-    <!--<View-->
-        <!--android:layout_width="1dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:background="@color/listItemFirstBG">-->
-    <!--</View>-->
 
     <Switch
         android:id="@+id/switchMapCategoryData"
@@ -60,10 +55,6 @@
         />
     </LinearLayout>
     </androidx.cardview.widget.CardView>
-    <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="1dp"-->
-        <!--android:background="@color/listItemFirstBG">-->
-    <!--</View>-->
+
 
 </LinearLayout>

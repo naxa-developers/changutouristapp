@@ -18,5 +18,6 @@ public class UrlConstant {
         public static final String FETCH_PLACE_DETAILS= "mobileapi/mobapi/place_details_api";
         public static final String FETCH_MAYOR_MESSAGE_DETAILS= "mobileapi/mobapi/mayerMessage";
         public static final String FETCH_TOURIST_INFORMATION_GUIDE_DETAILS= "mobileapi/mobapi/touristInformation";
+        public static final String POST_PLACE_RATING= "mobileapi/mobapi/starRating";
 
 }

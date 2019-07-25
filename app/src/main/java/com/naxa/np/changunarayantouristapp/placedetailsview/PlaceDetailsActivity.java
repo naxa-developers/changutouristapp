@@ -2,6 +2,8 @@ package com.naxa.np.changunarayantouristapp.placedetailsview;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -21,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,11 +46,14 @@ import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.SortByDistance;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlaceListDetails;
 import com.naxa.np.changunarayantouristapp.placedetailsview.nearbyplaces.NearByPlacesListActivity;
+import com.naxa.np.changunarayantouristapp.placedetailsview.ratingplace.PlaceRatingResponse;
 import com.naxa.np.changunarayantouristapp.touristinformationguide.TourishInformationGuideActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
+import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.GpsUtils;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
+import com.naxa.np.changunarayantouristapp.utils.ToastUtils;
 import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 import com.naxa.np.changunarayantouristapp.videoplayer.VideoListActivity;
 import com.naxa.np.changunarayantouristapp.vrimage.VRImageViewActivity;
@@ -64,6 +70,7 @@ import java.util.List;
 import java.util.Set;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
 
@@ -83,6 +90,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
     BottomNavigationView bottomNavigationView;
     RecyclerView recyclerViewnearByPlaces;
     LinearLayout llNearByPlacesLayout;
+    RelativeLayout ratinglayout;
 
     PlacesDetailsEntity placesDetailsEntity;
     boolean isFromMainPlaceList;
@@ -181,12 +189,12 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
             btnView360Image.setVisibility(View.VISIBLE);
         }
 
+        if(placesDetailsEntity.getFID() != null && !TextUtils.isEmpty(placesDetailsEntity.getFID())){
+            ratingBar.setRating(Float.parseFloat(placesDetailsEntity.getFID()));
+        }else {
+            ratingBar.setRating(0f);
+        }
 
-//        if(isFromMainPlaceList){
-//            if(!TextUtils.isEmpty(placesDetailsEntity.getPrimaryImage())){
-//                LoadImageUtils.loadImageToViewFromSrc(ivImageMain, placesDetailsEntity.getPrimaryImage());
-//            }
-//        }else {
 
         if (!TextUtils.isEmpty(fetchPromaryImageFromList(placesDetailsEntity))) {
             LoadImageUtils.loadImageToViewFromSrc(ivImageMain, fetchPromaryImageFromList(placesDetailsEntity));
@@ -224,6 +232,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         tvPlaceDesc = findViewById(R.id.tv_place_desc);
         ivImageMain = findViewById(R.id.iv_place_details_main);
         ratingBar = findViewById(R.id.rating_bar_place);
+        ratinglayout = findViewById(R.id.rating_layout);
         recyclerViewnearByPlaces = findViewById(R.id.rv_nearby_places);
         llNearByPlacesLayout = findViewById(R.id.ll_nearby_places_layout);
         llNearByPlacesLayout.setVisibility(View.GONE);
@@ -237,6 +246,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         btnViewAllNearByPlaces.setOnClickListener(this);
         btnView360Image.setOnClickListener(this);
         btnTouristInfoGuide.setOnClickListener(this);
+        ratinglayout.setOnClickListener(this);
 
 
     }
@@ -339,8 +349,13 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
             case R.id.btn_tourist_info_guide:
                 ActivityUtil.openActivity(TourishInformationGuideActivity.class, PlaceDetailsActivity.this);
                 break;
+
+            case R.id.rating_layout:
+                submitRationDialogShow();
+                break;
         }
     }
+
 
 
     @Override
@@ -442,6 +457,79 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         }else {
             onLocationChanged(null);
         }
+    }
+
+
+    private void submitRationDialogShow() {
+//        DialogFactory dialogFactory = new DialogFactory();
+        DialogFactory.createPlaceRatingDialog(this, new DialogFactory.PlaceRatingDialogListner() {
+            @Override
+            public void onSubmitTotalRatingStar(Dialog dialog, float starRating) {
+
+                postRatingOfThisPlace(dialog, starRating);
+
+            }
+
+            @Override
+            public void onRatingClose() {
+
+            }
+        }).show();
+
+
+
+
+    }
+
+    String thankYouMessage;
+    ProgressDialog progressDialog;
+    private void postRatingOfThisPlace(Dialog dialog, float starRating) {
+
+        progressDialog = DialogFactory.createProgressDialog(PlaceDetailsActivity.this, getResources().getString(R.string.please_wait));
+        progressDialog.show();
+
+        thankYouMessage = getResources().getString(R.string.thank_you_for_rating_us);
+
+        apiInterface.postPlaceStarRating(Constant.Network.API_KEY, placesDetailsEntity.getId(), starRating+"", placesDetailsEntity.getCategoryType())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<PlaceRatingResponse>() {
+                    @Override
+                    public void onNext(PlaceRatingResponse placeRatingResponse) {
+                        progressDialog.dismiss();
+                        dialog.dismiss();
+                        if(placeRatingResponse == null){
+                            ToastUtils.showShortToast(getResources().getString(R.string.unable_to_rate));
+                            return;
+                        }
+
+                        thankYouMessage = placeRatingResponse.getMessage();
+
+                        if(placeRatingResponse.getError() == 0){
+                            placesDetailsEntity.setFID(placeRatingResponse.getAverage());
+                            ratingBar.setRating(Float.parseFloat(placeRatingResponse.getAverage()));
+                            placeDetailsEntityViewModel.insert(placesDetailsEntity);
+                            ToastUtils.showShortToast(thankYouMessage);
+                        }else {
+                            ToastUtils.showShortToast(thankYouMessage);
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.showShortToast(getResources().getString(R.string.unable_to_rate)+e.getMessage());
+                        progressDialog.dismiss();
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        ToastUtils.showShortToast(thankYouMessage);
+                        progressDialog.dismiss();
+                        dialog.dismiss();
+                    }
+                });
     }
 
 

@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.RatingBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -34,6 +35,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.DrawGeoJsonOnMap;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.MapDataLayerDialogCloseListen;
+import com.naxa.np.changunarayantouristapp.network.NetworkApiInterface;
 import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.SectionMultipleItem;
 import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.SectionMultipleItemAdapter;
 
@@ -461,6 +463,47 @@ public final class DialogFactory {
         void onAudioStop();
 
         void onDialogClose();
+    }
+
+
+    public static Dialog createPlaceRatingDialog(Context context, PlaceRatingDialogListner listner){
+
+
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        Window window = dialog.getWindow();
+        window.setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.place_rating_custom_dialog_layout);
+
+        ImageButton btnClose =  dialog.findViewById(R.id.btn_close_dialog);
+        Button btnSubmit = dialog.findViewById(R.id.btn_submit_rating);
+
+        RatingBar ratingBar = dialog.findViewById(R.id.ratingbar_dialog);
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listner.onRatingClose();
+                dialog.dismiss();
+            }
+        });
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listner.onSubmitTotalRatingStar(dialog, ratingBar.getRating());
+            }
+        });
+
+
+        return dialog;
+    }
+
+    public interface PlaceRatingDialogListner{
+        void onSubmitTotalRatingStar(Dialog dialog, float starRating);
+
+        void onRatingClose();
     }
 
 }

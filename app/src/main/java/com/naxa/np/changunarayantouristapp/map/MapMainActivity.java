@@ -104,11 +104,9 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         LocationListener, View.OnClickListener, AdapterView.OnItemSelectedListener {
 
 
-    private static final String TAG = "DemoActivity";
+    private static final String TAG = "MapMainActivity";
 
     Button btnNavigation;
-//    RecyclerView recyclerViewMapCategory;
-
     boolean isBtnGetRoutePressed = false;
 
 
@@ -172,8 +170,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
         setupToolbar(getResources().getString(R.string.explore_changunarayan_area, "Changunarayan"), false);
         initUI(savedInstanceState);
-
-
     }
 
     private void initUI(Bundle savedInstanceState) {
@@ -208,32 +204,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
         setupBottomSlidingPanel();
 
-
         mapDataLayerList = new ArrayList<>();
-
-
-//        geoJsonCategoryViewModel.getAllGeoJsonCategoryEntityByLanguage(SharedPreferenceUtils.getInstance(MapMainActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null), "food")
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new DisposableMaybeObserver<List<GeoJsonCategoryListEntity>>() {
-//                    @Override
-//                    public void onSuccess(List<GeoJsonCategoryListEntity> geoJsonCategoryListEntities) {
-//                        for (GeoJsonCategoryListEntity geoJsonCategoryListEntity : geoJsonCategoryListEntities) {
-//                            mapDataLayerList.add(new SectionMultipleItem(SectionMultipleItem.MAP_DATA_LIST, new MultiItemSectionModel(
-//                                    geoJsonCategoryListEntity.getCategoryMarker(), geoJsonCategoryListEntity.getCategoryName(), geoJsonCategoryListEntity.getCategoryTable())));
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
 
         getMapFilterLayerCategoryList();
 
@@ -266,7 +237,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                                             for (int index = 0; index < geoJsonCategoryListEntities.size(); index++) {
                                                 GeoJsonCategoryListEntity geoJsonCategoryListEntity = geoJsonCategoryListEntities.get(index);
                                                 if (index == 0) {
-                                                    mapDataLayerList.add(new SectionMultipleItem(true, geoJsonCategoryListEntity.getSubCategories(), false, false));
+                                                    mapDataLayerList.add(new SectionMultipleItem(true, geoJsonCategoryListEntity.getSubCategories(), false, false, geoJsonCategoryListEntities.size()+""));
                                                 }
                                                 mapDataLayerList.add(new SectionMultipleItem(SectionMultipleItem.MAP_DATA_LIST, new MultiItemSectionModel(
                                                         geoJsonCategoryListEntity.getCategoryMarker(), geoJsonCategoryListEntity.getCategoryName(), geoJsonCategoryListEntity.getCategoryTable())));

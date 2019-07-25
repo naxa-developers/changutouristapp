@@ -35,7 +35,7 @@ public class PlacesDetailsEntity implements Parcelable {
     @SerializedName("FID")
     @ColumnInfo(name = "fid")
     @Expose
-    private Integer FID;
+    private String FID;
 
     @SerializedName("Name")
     @ColumnInfo(name = "name")
@@ -102,6 +102,11 @@ public class PlacesDetailsEntity implements Parcelable {
     @Expose
     private String longitude;
 
+    @SerializedName("id")
+    @ColumnInfo(name = "id")
+    @Expose
+    private String id;
+
     @SerializedName("the geom")
     @ColumnInfo(name = "the_geom")
     @Expose
@@ -113,7 +118,7 @@ public class PlacesDetailsEntity implements Parcelable {
     private String qrLanguage;
 
 
-    public PlacesDetailsEntity(@NotNull String placeType, @NotNull String categoryType, Integer FID, String name, @NotNull String type, String description, String photo, String primaryImage, String images, String videos, String _360Images, String audio, String QRCode, String language, String latitude, String longitude, String theGeom, String qrLanguage) {
+    public PlacesDetailsEntity(@NotNull String placeType, @NotNull String categoryType, String FID, String name, @NotNull String type, String description, String photo, String primaryImage, String images, String videos, String _360Images, String audio, String QRCode, String language, String latitude, String longitude, String id, String theGeom, String qrLanguage) {
         this.placeType = placeType.trim();
         this.categoryType = categoryType.trim();
         this.FID = FID;
@@ -130,6 +135,7 @@ public class PlacesDetailsEntity implements Parcelable {
         this.language = language;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.id = id;
         this.theGeom = theGeom;
         this.qrLanguage = qrLanguage;
     }
@@ -280,7 +286,7 @@ public class PlacesDetailsEntity implements Parcelable {
         this.theGeom = theGeom;
     }
 
-    public Integer getFID() {
+    public String getFID() {
         return FID;
     }
 
@@ -288,7 +294,7 @@ public class PlacesDetailsEntity implements Parcelable {
         return QRCode;
     }
 
-    public void setFID(Integer FID) {
+    public void setFID(String FID) {
         this.FID = FID;
     }
 
@@ -306,7 +312,7 @@ public class PlacesDetailsEntity implements Parcelable {
         dest.writeInt(this.pid);
         dest.writeString(this.placeType);
         dest.writeString(this.categoryType);
-        dest.writeValue(this.FID);
+        dest.writeString(this.FID);
         dest.writeString(this.name);
         dest.writeString(this.type);
         dest.writeString(this.description);
@@ -320,6 +326,7 @@ public class PlacesDetailsEntity implements Parcelable {
         dest.writeString(this.language);
         dest.writeString(this.latitude);
         dest.writeString(this.longitude);
+        dest.writeString(this.id);
         dest.writeString(this.theGeom);
         dest.writeString(this.qrLanguage);
     }
@@ -328,7 +335,7 @@ public class PlacesDetailsEntity implements Parcelable {
         this.pid = in.readInt();
         this.placeType = in.readString();
         this.categoryType = in.readString();
-        this.FID = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.FID = in.readString();
         this.name = in.readString();
         this.type = in.readString();
         this.description = in.readString();
@@ -342,6 +349,7 @@ public class PlacesDetailsEntity implements Parcelable {
         this.language = in.readString();
         this.latitude = in.readString();
         this.longitude = in.readString();
+        this.id = in.readString();
         this.theGeom = in.readString();
         this.qrLanguage = in.readString();
     }
@@ -364,5 +372,13 @@ public class PlacesDetailsEntity implements Parcelable {
 
     public void setQrLanguage(String qrLanguage) {
         this.qrLanguage = qrLanguage;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
