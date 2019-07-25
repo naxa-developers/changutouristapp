@@ -5,6 +5,6 @@
 
     <corners android:radius="@dimen/spacing_mlarge" />
 
-    <solid android:color="@color/colorPrimary"></solid>
+    <solid android:color="@color/colorPrimaryLight"></solid>
 
 </shape>
