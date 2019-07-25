@@ -21,6 +21,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +47,7 @@ import com.naxa.np.changunarayantouristapp.placedetailsview.nearbyplaces.NearByP
 import com.naxa.np.changunarayantouristapp.touristinformationguide.TourishInformationGuideActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
+import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.GpsUtils;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
@@ -83,6 +85,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
     BottomNavigationView bottomNavigationView;
     RecyclerView recyclerViewnearByPlaces;
     LinearLayout llNearByPlacesLayout;
+    RelativeLayout ratinglayout;
 
     PlacesDetailsEntity placesDetailsEntity;
     boolean isFromMainPlaceList;
@@ -224,6 +227,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         tvPlaceDesc = findViewById(R.id.tv_place_desc);
         ivImageMain = findViewById(R.id.iv_place_details_main);
         ratingBar = findViewById(R.id.rating_bar_place);
+        ratinglayout = findViewById(R.id.rating_layout);
         recyclerViewnearByPlaces = findViewById(R.id.rv_nearby_places);
         llNearByPlacesLayout = findViewById(R.id.ll_nearby_places_layout);
         llNearByPlacesLayout.setVisibility(View.GONE);
@@ -237,7 +241,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         btnViewAllNearByPlaces.setOnClickListener(this);
         btnView360Image.setOnClickListener(this);
         btnTouristInfoGuide.setOnClickListener(this);
-        ratingBar.setOnClickListener(this);
+        ratinglayout.setOnClickListener(this);
 
 
     }
@@ -341,7 +345,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
                 ActivityUtil.openActivity(TourishInformationGuideActivity.class, PlaceDetailsActivity.this);
                 break;
 
-            case R.id.rating_bar_place:
+            case R.id.rating_layout:
                 submitRationDialogShow();
                 break;
         }
@@ -452,6 +456,21 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
 
 
     private void submitRationDialogShow() {
+//        DialogFactory dialogFactory = new DialogFactory();
+        DialogFactory.createPlaceRatingDialog(this, apiInterface, new DialogFactory.PlaceRatingDialogListner() {
+            @Override
+            public void onRatingSuccess(float starRating) {
+
+            }
+
+            @Override
+            public void onRatingClose() {
+
+            }
+        }).show();
+
+
+
 
     }
 

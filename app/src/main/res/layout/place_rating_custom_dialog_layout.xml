@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/white_80">
+        android:background="@color/white_95">
 
         <TextView
             android:layout_width="match_parent"
@@ -28,9 +28,6 @@
             android:layout_marginTop="@dimen/activity_default_margin"
             android:id="@+id/ratingbar_dialog"
             android:numStars="5"
-            android:isIndicator="true"
-            android:clickable="true"
-            android:focusable="true"
             style="@style/placeRatingBarDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,6 +35,7 @@
             />
 
         <Button
+            android:id="@+id/btn_submit_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/circle_bg"

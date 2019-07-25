@@ -72,6 +72,10 @@
                             android:gravity="center_vertical"
                             />
 
+                    <RelativeLayout
+                        android:id="@+id/rating_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
                     <RatingBar
                         android:id="@+id/rating_bar_place"
                         android:layout_width="wrap_content"
@@ -79,8 +83,10 @@
                         style="@style/placeRatingBar"
                         android:rating="3.5"
                         android:layout_marginStart="@dimen/default_padding"
+                        android:clickable="true"
                         android:focusable="true"
                       />
+                    </RelativeLayout>
 
                     <TextView
                         android:id="@+id/tv_place_desc"

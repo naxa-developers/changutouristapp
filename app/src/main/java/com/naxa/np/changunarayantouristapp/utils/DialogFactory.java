@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.RatingBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -465,12 +466,44 @@ public final class DialogFactory {
     }
 
 
-    public Dialog createPlaceRatingDialog(Context context, NetworkApiInterface apiInterface, PlaceRatingDialogListner listner){
+    public static Dialog createPlaceRatingDialog(Context context, NetworkApiInterface apiInterface, PlaceRatingDialogListner listner){
 
+
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        Window window = dialog.getWindow();
+        window.setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.place_rating_custom_dialog_layout);
+
+        ImageButton btnClose =  dialog.findViewById(R.id.btn_close_dialog);
+        Button btnSubmit = dialog.findViewById(R.id.btn_submit_rating);
+
+        RatingBar ratingBar = dialog.findViewById(R.id.ratingbar_dialog);
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listner.onRatingClose();
+                dialog.dismiss();
+            }
+        });
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listner.onRatingSuccess(ratingBar.getRating());
+            }
+        });
+
+
+        return dialog;
     }
 
     public interface PlaceRatingDialogListner{
-        void onRating(float starRating);
+        void onRatingSuccess(float starRating);
+
+        void onRatingClose();
     }
 
 }
