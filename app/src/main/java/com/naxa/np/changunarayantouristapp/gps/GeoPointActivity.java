@@ -126,7 +126,7 @@ public class GeoPointActivity extends AppCompatActivity implements LocationListe
         super.onResume();
 
         if (locationDialog != null) {
-            locationDialog.show();
+//            locationDialog.show();
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {

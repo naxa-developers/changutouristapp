@@ -27,7 +27,7 @@ public interface GeoJsonCategoryDao {
     Flowable<List<GeoJsonCategoryListEntity>> getGeoJsonCategoryListByLanguage(String language, String slug);
 
 
-    @Query("SELECT DISTINCT slug from GeoJsonCategoryListEntity WHERE language LIKE :language ORDER BY id ASC ")
+    @Query("SELECT DISTINCT slug from GeoJsonCategoryListEntity WHERE language LIKE :language ORDER BY slug ASC ")
     Flowable<List<String>> getGeoJsonSubCategorySlugByLanguage(String language);
 
     @Query("DELETE FROM GeoJsonCategoryListEntity")

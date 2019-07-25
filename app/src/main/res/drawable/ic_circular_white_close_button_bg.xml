@@ -6,7 +6,7 @@
             android:innerRadius="0dp"
             android:shape="oval"
             android:useLevel="false">
-            <solid android:color="@color/white_95" />
+            <solid android:color="@color/white" />
 
             <padding
                 android:bottom="2dp"

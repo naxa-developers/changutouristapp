@@ -1,82 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--<RelativeLayout
-xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--android:background="@color/transparent"-->
-    <!--&gt;-->
-
-
-<androidx.cardview.widget.CardView android:layout_width="match_parent"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="10dp"
-    android:layout_marginTop="@dimen/activity_default_margin"
-    android:backgroundTint="@color/transparent"
-    app:cardElevation="5dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/spacing_xxsmall"
-            android:background="@color/transparent"
-            >
+    android:background="@color/transparent">
 
-    <LinearLayout
-        android:layout_marginTop="@dimen/activity_default_margin"
-        android:layout_marginEnd="@dimen/activity_default_margin"
+    <androidx.cardview.widget.CardView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/white"
-        >
+        android:layout_marginTop="@dimen/activity_default_margin"
+        android:layout_marginEnd="@dimen/dp_14"
+        app:cardCornerRadius="@dimen/default_padding"
+        app:cardElevation="0dp">
 
-        <TextView
+        <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:textColor="@color/white"
-            android:text="@string/icon_explanation"
-            android:gravity="center"
-            android:textSize="@dimen/material_text_title"/>
+            android:background="@color/white"
+            android:orientation="vertical">
 
-
-        <View
-
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="@drawable/dotted_line"
-            android:visibility="gone">
-        </View>
-
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="@dimen/spacing_medium"
-            android:id="@+id/recyclerViewDialogMapDataCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white">
-        </androidx.recyclerview.widget.RecyclerView>
-    </LinearLayout>
-            <ImageButton
-                android:id="@+id/btn_close_dialog"
-                android:layout_width="34dp"
-                android:layout_height="34dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:background="@drawable/ic_circular_white_close_button_bg"
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:text="@string/icon_explanation"
+                style="@style/bodyText"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 />
 
-        </RelativeLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewDialogMapDataCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:background="@color/white">
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 
+    <ImageButton
+        android:id="@+id/btn_close_dialog"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/ic_circular_white_close_button_bg"
+        />
 
-
-
-<!--</RelativeLayout>-->
+</RelativeLayout>
 
