@@ -34,6 +34,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
 import com.naxa.np.changunarayantouristapp.MainActivity;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.audioplayer.AudioListActivity;
@@ -45,6 +46,7 @@ import com.naxa.np.changunarayantouristapp.imageviewer.ImageListGridViewActivity
 import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.SortByDistance;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlaceListDetails;
+import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlaceListDetailsResponse;
 import com.naxa.np.changunarayantouristapp.placedetailsview.nearbyplaces.NearByPlacesListActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.ratingplace.PlaceRatingResponse;
 import com.naxa.np.changunarayantouristapp.touristinformationguide.TourishInformationGuideActivity;
@@ -67,6 +69,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Observable;
 import java.util.Set;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -469,8 +472,11 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         DialogFactory.createPlaceRatingDialog(this, new DialogFactory.PlaceRatingDialogListner() {
             @Override
             public void onSubmitTotalRatingStar(Dialog dialog, float starRating) {
-
-                postRatingOfThisPlace(dialog, starRating);
+                if(isFromMainPlaceList) {
+                    postRatingOfMainPlace(dialog, starRating);
+                }else {
+                    postRatingOfThisPlace(dialog, starRating);
+                }
 
             }
 
@@ -493,6 +499,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         progressDialog.show();
 
         thankYouMessage = getResources().getString(R.string.thank_you_for_rating_us);
+
 
         apiInterface.postPlaceStarRating(Constant.Network.API_KEY, placesDetailsEntity.getId(), starRating+"", placesDetailsEntity.getCategoryType())
                 .subscribeOn(Schedulers.io())
@@ -534,6 +541,72 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
                         dialog.dismiss();
                     }
                 });
+    }
+
+    private void postRatingOfMainPlace(Dialog dialog, float starRating) {
+
+        progressDialog = DialogFactory.createProgressDialog(PlaceDetailsActivity.this, getResources().getString(R.string.please_wait));
+        progressDialog.show();
+
+        thankYouMessage = getResources().getString(R.string.thank_you_for_rating_us);
+
+
+        apiInterface.postMainPlaceStarRating(Constant.Network.API_KEY, placesDetailsEntity.getId(), starRating+"", placesDetailsEntity.getCategoryType())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<PlaceRatingResponse>() {
+                    @Override
+                    public void onNext(PlaceRatingResponse placeRatingResponse) {
+                        progressDialog.dismiss();
+                        dialog.dismiss();
+                        if(placeRatingResponse == null){
+                            ToastUtils.showShortToast(getResources().getString(R.string.unable_to_rate));
+                            return;
+                        }
+
+                        thankYouMessage = placeRatingResponse.getMessage();
+
+                        if(placeRatingResponse.getError() == 0){
+                            placesDetailsEntity.setFID(placeRatingResponse.getAverage());
+                            ratingBar.setRating(Float.parseFloat(placeRatingResponse.getAverage()));
+
+                            updateSharedPrefData(placesDetailsEntity);
+                            ToastUtils.showShortToast(thankYouMessage);
+                        }else {
+                            ToastUtils.showShortToast(thankYouMessage);
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.showShortToast(getResources().getString(R.string.unable_to_rate)+e.getMessage());
+                        progressDialog.dismiss();
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        ToastUtils.showShortToast(thankYouMessage);
+                        progressDialog.dismiss();
+                        dialog.dismiss();
+                    }
+                });
+    }
+
+    private void updateSharedPrefData(PlacesDetailsEntity placesDetailsEntity) {
+        Gson gson = new Gson();
+        MainPlaceListDetailsResponse mainPlaceListDetailsResponse = gson.fromJson(SharedPreferenceUtils.getInstance(this).getStringValue(Constant.SharedPrefKey.KEY_MAIN_PLACES_list_DETAILS, null), MainPlaceListDetailsResponse.class);
+        if(mainPlaceListDetailsResponse.getData() != null){
+            for (int index = 0 ; index <mainPlaceListDetailsResponse.getData().size() ; index++){
+                PlacesDetailsEntity placesDetailsEntity1 = mainPlaceListDetailsResponse.getData().get(index);
+                if(TextUtils.equals(placesDetailsEntity1.getPlaceType(), placesDetailsEntity.getPlaceType())){
+                    mainPlaceListDetailsResponse.getData().set(index, placesDetailsEntity);
+                }
+            }
+
+            SharedPreferenceUtils.getInstance(this).setValue(Constant.SharedPrefKey.KEY_MAIN_PLACES_list_DETAILS, gson.toJson(mainPlaceListDetailsResponse));
+        }
     }
 
 

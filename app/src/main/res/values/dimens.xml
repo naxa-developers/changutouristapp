@@ -47,6 +47,7 @@
     <dimen name="material_text_title">20sp</dimen>
     <dimen name="material_text_title2">18sp</dimen>
     <dimen name="material_text_headline">24sp</dimen>
+    <dimen name="material_text_headline1">22sp</dimen>
     <dimen name="material_text_display1">30sp</dimen>
     <dimen name="material_text_display2">34sp</dimen>
     <dimen name="material_text_display3">45sp</dimen>
