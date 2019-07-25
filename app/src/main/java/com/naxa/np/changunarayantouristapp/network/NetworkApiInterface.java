@@ -53,4 +53,8 @@ public interface NetworkApiInterface {
     @POST(UrlConstant.POST_PLACE_RATING)
     @FormUrlEncoded
     Observable<PlaceRatingResponse> postPlaceStarRating(@Field("api_key") String api_key, @Field("id") String placeId, @Field("rating") String rating, @Field("category_table") String category_type);
+
+    @POST(UrlConstant.POST_MAIN_PLACE_RATING)
+    @FormUrlEncoded
+    Observable<PlaceRatingResponse> postMainPlaceStarRating(@Field("api_key") String api_key, @Field("id") String placeId, @Field("rating") String rating, @Field("category_table") String category_type);
 }
