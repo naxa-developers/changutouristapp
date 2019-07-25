@@ -29,6 +29,7 @@
             android:id="@+id/ratingbar_dialog"
             android:numStars="5"
             style="@style/placeRatingBarDialog"
+            android:stepSize="0.1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

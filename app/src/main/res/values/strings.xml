@@ -112,5 +112,8 @@
     <string name="location_metadata">Satellites available: %1$d/24\n\nTime elapsed: %2$s</string>
     <string name="submit_rating">submit rating</string>
     <string name="rate_place">Rate Place</string>
+    <string name="thank_you_for_rating_us">Thank you for rating us.</string>
+    <string name="unable_to_rate">Unable to rate this place.</string>
+    <string name="please_wait">Please wait!!!</string>
 
 </resources>

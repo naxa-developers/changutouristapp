@@ -2,6 +2,8 @@ package com.naxa.np.changunarayantouristapp.placedetailsview;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -44,12 +46,14 @@ import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.SortByDistance;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlaceListDetails;
 import com.naxa.np.changunarayantouristapp.placedetailsview.nearbyplaces.NearByPlacesListActivity;
+import com.naxa.np.changunarayantouristapp.placedetailsview.ratingplace.PlaceRatingResponse;
 import com.naxa.np.changunarayantouristapp.touristinformationguide.TourishInformationGuideActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.GpsUtils;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
+import com.naxa.np.changunarayantouristapp.utils.ToastUtils;
 import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 import com.naxa.np.changunarayantouristapp.videoplayer.VideoListActivity;
 import com.naxa.np.changunarayantouristapp.vrimage.VRImageViewActivity;
@@ -66,6 +70,7 @@ import java.util.List;
 import java.util.Set;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
 
@@ -457,9 +462,11 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
 
     private void submitRationDialogShow() {
 //        DialogFactory dialogFactory = new DialogFactory();
-        DialogFactory.createPlaceRatingDialog(this, apiInterface, new DialogFactory.PlaceRatingDialogListner() {
+        DialogFactory.createPlaceRatingDialog(this, new DialogFactory.PlaceRatingDialogListner() {
             @Override
-            public void onRatingSuccess(float starRating) {
+            public void onSubmitTotalRatingStar(Dialog dialog, float starRating) {
+
+                postRatingOfThisPlace(dialog, starRating);
 
             }
 
@@ -474,7 +481,56 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
 
     }
 
+    String thankYouMessage;
+    ProgressDialog progressDialog;
+    private void postRatingOfThisPlace(Dialog dialog, float starRating) {
 
+        progressDialog = DialogFactory.createProgressDialog(PlaceDetailsActivity.this, getResources().getString(R.string.please_wait));
+        progressDialog.show();
+
+        thankYouMessage = getResources().getString(R.string.thank_you_for_rating_us);
+
+        apiInterface.postPlaceStarRating(Constant.Network.API_KEY, placesDetailsEntity.getId(), starRating+"", placesDetailsEntity.getCategoryType())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<PlaceRatingResponse>() {
+                    @Override
+                    public void onNext(PlaceRatingResponse placeRatingResponse) {
+                        progressDialog.dismiss();
+                        dialog.dismiss();
+                        if(placeRatingResponse == null){
+                            ToastUtils.showShortToast(getResources().getString(R.string.unable_to_rate));
+                            return;
+                        }
+
+                        thankYouMessage = placeRatingResponse.getMessage();
+
+                        if(placeRatingResponse.getError() == 0){
+                            placesDetailsEntity.setFID(placeRatingResponse.getAverage());
+                            ratingBar.setRating(Float.parseFloat(placeRatingResponse.getAverage()));
+                            placeDetailsEntityViewModel.insert(placesDetailsEntity);
+                            ToastUtils.showShortToast(thankYouMessage);
+                        }else {
+                            ToastUtils.showShortToast(thankYouMessage);
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.showShortToast(getResources().getString(R.string.unable_to_rate)+e.getMessage());
+                        progressDialog.dismiss();
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        ToastUtils.showShortToast(thankYouMessage);
+                        progressDialog.dismiss();
+                        dialog.dismiss();
+                    }
+                });
+    }
 
 
 }

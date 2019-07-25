@@ -120,7 +120,7 @@
     </style>
 
     <style name="placeRatingBarDialog" parent="Widget.AppCompat.RatingBar">
-        <!--<item name="android:progressDrawable">@drawable/food_rating_bar_full</item>-->
+        <!--<item name="android:progressDrawable">@drawable/custom_rating_bar_star_drawable</item>-->
         <item name="android:max">5</item>
         <item name="colorControlNormal">@color/colorAccent</item>
         <item name="colorControlActivated">@color/colorPrimary</item>

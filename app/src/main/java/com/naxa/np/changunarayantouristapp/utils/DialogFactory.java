@@ -466,7 +466,7 @@ public final class DialogFactory {
     }
 
 
-    public static Dialog createPlaceRatingDialog(Context context, NetworkApiInterface apiInterface, PlaceRatingDialogListner listner){
+    public static Dialog createPlaceRatingDialog(Context context, PlaceRatingDialogListner listner){
 
 
         final Dialog dialog = new Dialog(context);
@@ -492,7 +492,7 @@ public final class DialogFactory {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listner.onRatingSuccess(ratingBar.getRating());
+                listner.onSubmitTotalRatingStar(dialog, ratingBar.getRating());
             }
         });
 
@@ -501,7 +501,7 @@ public final class DialogFactory {
     }
 
     public interface PlaceRatingDialogListner{
-        void onRatingSuccess(float starRating);
+        void onSubmitTotalRatingStar(Dialog dialog, float starRating);
 
         void onRatingClose();
     }
