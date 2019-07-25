@@ -237,7 +237,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                                             for (int index = 0; index < geoJsonCategoryListEntities.size(); index++) {
                                                 GeoJsonCategoryListEntity geoJsonCategoryListEntity = geoJsonCategoryListEntities.get(index);
                                                 if (index == 0) {
-                                                    mapDataLayerList.add(new SectionMultipleItem(true, geoJsonCategoryListEntity.getSubCategories(), false, false));
+                                                    mapDataLayerList.add(new SectionMultipleItem(true, geoJsonCategoryListEntity.getSubCategories(), false, false, geoJsonCategoryListEntities.size()+""));
                                                 }
                                                 mapDataLayerList.add(new SectionMultipleItem(SectionMultipleItem.MAP_DATA_LIST, new MultiItemSectionModel(
                                                         geoJsonCategoryListEntity.getCategoryMarker(), geoJsonCategoryListEntity.getCategoryName(), geoJsonCategoryListEntity.getCategoryTable())));

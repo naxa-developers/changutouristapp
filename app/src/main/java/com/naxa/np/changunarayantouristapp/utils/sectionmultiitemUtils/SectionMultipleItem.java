@@ -14,11 +14,13 @@ public class SectionMultipleItem extends SectionMultiEntity<MultiItemSectionMode
     private boolean isMore;
     private boolean isHeadListNo;
     private MultiItemSectionModel multiItemSectionModel;
+    private String headerNo;
 
-    public SectionMultipleItem(boolean isHeader, String header, boolean isMore, boolean isHeadListNo) {
+    public SectionMultipleItem(boolean isHeader, String header, boolean isMore, boolean isHeadListNo, String headerNo) {
         super(isHeader, header);
         this.isMore = isMore;
         this.isHeadListNo = isHeadListNo;
+        this.headerNo = headerNo;
     }
 
     public SectionMultipleItem(int itemType, MultiItemSectionModel multiItemSectionModel) {
@@ -55,5 +57,13 @@ public class SectionMultipleItem extends SectionMultiEntity<MultiItemSectionMode
 
     public void setHeadListNo(boolean headListNo) {
         isHeadListNo = headListNo;
+    }
+
+    public String getHeaderNo() {
+        return headerNo;
+    }
+
+    public void setHeaderNo(String headerNo) {
+        this.headerNo = headerNo;
     }
 }

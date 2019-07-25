@@ -1,5 +1,6 @@
 package com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -47,6 +48,12 @@ public class SectionMultipleItemAdapter extends BaseSectionMultiItemQuickAdapter
         // deal with header viewHolder
         TextView view = helper.getView(R.id.header_no);
         view.setVisibility(item.isHeadListNo() ? View.VISIBLE : View.GONE);
+
+
+        if(!TextUtils.isEmpty(item.getHeaderNo())){
+            helper.setVisible(R.id.header_no, true);
+            helper.setText(R.id.header_no, item.getHeaderNo());
+        }
 
         helper.setText(R.id.header, item.header);
         helper.setVisible(R.id.more, item.isMore());

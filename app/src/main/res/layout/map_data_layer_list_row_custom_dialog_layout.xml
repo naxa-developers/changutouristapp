@@ -19,8 +19,8 @@
         card_view:cardBackgroundColor="@color/white"
         android:outlineAmbientShadowColor="@color/colorPrimaryDark"
         android:outlineSpotShadowColor="@color/colorPrimaryDark"
-        card_view:cardCornerRadius="@dimen/spacing_xsmall"
-        card_view:cardElevation="1dp"
+        card_view:cardCornerRadius="@dimen/spacing_small"
+        card_view:cardElevation="2dp"
         card_view:cardUseCompatPadding="true"
         tools:ignore="UnusedAttribute">
 
