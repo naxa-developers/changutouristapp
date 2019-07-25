@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -54,7 +55,7 @@ import static com.naxa.np.changunarayantouristapp.utils.Constant.Network.API_KEY
 public class MainActivity extends BaseActivity implements View.OnClickListener, DataDonwloadView, FileDownloadView, NavigationView.OnNavigationItemSelectedListener {
 
 
-    ImageButton btnScanQR, btnViewOnMap;
+    Button btnScanQR, btnViewOnMap;
     GeoJsonCategoryViewModel geoJsonCategoryViewModel;
     GeoJsonListViewModel geoJsonListViewModel;
     PlaceDetailsEntityViewModel placeDetailsEntityViewModel;

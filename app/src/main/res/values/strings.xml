@@ -115,5 +115,6 @@
     <string name="thank_you_for_rating_us">Thank you for rating us.</string>
     <string name="unable_to_rate">Unable to rate this place.</string>
     <string name="please_wait">Please wait!!!</string>
+    <string name="scan">Scan</string>
 
 </resources>
