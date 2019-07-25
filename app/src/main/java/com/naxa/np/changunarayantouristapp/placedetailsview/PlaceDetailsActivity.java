@@ -190,7 +190,11 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         }
 
         if(placesDetailsEntity.getFID() != null && !TextUtils.isEmpty(placesDetailsEntity.getFID())){
-            ratingBar.setRating(Float.parseFloat(placesDetailsEntity.getFID()));
+            try {
+                ratingBar.setRating(Float.parseFloat(placesDetailsEntity.getFID()));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }else {
             ratingBar.setRating(0f);
         }
