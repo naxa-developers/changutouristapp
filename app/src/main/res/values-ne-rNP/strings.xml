@@ -61,7 +61,7 @@
     <string name="audios">अडियो</string>
     <string name="map">नक्सा</string>
     ​
-    <string name="fetching_file">Getting %1$s.\n\Geojson data %2$s of %3$s file(s)</string>
+    <string name="fetching_file">Getting %1$s.\n\nGeojson data %2$s of %3$s file(s)</string>
     <string name="changunarayan_boundary">चाङुनारायण  </string>
     <string name="nagarkot_boundary">नगकोट </string>
     <string name="select_language">भाषा छनोट गर्नुस</string>
@@ -86,31 +86,31 @@
     <string name="settings">सेटिङ्हरू</string>
     <string name="about_us">हाम्रोबारे</string>
     ​
-    <string name = "navigation_drawer_open"> नेभिगेसन ड्रयर खोल्नुहोस् </ string>
-    <string name = "navigation_drawer_close"> बन्द नेविगेसन ड्रयर </ string>
-    <string name = "nav_header_title"> समीर दाङ </ string>
-    <string name = "nav_header_subtitle"> samirdangal@gmail.com </ string>
-    <string name = "nav_header_desc"> नेभिगेसन हेडर </ string>
-    <string name = "changunarayan"> चाङुनारायण विरासत स्थल </ string>
-    <string name = "currently_there_is_no_data_available"> हाल, कुनै डेटा उपलब्ध छैन। </ string>
-    <string name = "explore_changunarayan_area">%s क्षेत्र अन्वेषण गर्नुहोस् </ string>
-    <string name = "tourist_information_guide"> पर्यटक जानकारी गाइड </ string>
-    <string name = "get_started"> सुरू गर्नुहोस् </ string>
-    <string name = "welcome_to_changunarayan"> चाङुनारायणमा स्वागत छ </ string>
-    <string name = "your_virtual_guide"> तपाईको भर्चुअल गाइड। </ string>
+    <string name = "navigation_drawer_open"> नेभिगेसन ड्रयर खोल्नुहोस् </string>
+    <string name = "navigation_drawer_close"> बन्द नेविगेसन ड्रयर </string>
+    <string name = "nav_header_title"> समीर दाङ </string>
+    <string name = "nav_header_subtitle"> samirdangal@gmail.com </string>
+    <string name = "nav_header_desc"> नेभिगेसन हेडर </string>
+    <string name = "changunarayan"> चाङुनारायण विरासत स्थल </string>
+    <string name = "currently_there_is_no_data_available"> हाल कुनै डेटा उपलब्ध छैन। </string>
+    <string name = "explore_changunarayan_area">%s क्षेत्र अन्वेषण गर्नुहोस् </string>
+    <string name = "tourist_information_guide"> पर्यटक जानकारी गाइड </string>
+    <string name = "get_started"> सुरू गर्नुहोस् </string>
+    <string name = "welcome_to_changunarayan"> चाङुनारायणमा स्वागत छ </string>
+    <string name = "your_virtual_guide"> तपाईको भर्चुअल गाइड। </string>
     ​
     ​
-    <string name = "get_location"> रेकर्ड स्थान </ string>
-    <string name = "getting_location"> स्थान लोड हुँदैछ </ string>
-    <string name = "please_wait_long"> कृपया प्रतीक्षा गर्नुहोस्। यसले केही मिनेट लिन सक्छ। </ String>
-    <string name = "save_point"> जिप प्वाइन्ट </ string> बचत गर्नुहोस्
-    <string name = "get_point"> जिएप्ट शुरू गर्नुहोस् </ string>
-    <string name = "geopoint_view_read_only"> ज्योतिष </ string> हेर्नुहोस्
-    <string name = "cancel_location"> रद्द गर्नुहोस् </ string>
-    <string name = "provider_disabled_error"> माफ गर्नुहोस्, स्थान प्रदायक असक्षम छन्! </ string>
-    <string name = "location_provider_accuracy">%1$s प्रयोग गर्दै। शुद्धता %2$s मीटर छ </ string>
-    <string name = "location_accuracy"> शुद्धता %f$s m हो</ string>
-    <string name = "location_metadata"> उपग्रह उपलब्ध: %1$d / 2४ \n \n समय सीमा: %2$s </ string>
+    <string name = "get_location"> रेकर्ड स्थान </string>
+    <string name = "getting_location"> स्थान लोड हुँदैछ </string>
+    <string name = "please_wait_long"> कृपया प्रतीक्षा गर्नुहोस्। यसले केही मिनेट लिन सक्छ। </string>
+    <string name = "save_point"> जिप प्वाइन्ट </string> बचत गर्नुहोस्
+    <string name = "get_point"> जिएप्ट शुरू गर्नुहोस् </string>
+    <string name = "geopoint_view_read_only"> ज्योतिष </string> हेर्नुहोस्
+    <string name = "cancel_location"> रद्द गर्नुहोस् </string>
+    <string name = "provider_disabled_error"> माफ गर्नुहोस्, स्थान प्रदायक असक्षम छन्! </string>
+    <string name = "location_provider_accuracy">%1$s प्रयोग गर्दै। शुद्धता %2$s मीटर छ </string>
+    <string name = "location_accuracy"> शुद्धता %f$s m हो</string>
+    <string name = "location_metadata"> उपग्रह उपलब्ध: %1$d / 2४ \n \n समय सीमा: %2$s </string>
 
     <string name="submit_rating">रेटिंग पठाउनुहोस</string>
     <string name="rate_place">ठाउँको रेट </string>

@@ -1,8 +1,10 @@
 package com.naxa.np.changunarayantouristapp.selectlanguage;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -11,6 +13,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.franmontiel.localechanger.LocaleChanger;
+import com.franmontiel.localechanger.utils.ActivityRecreationHelper;
 import com.google.gson.Gson;
 import com.naxa.np.changunarayantouristapp.MainActivity;
 import com.naxa.np.changunarayantouristapp.R;
@@ -25,6 +29,7 @@ import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
@@ -160,11 +165,8 @@ public class SelectlanguageActivity extends BaseActivity {
                         Log.d(TAG, "onClick: " + languageDetails.getName());
                         SharedPreferenceUtils.getInstance(SelectlanguageActivity.this).setValue(Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE, languageDetails.getAlias());
 
-                        if (isFromMainActivity) {
-                            launchMainActivity();
-                        } else {
-                            launchLoginScreen();
-                        }
+                        changeLocale(languageDetails.getAlias());
+
                     }
                 });
 
@@ -176,6 +178,29 @@ public class SelectlanguageActivity extends BaseActivity {
             }
         };
         recyclerView.setAdapter(adapter);
+    }
+
+    private void changeLocale(String alias) {
+//        String language = "en";
+//        Log.d(TAG, "changeLocale: "+alias);
+//        if(TextUtils.equals(alias, "nep")) {
+//            language = "ne";
+//        }
+
+        LocaleChanger.setLocale(new Locale("en", "US"));
+        if(TextUtils.equals(alias, "nep")) {
+            LocaleChanger.setLocale(new Locale("ne", "NP"));
+        }
+//        ActivityRecreationHelper.recreate(SelectlanguageActivity.this, true);
+
+        if (isFromMainActivity) {
+            launchMainActivity();
+        } else {
+            launchLoginScreen();
+        }
+//        LocaleHelper.setLocale(SelectlanguageActivity.this, language);
+//        //It is required to recreate the activity to reflect the change in UI.
+//        recreate();
     }
 
 
@@ -220,6 +245,12 @@ public class SelectlanguageActivity extends BaseActivity {
                     public void onPermissionDenied() {
                     }
                 });
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        newBase = LocaleChanger.configureBaseContext(newBase);
+        super.attachBaseContext(newBase);
     }
 
 }
