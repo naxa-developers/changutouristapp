@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
@@ -16,27 +17,33 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
-import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
-import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntityViewModel;
+import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListEntity;
+import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonCategoryViewModel;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.mapdialogs.SelectMaincategoryViewHolder;
-import com.naxa.np.changunarayantouristapp.selectlanguage.LanguageDetails;
-import com.naxa.np.changunarayantouristapp.selectlanguage.SelectLanguageViewHolder;
-import com.naxa.np.changunarayantouristapp.selectlanguage.SelectlanguageActivity;
-import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
+import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.MultiItemSectionModel;
 import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.SectionMultipleItem;
 import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.SectionMultipleItemAdapter;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subscribers.DisposableSubscriber;
+
+import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE;
 
 public class MapDialogs {
     private static final String TAG = "MapDialogs";
 
+    public MapDialogs() {
+    }
 
 
-    public static Dialog createMapDataLayerDialog(@NonNull Context context, PlaceDetailsEntityViewModel placeDetailsEntityViewModel,
+    public  Dialog createMapDataLayerDialog(@NonNull Context context, GeoJsonCategoryViewModel geoJsonCategoryViewModel,
                                                   List<String> mainCategoryList, boolean isFirsttime, @NonNull MapDataLayerDialogCloseListen listner) {
 
         final Dialog dialog = new Dialog(context);
@@ -46,9 +53,9 @@ public class MapDialogs {
         window.setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setContentView(R.layout.map_data_filter_custom_dialog_layout);
 
-//        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-//        lp.copyFrom(dialog.getWindow().getAttributes());
-//        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
 //        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
 
 //        List<SectionMultipleItem> mapDataCategoryArrayList
@@ -70,26 +77,23 @@ public class MapDialogs {
             }
         });
 
-        setUpMainCategoryRecycler(context, recyclerViewMainCategory, placeDetailsEntityViewModel, mainCategoryList);
-
-//        setUpFilterlayerRecyclerView(recyclerView, );
-
+        setUpMainCategoryRecycler(context, recyclerViewMainCategory, geoJsonCategoryViewModel, mainCategoryList, recyclerView);
 
         if (isFirsttime) {
             listner.isFirstTime();
         }
-        //        dialog.getWindow().setAttributes(lp);
+                dialog.getWindow().setAttributes(lp);
         return dialog;
     }
 
 
-    private static void setUpMainCategoryRecycler(Context context, RecyclerView recyclerViewMainCategory, PlaceDetailsEntityViewModel placeDetailsEntityViewModel, List<String> mainCategoryList) {
+    private void setUpMainCategoryRecycler(Context context, RecyclerView recyclerViewMainCategory, GeoJsonCategoryViewModel geoJsonCategoryViewModel, List<String> mainCategoryList, RecyclerView recyclerViewMapLayer) {
 
         if (mainCategoryList == null) {
             return;
         }
         BaseRecyclerViewAdapter<String, SelectMaincategoryViewHolder> adapter;
-        LinearLayoutManager manager = new LinearLayoutManager(context);
+        LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false );
         recyclerViewMainCategory.setLayoutManager(manager);
         recyclerViewMainCategory.setItemAnimator(new DefaultItemAnimator());
         adapter = new BaseRecyclerViewAdapter<String, SelectMaincategoryViewHolder>(mainCategoryList, R.layout.select_main_category_map_layer_dialog) {
@@ -100,7 +104,9 @@ public class MapDialogs {
                 selectMaincategoryViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.d(TAG, "onClick: " + maincategory);
+//                        Log.d(TAG, "onClick: " + maincategory);
+
+                        fetchCategoryWiseLayerDataFromDatabase(context, maincategory, geoJsonCategoryViewModel, recyclerViewMapLayer);
 
                     }
                 });
@@ -115,9 +121,48 @@ public class MapDialogs {
         recyclerViewMainCategory.setAdapter(adapter);
     }
 
+    private void fetchCategoryWiseLayerDataFromDatabase(Context context, String maincategory, @NotNull GeoJsonCategoryViewModel geoJsonCategoryViewModel, RecyclerView recyclerView) {
+        // 1. create entityList which item data extend SectionMultiEntity
+         List<SectionMultipleItem> mapDataLayerList = new ArrayList<>();
+
+        geoJsonCategoryViewModel.getAllGeoJsonCategoryEntityByLanguage(SharedPreferenceUtils.getInstance(context).getStringValue(KEY_SELECTED_APP_LANGUAGE, null), maincategory)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableSubscriber<List<GeoJsonCategoryListEntity>>() {
+                    @Override
+                    public void onNext(List<GeoJsonCategoryListEntity> geoJsonCategoryListEntities) {
+
+                        if (geoJsonCategoryListEntities != null && geoJsonCategoryListEntities.size() > 0) {
+                            Log.d(TAG, "onNext: "+geoJsonCategoryListEntities.size());
+                            for (int index = 0; index < geoJsonCategoryListEntities.size(); index++) {
+                                GeoJsonCategoryListEntity geoJsonCategoryListEntity = geoJsonCategoryListEntities.get(index);
+                                if (index == 0) {
+                                    mapDataLayerList.add(new SectionMultipleItem(true, geoJsonCategoryListEntity.getSubCategories(), false, false, geoJsonCategoryListEntities.size()+""));
+                                }
+                                mapDataLayerList.add(new SectionMultipleItem(SectionMultipleItem.MAP_DATA_LIST, new MultiItemSectionModel(
+                                        geoJsonCategoryListEntity.getCategoryMarker(), geoJsonCategoryListEntity.getCategoryName(), geoJsonCategoryListEntity.getCategoryTable())));
+                            }
+
+
+                            setUpFilterlayerRecyclerView(recyclerView, mapDataLayerList);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
 
 
 
+
+    }
 
 
     private static void setUpFilterlayerRecyclerView(@NotNull RecyclerView recyclerView, List<SectionMultipleItem> mapDataCategoryArrayList) {

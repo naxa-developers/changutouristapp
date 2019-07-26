@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/activity_default_margin"
     android:background="@color/transparent">
 
     <androidx.cardview.widget.CardView
@@ -43,6 +44,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_medium"
+                    android:layout_marginStart="@dimen/activity_default_margin"
                     android:background="@color/white">
                 </androidx.recyclerview.widget.RecyclerView>
 
