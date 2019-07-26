@@ -119,6 +119,9 @@ public class MapDialogs {
             }
         };
         recyclerViewMainCategory.setAdapter(adapter);
+
+        fetchCategoryWiseLayerDataFromDatabase(context, mainCategoryList.get(0), geoJsonCategoryViewModel, recyclerViewMapLayer);
+
     }
 
     private void fetchCategoryWiseLayerDataFromDatabase(Context context, String maincategory, @NotNull GeoJsonCategoryViewModel geoJsonCategoryViewModel, RecyclerView recyclerView) {
