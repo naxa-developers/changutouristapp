@@ -58,6 +58,7 @@ import com.naxa.np.changunarayantouristapp.map.mapboxutils.DrawGeoJsonOnMap;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.DrawMarkerOnMap;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.DrawRouteOnMap;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.MapDataLayerDialogCloseListen;
+import com.naxa.np.changunarayantouristapp.map.mapboxutils.MapDialogs;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.MapboxBaseStyleUtils;
 import com.naxa.np.changunarayantouristapp.placedetailsview.PlaceDetailsActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlacesListActivity;
@@ -155,8 +156,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     private NavigationMapRoute navigationMapRoute;
     SharedPreferenceUtils sharedPreferenceUtils;
 
-    // 1. create entityList which item data extend SectionMultiEntity
-    private List<SectionMultipleItem> mapDataLayerList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,6 +167,9 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         gson = new Gson();
         geoJsonCategoryViewModel = ViewModelProviders.of(this).get(GeoJsonCategoryViewModel.class);
         placeDetailsEntityViewModel = ViewModelProviders.of(this).get(PlaceDetailsEntityViewModel.class);
+
+        getMapFilterLayerCategoryList();
+
 
         setupToolbar(getResources().getString(R.string.explore_changunarayan_area, "Changunarayan"), false);
         initUI(savedInstanceState);
@@ -204,62 +207,31 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
         setupBottomSlidingPanel();
 
-        mapDataLayerList = new ArrayList<>();
-
-        getMapFilterLayerCategoryList();
-
         netIntent(getIntent());
 
     }
 
+    List<String> maincategoryList = new ArrayList<>();
     private void getMapFilterLayerCategoryList() {
         geoJsonCategoryViewModel.getGeoJsonSubCategorySlugByLanguage(SharedPreferenceUtils.getInstance(MapMainActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null))
-                .observeOn(Schedulers.computation())
-                .subscribeOn(Schedulers.computation())
-                .flatMapIterable(new Function<List<String>, List<String>>() {
+                .observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new DisposableSubscriber<List<String>>() {
                     @Override
-                    public List<String> apply(List<String> stringList) throws Exception {
-                        return stringList;
+                    public void onNext(List<String> stringList) {
+                        maincategoryList = stringList;
                     }
-                })
-                .map(new Function<String, String>() {
+
                     @Override
-                    public String apply(String slug) throws Exception {
+                    public void onError(Throwable t) {
 
-                        geoJsonCategoryViewModel.getAllGeoJsonCategoryEntityByLanguage(SharedPreferenceUtils.getInstance(MapMainActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null), slug)
-                                .subscribeOn(Schedulers.computation())
-                                .observeOn(Schedulers.computation())
-                                .subscribe(new DisposableSubscriber<List<GeoJsonCategoryListEntity>>() {
-                                    @Override
-                                    public void onNext(List<GeoJsonCategoryListEntity> geoJsonCategoryListEntities) {
-
-                                        if (geoJsonCategoryListEntities != null && geoJsonCategoryListEntities.size() > 0) {
-                                            for (int index = 0; index < geoJsonCategoryListEntities.size(); index++) {
-                                                GeoJsonCategoryListEntity geoJsonCategoryListEntity = geoJsonCategoryListEntities.get(index);
-                                                if (index == 0) {
-                                                    mapDataLayerList.add(new SectionMultipleItem(true, geoJsonCategoryListEntity.getSubCategories(), false, false, geoJsonCategoryListEntities.size()+""));
-                                                }
-                                                mapDataLayerList.add(new SectionMultipleItem(SectionMultipleItem.MAP_DATA_LIST, new MultiItemSectionModel(
-                                                        geoJsonCategoryListEntity.getCategoryMarker(), geoJsonCategoryListEntity.getCategoryName(), geoJsonCategoryListEntity.getCategoryTable())));
-                                            }
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onError(Throwable t) {
-
-                                    }
-
-                                    @Override
-                                    public void onComplete() {
-
-                                    }
-                                });
-
-                        return slug;
                     }
-                })
-                .subscribe();
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
 
 
     }
@@ -430,13 +402,14 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
     }
 
-    private Dialog setupMapDataLayerDialog(boolean isFirstTime) {
+    private Dialog setupMapDataLayerDialog(boolean isFirstTime, List<String> maincategoryList) {
 
         if (mapboxMap == null) {
             Toast.makeText(this, "Your map is not ready yet", Toast.LENGTH_SHORT).show();
         }
+        MapDialogs mapDialogs = new MapDialogs();
 
-        return DialogFactory.createMapDataLayerDialog(MapMainActivity.this, mapDataLayerList, drawGeoJsonOnMap, isFirstTime, new MapDataLayerDialogCloseListen() {
+        return mapDialogs.createMapDataLayerDialog(MapMainActivity.this, geoJsonCategoryViewModel, maincategoryList, isFirstTime, new MapDataLayerDialogCloseListen() {
                     @Override
                     public void onDialogClose() {
                         drawCategoryWiseMarkersOnMap();
@@ -562,7 +535,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         initSpinner();
 
 
-        setupMapDataLayerDialog(true).hide();
+        setupMapDataLayerDialog(true, maincategoryList).hide();
 
 
         if (isFromIntent) {
@@ -918,7 +891,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 mapboxMap.clear();
                 setupMapOptionsDialog().hide();
                 mapDataLayerListCheckedEventList.clear();
-                setupMapDataLayerDialog(false).show();
+                setupMapDataLayerDialog(false, maincategoryList).show();
                 break;
 
             case R.id.btnMapLayerSwitch:

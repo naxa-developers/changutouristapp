@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/activity_default_margin"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        app:cardCornerRadius="@dimen/default_padding"
+        android:backgroundTint="@color/sectionrecyclerHeadBG"
+        app:cardElevation="3dp">
+
+
+        <TextView
+            android:id="@+id/tv_select_map_layer_main_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/english"
+            style="@style/LanguageSelectorTextStyle"
+            android:layout_margin="@dimen/spacing_xxsmall"
+            android:background="@color/sectionrecyclerHeadBG"/>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
