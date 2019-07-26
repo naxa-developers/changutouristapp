@@ -2,7 +2,6 @@ package com.naxa.np.changunarayantouristapp.map.mapboxutils;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -58,7 +57,6 @@ public class MapDialogs {
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
 //        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
 
-//        List<SectionMultipleItem> mapDataCategoryArrayList
 
         RecyclerView recyclerView =  dialog.findViewById(R.id.recyclerViewDialogMapDataCategory);
         RecyclerView recyclerViewMainCategory =  dialog.findViewById(R.id.recyclerViewDialogMapDataMainCategory);
@@ -105,7 +103,6 @@ public class MapDialogs {
                     @Override
                     public void onClick(View v) {
 //                        Log.d(TAG, "onClick: " + maincategory);
-
                         fetchCategoryWiseLayerDataFromDatabase(context, maincategory, geoJsonCategoryViewModel, recyclerViewMapLayer);
 
                     }
@@ -136,7 +133,7 @@ public class MapDialogs {
                     public void onNext(List<GeoJsonCategoryListEntity> geoJsonCategoryListEntities) {
 
                         if (geoJsonCategoryListEntities != null && geoJsonCategoryListEntities.size() > 0) {
-                            Log.d(TAG, "onNext: "+geoJsonCategoryListEntities.size());
+//                            Log.d(TAG, "onNext: "+geoJsonCategoryListEntities.size());
                             for (int index = 0; index < geoJsonCategoryListEntities.size(); index++) {
                                 GeoJsonCategoryListEntity geoJsonCategoryListEntity = geoJsonCategoryListEntities.get(index);
                                 if (index == 0) {
@@ -162,9 +159,6 @@ public class MapDialogs {
                     }
                 });
 
-
-
-
     }
 
 
@@ -179,7 +173,7 @@ public class MapDialogs {
                     case R.id.card_view:
                         if (item.getMultiItemSectionModel() != null) {
                             if (item.getMultiItemSectionModel().getData_value().equals("") || item.getMultiItemSectionModel().getData_value() == null) {
-                                Log.d(TAG, "onItemChildClick: null value ");
+//                                Log.d(TAG, "onItemChildClick: null value ");
                                 return;
                             }
 
