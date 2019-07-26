@@ -33,12 +33,27 @@
                 android:textStyle="bold"
                 />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:orientation="horizontal">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewDialogMapDataMainCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:background="@color/white">
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </LinearLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewDialogMapDataCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_medium"
-                android:background="@color/white">
+                android:layout_marginTop="@dimen/activity_default_margin"
+                android:background="@color/white_95">
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
