@@ -26,6 +26,8 @@ import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.network.NetworkApiClient;
 import com.naxa.np.changunarayantouristapp.network.NetworkApiInterface;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
+import com.naxa.np.changunarayantouristapp.utils.languageswitchutils.AppLocale;
+import com.naxa.np.changunarayantouristapp.utils.languageswitchutils.MyContextWrapper;
 
 import java.util.ArrayList;
 
@@ -180,5 +182,10 @@ public class BaseActivity extends AppCompatActivity {
         LocaleChanger.onConfigurationChanged();
     }
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        newBase = LocaleChanger.configureBaseContext(newBase);
+        super.attachBaseContext(MyContextWrapper.wrap(newBase, AppLocale.changeLocale()));
+    }
 
 }

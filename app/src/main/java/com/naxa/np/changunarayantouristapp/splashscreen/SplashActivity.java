@@ -12,11 +12,14 @@ import com.franmontiel.localechanger.LocaleChanger;
 import com.franmontiel.localechanger.utils.ActivityRecreationHelper;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
+import com.naxa.np.changunarayantouristapp.common.ChangunarayanTouristApp;
 import com.naxa.np.changunarayantouristapp.mayormessage.MayorMessageActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.CreateAppMainFolderUtils;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
+import com.naxa.np.changunarayantouristapp.utils.languageswitchutils.AppLocale;
+import com.naxa.np.changunarayantouristapp.utils.languageswitchutils.MyContextWrapper;
 
 import java.util.Locale;
 
@@ -41,30 +44,6 @@ public class SplashActivity extends BaseActivity {
         checkStoragePermission();
 
     }
-
-    private void changeLocale() {
-        String alias = "en";
-       String appLanguage  = SharedPreferenceUtils.getInstance(SplashActivity.this).getStringValue(Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE, null);
-       if(!TextUtils.isEmpty(appLanguage)){
-           alias = appLanguage;
-       }
-
-        changeAppLocale(alias);
-    }
-
-    private void changeAppLocale(String alias) {
-//        String language = "en";
-
-        LocaleChanger.setLocale(new Locale("en", "US"));
-        if(TextUtils.equals(alias, "nep")) {
-            LocaleChanger.setLocale(new Locale("ne", "NP"));
-        }
-//        ActivityRecreationHelper.recreate(SplashActivity.this, true);
-//        LocaleHelper.setLocale(SplashActivity.this, language);
-        //It is required to recreate the activity to reflect the change in UI.
-//        recreate();
-    }
-
 
     private void makeActivityFullScreen() {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -100,7 +79,8 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void run() {
                 //Do something after 100ms
-                changeLocale();
+                AppLocale.changeLocale();
+                ActivityRecreationHelper.recreate(SplashActivity.this, true);
 
                 if (SharedPreferenceUtils.getInstance(SplashActivity.this).getBoolanValue(IS_APP_FIRST_TIME_LAUNCH, true)) {
                     SharedPreferenceUtils.getInstance(SplashActivity.this).setValue(MAP_OVERLAY_LAYER, KEY_CHANGUNARAYAN_BOARDER);
@@ -116,7 +96,14 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
         LocaleChanger.onConfigurationChanged();
+        super.onConfigurationChanged(newConfig);
+
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        newBase = LocaleChanger.configureBaseContext(newBase);
+        super.attachBaseContext(MyContextWrapper.wrap(newBase, AppLocale.changeLocale()));
     }
 }

@@ -1,6 +1,7 @@
 package com.naxa.np.changunarayantouristapp.mayormessage;
 
 import android.app.Dialog;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import com.franmontiel.localechanger.LocaleChanger;
 import com.google.gson.Gson;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
@@ -52,8 +54,7 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
         gson = new Gson();
         fileDownloadPresenter = new FileDownloadPresenterImpl(this, MayorMessageActivity.this);
 
-
-        setupToolbar("Welcome to Chagunarayan ", false);
+        setupToolbar(getResources().getString(R.string.welcome_to_changunarayan), false);
 
         initUI();
 
@@ -189,5 +190,11 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
             dialog = DialogFactory.createSimpleOkErrorDialog(MayorMessageActivity.this, "Video Downloading Error", failedMsg);
             dialog.show();
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        LocaleChanger.onConfigurationChanged();
     }
 }

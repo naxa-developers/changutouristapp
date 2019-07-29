@@ -1,9 +1,11 @@
 package com.naxa.np.changunarayantouristapp.vrimage;
 
 import android.content.res.AssetManager;
+import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import com.franmontiel.localechanger.LocaleChanger;
 import com.google.vr.sdk.widgets.pano.VrPanoramaView;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
@@ -66,6 +68,12 @@ public class VRImageViewActivity extends BaseActivity {
         // Destroy the widget and free memory.
         super.onDestroy();
         mVRPanoramaView.shutdown();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        LocaleChanger.onConfigurationChanged();
     }
 }
 

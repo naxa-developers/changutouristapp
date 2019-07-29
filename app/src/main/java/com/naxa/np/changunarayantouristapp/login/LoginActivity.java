@@ -1,10 +1,12 @@
 package com.naxa.np.changunarayantouristapp.login;
 
 import android.app.Dialog;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.franmontiel.localechanger.LocaleChanger;
 import com.google.android.material.button.MaterialButton;
 import com.naxa.np.changunarayantouristapp.MainActivity;
 import com.naxa.np.changunarayantouristapp.R;
@@ -33,7 +35,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        setupToolbar("Explore", false);
+        setupToolbar(getResources().getString(R.string.explore), false);
 
         initUI();
     }
@@ -114,5 +116,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        LocaleChanger.onConfigurationChanged();
     }
 }

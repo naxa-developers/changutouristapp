@@ -1,4 +1,4 @@
-package com.naxa.np.changunarayantouristapp.map.mapboxutils;
+package com.naxa.np.changunarayantouristapp.map.mapboxutils.mapdialogs;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -18,6 +18,7 @@ import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
 import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListEntity;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonCategoryViewModel;
+import com.naxa.np.changunarayantouristapp.map.mapboxutils.MapDataLayerDialogCloseListen;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.mapdialogs.SelectMaincategoryViewHolder;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.MultiItemSectionModel;
@@ -125,7 +126,8 @@ public class MapDialogs {
         // 1. create entityList which item data extend SectionMultiEntity
          List<SectionMultipleItem> mapDataLayerList = new ArrayList<>();
 
-        geoJsonCategoryViewModel.getAllGeoJsonCategoryEntityByLanguage(SharedPreferenceUtils.getInstance(context).getStringValue(KEY_SELECTED_APP_LANGUAGE, null), maincategory)
+        geoJsonCategoryViewModel.getAllGeoJsonCategoryEntityByLanguage(SharedPreferenceUtils.getInstance(context).getStringValue(KEY_SELECTED_APP_LANGUAGE, null),
+                maincategory)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSubscriber<List<GeoJsonCategoryListEntity>>() {

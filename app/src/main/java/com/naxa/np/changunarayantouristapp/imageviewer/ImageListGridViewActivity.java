@@ -1,6 +1,7 @@
 package com.naxa.np.changunarayantouristapp.imageviewer;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.franmontiel.localechanger.LocaleChanger;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
@@ -108,5 +110,11 @@ public class ImageListGridViewActivity extends BaseActivity {
         mAdapter.notifyDataSetChanged();
 
 
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        LocaleChanger.onConfigurationChanged();
     }
 }

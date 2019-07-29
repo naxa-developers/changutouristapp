@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -29,6 +30,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.franmontiel.localechanger.LocaleChanger;
 import com.google.gson.Gson;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
@@ -48,7 +50,6 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.services.android.navigation.ui.v5.route.NavigationMapRoute;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
-import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListEntity;
 import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonCategoryViewModel;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntityViewModel;
@@ -58,7 +59,7 @@ import com.naxa.np.changunarayantouristapp.map.mapboxutils.DrawGeoJsonOnMap;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.DrawMarkerOnMap;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.DrawRouteOnMap;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.MapDataLayerDialogCloseListen;
-import com.naxa.np.changunarayantouristapp.map.mapboxutils.MapDialogs;
+import com.naxa.np.changunarayantouristapp.map.mapboxutils.mapdialogs.MapDialogs;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.MapboxBaseStyleUtils;
 import com.naxa.np.changunarayantouristapp.placedetailsview.PlaceDetailsActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlacesListActivity;
@@ -68,8 +69,6 @@ import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 import com.naxa.np.changunarayantouristapp.utils.ToastUtils;
 import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
-import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.MultiItemSectionModel;
-import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.SectionMultipleItem;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import org.greenrobot.eventbus.EventBus;
@@ -78,15 +77,12 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.reactivestreams.Publisher;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.observers.DisposableObserver;
@@ -998,5 +994,11 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        LocaleChanger.onConfigurationChanged();
     }
 }

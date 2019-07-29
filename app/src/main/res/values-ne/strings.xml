@@ -118,4 +118,11 @@
     <string name="unable_to_rate">यो ठाउको रेट गर्न सकिएन</string>
     <string name="please_wait">कृपया पर्खनुहोस!!!</string>
     <string name="scan">स्क्यान</string>
+
+    <string name="explore">अन्वेषण गर्नुहोस्</string>
+    <string name="register">दर्ता गर्नुहोस</string>
+    <string name="place_details">ठाऊको विवरण</string>
+    <string name="home_page">गृह पृष्ठ</string>
+
+
 </resources>

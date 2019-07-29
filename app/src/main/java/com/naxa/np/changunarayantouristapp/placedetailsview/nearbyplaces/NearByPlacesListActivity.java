@@ -1,6 +1,7 @@
 package com.naxa.np.changunarayantouristapp.placedetailsview.nearbyplaces;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.franmontiel.localechanger.LocaleChanger;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
@@ -231,6 +233,12 @@ public class NearByPlacesListActivity extends BaseActivity {
             setUpRecyclerView(sortedNearbyPlacesList, sortedNearbyPlacesDistanceList);
             hideLoading();
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        LocaleChanger.onConfigurationChanged();
     }
 
 }

@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.LocaleList;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -20,12 +21,14 @@ import com.naxa.np.changunarayantouristapp.MainActivity;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
+import com.naxa.np.changunarayantouristapp.common.ChangunarayanTouristApp;
 import com.naxa.np.changunarayantouristapp.mayormessage.MayorMessageActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.NetworkUtils;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
+import com.naxa.np.changunarayantouristapp.utils.languageswitchutils.MyContextWrapper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +62,7 @@ public class SelectlanguageActivity extends BaseActivity {
         setContentView(R.layout.activity_selectlanguage);
         gson = new Gson();
 
-        setupToolbar("Select Language", false);
+        setupToolbar(getResources().getString(R.string.select_language), false);
         initUI();
 
         newGetIntent(getIntent());
@@ -165,8 +168,15 @@ public class SelectlanguageActivity extends BaseActivity {
                         Log.d(TAG, "onClick: " + languageDetails.getName());
                         SharedPreferenceUtils.getInstance(SelectlanguageActivity.this).setValue(Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE, languageDetails.getAlias());
 
-                        changeLocale(languageDetails.getAlias());
+//                        changeLocale(languageDetails.getAlias());
 
+                        ActivityRecreationHelper.recreate(SelectlanguageActivity.this, true);
+
+                        if (isFromMainActivity) {
+                            launchMainActivity();
+                        } else {
+                            launchLoginScreen();
+                        }
                     }
                 });
 
@@ -180,27 +190,28 @@ public class SelectlanguageActivity extends BaseActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    private void changeLocale(String alias) {
+
+
+    private Locale changeLocale(String alias) {
 //        String language = "en";
 //        Log.d(TAG, "changeLocale: "+alias);
 //        if(TextUtils.equals(alias, "nep")) {
 //            language = "ne";
 //        }
 
-        LocaleChanger.setLocale(new Locale("en", "US"));
+        Locale newLocale ;
+        newLocale = new Locale("en", "US");
         if(TextUtils.equals(alias, "nep")) {
-            LocaleChanger.setLocale(new Locale("ne", "NP"));
+            newLocale = new Locale("ne", "NP");
         }
-//        ActivityRecreationHelper.recreate(SelectlanguageActivity.this, true);
+        LocaleChanger.setLocale(newLocale);
 
-        if (isFromMainActivity) {
-            launchMainActivity();
-        } else {
-            launchLoginScreen();
-        }
 //        LocaleHelper.setLocale(SelectlanguageActivity.this, language);
 //        //It is required to recreate the activity to reflect the change in UI.
 //        recreate();
+
+
+        return newLocale;
     }
 
 
@@ -230,15 +241,15 @@ public class SelectlanguageActivity extends BaseActivity {
                 new PermissionRequestListener() {
                     @Override
                     public void onPermissionGranted() {
-                        SharedPreferenceUtils.getInstance(SelectlanguageActivity.this).setValue(Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS, false);
+//                        SharedPreferenceUtils.getInstance(SelectlanguageActivity.this).setValue(Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS, false);
 
-                       if(NetworkUtils.isNetworkAvailable()) {
+//                       if(NetworkUtils.isNetworkAvailable()) {
                            ActivityUtil.openActivity(MainActivity.class, SelectlanguageActivity.this);
                            finish();
-                       }else {
-                           dialog = DialogFactory.createSimpleOkErrorDialog(SelectlanguageActivity.this, getResources().getString(R.string.no_internet_connection), getResources().getString(R.string.check_internet_retry_again));
-                           dialog.show();
-                       }
+//                       }else {
+//                           dialog = DialogFactory.createSimpleOkErrorDialog(SelectlanguageActivity.this, getResources().getString(R.string.no_internet_connection), getResources().getString(R.string.check_internet_retry_again));
+//                           dialog.show();
+//                       }
                     }
 
                     @Override
@@ -250,7 +261,9 @@ public class SelectlanguageActivity extends BaseActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         newBase = LocaleChanger.configureBaseContext(newBase);
-        super.attachBaseContext(newBase);
+        super.attachBaseContext(MyContextWrapper.wrap(newBase,
+                changeLocale(SharedPreferenceUtils.getInstance(ChangunarayanTouristApp.getInstance()).getStringValue(Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE, null)) ));
+//        super.attachBaseContext(newBase);
     }
 
 }

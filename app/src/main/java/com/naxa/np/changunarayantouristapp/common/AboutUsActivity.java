@@ -1,11 +1,13 @@
 package com.naxa.np.changunarayantouristapp.common;
 
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.franmontiel.localechanger.LocaleChanger;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 
@@ -72,5 +74,11 @@ public class AboutUsActivity extends BaseActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        LocaleChanger.onConfigurationChanged();
     }
 }

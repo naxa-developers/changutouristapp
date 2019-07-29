@@ -3,6 +3,7 @@ package com.naxa.np.changunarayantouristapp;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -22,6 +23,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.franmontiel.localechanger.LocaleChanger;
 import com.google.android.material.navigation.NavigationView;
 import com.naxa.np.changunarayantouristapp.barcodereader.QRCodeReaderActivity;
 import com.naxa.np.changunarayantouristapp.common.AboutUsActivity;
@@ -78,7 +80,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         fileDownloadPresenter = new FileDownloadPresenterImpl(this, MainActivity.this);
 
 
-        setupToolbar("Home Page", false);
+        setupToolbar(getResources().getString(R.string.home_page), false);
         initUI();
 
 
@@ -325,5 +327,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        LocaleChanger.onConfigurationChanged();
     }
 }

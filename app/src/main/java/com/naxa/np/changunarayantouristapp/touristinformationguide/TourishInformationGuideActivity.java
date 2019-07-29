@@ -1,6 +1,7 @@
 package com.naxa.np.changunarayantouristapp.touristinformationguide;
 
 import android.app.Dialog;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.franmontiel.localechanger.LocaleChanger;
 import com.google.gson.Gson;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
@@ -48,7 +50,7 @@ public class TourishInformationGuideActivity extends BaseActivity {
 
         gson = new Gson();
 
-        setupToolbar("Tourist Information Guide", false);
+        setupToolbar(getResources().getString(R.string.tourist_information_guide), false);
 
         initUI();
     }
@@ -192,5 +194,9 @@ public class TourishInformationGuideActivity extends BaseActivity {
         recyclerView.setAdapter(adapter);
     }
 
-
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        LocaleChanger.onConfigurationChanged();
+    }
 }

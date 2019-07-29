@@ -1,4 +1,4 @@
-package com.naxa.np.changunarayantouristapp.utils;
+package com.naxa.np.changunarayantouristapp.utils.languageswitchutils;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -7,6 +7,8 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.preference.PreferenceManager;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
@@ -52,7 +54,7 @@ public class LocaleHelper {
     }
 
     @TargetApi(Build.VERSION_CODES.N)
-    private static Context updateResources(Context context, String language) {
+    private static Context updateResources(@NotNull Context context, String language) {
         Locale locale = new Locale(language);
         Locale.setDefault(locale);
 
@@ -63,7 +65,7 @@ public class LocaleHelper {
     }
 
     @SuppressWarnings("deprecation")
-    private static Context updateResourcesLegacy(Context context, String language) {
+    private static Context updateResourcesLegacy(@NotNull Context context, String language) {
         Locale locale = new Locale(language);
         Locale.setDefault(locale);
 

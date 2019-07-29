@@ -2,6 +2,7 @@ package com.naxa.np.changunarayantouristapp.audioplayer;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.franmontiel.localechanger.LocaleChanger;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
@@ -54,7 +56,7 @@ public class AudioListActivity extends BaseActivity implements FileDownloadView 
         fileDownloadPresenter = new FileDownloadPresenterImpl(this, AudioListActivity.this);
 
 
-        setupToolbar("Images", false);
+        setupToolbar("Audio", false);
 
         initUI(getIntent());
     }
@@ -217,5 +219,11 @@ public class AudioListActivity extends BaseActivity implements FileDownloadView 
         dialog.dismiss();
         Log.d(TAG, "fileDownloadFailed: " + failedMsg);
 
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        LocaleChanger.onConfigurationChanged();
     }
 }
