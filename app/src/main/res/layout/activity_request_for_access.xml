@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_medium"
-            android:text="Full Name" />
+            android:text="@string/full_name" />
 
         <EditText
             android:id="@+id/et_user_full_name"
@@ -36,7 +36,7 @@
             android:layout_marginBottom="@dimen/spacing_large"
             android:background="@drawable/rectangle_rounded_text_bordered_light_"
             android:inputType="text"
-            android:hint="Enter Full Name"
+            android:hint="@string/enter_full_name"
             android:padding="@dimen/spacing_medium" />
 
         <!--email-->
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_medium"
-            android:text="Email" />
+            android:text="@string/email" />
 
         <EditText
             android:id="@+id/et_user_email"
@@ -53,7 +53,7 @@
             android:layout_marginBottom="@dimen/spacing_large"
             android:background="@drawable/rectangle_rounded_text_bordered_light_"
             android:inputType="text"
-            android:hint="Enter Your Email"
+            android:hint="@string/enter_your_email"
             android:padding="@dimen/spacing_medium" />
 
         <!--email-->
@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_medium"
-            android:text="Country" />
+            android:text="@string/country" />
 
         <AutoCompleteTextView
             android:id="@+id/et_user_country"
@@ -71,7 +71,7 @@
             android:layout_marginBottom="@dimen/spacing_large"
             android:background="@drawable/rectangle_rounded_text_bordered_light_"
             android:inputType="text"
-            android:hint="Your Country"
+            android:hint="@string/your_country"
             android:padding="@dimen/spacing_medium" />
 
 
@@ -80,7 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_medium"
-        android:text="Select Gender"
+        android:text="@string/select_gender"
         />
         <RadioGroup
             android:layout_width="match_parent"
@@ -131,7 +131,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_medium"
-            android:text="Purpose For Visit"
+            android:text="@string/purpose_for_visit"
             />
         <RadioGroup
             android:layout_width="match_parent"
@@ -187,7 +187,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_alignParentBottom="true"
-        android:text="Register"
+        android:text="@string/register"
         android:layout_margin="@dimen/activity_default_margin" />
 
 </RelativeLayout>

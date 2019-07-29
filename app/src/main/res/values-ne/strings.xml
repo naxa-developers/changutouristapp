@@ -124,5 +124,20 @@
     <string name="place_details">ठाऊको विवरण</string>
     <string name="home_page">गृह पृष्ठ</string>
 
+    <string name="designed_and_developed_by_naxa_pvt_ltd">Designed and developed by Naxa Pvt. Ltd.</string>
+    <string name="all_rights_reserved_2019">All rights reserved ©2019.</string>
+    <string name="full_name">Full Name</string>
+    <string name="enter_full_name">Enter Full Name</string>
+    <string name="email">Email</string>
+    <string name="enter_your_email">Enter Your Email</string>
+    <string name="country">Country</string>
+    <string name="your_country">Your Country</string>
+    <string name="select_gender">Select Gender</string>
+    <string name="purpose_for_visit">Purpose For Visit</string>
+    <string name="easy_way_to_get_details_with_little_effort">Easy way to get details with little effort.</string>
+    <string name="verification_code">Verification Code</string>
+    <string name="enter_verification_code">Enter Verification Code</string>
+    <string name="or">OR</string>
+
 
 </resources>

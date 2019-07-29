@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar_layout"
         android:layout_margin="@dimen/activity_default_margin"
-        android:text="Easy way to get details with little effort."
+        android:text="@string/easy_way_to_get_details_with_little_effort"
         style="@style/headlineText"
         />
 
@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_medium"
-            android:text="Verification Code" />
+            android:text="@string/verification_code" />
 
         <EditText
             android:id="@+id/et_verification_code"
@@ -41,7 +41,7 @@
             android:background="@drawable/rectangle_rounded_text_bordered_light_"
             android:inputType="text"
             android:text="CTG2"
-            android:hint="Enter Verification Code"
+            android:hint="@string/enter_verification_code"
             android:padding="@dimen/spacing_medium" />
 
         <com.google.android.material.button.MaterialButton
@@ -70,7 +70,7 @@
                 android:layout_height="35dp"
                 android:background="@drawable/circle_bg"
                 android:layout_centerHorizontal="true"
-                android:text="OR"
+                android:text="@string/or"
                 android:gravity="center"
                 android:textColor="@color/white"/>
         </RelativeLayout>
