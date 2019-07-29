@@ -28,6 +28,7 @@ import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.NetworkUtils;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
+import com.naxa.np.changunarayantouristapp.utils.languageswitchutils.AppLocale;
 import com.naxa.np.changunarayantouristapp.utils.languageswitchutils.MyContextWrapper;
 
 import java.util.HashMap;
@@ -168,8 +169,6 @@ public class SelectlanguageActivity extends BaseActivity {
                         Log.d(TAG, "onClick: " + languageDetails.getName());
                         SharedPreferenceUtils.getInstance(SelectlanguageActivity.this).setValue(Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE, languageDetails.getAlias());
 
-//                        changeLocale(languageDetails.getAlias());
-
                         ActivityRecreationHelper.recreate(SelectlanguageActivity.this, true);
 
                         if (isFromMainActivity) {
@@ -189,31 +188,7 @@ public class SelectlanguageActivity extends BaseActivity {
         };
         recyclerView.setAdapter(adapter);
     }
-
-
-
-    private Locale changeLocale(String alias) {
-//        String language = "en";
-//        Log.d(TAG, "changeLocale: "+alias);
-//        if(TextUtils.equals(alias, "nep")) {
-//            language = "ne";
-//        }
-
-        Locale newLocale ;
-        newLocale = new Locale("en", "US");
-        if(TextUtils.equals(alias, "nep")) {
-            newLocale = new Locale("ne", "NP");
-        }
-        LocaleChanger.setLocale(newLocale);
-
-//        LocaleHelper.setLocale(SelectlanguageActivity.this, language);
-//        //It is required to recreate the activity to reflect the change in UI.
-//        recreate();
-
-
-        return newLocale;
-    }
-
+    
 
     private void launchLoginScreen() {
 
@@ -261,8 +236,7 @@ public class SelectlanguageActivity extends BaseActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         newBase = LocaleChanger.configureBaseContext(newBase);
-        super.attachBaseContext(MyContextWrapper.wrap(newBase,
-                changeLocale(SharedPreferenceUtils.getInstance(ChangunarayanTouristApp.getInstance()).getStringValue(Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE, null)) ));
+        super.attachBaseContext(MyContextWrapper.wrap(newBase, AppLocale.changeLocale()));
 //        super.attachBaseContext(newBase);
     }
 
