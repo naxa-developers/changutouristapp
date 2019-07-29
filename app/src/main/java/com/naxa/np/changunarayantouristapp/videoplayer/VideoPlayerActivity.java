@@ -1,12 +1,14 @@
 package com.naxa.np.changunarayantouristapp.videoplayer;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import com.franmontiel.localechanger.LocaleChanger;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.FileNameAndUrlPojo;
@@ -59,5 +61,11 @@ public class VideoPlayerActivity extends BaseActivity {
             videoView.start();
         }
 
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        LocaleChanger.onConfigurationChanged();
     }
 }

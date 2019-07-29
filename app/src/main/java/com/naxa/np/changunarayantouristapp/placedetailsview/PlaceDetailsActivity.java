@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -33,6 +34,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.franmontiel.localechanger.LocaleChanger;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.naxa.np.changunarayantouristapp.MainActivity;
@@ -119,7 +121,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
 
         placeDetailsEntityViewModel = ViewModelProviders.of(this).get(PlaceDetailsEntityViewModel.class);
 
-        setupToolbar("Place Details", false);
+        setupToolbar(getResources().getString(R.string.place_details), false);
         initUI();
 
         try {
@@ -609,5 +611,11 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        LocaleChanger.onConfigurationChanged();
+    }
 
 }

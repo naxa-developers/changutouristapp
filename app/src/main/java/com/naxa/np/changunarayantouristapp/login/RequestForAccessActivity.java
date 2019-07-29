@@ -1,6 +1,7 @@
 package com.naxa.np.changunarayantouristapp.login;
 
 import android.app.Dialog;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.franmontiel.localechanger.LocaleChanger;
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 import com.naxa.np.changunarayantouristapp.R;
@@ -37,7 +39,7 @@ public class RequestForAccessActivity extends BaseActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_for_access);
-        setupToolbar("Register", false);
+        setupToolbar(getResources().getString(R.string.register), false);
         initUI();
     }
 
@@ -170,5 +172,11 @@ public class RequestForAccessActivity extends BaseActivity implements View.OnCli
 
                     }
                 });
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        LocaleChanger.onConfigurationChanged();
     }
 }

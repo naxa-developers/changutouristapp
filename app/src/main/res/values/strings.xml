@@ -116,5 +116,10 @@
     <string name="unable_to_rate">Unable to rate this place.</string>
     <string name="please_wait">Please wait!!!</string>
     <string name="scan">Scan</string>
+    <string name="explore">Explore</string>
+    <string name="register">Register</string>
+    <string name="place_details">Place Details</string>
+    <string name="home_page">Home Page</string>
+
 
 </resources>

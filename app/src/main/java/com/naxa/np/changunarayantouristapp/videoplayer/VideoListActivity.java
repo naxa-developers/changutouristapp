@@ -2,6 +2,7 @@ package com.naxa.np.changunarayantouristapp.videoplayer;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.franmontiel.localechanger.LocaleChanger;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
@@ -53,7 +55,7 @@ public class VideoListActivity extends BaseActivity implements FileDownloadView 
         fileDownloadPresenter = new FileDownloadPresenterImpl(this, VideoListActivity.this);
 
 
-        setupToolbar("Images", false);
+        setupToolbar("Videos", false);
 
         initUI(getIntent());
     }
@@ -156,5 +158,11 @@ public class VideoListActivity extends BaseActivity implements FileDownloadView 
         dialog.dismiss();
         Log.d(TAG, "fileDownloadFailed: "+failedMsg);
 
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        LocaleChanger.onConfigurationChanged();
     }
 }

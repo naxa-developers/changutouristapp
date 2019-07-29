@@ -39,7 +39,7 @@ public class GeoJsonCategoryRepository {
     }
 
 
-    public Flowable<List<GeoJsonCategoryListEntity>> getAllGeoJsonCategoryEntityByLanguage(String language, String slug) {
+    public Flowable<List<GeoJsonCategoryListEntity>> getAllGeoJsonCategoryEntityByLanguage(String language,  String slug) {
         mSpecificTypeGeoJsonCategoryEntity = mGeoJsonCategoryDao.getGeoJsonCategoryListByLanguage(language, slug);
         return mSpecificTypeGeoJsonCategoryEntity;
     }

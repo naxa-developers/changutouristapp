@@ -1,5 +1,6 @@
 package com.naxa.np.changunarayantouristapp.barcodereader;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
+import com.franmontiel.localechanger.LocaleChanger;
 import com.google.android.material.button.MaterialButton;
 import com.google.zxing.Result;
 import com.naxa.np.changunarayantouristapp.R;
@@ -54,7 +56,7 @@ public class QRCodeReaderActivity extends BaseActivity {
 
         placeDetailsEntityViewModel = ViewModelProviders.of(this).get(PlaceDetailsEntityViewModel.class);
 
-        setupToolbar("QR Code Scan", false);
+        setupToolbar(getResources().getString(R.string.scan_barcode), false);
         initUI();
     }
 
@@ -189,6 +191,12 @@ public class QRCodeReaderActivity extends BaseActivity {
             mCodeScanner.releaseResources();
         }
         super.onPause();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        LocaleChanger.onConfigurationChanged();
     }
 
 }

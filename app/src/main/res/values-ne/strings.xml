@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">चाङुनारायण  पर्यटक गाइड</string>
+    ​
+    <string name="next">अर्को</string>
+    <string name="skip">छोड्नुहोस्</string>
+    <string name="got_it">बुझे</string>
+    ​
+    <string name="slide_1_title">यात्रा गर्दै!</string>
+    <string name="slide_1_desc">राम्रो प्रविधिसँग यात्रा गर्नुहोस्।</string>
+    ​
+    <string name="slide_2_title">QR Code स्क्यान गर्नुहोस्!</string>
+    <string name="slide_2_desc">जानकारीको सजिलो पहुँचको लागि QR कोड स्क्यान गर्नुहोस्।</string>
+    ​
+    <string name="slide_3_title">३६० /वी आर फोटोहरू!</string>
+    <string name="slide_3_desc">सबै मौसम र समयको ३६० डिग्री फोटोहरूसँग थप अन्वेषण गर्नुहोस्।</string>
+    ​
+    <string name="slide_4_title">अडियो संग राम्रो!</string>
+    <string name="slide_4_desc">राम्रो बुझ्नका लागि ठाउँहरूको अडियो विवरण।</string>
+    ​
+    <string name="slide_5_title">नक्सामा हेर्नुहोस्!</string>
+    <string name="slide_5_desc">कम प्रयासको साथ गन्तव्यमा बाटो खोज्न सजिलो तरिका।</string>
+    ​
+    <string name="storage_rationale">चाङुनारायण  पर्यटक अनुप्रयोगलाई डेटा डाउनलोड गर्न र सुरक्षित गर्न भण्डारण अनुमति चाहिन्छ ताकि तिनीहरू सिधा साझा गर्न सकिन्छ।</string>
+    <string name="camera_rationale">चाङुनारायण  पर्यटन अनुप्रयोगलाई QR Code स्क्यानको लागि क्यामेरा अनुमति चाहिन्छ।</string>
+    <string name="english">English</string>
+    <string name="nepali">Nepali (नेपाली)</string>
+    <string name="chinese">Chinese (中文)</string>
+    <string name="scan_barcode">स्क्यान QRCode</string>
+    <string name="no_barcode_captured">कुनै QRCode कैप्चर गरिएको छैन</string>
+    <string name="image_description">चित्र विवरण</string>
+    <string name="male">पुरुष</string>
+    <string name="female">महिला</string>
+    <string name="others">अन्य</string>
+    <string name="religious_visit">धार्मिक भ्रमण</string>
+    <string name="sight_seeing">दृष्य हेर्न</string>
+    <string name="verification">रुजु गर्नुहोस्</string>
+    <string name="request_for_access">पहुँचको लागि अनुरोध</string>
+    <string name="no_internet_connection">इन्टरनेट जडान छैन!</string>
+    <string name="check_internet_retry_again">तपाइँको इन्टरनेट जडान जाँच गर्नुहोस् र पुन: प्रयास गर्नुहोस्।</string>
+    ​
+    ​
+    <string name="dialog_action_ok">ठिक छ</string>
+    <string name="dialog_error_title">अप्रत्याशित त्रुटि भयो।</string>
+    <string name="dialog_error_title_sync_failed">डाटा समक्रमण असफल भयो (Code: %1$s)</string>
+    <string name="dialog_action_hide">लुकाउनुहोस्</string>
+    <string name="dialog_action_retry">पुन: प्रयास गर्नुहोस्</string>
+    <string name="select_base_layer">बेस तह चयन गर्नुहोस्</string>
+    <string name="select_overlay_layer">ओवरले तह चयन गर्नुहोस्</string>
+    <string name="select_place_layer">स्थान छान्नुहोस्</string>
+    <string name="title">शीर्षक</string>
+    <string name="icon_explanation">प्रतीक व्याख्या</string>
+    <string name="go_there">मार्ग प्राप्त गर्नुहोस्</string>
+    ​
+    <string name="loremipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="view_all">सबै हेर्नुहोस्</string>
+    <string name="nearby_places">नजिकैका स्थानहरु</string>
+    <string name="place_name">स्थान नाम</string>
+    <string name="images">तस्बिरहरू</string>
+    <string name="videos">भिडियोहरू</string>
+    <string name="audios">अडियो</string>
+    <string name="map">नक्सा</string>
+    ​
+    <string name="fetching_file">Getting %1$s.\n\nGeojson data %2$s of %3$s file(s)</string>
+    <string name="changunarayan_boundary">चाङुनारायण  </string>
+    <string name="nagarkot_boundary">नगकोट </string>
+    <string name="select_language">भाषा छनोट गर्नुस</string>
+    <string name="refresh_data">डाटा ताजा गर्नुहोस्</string>
+    <string name="view_details">विवरण हेर्नुहोस्</string>
+    ​
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">नमस्ते खाली टुक्रा</string>
+    <string name="pause">बिश्राम </string>
+    <string name="play">सुरू गर्नुहोस्</string>
+    <string name="reverse">उल्टाउनुहोस्</string>
+    <string name="stop">रोक्नुहोस्</string>
+    <string name="fast">छिटो</string>
+    <string name="audio_title">अडियो शीर्षक</string>
+    <string name="see_the_majestic_himalayas_including_mt_everest_if_the_skies_are_clear_you_can_view_the_himalayan_mountains">चाङुनारायणको पुरातन शहरमा स्वागत छ र नगरकोटको सुन्दरतामा मजा लिनुहोस्। यो एप प्रत्येक वस्तुहरू र वरिपरिको स्थानहरूको प्रमाणित जानकारीसहित तपाईंको  साथ दिने भर्चुअल टूर गाइड हो।</string>
+    <string name="nepal">नेपाल</string>
+    <string name="place_list">सूची</string>
+    <string name="near_by_places_list">नजिकैको स्थान सूची</string>
+    <string name="submit_qrcode">QR Code पेश गर्नुहोस्</string>
+    <string name="home">घर</string>
+    <string name="qrcode_scanner">QRCode स्क्यानर</string>
+    <string name="settings">सेटिङ्हरू</string>
+    <string name="about_us">हाम्रोबारे</string>
+    ​
+    <string name = "navigation_drawer_open"> नेभिगेसन ड्रयर खोल्नुहोस् </string>
+    <string name = "navigation_drawer_close"> बन्द नेविगेसन ड्रयर </string>
+    <string name = "nav_header_title"> समीर दाङ </string>
+    <string name = "nav_header_subtitle"> samirdangal@gmail.com </string>
+    <string name = "nav_header_desc"> नेभिगेसन हेडर </string>
+    <string name = "changunarayan"> चाङुनारायण विरासत स्थल </string>
+    <string name = "currently_there_is_no_data_available"> हाल कुनै डेटा उपलब्ध छैन। </string>
+    <string name = "explore_changunarayan_area">%s क्षेत्र अन्वेषण गर्नुहोस् </string>
+    <string name = "tourist_information_guide"> पर्यटक जानकारी गाइड </string>
+    <string name = "get_started"> सुरू गर्नुहोस् </string>
+    <string name = "welcome_to_changunarayan"> चाङुनारायणमा स्वागत छ </string>
+    <string name = "your_virtual_guide"> तपाईको भर्चुअल गाइड। </string>
+    ​
+    ​
+    <string name = "get_location"> रेकर्ड स्थान </string>
+    <string name = "getting_location"> स्थान लोड हुँदैछ </string>
+    <string name = "please_wait_long"> कृपया प्रतीक्षा गर्नुहोस्। यसले केही मिनेट लिन सक्छ। </string>
+    <string name = "save_point"> जिप प्वाइन्ट </string> बचत गर्नुहोस्
+    <string name = "get_point"> जिएप्ट शुरू गर्नुहोस् </string>
+    <string name = "geopoint_view_read_only"> ज्योतिष </string> हेर्नुहोस्
+    <string name = "cancel_location"> रद्द गर्नुहोस् </string>
+    <string name = "provider_disabled_error"> माफ गर्नुहोस्, स्थान प्रदायक असक्षम छन्! </string>
+    <string name = "location_provider_accuracy">%1$s प्रयोग गर्दै। शुद्धता %2$s मीटर छ </string>
+    <string name = "location_accuracy"> शुद्धता %f$s m हो</string>
+    <string name = "location_metadata"> उपग्रह उपलब्ध: %1$d / 2४ \n \n समय सीमा: %2$s </string>
+
+    <string name="submit_rating">रेटिंग पठाउनुहोस</string>
+    <string name="rate_place">ठाउँको रेट </string>
+    <string name="thank_you_for_rating_us">रेटिंग गर्नुभएकोमा यहालाई धन्यबाद</string>
+    <string name="unable_to_rate">यो ठाउको रेट गर्न सकिएन</string>
+    <string name="please_wait">कृपया पर्खनुहोस!!!</string>
+    <string name="scan">स्क्यान</string>
+
+    <string name="explore">अन्वेषण गर्नुहोस्</string>
+    <string name="register">दर्ता गर्नुहोस</string>
+    <string name="place_details">ठाऊको विवरण</string>
+    <string name="home_page">गृह पृष्ठ</string>
+
+
+</resources>
