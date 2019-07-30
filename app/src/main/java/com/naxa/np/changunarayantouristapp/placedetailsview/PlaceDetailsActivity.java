@@ -289,6 +289,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
                     hashMap3.put(KEY_VALUE, isFromMainPlaceList);
                     hashMap3.put(KEY_OBJECT, placesDetailsEntity);
                     ActivityUtil.openActivity(MapMainActivity.class, PlaceDetailsActivity.this, hashMap3, false);
+                    finish();
                     return true;
             }
             return false;

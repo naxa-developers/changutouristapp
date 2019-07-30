@@ -34,7 +34,8 @@
         <activity
             android:name=".placedetailsview.PlaceDetailsActivity"
             android:exported="true" />
-        <activity android:name=".map.MapMainActivity" />
+        <activity android:name=".map.MapMainActivity"
+            android:noHistory="true"/>
         <activity android:name=".map.markerdetailspage.MarkerDetailsDisplayActivity" />
         <activity android:name=".login.LoginActivity" />
         <activity

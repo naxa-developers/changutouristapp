@@ -196,7 +196,6 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
                     @Override
                     public void onComplete() {
                         Log.d(TAG, "onComplete: boarderLoadComplete");
-                        listner.onLoadComplete();
                     }
                 });
     }
@@ -293,6 +292,8 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
 
 
                         }
+
+                        listner.onLoadComplete();
 
                     } catch (JSONException e) {
                         e.printStackTrace();

@@ -350,20 +350,12 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                         drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "", new DrawGeoJsonOnMap.onBoundaryLoadListner() {
                             @Override
                             public void onLoadComplete() {
-                                plotDefaultMarkerOnMap(placeType);
-
-                                if (isFromIntent) {
-                                    if (!isFromMainPlaceList) {
-
-                                        setMapCameraPosition(drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity)).getPosition());
-
-                                    }
-                                }
 
                             }
 
                             @Override
                             public void onRemoveComplete() {
+                                plotDefaultmarkerAndSingleMarker();
 
                             }
                         });
@@ -386,20 +378,11 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                         drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "", new DrawGeoJsonOnMap.onBoundaryLoadListner() {
                             @Override
                             public void onLoadComplete() {
-                                plotDefaultMarkerOnMap(placeType);
 
-                                if (isFromIntent) {
-                                    if (!isFromMainPlaceList) {
-
-                                        setMapCameraPosition(drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity)).getPosition());
-
-                                    }
-                                }
                             }
 
                             @Override
                             public void onRemoveComplete() {
-
                             }
                         });
                         removeLayerFromMap("changunarayan_boundary.geojson");
@@ -423,12 +406,14 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                                     drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, false, "", new DrawGeoJsonOnMap.onBoundaryLoadListner() {
                                         @Override
                                         public void onLoadComplete() {
+                                            Log.d(TAG, "onLoadComplete: remove Boaredr Load");
 
                                         }
 
                                         @Override
                                         public void onRemoveComplete() {
-
+                                            plotDefaultmarkerAndSingleMarker();
+                                            Log.d(TAG, "onLoadComplete: remove Boaredr removed");
                                         }
                                     });
 
@@ -442,6 +427,23 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         );
 
 
+    }
+
+    private void plotDefaultmarkerAndSingleMarker() {
+        plotDefaultMarkerOnMap(placeType);
+
+        if (isFromIntent) {
+            if (!isFromMainPlaceList) {
+                Log.d(TAG, "onLoadComplete: Boaredr Load nagarkot");
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        setMapCameraPosition(drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity)).getPosition());
+                    }
+                }, 2000);
+
+            }
+        }
     }
 
     private Dialog setupMapDataLayerDialog(boolean isFirstTime, List<String> maincategoryList) {
@@ -576,8 +578,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         isMapFirstTime = true;
         initSpinner();
         setupMapOptionsDialog().hide();
-
-
 
         setupMapDataLayerDialog(true, maincategoryList).hide();
 
@@ -967,7 +967,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     private void plotDefaultMarkerOnMap(String placeType) {
 
         Log.d(TAG, "plotDefaultMarkerOnMap: " + isMapFirstTime);
-        if (!isMapFirstTime || !isFromMainPlaceList) {
+        if (!isMapFirstTime  || !isFromMainPlaceList) {
             return;
         }
 
@@ -1027,10 +1027,13 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         }
 
         isMapFirstTime = true;
+        isFromMainPlaceList = true;
+
         if (!isMapPlaceLayerFromDialog) {
             setupMapOptionsDialog().hide();
         }
         isMapPlaceLayerFromDialog = false;
+
     }
 
     @Override
