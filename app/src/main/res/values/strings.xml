@@ -135,6 +135,7 @@
     <string name="verification_code">Verification Code</string>
     <string name="enter_verification_code">Enter Verification Code</string>
     <string name="or">OR</string>
+    <string name="language_not_found">Language not found</string>
 
 
 </resources>

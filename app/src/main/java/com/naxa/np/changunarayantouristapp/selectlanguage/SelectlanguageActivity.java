@@ -73,7 +73,7 @@ public class SelectlanguageActivity extends BaseActivity {
     private void newGetIntent(Intent intent) {
         if (intent != null) {
             HashMap<String, Object> hashMap = (HashMap<String, Object>) intent.getSerializableExtra("map");
-            if(hashMap != null) {
+            if (hashMap != null) {
                 isFromMainActivity = (boolean) hashMap.get(KEY_VALUE);
             }
 
@@ -85,8 +85,15 @@ public class SelectlanguageActivity extends BaseActivity {
             fetchLanguageListFromServer();
         } else {
             LanguageDetailsResponse languageDetailsResponse = gson.fromJson(SharedPreferenceUtils.getInstance(SelectlanguageActivity.this).getStringValue(Constant.SharedPrefKey.KEY_LANGUAGE_LIST_DETAILS, null), LanguageDetailsResponse.class);
-            if (languageDetailsResponse.getData() != null) {
+            if (languageDetailsResponse != null) {
                 setuprecyclerView(languageDetailsResponse.getData());
+            } else {
+                DialogFactory.createMessageDialogWithRetry(this, getResources().getString(R.string.language_not_found), getResources().getString(R.string.check_internet_retry_again), new DialogFactory.onClickListner() {
+                    @Override
+                    public void onClick() {
+                        fetchLanguageListFromServer();
+                    }
+                }).show();
             }
         }
     }
@@ -111,7 +118,7 @@ public class SelectlanguageActivity extends BaseActivity {
                 .subscribe(new DisposableObserver<LanguageDetailsResponse>() {
                     @Override
                     public void onNext(LanguageDetailsResponse languageDetailsResponse) {
-
+                        dialog.dismiss();
                         if (languageDetailsResponse == null) {
                             dialog = DialogFactory.createSimpleOkErrorDialog(SelectlanguageActivity.this, "Data Fetch Error", "unable to download data ");
                             dialog.show();
@@ -119,13 +126,11 @@ public class SelectlanguageActivity extends BaseActivity {
                         }
 
                         if (languageDetailsResponse.getError() == 0) {
-                            dialog.dismiss();
                             if (languageDetailsResponse.getData() != null) {
                                 SharedPreferenceUtils.getInstance(SelectlanguageActivity.this).setValue(Constant.SharedPrefKey.KEY_LANGUAGE_LIST_DETAILS, gson.toJson(languageDetailsResponse));
                                 setuprecyclerView(languageDetailsResponse.getData());
                             }
                         } else {
-                            dialog.dismiss();
                             dialog = DialogFactory.createSimpleOkErrorDialog(SelectlanguageActivity.this, "Data Fetch Error", languageDetailsResponse.getMessage());
                             dialog.show();
                         }
@@ -134,6 +139,7 @@ public class SelectlanguageActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
+                        dialog.dismiss();
                         dialog = DialogFactory.createSimpleOkErrorDialog(SelectlanguageActivity.this, "Data Fetch Error", e.getMessage());
                         dialog.show();
                     }
@@ -151,7 +157,7 @@ public class SelectlanguageActivity extends BaseActivity {
         if (languageDetailsList == null) {
             return;
         }
-        if(dialog != null && dialog.isShowing()){
+        if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
 
@@ -188,7 +194,7 @@ public class SelectlanguageActivity extends BaseActivity {
         };
         recyclerView.setAdapter(adapter);
     }
-    
+
 
     private void launchLoginScreen() {
 
@@ -219,8 +225,8 @@ public class SelectlanguageActivity extends BaseActivity {
 //                        SharedPreferenceUtils.getInstance(SelectlanguageActivity.this).setValue(Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS, false);
 
 //                       if(NetworkUtils.isNetworkAvailable()) {
-                           ActivityUtil.openActivity(MainActivity.class, SelectlanguageActivity.this);
-                           finish();
+                        ActivityUtil.openActivity(MainActivity.class, SelectlanguageActivity.this);
+                        finish();
 //                       }else {
 //                           dialog = DialogFactory.createSimpleOkErrorDialog(SelectlanguageActivity.this, getResources().getString(R.string.no_internet_connection), getResources().getString(R.string.check_internet_retry_again));
 //                           dialog.show();

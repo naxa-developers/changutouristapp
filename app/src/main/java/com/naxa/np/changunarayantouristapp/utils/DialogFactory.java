@@ -105,11 +105,16 @@ public final class DialogFactory {
     }
 
 
-    public static Dialog createMessageDialog(final Context context, String title, String message) {
+    public static Dialog createMessageDialogWithRetry(final Context context, String title, String message, onClickListner listener) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context, R.style.RiseUpDialog)
                 .setTitle(title)
                 .setMessage(message)
-                .setNeutralButton(R.string.dialog_action_ok, null);
+                .setPositiveButton(R.string.dialog_action_retry,new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        listener.onClick();
+                    }
+                });
         return alertDialog.create();
     }
 
