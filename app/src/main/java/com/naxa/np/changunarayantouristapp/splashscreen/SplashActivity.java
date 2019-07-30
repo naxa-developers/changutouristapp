@@ -81,7 +81,7 @@ public class SplashActivity extends BaseActivity {
             public void run() {
                 //Do something after 100ms
                 AppLocale.changeLocale();
-                ActivityRecreationHelper.recreate(SplashActivity.this, true);
+//                ActivityRecreationHelper.recreate(SplashActivity.this, true);
 
                 if (SharedPreferenceUtils.getInstance(SplashActivity.this).getBoolanValue(IS_APP_FIRST_TIME_LAUNCH, true)) {
                     SharedPreferenceUtils.getInstance(SplashActivity.this).setValue(MAP_OVERLAY_LAYER, KEY_CHANGUNARAYAN_BOARDER);
@@ -90,7 +90,7 @@ public class SplashActivity extends BaseActivity {
                 } else {
                     ActivityUtil.openActivity(MayorMessageActivity.class, SplashActivity.this);
                 }
-                finish();
+                finishAffinity();
             }
 
         }, 2000);

@@ -129,7 +129,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             drawer.closeDrawer(GravityCompat.START);
         } else {
             if (doubleBackToExitPressedOnce) {
-                super.onBackPressed();
+//                super.onBackPressed();
+                finishAffinity();
                 return;
             }
 
@@ -224,6 +225,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 HashMap<String, Object> hashMap = new HashMap<>();
                 hashMap.put(KEY_VALUE, true);
                 ActivityUtil.openActivity(SelectlanguageActivity.class, MainActivity.this, hashMap, false);
+                finish();
                 break;
 
             case R.id.action_refresh_data:

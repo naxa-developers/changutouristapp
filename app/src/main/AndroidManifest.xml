@@ -47,7 +47,9 @@
             android:name=".barcodereader.QRCodeReaderActivity"
             android:exported="true" />
         <activity android:name=".common.BaseActivity" />
-        <activity android:name=".selectlanguage.SelectlanguageActivity" />
+        <activity android:name=".selectlanguage.SelectlanguageActivity"
+            android:noHistory="true"
+            />
         <activity android:name=".splashscreen.SplashActivity"
             android:noHistory="true">
             <intent-filter>

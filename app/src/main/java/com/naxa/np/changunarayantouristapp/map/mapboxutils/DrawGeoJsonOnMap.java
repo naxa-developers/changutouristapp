@@ -138,7 +138,7 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
     }
 
 
-    public void readAndDrawGeoSonFileOnMap(String geoJsonFileName, Boolean isChecked, String imageName) {
+    public synchronized void readAndDrawGeoSonFileOnMap(String geoJsonFileName, Boolean isChecked, String imageName, onBoundaryLoadListner listner) {
 
 //        this.imageName = imageName;
 //        this.isChecked = isChecked;
@@ -180,7 +180,7 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
                             inputStream.close();
 
 
-                            drawGeoJsonOnMap(geoJsonString, isChecked, imageName);
+                            drawGeoJsonOnMap(geoJsonString, isChecked, imageName, listner);
 
 
                         } catch (IOException e) {
@@ -195,12 +195,13 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
 
                     @Override
                     public void onComplete() {
-
+                        Log.d(TAG, "onComplete: boarderLoadComplete");
+                        listner.onLoadComplete();
                     }
                 });
     }
 
-    private void drawGeoJsonOnMap(@NotNull StringBuilder geoJsonString, Boolean isChecked, String imageName) {
+    private synchronized void drawGeoJsonOnMap(@NotNull StringBuilder geoJsonString, Boolean isChecked, String imageName, onBoundaryLoadListner listner) {
         GeoJsonSource source = new GeoJsonSource(geojsonSourceId, geoJsonString.toString());
         String type = "";
         try {
@@ -292,19 +293,21 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
 
 
                         }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
 
                 }
+
             } else {
                 mapboxMap.removeLayer(lineLayer);
+                listner.onRemoveComplete();
             }
             mapView.invalidate();
 
         }
-
 
     }
 
@@ -765,5 +768,12 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
         Feature feature = featureCollection.features().get(index);
         setFeatureSelectState(feature, true);
         refreshSource();
+    }
+
+    public interface onBoundaryLoadListner {
+
+        void onLoadComplete();
+
+        void onRemoveComplete();
     }
 }

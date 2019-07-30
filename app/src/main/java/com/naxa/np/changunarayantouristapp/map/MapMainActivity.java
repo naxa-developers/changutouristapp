@@ -48,6 +48,7 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.services.android.navigation.ui.v5.route.NavigationMapRoute;
+import com.naxa.np.changunarayantouristapp.MainActivity;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
@@ -157,7 +158,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Mapbox.getInstance(this, "pk.eyJ1IjoicGVhY2VuZXBhbCIsImEiOiJjand6d3U1Zm4ycDhvNGJwNXBoazB2bHVsIn0.A-aBUuDaGi01JNFhYmzAtA");
+        Mapbox.getInstance(this, "pk.eyJ1IjoicGVhY2VuZXBhbCIsImEiOiJjajZhYzJ4ZmoxMWt4MzJsZ2NnMmpsejl4In0.rb2hYqaioM1-09E83J-SaA");
         setContentView(R.layout.activity_map_main);
 
         gson = new Gson();
@@ -186,7 +187,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         btnPlacesDetailsList = findViewById(R.id.btn_route_to_main_places_list);
         btnRouteToMap = findViewById(R.id.btn_route_to_map);
         btnLayoutMapList = findViewById(R.id.btn_layout);
-
+        mapPlaceListSpinner = findViewById(R.id.spinner_map_places);
 
         btnNavigation.setOnClickListener(this);
         btnGoThere.setOnClickListener(this);
@@ -346,11 +347,29 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                         }
 
                         filename = "changunarayan_boundary.geojson";
-                        drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
+                        drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "", new DrawGeoJsonOnMap.onBoundaryLoadListner() {
+                            @Override
+                            public void onLoadComplete() {
+                                plotDefaultMarkerOnMap(placeType);
+
+                                if (isFromIntent) {
+                                    if (!isFromMainPlaceList) {
+
+                                        setMapCameraPosition(drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity)).getPosition());
+
+                                    }
+                                }
+
+                            }
+
+                            @Override
+                            public void onRemoveComplete() {
+
+                            }
+                        });
                         removeLayerFromMap("nagarkot_boundary.geojson");
                         placeType = "changunarayan";
                         setupToolbar(getResources().getString(R.string.explore_changunarayan_area, "Changunarayan"), false);
-                        plotDefaultMarkerOnMap(placeType);
 
                         mapboxBaseStyleUtils = new MapboxBaseStyleUtils(MapMainActivity.this, mapboxMap, mapView);
                         mapboxBaseStyleUtils.changeBaseColor();
@@ -364,12 +383,29 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                         }
 
                         filename = "nagarkot_boundary.geojson";
-                        drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
+                        drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "", new DrawGeoJsonOnMap.onBoundaryLoadListner() {
+                            @Override
+                            public void onLoadComplete() {
+                                plotDefaultMarkerOnMap(placeType);
+
+                                if (isFromIntent) {
+                                    if (!isFromMainPlaceList) {
+
+                                        setMapCameraPosition(drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity)).getPosition());
+
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onRemoveComplete() {
+
+                            }
+                        });
                         removeLayerFromMap("changunarayan_boundary.geojson");
                         placeType = "nagarkot";
                         setupToolbar(getResources().getString(R.string.explore_changunarayan_area, "Nagarkot"), false);
 
-                        plotDefaultMarkerOnMap(placeType);
 
                         mapboxBaseStyleUtils = new MapboxBaseStyleUtils(MapMainActivity.this, mapboxMap, mapView);
                         mapboxBaseStyleUtils.changeBaseColor();
@@ -384,7 +420,17 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                                 @Override
                                 public void run() {
                                     //Do something after 100ms
-                                    drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, false, "");
+                                    drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, false, "", new DrawGeoJsonOnMap.onBoundaryLoadListner() {
+                                        @Override
+                                        public void onLoadComplete() {
+
+                                        }
+
+                                        @Override
+                                        public void onRemoveComplete() {
+
+                                        }
+                                    });
 
                                 }
                             }, 50);
@@ -501,7 +547,9 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 (mLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED || mLayout.getPanelState() == SlidingUpPanelLayout.PanelState.ANCHORED)) {
             mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
         } else {
-            super.onBackPressed();
+            ActivityUtil.openActivity(MainActivity.class, MapMainActivity.this);
+            finish();
+//            super.onBackPressed();
         }
     }
 
@@ -526,43 +574,37 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
 
         isMapFirstTime = true;
+        initSpinner();
         setupMapOptionsDialog().hide();
 
-        initSpinner();
 
 
         setupMapDataLayerDialog(true, maincategoryList).hide();
 
 
-        if (isFromIntent) {
-            if (!isFromMainPlaceList) {
-                drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity));
-            }
-        }
 
         mapView.invalidate();
     }
 
     private void initSpinner() {
-        mapPlaceListSpinner = findViewById(R.id.spinner_map_places);
 
         int MAP_PLACE_BOUNDARY_ID = sharedPreferenceUtils.getIntValue(MAP_OVERLAY_LAYER, -1);
 
-        mapView.setStyleUrl(getResources().getString(R.string.mapbox_style_mapbox_streets));
+//        mapView.setStyleUrl(getResources().getString(R.string.mapbox_style_mapbox_streets));
+        mapView.setStyleUrl("mapbox://styles/peacenepal/cjypk1l6w56y81co32qklu983");
         if (MAP_PLACE_BOUNDARY_ID == KEY_CHANGUNARAYAN_BOARDER) {
             mapPlaceListSpinner.setSelection(0);
         } else if (MAP_PLACE_BOUNDARY_ID == KEY_NAGARKOT_BOARDER) {
             mapPlaceListSpinner.setSelection(1);
         }
-
         mapPlaceListSpinner.setOnItemSelectedListener(this);
     }
 
-    public void setMapCameraPosition() {
+    public void setMapCameraPosition(LatLng location) {
 
         CameraPosition position = new CameraPosition.Builder()
-                .target(new LatLng(27.657531140175244, 85.46161651611328)) // Sets the new camera position
-                .zoom(14.0) // Sets the zoom
+                .target(location) // Sets the new camera position
+                .zoom(20.0) // Sets the zoom
                 .bearing(0) // Rotate the camera
                 .tilt(30) // Set the camera tilt
                 .build(); // Creates a CameraPosition from the builder
@@ -571,7 +613,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 .newCameraPosition(position), 2000);
         mapView.invalidate();
 
-        enableLocationComponent();
+//        enableLocationComponent();
     }
 
 
@@ -679,11 +721,11 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     }
 
 
-    private void animateCameraPosition(Location location) {
+    private void animateCameraPosition(LatLng location, int zoomLevel) {
         CameraPosition position = new CameraPosition.Builder()
 //                .target(new LatLng(27.7033, 85.4324)) // Sets the new camera position
-                .target(new LatLng(location)) // Sets the new camera position
-                .zoom(11) // Sets the zoom
+                .target(location) // Sets the new camera position
+                .zoom(zoomLevel) // Sets the zoom
                 .bearing(0) // Rotate the camera
                 .tilt(30) // Set the camera tilt
                 .build(); // Creates a CameraPosition from the builder
@@ -897,7 +939,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
             case R.id.btn_users_current_location:
                 if (originLocation != null) {
-                    animateCameraPosition(originLocation);
+                    animateCameraPosition(new LatLng(originLocation.getLatitude(), originLocation.getLongitude()), 14);
                 } else {
                     Toast.makeText(this, "Searching Your Current Location", Toast.LENGTH_SHORT).show();
                 }
@@ -1001,4 +1043,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         super.onConfigurationChanged(newConfig);
         LocaleChanger.onConfigurationChanged();
     }
+
+
 }

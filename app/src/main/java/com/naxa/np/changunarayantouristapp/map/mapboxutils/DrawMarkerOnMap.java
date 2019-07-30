@@ -248,7 +248,7 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
 
     }
 
-    public void addSingleMarker (String imageName, String snippest){
+    public Marker addSingleMarker (String imageName, String snippest){
 
         Icon icon ;
 
@@ -272,6 +272,9 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
                 .snippet(snippest)
                 .icon(icon));
 
+//        animateCameraPosition(marker.getPosition());
+
+
 
         mapboxMap.setOnMarkerClickListener(new MapboxMap.OnMarkerClickListener() {
             @Override
@@ -282,6 +285,7 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
             }
         });
 
+        return  marker;
     }
 
 
@@ -304,10 +308,10 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
     }
 
 
-    public void animateCameraPosition(LatLng location) {
+    public void animateCameraPosition(LatLng location ) {
         CameraPosition position = new CameraPosition.Builder()
                 .target(new LatLng(location)) // Sets the new camera position
-//                .zoom(14) // Sets the zoom
+//                .zoom(16) // Sets the zoom
                 .bearing(0) // Rotate the camera
                 .tilt(10) // Set the camera tilt
                 .build(); // Creates a CameraPosition from the builder
