@@ -26,8 +26,9 @@
             android:title="@string/tourist_information_guide" />
 
         <item
-            android:id="@+id/nav_settings"
-            android:title="@string/settings" />
+            android:id="@+id/nav_logout"
+            android:title="@string/logout"
+            />
         <item
             android:id="@+id/nav_about_us"
             android:title="@string/about_us" />

@@ -1,11 +1,9 @@
 package com.naxa.np.changunarayantouristapp;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.provider.Settings;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -13,9 +11,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -37,15 +35,17 @@ import com.naxa.np.changunarayantouristapp.fetchdata.DataDownloadPresenterImpl;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenter;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenterImpl;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadView;
+import com.naxa.np.changunarayantouristapp.login.LoginActivity;
 import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
+import com.naxa.np.changunarayantouristapp.mayormessage.MayorMessageActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlacesListActivity;
 import com.naxa.np.changunarayantouristapp.selectlanguage.SelectlanguageActivity;
+import com.naxa.np.changunarayantouristapp.splashscreen.WalkThroughSliderActivity;
 import com.naxa.np.changunarayantouristapp.touristinformationguide.TourishInformationGuideActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.CreateAppMainFolderUtils;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
-import com.naxa.np.changunarayantouristapp.utils.GpsUtils;
 import com.naxa.np.changunarayantouristapp.utils.NetworkUtils;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 
@@ -53,6 +53,9 @@ import java.util.HashMap;
 
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_VALUE;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.Network.API_KEY;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_APP_FIRST_TIME_LAUNCH;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_USER_ALREADY_LOGGED_IN;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, DataDonwloadView, FileDownloadView, NavigationView.OnNavigationItemSelectedListener {
 
@@ -64,6 +67,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     ProgressDialog progressDialog;
     DataDownloadPresenter dataDownloadPresenter;
     FileDownloadPresenter fileDownloadPresenter;
+
+    boolean doubleBackToExitPressedOnce = false;
 
 
     @Override
@@ -123,7 +128,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce=false;
+                }
+            }, 2000);
+
         }
     }
 
@@ -167,7 +187,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
 
     private void fetchAllData() {
-        if (SharedPreferenceUtils.getInstance(MainActivity.this).getBoolanValue(Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS, false)) {
+        if (SharedPreferenceUtils.getInstance(MainActivity.this).getBoolanValue(IS_PLACES_DATA_ALREADY_EXISTS, false)) {
 
         } else {
             if (NetworkUtils.isNetworkAvailable()) {
@@ -316,7 +336,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 ActivityUtil.openActivity(TourishInformationGuideActivity.class, this);
                 break;
 
-            case R.id.nav_settings:
+            case R.id.nav_logout:
+                SharedPreferenceUtils.getInstance(MainActivity.this).setValue(IS_USER_ALREADY_LOGGED_IN, false);
+                ActivityUtil.openActivity(LoginActivity.class, this);
+                finish();
                 break;
 
             case R.id.nav_about_us:
@@ -334,4 +357,5 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         super.onConfigurationChanged(newConfig);
         LocaleChanger.onConfigurationChanged();
     }
+
 }

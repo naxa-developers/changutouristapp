@@ -13,6 +13,7 @@ import android.widget.VideoView;
 
 import com.franmontiel.localechanger.LocaleChanger;
 import com.google.gson.Gson;
+import com.naxa.np.changunarayantouristapp.MainActivity;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenter;
@@ -34,6 +35,7 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_MAYOR_MESSAGE_FIRST_TIME;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_USER_ALREADY_LOGGED_IN;
 
 public class MayorMessageActivity extends BaseActivity implements FileDownloadView {
 
@@ -136,8 +138,13 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
                     videoView.stopPlayback();
                 }
 
-                ActivityUtil.openActivity(LoginActivity.class, MayorMessageActivity.this);
-                finish();
+                if(SharedPreferenceUtils.getInstance(MayorMessageActivity.this).getBoolanValue(IS_USER_ALREADY_LOGGED_IN, false)){
+                    ActivityUtil.openActivity(MainActivity.class, MayorMessageActivity.this);
+                    finish();
+                }else {
+                    ActivityUtil.openActivity(LoginActivity.class, MayorMessageActivity.this);
+                    finish();
+                }
 
             }
         });

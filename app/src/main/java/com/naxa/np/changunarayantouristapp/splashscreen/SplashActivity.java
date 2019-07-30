@@ -14,6 +14,7 @@ import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.common.ChangunarayanTouristApp;
 import com.naxa.np.changunarayantouristapp.mayormessage.MayorMessageActivity;
+import com.naxa.np.changunarayantouristapp.selectlanguage.SelectlanguageActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.CreateAppMainFolderUtils;
@@ -84,7 +85,8 @@ public class SplashActivity extends BaseActivity {
 
                 if (SharedPreferenceUtils.getInstance(SplashActivity.this).getBoolanValue(IS_APP_FIRST_TIME_LAUNCH, true)) {
                     SharedPreferenceUtils.getInstance(SplashActivity.this).setValue(MAP_OVERLAY_LAYER, KEY_CHANGUNARAYAN_BOARDER);
-                    ActivityUtil.openActivity(WalkThroughSliderActivity.class, SplashActivity.this);
+                    ActivityUtil.openActivity(SelectlanguageActivity.class, SplashActivity.this);
+
                 } else {
                     ActivityUtil.openActivity(MayorMessageActivity.class, SplashActivity.this);
                 }

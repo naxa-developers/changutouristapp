@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/margin_small"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/margin_xsmall"
         app:cardElevation="5dp">
 
@@ -16,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/title"
-            style="@style/LanguageSelectorTextStyle"
+            style="@style/headlineText"
             />
 
         <TextView
@@ -24,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/title"
-            style="@style/LanguageSelectorTextStyle"
+            style="@style/bodyText"
             android:visibility="gone"
             />
 
