@@ -21,8 +21,12 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.franmontiel.localechanger.LocaleChanger;
 import com.naxa.np.changunarayantouristapp.R;
+import com.naxa.np.changunarayantouristapp.mayormessage.MayorMessageActivity;
 import com.naxa.np.changunarayantouristapp.selectlanguage.SelectlanguageActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
+import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
+
+import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_APP_FIRST_TIME_LAUNCH;
 
 public class WalkThroughSliderActivity extends AppCompatActivity {
 
@@ -133,7 +137,9 @@ public class WalkThroughSliderActivity extends AppCompatActivity {
     }
 
     private void launchLanguageSelectorScreen() {
-        ActivityUtil.openActivity(SelectlanguageActivity.class, WalkThroughSliderActivity.this);
+        SharedPreferenceUtils.getInstance(WalkThroughSliderActivity.this).setValue(IS_APP_FIRST_TIME_LAUNCH, false);
+        ActivityUtil.openActivity(MayorMessageActivity.class, WalkThroughSliderActivity.this);
+        finish();
     }
 
     //  viewpager change listener

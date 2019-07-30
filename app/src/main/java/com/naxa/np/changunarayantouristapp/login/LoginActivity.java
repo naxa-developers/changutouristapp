@@ -3,8 +3,10 @@ package com.naxa.np.changunarayantouristapp.login;
 import android.app.Dialog;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.franmontiel.localechanger.LocaleChanger;
 import com.google.android.material.button.MaterialButton;
@@ -16,6 +18,7 @@ import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.FieldValidatorUtils;
 import com.naxa.np.changunarayantouristapp.utils.NetworkUtils;
+import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,11 +27,17 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_APP_FIRST_TIME_LAUNCH;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_USER_ALREADY_LOGGED_IN;
+
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
     MaterialButton btnVerification, btnRequestForAccess;
 
     EditText etVerificationCode;
+
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,10 +98,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                 dialog.show();
                             } else {
                                 if (userLoginResponse.getError() == 0) {
-
+                                    SharedPreferenceUtils.getInstance(LoginActivity.this).setValue(IS_USER_ALREADY_LOGGED_IN, true);
                                             ActivityUtil.openActivity(MainActivity.class, LoginActivity.this);
+                                            finish();
 
-                                    dialog.show();
                                 } else {
                                     dialog = DialogFactory.createSimpleOkErrorDialog(LoginActivity.this, "Failed", userLoginResponse.getMessage());
                                     dialog.show();
@@ -109,7 +118,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                         @Override
                         public void onComplete() {
-
+                            dialog.dismiss();
                         }
                     });
 
@@ -123,4 +132,24 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         super.onConfigurationChanged(newConfig);
         LocaleChanger.onConfigurationChanged();
     }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
+
 }

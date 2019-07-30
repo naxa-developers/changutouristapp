@@ -99,11 +99,12 @@ public class MapDialogs {
 
             @Override
             public void viewBinded(SelectMaincategoryViewHolder selectMaincategoryViewHolder, final String maincategory, int position) {
-                selectMaincategoryViewHolder.bindView(maincategory);
+                selectMaincategoryViewHolder.bindView(maincategory, position);
                 selectMaincategoryViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 //                        Log.d(TAG, "onClick: " + maincategory);
+                        selectMaincategoryViewHolder.changeSelectedItemBGColor(v);
                         fetchCategoryWiseLayerDataFromDatabase(context, maincategory, geoJsonCategoryViewModel, recyclerViewMapLayer);
 
                     }

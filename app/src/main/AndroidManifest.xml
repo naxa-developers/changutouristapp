@@ -23,7 +23,8 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".common.AboutUsActivity"></activity>
         <activity android:name=".touristinformationguide.TourishInformationGuideActivity" />
-        <activity android:name=".mayormessage.MayorMessageActivity" />
+        <activity android:name=".mayormessage.MayorMessageActivity"
+            android:noHistory="true"/>
         <activity android:name=".placedetailsview.nearbyplaces.NearByPlacesListActivity" />
         <activity android:name=".placedetailsview.mainplacesdetails.MainPlacesListActivity" />
         <activity android:name=".audioplayer.AudioListActivity" />
@@ -47,7 +48,8 @@
             android:exported="true" />
         <activity android:name=".common.BaseActivity" />
         <activity android:name=".selectlanguage.SelectlanguageActivity" />
-        <activity android:name=".splashscreen.SplashActivity">
+        <activity android:name=".splashscreen.SplashActivity"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,7 +60,8 @@
             android:name=".MainActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
-        <activity android:name=".splashscreen.WalkThroughSliderActivity" />
+        <activity android:name=".splashscreen.WalkThroughSliderActivity"
+            android:noHistory="true"/>
         <activity android:name=".gps.GeoPointActivity" />
     </application>
 

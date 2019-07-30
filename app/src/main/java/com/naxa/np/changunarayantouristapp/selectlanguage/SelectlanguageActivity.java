@@ -23,6 +23,7 @@ import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
 import com.naxa.np.changunarayantouristapp.common.ChangunarayanTouristApp;
 import com.naxa.np.changunarayantouristapp.mayormessage.MayorMessageActivity;
+import com.naxa.np.changunarayantouristapp.splashscreen.WalkThroughSliderActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
@@ -202,9 +203,7 @@ public class SelectlanguageActivity extends BaseActivity {
                 new PermissionRequestListener() {
                     @Override
                     public void onPermissionGranted() {
-                        SharedPreferenceUtils.getInstance(SelectlanguageActivity.this).setValue(IS_APP_FIRST_TIME_LAUNCH, false);
-
-                        ActivityUtil.openActivity(MayorMessageActivity.class, SelectlanguageActivity.this);
+                        ActivityUtil.openActivity(WalkThroughSliderActivity.class, SelectlanguageActivity.this);
                         finish();
                     }
 
