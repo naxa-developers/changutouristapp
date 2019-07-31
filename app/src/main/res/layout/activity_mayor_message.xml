@@ -6,15 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".mayormessage.MayorMessageActivity"
-    android:background="@color/slate_black">
+    android:background="@color/colorPrimary">
 
     <include layout="@layout/toolbar"
         android:id="@+id/toolbar_layout"/>
 
     <RelativeLayout
         android:layout_below="@id/toolbar_layout"
-        android:layout_above="@id/btn_skip_mayor_message"
+        android:layout_above="@id/mayors_description_layout"
         android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/spacing_appbar_size"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -25,20 +26,64 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true">
             <VideoView
+                android:layout_marginTop="@dimen/spacing_appbar_size"
                 android:id="@+id/video_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/slate_black"/>
         </LinearLayout>
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/mayors_description_layout"
+        android:layout_above="@id/btn_skip_mayor_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_default_margin"
+        android:layout_marginBottom="@dimen/spacing_xxxlarge"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/headlineText"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="@string/respected_mayor_lbl"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/subHeadText"
+            android:textColor="@color/white"
+            android:text="@string/mayor_name"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/bodyText"
+            android:textColor="@color/white"
+            android:text="@string/mayors_video_desc"
+            android:gravity="center"/>
+
+
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/btn_skip_mayor_message"
+        style="@style/headlineText"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/activity_default_margin"
-        android:text="@string/skip"/>
+        android:text="@string/skip"
+       />
 
 </RelativeLayout>

@@ -137,6 +137,9 @@
     <string name="or">OR</string>
     <string name="language_not_found">Language not found</string>
     <string name="logout">Logout</string>
+    <string name="respected_mayor_lbl">सम्माननीय मेयर</string>
+    <string name="mayor_name">सोम प्रसाद मिश्र</string>
+    <string name="mayors_video_desc">चाँगुनारायण नगरपालिकाको पहिलो पर्यटनसम्बन्धि मोबाइल अनुप्रयोगमा तपाईलाई स्वागत छ।</string>
 
 
 </resources>
