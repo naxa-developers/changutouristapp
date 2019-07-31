@@ -2,6 +2,7 @@ package com.naxa.np.changunarayantouristapp.mayormessage;
 
 import android.app.Dialog;
 import android.content.res.Configuration;
+import android.net.ParseException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -20,6 +21,7 @@ import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenter;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadPresenterImpl;
 import com.naxa.np.changunarayantouristapp.filedownload.FileDownloadView;
 import com.naxa.np.changunarayantouristapp.login.LoginActivity;
+import com.naxa.np.changunarayantouristapp.login.UserLoginResponse;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.CreateAppMainFolderUtils;
@@ -29,6 +31,9 @@ import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
@@ -36,6 +41,7 @@ import io.reactivex.schedulers.Schedulers;
 
 import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_MAYOR_MESSAGE_FIRST_TIME;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_USER_ALREADY_LOGGED_IN;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.KEY_USER_LOGGED_IN_RESPONSE;
 
 public class MayorMessageActivity extends BaseActivity implements FileDownloadView {
 
@@ -139,8 +145,16 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
                 }
 
                 if(SharedPreferenceUtils.getInstance(MayorMessageActivity.this).getBoolanValue(IS_USER_ALREADY_LOGGED_IN, false)){
-                    ActivityUtil.openActivity(MainActivity.class, MayorMessageActivity.this);
-                    finish();
+
+                    validateDate();
+
+                    if(validateDate()) {
+                        ActivityUtil.openActivity(MainActivity.class, MayorMessageActivity.this);
+                        finish();
+                    }else {
+                        ActivityUtil.openActivity(LoginActivity.class, MayorMessageActivity.this);
+                        finish();
+                    }
                 }else {
                     ActivityUtil.openActivity(LoginActivity.class, MayorMessageActivity.this);
                     finish();
@@ -149,6 +163,47 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
             }
         });
 
+    }
+
+    private boolean validateDate() {
+        UserLoginResponse userLoginResponse = gson.fromJson(SharedPreferenceUtils.getInstance(MayorMessageActivity.this).getStringValue(KEY_USER_LOGGED_IN_RESPONSE, null), UserLoginResponse.class);
+        if(TextUtils.isEmpty(userLoginResponse.getDate())){
+            return false;
+        }else {
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date expiryDate = new Date();
+            try {
+                expiryDate = dateFormat.parse(userLoginResponse.getDate());
+//                expiryDate = dateFormat.parse("2019-07-31");
+                Date date = new Date();
+                Date locaDate = dateFormat.parse(dateFormat.format(date));
+
+                return compareDates(locaDate, expiryDate);
+
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                return  false;
+            }
+
+        }
+
+    }
+
+    private boolean  compareDates(@NotNull Date localDate, @NotNull Date expiryDate)
+    {
+        boolean isLocalTimeEqualsorSmaller = false;
+        //CompareTo() Method
+        int dateDifference = localDate.compareTo(expiryDate);
+
+        if(dateDifference >= 0) {
+            isLocalTimeEqualsorSmaller = false;
+        }
+        else {
+            isLocalTimeEqualsorSmaller = true;
+        }
+        return isLocalTimeEqualsorSmaller;
     }
 
 

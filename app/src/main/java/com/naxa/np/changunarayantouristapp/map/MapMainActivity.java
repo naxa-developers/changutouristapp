@@ -135,7 +135,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
     String filename = "";
     String placeType = "";
-    private boolean isMapFirstTime = false;
+    private boolean isMapFirstTime = true;
     private boolean isMapPlaceLayerFromDialog = false;
 
 
