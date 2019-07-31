@@ -57,9 +57,10 @@
             android:id="@+id/dataLayerSwitchcard"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             mapbox:cardCornerRadius="5dp"
-            android:layout_centerVertical="true">
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true">
         <ImageButton
             android:id="@+id/btnMapLayerData"
             android:layout_width="match_parent"
@@ -75,7 +76,8 @@
             android:layout_height="32dp"
             android:layout_margin="16dp"
             mapbox:cardCornerRadius="5dp"
-           android:layout_below="@id/dataLayerSwitchcard" >
+           android:layout_below="@id/dataLayerSwitchcard"
+            android:layout_alignParentEnd="true">
 
             <ImageButton
                 android:id="@+id/btnMapLayerSwitch"

@@ -19,7 +19,6 @@ import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
 import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListEntity;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonCategoryViewModel;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.MapDataLayerDialogCloseListen;
-import com.naxa.np.changunarayantouristapp.map.mapboxutils.mapdialogs.SelectMaincategoryViewHolder;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.MultiItemSectionModel;
 import com.naxa.np.changunarayantouristapp.utils.sectionmultiitemUtils.SectionMultipleItem;
@@ -39,6 +38,9 @@ import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.K
 public class MapDialogs {
     private static final String TAG = "MapDialogs";
 
+
+
+
     public MapDialogs() {
     }
 
@@ -56,7 +58,7 @@ public class MapDialogs {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-//        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
 
 
         RecyclerView recyclerView =  dialog.findViewById(R.id.recyclerViewDialogMapDataCategory);
@@ -76,7 +78,7 @@ public class MapDialogs {
             }
         });
 
-        setUpMainCategoryRecycler(context, recyclerViewMainCategory, geoJsonCategoryViewModel, mainCategoryList, recyclerView);
+        setUpMainCategoryRecycler(context, recyclerViewMainCategory, geoJsonCategoryViewModel, mainCategoryList, recyclerView, 0, mainCategoryList.get(0));
 
         if (isFirsttime) {
             listner.isFirstTime();
@@ -86,7 +88,8 @@ public class MapDialogs {
     }
 
 
-    private void setUpMainCategoryRecycler(Context context, RecyclerView recyclerViewMainCategory, GeoJsonCategoryViewModel geoJsonCategoryViewModel, List<String> mainCategoryList, RecyclerView recyclerViewMapLayer) {
+    private void setUpMainCategoryRecycler(Context context, RecyclerView recyclerViewMainCategory, GeoJsonCategoryViewModel geoJsonCategoryViewModel, List<String> mainCategoryList, RecyclerView recyclerViewMapLayer,
+                                           int selectedPosition, String selectedMainCategory) {
 
         if (mainCategoryList == null) {
             return;
@@ -99,14 +102,11 @@ public class MapDialogs {
 
             @Override
             public void viewBinded(SelectMaincategoryViewHolder selectMaincategoryViewHolder, final String maincategory, int position) {
-                selectMaincategoryViewHolder.bindView(maincategory, position);
+                selectMaincategoryViewHolder.bindView(maincategory, position, selectedPosition );
                 selectMaincategoryViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        Log.d(TAG, "onClick: " + maincategory);
-                        selectMaincategoryViewHolder.changeSelectedItemBGColor(v);
-                        fetchCategoryWiseLayerDataFromDatabase(context, maincategory, geoJsonCategoryViewModel, recyclerViewMapLayer);
-
+                        setUpMainCategoryRecycler(context, recyclerViewMainCategory, geoJsonCategoryViewModel, mainCategoryList, recyclerViewMapLayer, position, mainCategoryList.get(position));
                     }
                 });
 
@@ -119,8 +119,7 @@ public class MapDialogs {
         };
         recyclerViewMainCategory.setAdapter(adapter);
 
-        fetchCategoryWiseLayerDataFromDatabase(context, mainCategoryList.get(0), geoJsonCategoryViewModel, recyclerViewMapLayer);
-
+        fetchCategoryWiseLayerDataFromDatabase(context, selectedMainCategory, geoJsonCategoryViewModel, recyclerViewMapLayer);
     }
 
     private void fetchCategoryWiseLayerDataFromDatabase(Context context, String maincategory, @NotNull GeoJsonCategoryViewModel geoJsonCategoryViewModel, RecyclerView recyclerView) {
@@ -145,8 +144,6 @@ public class MapDialogs {
                                 mapDataLayerList.add(new SectionMultipleItem(SectionMultipleItem.MAP_DATA_LIST, new MultiItemSectionModel(
                                         geoJsonCategoryListEntity.getCategoryMarker(), geoJsonCategoryListEntity.getCategoryName(), geoJsonCategoryListEntity.getCategoryTable())));
                             }
-
-
                             setUpFilterlayerRecyclerView(recyclerView, mapDataLayerList);
                         }
                     }
@@ -176,15 +173,12 @@ public class MapDialogs {
                     case R.id.card_view:
                         if (item.getMultiItemSectionModel() != null) {
                             if (item.getMultiItemSectionModel().getData_value().equals("") || item.getMultiItemSectionModel().getData_value() == null) {
-//                                Log.d(TAG, "onItemChildClick: null value ");
                                 return;
                             }
-
                         }
                         break;
                     default:
                         break;
-
                 }
             }
         });

@@ -102,7 +102,7 @@
     <string name="get_location">Record Location</string>
     <string name="getting_location">Loading Location</string>
     <string name="please_wait_long">Please wait. This could take a few minutes.</string>
-    <string name="save_point">Save GeoPoint</string>
+    <string name="save_point">Accept GeoPoint</string>
     <string name="get_point">Start GeoPoint</string>
     <string name="geopoint_view_read_only">View GeoPoint</string>
     <string name="cancel_location">Cancel</string>
