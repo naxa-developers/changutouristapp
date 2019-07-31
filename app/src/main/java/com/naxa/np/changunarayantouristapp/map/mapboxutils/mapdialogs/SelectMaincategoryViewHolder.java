@@ -13,6 +13,9 @@ public class SelectMaincategoryViewHolder extends RecyclerView.ViewHolder {
     private TextView tvSelectMainCategory;
     private CardView cardViewCategoryHead;
 
+    private TextView tvSelectMainCategorySelected;
+    private CardView cardViewCategoryHeadSelected;
+
 
     public SelectMaincategoryViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -22,21 +25,14 @@ public class SelectMaincategoryViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public void bindView(String maincategoryName, int position) {
-        if(position == 0){
+    public void bindView(String maincategoryName, int position, int selectedosition) {
+
+        if(position == selectedosition){
             cardViewCategoryHead.setCardBackgroundColor(cardViewCategoryHead.getContext().getResources().getColor(R.color.colorPrimaryLight));
             tvSelectMainCategory.setBackgroundColor(tvSelectMainCategory.getContext().getResources().getColor(R.color.colorPrimaryLight));
         }
+
         tvSelectMainCategory.setText(maincategoryName);
     }
-
-    public void changeSelectedItemBGColor(View view) {
-        cardViewCategoryHead.setCardBackgroundColor(cardViewCategoryHead.getResources().getColor(R.color.sectionrecyclerHeadBG));
-        tvSelectMainCategory.setBackgroundColor(tvSelectMainCategory.getContext().getResources().getColor(R.color.sectionrecyclerHeadBG));
-        cardViewCategoryHead = view.findViewById(R.id.card_view_map_category_title);
-        tvSelectMainCategory = view.findViewById(R.id.tv_select_map_layer_main_category);
-        cardViewCategoryHead.setCardBackgroundColor(cardViewCategoryHead.getResources().getColor(R.color.colorPrimaryLight));
-        tvSelectMainCategory.setBackgroundColor(tvSelectMainCategory.getResources().getColor(R.color.colorPrimaryLight));
-
-    }
+        
 }
