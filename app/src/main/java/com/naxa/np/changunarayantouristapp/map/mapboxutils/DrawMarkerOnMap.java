@@ -59,28 +59,29 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
         gson = new Gson();
     }
 
-        List<MyItem> items = new ArrayList<MyItem>();
-    public void AddMarkerOnMap(String geoJsonFileName ,StringBuilder stringBuilder, String imageName){
+    List<MyItem> items = new ArrayList<MyItem>();
+
+    public void AddMarkerOnMap(String geoJsonFileName, StringBuilder stringBuilder, String imageName) {
 
 
-        Log.d(TAG, "AddMarkerOnMap: "+stringBuilder.toString());
-        Icon icon ;
+        Log.d(TAG, "AddMarkerOnMap: " + stringBuilder.toString());
+        Icon icon;
 
-        if((LoadImageUtils.getImageBitmapFromDrawable(context, imageName)) == null){
+        if ((LoadImageUtils.getImageBitmapFromDrawable(context, imageName)) == null) {
             icon = IconFactory.getInstance(context).fromResource(R.drawable.mapbox_marker_icon_default);
-        }else {
+        } else {
             icon = IconFactory.getInstance(context).fromBitmap(LoadImageUtils.getImageBitmapFromDrawable(context, imageName));
         }
 
-      if(stringBuilder == null){
-          return;
-      }
+        if (stringBuilder == null) {
+            return;
+        }
 
         String geoJson = stringBuilder.toString();
 
 
         FeatureCollection featureCollection = FeatureCollection.fromJson(geoJson);
-        List<Feature> featureList  = featureCollection.features();
+        List<Feature> featureList = featureCollection.features();
 
         Observable.just(featureList)
                 .subscribeOn(Schedulers.computation())
@@ -105,16 +106,16 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
 //                        String title = feature.getStringProperty("name");
 
                         String snippest = feature.toString();
-                        Log.d(TAG, "onNext: JSON Object "+snippest);
-                        Log.d(TAG, "onNext: JSON Object Geometry "+feature.geometry().toJson());
+                        Log.d(TAG, "onNext: JSON Object " + snippest);
+                        Log.d(TAG, "onNext: JSON Object Geometry " + feature.geometry().toJson());
 
 
                         LatLng location = new LatLng(0.0, 0.0);
                         try {
                             JSONObject jsonObject = new JSONObject(feature.geometry().toJson());
-                            Log.d(TAG, "onNext: JSON Object Co-ordinates "+jsonObject.getJSONArray("coordinates").getString(0));
-                            String Lon = jsonObject.getJSONArray("coordinates").getString(0) ;
-                            String Lat = jsonObject.getJSONArray("coordinates").getString(1) ;
+                            Log.d(TAG, "onNext: JSON Object Co-ordinates " + jsonObject.getJSONArray("coordinates").getString(0));
+                            String Lon = jsonObject.getJSONArray("coordinates").getString(0);
+                            String Lat = jsonObject.getJSONArray("coordinates").getString(1);
                             location = new LatLng(Double.parseDouble(Lat), Double.parseDouble(Lon));
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -130,7 +131,7 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
                                 .icon(icon));
 ////
 //                        items.add(new MyItem(location,title,snippest, icon));
-                        items.add(new MyItem(location,"title",snippest, icon));
+                        items.add(new MyItem(location, "title", snippest, icon));
 
                         mapboxMap.setOnMarkerClickListener(new MapboxMap.OnMarkerClickListener() {
                             @Override
@@ -149,7 +150,7 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
 
                     @Override
                     public void onComplete() {
-                        Log.d(TAG, "onComplete: "+items.size());
+                        Log.d(TAG, "onComplete: " + items.size());
 
 //                        runThread(items);
                     }
@@ -158,21 +159,21 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
     }
 
 
-    public void AddListOfMarkerOnMap(List<PlacesDetailsEntity> placesDetailsEntityList, String imageName){
+    public void AddListOfMarkerOnMap(List<PlacesDetailsEntity> placesDetailsEntityList, String imageName) {
 
 
-        Icon icon ;
+        Icon icon;
 
-        if((LoadImageUtils.getImageBitmapFromStorage(imageName)) == null){
+        if ((LoadImageUtils.getImageBitmapFromStorage(imageName)) == null) {
             icon = IconFactory.getInstance(context).fromResource(R.drawable.mapbox_marker_icon_default);
-            Log.d(TAG, "AddListOfMarkerOnMap: "+imageName);
-        }else {
+            Log.d(TAG, "AddListOfMarkerOnMap: " + imageName);
+        } else {
 
             icon = IconFactory.getInstance(context).fromBitmap(LoadImageUtils.getImageBitmapFromStorage(imageName));
-            Log.d(TAG, "AddListOfMarkerOnMap: else "+imageName);
+            Log.d(TAG, "AddListOfMarkerOnMap: else " + imageName);
         }
 
-        if(placesDetailsEntityList == null){
+        if (placesDetailsEntityList == null) {
             Toast.makeText(context, "No Data found", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -198,19 +199,17 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
                     public void onNext(PlacesDetailsEntity placesDetailsEntity) {
 
 
-
                         String snippest = gson.toJson(placesDetailsEntity);
-                        Log.d(TAG, "onNext: JSON Object "+snippest);
-                        Log.d(TAG, "onNext: JSON Object Geometry "+ placesDetailsEntity.getLatitude() + " "+ placesDetailsEntity.getLongitude());
+                        Log.d(TAG, "onNext: JSON Object " + snippest);
+                        Log.d(TAG, "onNext: JSON Object Geometry " + placesDetailsEntity.getLatitude() + " " + placesDetailsEntity.getLongitude());
 
 
                         LatLng location = new LatLng(0.0, 0.0);
 
-                        if(placesDetailsEntity.getLatitude() != null && placesDetailsEntity.getLongitude() != null){
+                        if (placesDetailsEntity.getLatitude() != null && placesDetailsEntity.getLongitude() != null) {
 
                             location = new LatLng(Double.parseDouble(placesDetailsEntity.getLatitude()), Double.parseDouble(placesDetailsEntity.getLongitude()));
                         }
-
 
 
 //                         Add the custom icon marker to the map
@@ -222,7 +221,7 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
                                 .icon(icon));
 ////
 //                        items.add(new MyItem(location,title,snippest, icon));
-                        items.add(new MyItem(location,"title",snippest, icon));
+                        items.add(new MyItem(location, "title", snippest, icon));
 
                         mapboxMap.setOnMarkerClickListener(new MapboxMap.OnMarkerClickListener() {
                             @Override
@@ -241,24 +240,24 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
 
                     @Override
                     public void onComplete() {
-                        Log.d(TAG, "onComplete: "+items.size());
+                        Log.d(TAG, "onComplete: " + items.size());
 
                     }
                 });
 
     }
 
-    public void addSingleMarker (String imageName, String snippest){
+    public Marker addSingleMarker(String imageName, String snippest) {
 
-        Icon icon ;
+        Icon icon;
 
-        if((LoadImageUtils.getImageBitmapFromStorage(imageName)) == null){
+        if ((LoadImageUtils.getImageBitmapFromStorage(imageName)) == null) {
             icon = IconFactory.getInstance(context).fromResource(R.drawable.mapbox_marker_icon_default);
-            Log.d(TAG, "AddListOfMarkerOnMap: "+imageName);
-        }else {
+            Log.d(TAG, "AddListOfMarkerOnMap: " + imageName);
+        } else {
 
             icon = IconFactory.getInstance(context).fromBitmap(LoadImageUtils.getImageBitmapFromStorage(imageName));
-            Log.d(TAG, "AddListOfMarkerOnMap: else "+imageName);
+            Log.d(TAG, "AddListOfMarkerOnMap: else " + imageName);
         }
 
         PlacesDetailsEntity placesDetailsEntity = gson.fromJson(snippest, PlacesDetailsEntity.class);
@@ -281,7 +280,7 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
                 return true;
             }
         });
-
+        return marker;
     }
 
 
@@ -289,7 +288,7 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
     public boolean onMarkerClick(@NonNull Marker marker) {
 
         String snippest = marker.getSnippet();
-        Log.d(TAG, "onMarkerClick: "+snippest);
+        Log.d(TAG, "onMarkerClick: " + snippest);
 
         return false;
     }
@@ -299,7 +298,7 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
         String snippest = marker.getSnippet();
         EventBus.getDefault().post(new MarkerClickEvent.MarkerItemClick(snippest, marker.getPosition()));
 
-        Log.d(TAG, "onMarkerClick: "+snippest);
+        Log.d(TAG, "onMarkerClick: " + snippest);
         return false;
     }
 

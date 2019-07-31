@@ -157,7 +157,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Mapbox.getInstance(this, "pk.eyJ1IjoicGVhY2VuZXBhbCIsImEiOiJjand6d3U1Zm4ycDhvNGJwNXBoazB2bHVsIn0.A-aBUuDaGi01JNFhYmzAtA");
+        Mapbox.getInstance(this, "pk.eyJ1IjoicGVhY2VuZXBhbCIsImEiOiJjajZhYzJ4ZmoxMWt4MzJsZ2NnMmpsejl4In0.rb2hYqaioM1-09E83J-SaA");
         setContentView(R.layout.activity_map_main);
 
         gson = new Gson();
@@ -368,8 +368,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                         removeLayerFromMap("changunarayan_boundary.geojson");
                         placeType = "nagarkot";
                         setupToolbar(getResources().getString(R.string.explore_changunarayan_area, "Nagarkot"), false);
-
                         plotDefaultMarkerOnMap(placeType);
+
 
                         mapboxBaseStyleUtils = new MapboxBaseStyleUtils(MapMainActivity.this, mapboxMap, mapView);
                         mapboxBaseStyleUtils.changeBaseColor();
@@ -385,7 +385,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                                 public void run() {
                                     //Do something after 100ms
                                     drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, false, "");
-
                                 }
                             }, 50);
                         }
@@ -526,7 +525,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
 
         isMapFirstTime = true;
-        setupMapOptionsDialog().hide();
+        setupMapOptionsDialog();
 
         initSpinner();
 
@@ -536,7 +535,13 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
         if (isFromIntent) {
             if (!isFromMainPlaceList) {
-                drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity));
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        setMapCameraPosition(drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity)).getPosition());
+                    }
+                }, 1000);
+//                drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity));
             }
         }
 
@@ -548,7 +553,9 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
         int MAP_PLACE_BOUNDARY_ID = sharedPreferenceUtils.getIntValue(MAP_OVERLAY_LAYER, -1);
 
-        mapView.setStyleUrl(getResources().getString(R.string.mapbox_style_mapbox_streets));
+//        mapView.setStyleUrl(getResources().getString(R.string.mapbox_style_mapbox_streets));
+        mapView.setStyleUrl("mapbox://styles/peacenepal/cjypk1l6w56y81co32qklu983");
+
         if (MAP_PLACE_BOUNDARY_ID == KEY_CHANGUNARAYAN_BOARDER) {
             mapPlaceListSpinner.setSelection(0);
         } else if (MAP_PLACE_BOUNDARY_ID == KEY_NAGARKOT_BOARDER) {
@@ -558,11 +565,11 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         mapPlaceListSpinner.setOnItemSelectedListener(this);
     }
 
-    public void setMapCameraPosition() {
+    public void setMapCameraPosition(LatLng location) {
 
         CameraPosition position = new CameraPosition.Builder()
-                .target(new LatLng(27.657531140175244, 85.46161651611328)) // Sets the new camera position
-                .zoom(14.0) // Sets the zoom
+                .target(location) // Sets the new camera position
+                .zoom(20.0) // Sets the zoom
                 .bearing(0) // Rotate the camera
                 .tilt(30) // Set the camera tilt
                 .build(); // Creates a CameraPosition from the builder
@@ -570,8 +577,9 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         mapboxMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(position), 2000);
         mapView.invalidate();
+        isFromMainPlaceList = true;
 
-        enableLocationComponent();
+//        enableLocationComponent();
     }
 
 
@@ -885,7 +893,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                     return;
                 }
                 mapboxMap.clear();
-                setupMapOptionsDialog().hide();
+                setupMapOptionsDialog();
                 mapDataLayerListCheckedEventList.clear();
                 setupMapDataLayerDialog(false, maincategoryList).show();
                 break;
@@ -923,6 +931,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
 
     private void plotDefaultMarkerOnMap(String placeType) {
+
 
         Log.d(TAG, "plotDefaultMarkerOnMap: " + isMapFirstTime);
         if (!isMapFirstTime || !isFromMainPlaceList) {
@@ -977,17 +986,21 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if (position == 0) {
+            placeType = "changunarayan";
             SharedPreferenceUtils.getInstance(MapMainActivity.this).setValue(MAP_OVERLAY_LAYER, KEY_CHANGUNARAYAN_BOARDER);
             SharedPreferenceUtils.getInstance(MapMainActivity.this).setValue(KEY_MAIN_PLACE_TYPE, "changunarayan");
         } else if (position == 1) {
+            placeType = "nagarkot";
             SharedPreferenceUtils.getInstance(MapMainActivity.this).setValue(MAP_OVERLAY_LAYER, KEY_NAGARKOT_BOARDER);
             SharedPreferenceUtils.getInstance(MapMainActivity.this).setValue(KEY_MAIN_PLACE_TYPE, "nagarkot");
         }
 
         isMapFirstTime = true;
-        if (!isMapPlaceLayerFromDialog) {
-            setupMapOptionsDialog().hide();
-        }
+
+//        if (!isMapPlaceLayerFromDialog) {
+        setupMapOptionsDialog();
+//        }
+
         isMapPlaceLayerFromDialog = false;
     }
 
