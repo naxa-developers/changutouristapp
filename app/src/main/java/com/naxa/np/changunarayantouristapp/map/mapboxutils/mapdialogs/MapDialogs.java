@@ -107,8 +107,6 @@ public class MapDialogs {
                     @Override
                     public void onClick(View v) {
                         setUpMainCategoryRecycler(context, recyclerViewMainCategory, geoJsonCategoryViewModel, mainCategoryList, recyclerViewMapLayer, position, mainCategoryList.get(position));
-//
-
                     }
                 });
 
@@ -146,8 +144,6 @@ public class MapDialogs {
                                 mapDataLayerList.add(new SectionMultipleItem(SectionMultipleItem.MAP_DATA_LIST, new MultiItemSectionModel(
                                         geoJsonCategoryListEntity.getCategoryMarker(), geoJsonCategoryListEntity.getCategoryName(), geoJsonCategoryListEntity.getCategoryTable())));
                             }
-
-
                             setUpFilterlayerRecyclerView(recyclerView, mapDataLayerList);
                         }
                     }
@@ -177,15 +173,12 @@ public class MapDialogs {
                     case R.id.card_view:
                         if (item.getMultiItemSectionModel() != null) {
                             if (item.getMultiItemSectionModel().getData_value().equals("") || item.getMultiItemSectionModel().getData_value() == null) {
-//                                Log.d(TAG, "onItemChildClick: null value ");
                                 return;
                             }
-
                         }
                         break;
                     default:
                         break;
-
                 }
             }
         });

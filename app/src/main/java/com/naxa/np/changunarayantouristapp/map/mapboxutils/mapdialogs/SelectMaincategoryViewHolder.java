@@ -13,15 +13,11 @@ public class SelectMaincategoryViewHolder extends RecyclerView.ViewHolder {
     private TextView tvSelectMainCategory;
     private CardView cardViewCategoryHead;
 
-    private TextView tvSelectMainCategorySelected;
-    private CardView cardViewCategoryHeadSelected;
-
 
     public SelectMaincategoryViewHolder(@NonNull View itemView) {
         super(itemView);
         tvSelectMainCategory = itemView.findViewById(R.id.tv_select_map_layer_main_category);
         cardViewCategoryHead = itemView.findViewById(R.id.card_view_map_category_title);
-
 
     }
 
@@ -34,5 +30,5 @@ public class SelectMaincategoryViewHolder extends RecyclerView.ViewHolder {
 
         tvSelectMainCategory.setText(maincategoryName);
     }
-        
+
 }
