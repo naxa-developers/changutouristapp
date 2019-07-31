@@ -56,7 +56,7 @@ public class MapDialogs {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-//        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
 
 
         RecyclerView recyclerView =  dialog.findViewById(R.id.recyclerViewDialogMapDataCategory);

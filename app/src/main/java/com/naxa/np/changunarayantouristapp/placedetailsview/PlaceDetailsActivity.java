@@ -531,7 +531,7 @@ public class PlaceDetailsActivity extends BaseActivity implements View.OnClickLi
 
                     @Override
                     public void onError(Throwable e) {
-                        ToastUtils.showShortToast(getResources().getString(R.string.unable_to_rate)+e.getMessage());
+                        ToastUtils.showShortToast(getResources().getString(R.string.unable_to_rate)+" "+e.getMessage());
                         progressDialog.dismiss();
                         dialog.dismiss();
                     }

@@ -256,14 +256,12 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
             lineLayer.setProperties(
                     PropertyFactory.lineCap(Property.LINE_CAP_ROUND),
                     PropertyFactory.lineJoin(Property.LINE_JOIN_ROUND),
-                    PropertyFactory.backgroundOpacity(.5f),
+                    PropertyFactory.backgroundOpacity(1f),
                     PropertyFactory.backgroundPattern(Property.FILL_TRANSLATE_ANCHOR_MAP),
                     PropertyFactory.circleColor(context.getResources().getColor(R.color.homeBackgroundColor)),
                     PropertyFactory.lineWidth(2f),
                     PropertyFactory.lineColor(context.getResources().getColor(R.color.colorPrimary)),
                     PropertyFactory.circleColor(context.getResources().getColor(R.color.divider_grey))
-
-
             );
 
 
@@ -289,8 +287,6 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
                             mapboxMap.setLatLngBoundsForCameraTarget(latLngBounds);
                             mapboxMap.easeCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 60), 2000);
                             mapView.invalidate();
-
-
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -298,6 +294,7 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
 
 
                 }
+
             } else {
                 mapboxMap.removeLayer(lineLayer);
             }
