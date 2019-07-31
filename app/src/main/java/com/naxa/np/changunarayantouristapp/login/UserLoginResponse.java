@@ -11,6 +11,12 @@ public class UserLoginResponse {
     @Expose
     private String message;
 
+    @SerializedName("date")
+    @Expose
+    private String date;
+
+
+
     public Integer getError() {
         return error;
     }
@@ -25,5 +31,13 @@ public class UserLoginResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

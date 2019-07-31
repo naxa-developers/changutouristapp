@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.franmontiel.localechanger.LocaleChanger;
 import com.google.android.material.button.MaterialButton;
+import com.google.gson.Gson;
 import com.naxa.np.changunarayantouristapp.MainActivity;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
@@ -27,9 +28,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_APP_FIRST_TIME_LAUNCH;
-import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_USER_ALREADY_LOGGED_IN;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.KEY_USER_LOGGED_IN_RESPONSE;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
@@ -81,6 +81,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     Dialog dialog;
     private void verifyUser(String verificatioCode) {
+        Gson gson = new Gson();
         dialog = DialogFactory.createProgressDialog(LoginActivity.this, "Verifying User\nPlease wait....");
         dialog.show();
         JSONObject jsonObject = new JSONObject();
@@ -99,6 +100,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             } else {
                                 if (userLoginResponse.getError() == 0) {
                                     SharedPreferenceUtils.getInstance(LoginActivity.this).setValue(IS_USER_ALREADY_LOGGED_IN, true);
+                                    SharedPreferenceUtils.getInstance(LoginActivity.this).setValue(KEY_USER_LOGGED_IN_RESPONSE, gson.toJson(userLoginResponse));
+
                                             ActivityUtil.openActivity(MainActivity.class, LoginActivity.this);
                                             finish();
 
