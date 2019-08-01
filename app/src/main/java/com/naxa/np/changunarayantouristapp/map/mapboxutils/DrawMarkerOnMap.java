@@ -4,6 +4,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.UiThread;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
@@ -282,7 +283,9 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
                 return true;
             }
         });
+        mapView.invalidate();
         return marker;
+
     }
 
 

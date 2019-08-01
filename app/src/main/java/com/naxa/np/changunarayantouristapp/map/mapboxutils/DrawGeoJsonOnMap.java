@@ -260,6 +260,7 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
                     PropertyFactory.lineCap(Property.LINE_CAP_ROUND),
                     PropertyFactory.lineJoin(Property.LINE_JOIN_ROUND),
                     PropertyFactory.fillColor(context.getResources().getColor(R.color.colorPrimaryLight37)),
+//                    PropertyFactory.fillColor(context.getResources().getColor(R.color.white_37)),
                     PropertyFactory.backgroundOpacity(0.5f),
                     PropertyFactory.backgroundPattern(Property.FILL_TRANSLATE_ANCHOR_MAP)
             );
@@ -273,7 +274,7 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
                 if (mapboxMap.getLayer(geojsonLayerId) == null) {
 
 
-                    mapboxMap.addLayer(lineLayer);
+                    mapboxMap.addLayerAt(lineLayer, 1);
                     JSONObject geoJsonObj = null;
                     try {
                         geoJsonObj = new JSONObject(geoJsonString.toString());
