@@ -345,15 +345,20 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                             mapPlaceListSpinner.setSelection(0);
                         }
 
-                        filename = "changunarayan_boundary.geojson";
-                        drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
-                        removeLayerFromMap("nagarkot_boundary.geojson");
-                        placeType = "changunarayan";
-                        setupToolbar(getResources().getString(R.string.explore_changunarayan_area, "Changunarayan"), false);
-                        plotDefaultMarkerOnMap(placeType);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                filename = "changunarayan_boundary.geojson";
+                                drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
+                                removeLayerFromMap("nagarkot_boundary.geojson");
+                                placeType = "changunarayan";
+                                setupToolbar(getResources().getString(R.string.explore_changunarayan_area, "Changunarayan"), false);
+                                plotDefaultMarkerOnMap(placeType);
 
-                        mapboxBaseStyleUtils = new MapboxBaseStyleUtils(MapMainActivity.this, mapboxMap, mapView);
-                        mapboxBaseStyleUtils.changeBaseColor();
+                                mapboxMap.setMinZoomPreference(14.5);
+                            }
+                        }, 50);
+
                     }
 
                     @Override
@@ -363,16 +368,19 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                             mapPlaceListSpinner.setSelection(1);
                         }
 
-                        filename = "nagarkot_boundary.geojson";
-                        drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
-                        removeLayerFromMap("changunarayan_boundary.geojson");
-                        placeType = "nagarkot";
-                        setupToolbar(getResources().getString(R.string.explore_changunarayan_area, "Nagarkot"), false);
-                        plotDefaultMarkerOnMap(placeType);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                filename = "nagarkot_boundary.geojson";
+                                drawGeoJsonOnMap.readAndDrawGeoSonFileOnMap(filename, true, "");
+                                removeLayerFromMap("changunarayan_boundary.geojson");
+                                placeType = "nagarkot";
+                                setupToolbar(getResources().getString(R.string.explore_changunarayan_area, "Nagarkot"), false);
+                                plotDefaultMarkerOnMap(placeType);
 
-
-                        mapboxBaseStyleUtils = new MapboxBaseStyleUtils(MapMainActivity.this, mapboxMap, mapView);
-                        mapboxBaseStyleUtils.changeBaseColor();
+                                mapboxMap.setMinZoomPreference(11.5);
+                            }
+                            },50);
 
                     }
 
@@ -420,7 +428,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         );
     }
 
-    List<String> placeCategoryList;
 
     private void drawCategoryWiseMarkersOnMap() {
         Observable.just(mapDataLayerListCheckedEventList)
@@ -989,16 +996,18 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
             placeType = "changunarayan";
             SharedPreferenceUtils.getInstance(MapMainActivity.this).setValue(MAP_OVERLAY_LAYER, KEY_CHANGUNARAYAN_BOARDER);
             SharedPreferenceUtils.getInstance(MapMainActivity.this).setValue(KEY_MAIN_PLACE_TYPE, "changunarayan");
+            mapboxMap.setMinZoomPreference(14.5);
         } else if (position == 1) {
             placeType = "nagarkot";
             SharedPreferenceUtils.getInstance(MapMainActivity.this).setValue(MAP_OVERLAY_LAYER, KEY_NAGARKOT_BOARDER);
             SharedPreferenceUtils.getInstance(MapMainActivity.this).setValue(KEY_MAIN_PLACE_TYPE, "nagarkot");
+            mapboxMap.setMinZoomPreference(11.5);
         }
 
         isMapFirstTime = true;
 
 //        if (!isMapPlaceLayerFromDialog) {
-        setupMapOptionsDialog();
+        setupMapOptionsDialog().hide();
 //        }
 
         isMapPlaceLayerFromDialog = false;
