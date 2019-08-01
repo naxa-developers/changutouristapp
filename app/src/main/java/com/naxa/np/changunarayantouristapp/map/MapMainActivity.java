@@ -532,7 +532,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
 
         isMapFirstTime = true;
-        setupMapOptionsDialog();
+        setupMapOptionsDialog().hide();
 
         initSpinner();
 
@@ -567,6 +567,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
             mapPlaceListSpinner.setSelection(0);
         } else if (MAP_PLACE_BOUNDARY_ID == KEY_NAGARKOT_BOARDER) {
             mapPlaceListSpinner.setSelection(1);
+        }else{
+            mapPlaceListSpinner.setSelection(0);
         }
 
         mapPlaceListSpinner.setOnItemSelectedListener(this);

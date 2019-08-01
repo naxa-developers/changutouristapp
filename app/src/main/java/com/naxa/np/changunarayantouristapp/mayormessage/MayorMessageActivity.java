@@ -34,6 +34,7 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
@@ -81,6 +82,7 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
                     .subscribe(new DisposableObserver<MayorMessagesListResponse>() {
                         @Override
                         public void onNext(MayorMessagesListResponse mayorMessagesListResponse) {
+                            dialog.dismiss();
                             if (mayorMessagesListResponse == null) {
                                 dialog = DialogFactory.createSimpleOkErrorDialog(MayorMessageActivity.this, "Data Fetch Error", "unable to download data ");
                                 dialog.show();
@@ -89,7 +91,6 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
 
                             if (mayorMessagesListResponse.getError() == 0) {
                                 if (mayorMessagesListResponse.getData() != null) {
-                                    dialog.dismiss();
                                     SharedPreferenceUtils.getInstance(MayorMessageActivity.this).setValue(Constant.SharedPrefKey.KEY_MAYOR_MESSAGE_DETAILS, gson.toJson(mayorMessagesListResponse));
                                     SharedPreferenceUtils.getInstance(MayorMessageActivity.this).setValue(IS_MAYOR_MESSAGE_FIRST_TIME, false);
                                     mayorMessageDetails = mayorMessagesListResponse.getData().get(0);
@@ -97,7 +98,6 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
                                     downloadVideo(mayorMessageDetails);
                                 }
                             } else {
-                                dialog.dismiss();
                                 dialog = DialogFactory.createSimpleOkErrorDialog(MayorMessageActivity.this, "Data Fetch Error", mayorMessagesListResponse.getMessage());
                                 dialog.show();
                             }
@@ -106,13 +106,14 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
 
                         @Override
                         public void onError(Throwable e) {
+                            dialog.dismiss();
                             dialog = DialogFactory.createSimpleOkErrorDialog(MayorMessageActivity.this, "Data Fetch Error", e.getMessage());
                             dialog.show();
                         }
 
                         @Override
                         public void onComplete() {
-                            dialog.dismiss();
+//                            dialog.dismiss();
                         }
                     });
         } else {
@@ -171,7 +172,7 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
             return false;
         }else {
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
             Date expiryDate = new Date();
             try {
                 expiryDate = dateFormat.parse(userLoginResponse.getDate());
