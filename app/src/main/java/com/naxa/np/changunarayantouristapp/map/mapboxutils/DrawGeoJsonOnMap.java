@@ -237,7 +237,6 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
                     }, 50);
                 }
 
-
             } else {
                 mapboxMap.removeLayer(geojsonLayerId);
                 mapboxMap.removeLayer(MARKER_LAYER_ID);
@@ -253,21 +252,14 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
             if (mapboxMap.getSource(geojsonSourceId) == null) {
                 mapboxMap.addSource(source);
             }
-
-
             FillLayer lineLayer = new FillLayer(geojsonLayerId, geojsonSourceId);
             lineLayer.setProperties(
                     PropertyFactory.lineCap(Property.LINE_CAP_ROUND),
                     PropertyFactory.lineJoin(Property.LINE_JOIN_ROUND),
                     PropertyFactory.fillColor(context.getResources().getColor(R.color.colorPrimaryLight37)),
-//                    PropertyFactory.fillColor(context.getResources().getColor(R.color.white_37)),
                     PropertyFactory.backgroundOpacity(0.5f),
                     PropertyFactory.backgroundPattern(Property.FILL_TRANSLATE_ANCHOR_MAP)
             );
-
-
-
-
 
             if (isChecked) {
 
