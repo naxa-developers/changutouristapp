@@ -204,7 +204,7 @@ public class SelectlanguageActivity extends BaseActivity {
                     @Override
                     public void onPermissionGranted() {
                         ActivityUtil.openActivity(WalkThroughSliderActivity.class, SelectlanguageActivity.this);
-                        finish();
+                        finishAffinity();
                     }
 
                     @Override
@@ -225,7 +225,7 @@ public class SelectlanguageActivity extends BaseActivity {
 
 //                       if(NetworkUtils.isNetworkAvailable()) {
                         ActivityUtil.openActivity(MainActivity.class, SelectlanguageActivity.this);
-                        finish();
+                        finishAffinity();
 //                       }else {
 //                           dialog = DialogFactory.createSimpleOkErrorDialog(SelectlanguageActivity.this, getResources().getString(R.string.no_internet_connection), getResources().getString(R.string.check_internet_retry_again));
 //                           dialog.show();

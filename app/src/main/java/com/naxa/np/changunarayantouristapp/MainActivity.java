@@ -129,7 +129,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             drawer.closeDrawer(GravityCompat.START);
         } else {
             if (doubleBackToExitPressedOnce) {
-                super.onBackPressed();
+//                super.onBackPressed();
+                finishAffinity();
                 return;
             }
 

@@ -90,7 +90,7 @@ public class SplashActivity extends BaseActivity {
                 } else {
                     ActivityUtil.openActivity(MayorMessageActivity.class, SplashActivity.this);
                 }
-                finish();
+                finishAffinity();
             }
 
         }, 2000);
