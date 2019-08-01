@@ -33,9 +33,9 @@
             android:layout_height="@dimen/dp_40"
             android:layout_marginStart="@dimen/activity_default_margin"
             android:layout_marginTop="@dimen/activity_default_margin"
-            android:layout_marginEnd="76dp"
-            android:entries="@array/places_list"
             style="@style/SpinnerTheme"
+            android:layout_marginEnd="@dimen/dp_76"
+            android:entries="@array/places_list"
             />
 
 
