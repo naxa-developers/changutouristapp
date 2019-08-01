@@ -53,6 +53,7 @@ import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonCategoryViewModel;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntityViewModel;
+import com.naxa.np.changunarayantouristapp.events.LayerAddedSuccessEvent;
 import com.naxa.np.changunarayantouristapp.events.MapDataLayerListCheckEvent;
 import com.naxa.np.changunarayantouristapp.events.MarkerClickEvent;
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.DrawGeoJsonOnMap;
@@ -353,7 +354,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                                 removeLayerFromMap("nagarkot_boundary.geojson");
                                 placeType = "changunarayan";
                                 setupToolbar(getResources().getString(R.string.explore_changunarayan_area, "Changunarayan"), false);
-                                plotDefaultMarkerOnMap(placeType);
 
                                 mapboxMap.setMinZoomPreference(14.5);
                             }
@@ -376,7 +376,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                                 removeLayerFromMap("changunarayan_boundary.geojson");
                                 placeType = "nagarkot";
                                 setupToolbar(getResources().getString(R.string.explore_changunarayan_area, "Nagarkot"), false);
-                                plotDefaultMarkerOnMap(placeType);
+//                                plotDefaultMarkerOnMap(placeType);
 
                                 mapboxMap.setMinZoomPreference(11.5);
                             }
@@ -540,17 +540,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         setupMapDataLayerDialog(true, maincategoryList).hide();
 
 
-        if (isFromIntent) {
-            if (!isFromMainPlaceList) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        setMapCameraPosition(drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity)).getPosition());
-                    }
-                }, 1000);
-//                drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity));
-            }
-        }
 
         mapView.invalidate();
     }
@@ -560,8 +549,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
         int MAP_PLACE_BOUNDARY_ID = sharedPreferenceUtils.getIntValue(MAP_OVERLAY_LAYER, -1);
 
-//        mapView.setStyleUrl(getResources().getString(R.string.mapbox_style_mapbox_streets));
-        mapView.setStyleUrl("mapbox://styles/peacenepal/cjypk1l6w56y81co32qklu983");
+        mapView.setStyleUrl(getResources().getString(R.string.mapbox_style_mapbox_streets));
+//        mapView.setStyleUrl("mapbox://styles/peacenepal/cjypk1l6w56y81co32qklu983");
 
         if (MAP_PLACE_BOUNDARY_ID == KEY_CHANGUNARAYAN_BOARDER) {
             mapPlaceListSpinner.setSelection(0);
@@ -1024,5 +1013,26 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         LocaleChanger.onConfigurationChanged();
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLayerAddedSuccessEvent(LayerAddedSuccessEvent.LayerAddedSuccess layerAddedSuccess) {
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        plotDefaultMarkerOnMap(placeType);
+
+                        if (isFromIntent) {
+                            if (!isFromMainPlaceList) {
+                                setMapCameraPosition(drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity)).getPosition());
+                            }
+                        }
+                    }
+                }, 50);
+//                drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity));
+
+
     }
 }

@@ -272,6 +272,8 @@ public class DrawMarkerOnMap implements MapboxMap.OnInfoWindowClickListener,
                 .icon(icon));
 
 
+
+
         mapboxMap.setOnMarkerClickListener(new MapboxMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(@NonNull Marker marker) {
