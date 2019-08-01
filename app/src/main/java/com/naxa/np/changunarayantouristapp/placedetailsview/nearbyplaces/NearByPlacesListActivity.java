@@ -2,7 +2,6 @@ package com.naxa.np.changunarayantouristapp.placedetailsview.nearbyplaces;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -29,16 +28,11 @@ import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -181,7 +175,7 @@ public class NearByPlacesListActivity extends BaseActivity {
         recyclerView.setLayoutManager(manager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        adapter = new BaseRecyclerViewAdapter<PlacesDetailsEntity, MainPlacesListViewHolder>(placesDetailsEntities, R.layout.main_places_item_row_layout) {
+        adapter = new BaseRecyclerViewAdapter<PlacesDetailsEntity, MainPlacesListViewHolder>(placesDetailsEntities, R.layout.near_by_places_item_row_layout) {
 
             @Override
             public void viewBinded(MainPlacesListViewHolder mainPlacesListViewHolder, PlacesDetailsEntity placesDetailsEntity, int position) {
