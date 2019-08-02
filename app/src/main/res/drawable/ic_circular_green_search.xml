@@ -2,12 +2,13 @@
 
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
+
     <item>
         <shape xmlns:android="http://schemas.android.com/apk/res/android"
             android:innerRadius="0dp"
             android:shape="oval"
             android:useLevel="false">
-            <solid android:color="@color/colorPrimary" />
+            <solid android:color="@color/colorPrimaryLight37" />
 
             <padding
                 android:bottom="6dp"
@@ -17,7 +18,9 @@
         </shape>
     </item>
 
+    <item android:drawable="?attr/selectableItemBackground" />
 
     <item android:drawable="@drawable/ic_search_48dp" />
+
 
 </layer-list>

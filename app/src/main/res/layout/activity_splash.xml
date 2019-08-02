@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".splashscreen.SplashActivity"
-    android:background="@color/colorAccent">
+    tools:context=".splashscreen.SplashActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -27,23 +26,30 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/changunarayan_temple_image"
+        android:scaleType="centerCrop"
+        android:layout_weight="5"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/white_95">
+        android:background="@color/transparent">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:src="@drawable/changunarayan_temple_image"
-            android:scaleType="centerCrop"
-            android:layout_weight="5"/>
+            android:layout_weight="5"
+            android:background="@color/transparent"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
+            android:background="@drawable/gradient_bg_transparent_green"
             android:orientation="vertical">
 
             <TextView
@@ -54,6 +60,7 @@
                 android:text="@string/welcome_to_changunarayan"
                 style="@style/headlineText"
                 android:textSize="@dimen/slide_title"
+                android:textColor="@color/white_95"
                 />
 
             <TextView
@@ -62,7 +69,8 @@
                 android:text="@string/your_virtual_guide"
                 style="@style/bodyText"
                 android:gravity="center"
-                android:textSize="@dimen/text_material_header1" />
+                android:textSize="@dimen/text_material_header1"
+                android:textColor="@color/white_95"/>
         </LinearLayout>
 
     </LinearLayout>

@@ -15,6 +15,7 @@
     <color name="green_boarder">#05B491</color>
     <color name="white">#fff</color>
     <color name="black">#000</color>
+    <color name="black_37">#5E000000</color>
     <!--<color name="textColorPrimary">#E6000000</color>-->
     <color name="textColorPrimary">#2E2E2E</color>
     <color name="transparentBackgroundColor">#5E000000</color>
@@ -27,7 +28,7 @@
     <color name="listItemFirstBG">#E3F2FD</color>
     <color name="sectionrecyclerHeadBG">#F3BBDEFB</color>
     <color name="sectionrecyclerHeadBG_37">#5EBBDEFB</color>
-    <color name="transparent">#00e040fb</color>
+    <color name="transparent">#00000000</color>
 
 
 

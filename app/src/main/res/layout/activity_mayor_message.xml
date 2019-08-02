@@ -6,13 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".mayormessage.MayorMessageActivity"
-    android:background="@color/colorPrimary">
+    >
 
     <include layout="@layout/toolbar"
         android:id="@+id/toolbar_layout"/>
 
     <RelativeLayout
         android:layout_below="@id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/double_gradient_bg_transparent_green">
+    <RelativeLayout
         android:layout_above="@id/mayors_description_layout"
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/spacing_appbar_size"
@@ -85,5 +89,6 @@
         android:layout_margin="@dimen/activity_default_margin"
         android:text="@string/skip"
        />
+    </RelativeLayout>
 
 </RelativeLayout>
