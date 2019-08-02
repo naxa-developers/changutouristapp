@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
@@ -22,6 +24,7 @@ import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntityViewModel;
 import com.naxa.np.changunarayantouristapp.placedetailsview.PlaceDetailsActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
+import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.FieldValidatorUtils;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 
@@ -45,7 +48,7 @@ public class QRCodeReaderActivity extends BaseActivity {
     PlaceDetailsEntityViewModel placeDetailsEntityViewModel;
 
     EditText tvQRCode;
-    MaterialButton btnScanQrCode, btnSubmitQRCode;
+    Button btnScanQrCode, btnSubmitQRCode;
     private CodeScanner mCodeScanner;
     CodeScannerView scannerView;
 
@@ -123,16 +126,21 @@ public class QRCodeReaderActivity extends BaseActivity {
                     .subscribe(new DisposableSingleObserver<PlacesDetailsEntity>() {
                         @Override
                         public void onSuccess(PlacesDetailsEntity placesDetailsEntity) {
-                            HashMap<String, Object> hashMap3 = new HashMap<>();
-                            hashMap3.put(KEY_VALUE, false);
-                            hashMap3.put(KEY_OBJECT, placesDetailsEntity);
-                            ActivityUtil.openActivity(PlaceDetailsActivity.class, QRCodeReaderActivity.this, hashMap3, false);
+                            if(placesDetailsEntity != null) {
+                                HashMap<String, Object> hashMap3 = new HashMap<>();
+                                hashMap3.put(KEY_VALUE, false);
+                                hashMap3.put(KEY_OBJECT, placesDetailsEntity);
+                                ActivityUtil.openActivity(PlaceDetailsActivity.class, QRCodeReaderActivity.this, hashMap3, false);
+                            }else {
+                                DialogFactory.createSimpleOkErrorDialog(QRCodeReaderActivity.this, "", getResources().getString(R.string.currently_there_is_no_data_available)).show();
+                            }
 
                         }
 
                         @Override
                         public void onError(Throwable e) {
                             Timber.e(e);
+                            DialogFactory.createSimpleOkErrorDialog(QRCodeReaderActivity.this, "", getResources().getString(R.string.currently_there_is_no_data_available)).show();
                         }
                     });
         }
@@ -155,7 +163,10 @@ public class QRCodeReaderActivity extends BaseActivity {
                     public void run() {
 
                         tvQRCode.setText(result.getText());
-                        btnSubmitQRCode.setEnabled(true);
+                        getPlaceDetails();
+
+//                        btnSubmitQRCode.setEnabled(true);
+
                     }
                 });
             }
