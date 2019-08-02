@@ -1,6 +1,7 @@
 package com.naxa.np.changunarayantouristapp.map;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -64,9 +66,11 @@ import com.naxa.np.changunarayantouristapp.map.mapboxutils.mapdialogs.MapDialogs
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.MapboxBaseStyleUtils;
 import com.naxa.np.changunarayantouristapp.placedetailsview.PlaceDetailsActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlacesListActivity;
+import com.naxa.np.changunarayantouristapp.placedetailsview.nearbyplaces.NearByPlacesListActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
+import com.naxa.np.changunarayantouristapp.utils.GpsUtils;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 import com.naxa.np.changunarayantouristapp.utils.ToastUtils;
 import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
@@ -154,7 +158,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     SharedPreferenceUtils sharedPreferenceUtils;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -209,6 +212,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     }
 
     List<String> maincategoryList = new ArrayList<>();
+
     private void getMapFilterLayerCategoryList() {
         geoJsonCategoryViewModel.getGeoJsonSubCategorySlugByLanguage(SharedPreferenceUtils.getInstance(MapMainActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null))
                 .observeOn(Schedulers.io())
@@ -380,7 +384,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
                                 mapboxMap.setMinZoomPreference(11.5);
                             }
-                            },50);
+                        }, 50);
 
                     }
 
@@ -540,7 +544,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         setupMapDataLayerDialog(true, maincategoryList).hide();
 
 
-
         mapView.invalidate();
     }
 
@@ -556,7 +559,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
             mapPlaceListSpinner.setSelection(0);
         } else if (MAP_PLACE_BOUNDARY_ID == KEY_NAGARKOT_BOARDER) {
             mapPlaceListSpinner.setSelection(1);
-        }else{
+        } else {
             mapPlaceListSpinner.setSelection(0);
         }
 
@@ -704,6 +707,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
     ArrayList<LatLng> points = null;
     boolean point = false;
+
 
     private LatLng selectedMarkerPosition = new LatLng(0.0, 0.0);
 
@@ -914,17 +918,42 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 break;
 
             case R.id.btnGoThere:
-                ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-                if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                        connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+                checkNetworkAndGpsStatus(selectedMarkerPosition);
 
-                    generateRouteToGoThere(selectedMarkerPosition);
-                } else {
-                    Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
-                }
                 break;
         }
 
+    }
+
+    private void checkNetworkAndGpsStatus(LatLng selectedMarkerPosition) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            new GpsUtils(this).turnGPSOn(new GpsUtils.onGpsListener() {
+                @Override
+                public void gpsStatus(boolean isGPSEnable) {
+                    // turn on GPS
+                    if (isGPSEnable) {
+                        generateRouteToGoThere(selectedMarkerPosition);
+                    } else {
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(intent);
+                    }
+                }
+            });
+        } else {
+            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == Constant.MapKey.GPS_REQUEST) {
+                generateRouteToGoThere(selectedMarkerPosition);
+            }
+        }
     }
 
 
@@ -1019,20 +1048,18 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLayerAddedSuccessEvent(LayerAddedSuccessEvent.LayerAddedSuccess layerAddedSuccess) {
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        plotDefaultMarkerOnMap(placeType);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                plotDefaultMarkerOnMap(placeType);
 
-                        if (isFromIntent) {
-                            if (!isFromMainPlaceList) {
-                                setMapCameraPosition(drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity)).getPosition());
-                            }
-                        }
+                if (isFromIntent) {
+                    if (!isFromMainPlaceList) {
+                        setMapCameraPosition(drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity)).getPosition());
                     }
-                }, 50);
+                }
+            }
+        }, 50);
 //                drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity));
-
-
     }
 }
