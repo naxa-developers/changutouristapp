@@ -21,7 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/scan_barcode"/>
+        android:text="@string/scan_barcode"
+        android:visibility="gone"/>
 
 
 
@@ -45,25 +46,51 @@
             app:frameThickness="2dp"
             app:maskColor="#77000000"/>
 
-    <EditText
-        android:id="@+id/tv_qr_code"
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/btn_scan_qr_code"
-        android:hint="@string/no_barcode_captured"
-        style="@style/headlineText"
-        android:layout_margin="@dimen/activity_default_margin"/>
+        android:padding="@dimen/spacing_medium"
+        android:layout_marginEnd="@dimen/activity_default_margin"
+        android:layout_marginStart="@dimen/activity_default_margin"
+        android:layout_marginBottom="@dimen/spacing_appbar_size">
+
+        <EditText
+            android:id="@+id/tv_qr_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/no_barcode_captured"
+            style="@style/headlineText"
+            android:paddingEnd="@dimen/activity_default_margin"
+            android:paddingStart="@dimen/activity_default_margin"
+            android:textColor="@color/white_95"
+            android:textColorHint="@color/white_80"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_submit_qr_code"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:background="@drawable/ic_circular_green_search"
+            />
+
+    </LinearLayout>
+
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_submit_qr_code"
+        android:id="@+id/btn_submit_qr_code1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_qr_code"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:text="@string/submit_qrcode"
-        android:textAllCaps="false"/>
+        android:textAllCaps="false"
+        android:visibility="gone"/>
 
 </RelativeLayout>
