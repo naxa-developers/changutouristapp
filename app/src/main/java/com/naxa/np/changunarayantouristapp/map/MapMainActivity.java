@@ -175,6 +175,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         initUI(savedInstanceState);
     }
 
+    
     private void initUI(Bundle savedInstanceState) {
         btnNavigation = findViewById(R.id.navigation);
         ivSlidingLayoutIndicator = findViewById(R.id.iv_sliding_layout_indicator);
@@ -349,8 +350,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                         if (isMapPlaceLayerFromDialog) {
                             mapPlaceListSpinner.setSelection(0);
                         }
-
-                        new Handler().postDelayed(new Runnable() {
+                        final Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 filename = "changunarayan_boundary.geojson";
@@ -358,10 +359,10 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                                 removeLayerFromMap("nagarkot_boundary.geojson");
                                 placeType = "changunarayan";
                                 setupToolbar(getResources().getString(R.string.explore_changunarayan_area, "Changunarayan"), false);
-
                                 mapboxMap.setMinZoomPreference(14.5);
                             }
                         }, 50);
+
 
                     }
 
@@ -372,7 +373,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                             mapPlaceListSpinner.setSelection(1);
                         }
 
-                        new Handler().postDelayed(new Runnable() {
+                        final Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 filename = "nagarkot_boundary.geojson";
@@ -380,11 +382,10 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                                 removeLayerFromMap("changunarayan_boundary.geojson");
                                 placeType = "nagarkot";
                                 setupToolbar(getResources().getString(R.string.explore_changunarayan_area, "Nagarkot"), false);
-//                                plotDefaultMarkerOnMap(placeType);
-
                                 mapboxMap.setMinZoomPreference(11.5);
                             }
                         }, 50);
+
 
                     }
 
@@ -401,7 +402,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                             }, 50);
                         }
                     }
-
 
                 }
         );
@@ -537,11 +537,9 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
         isMapFirstTime = true;
         setupMapOptionsDialog().hide();
+        setupMapDataLayerDialog(true, maincategoryList).hide();
 
         initSpinner();
-
-
-        setupMapDataLayerDialog(true, maincategoryList).hide();
 
 
         mapView.invalidate();
@@ -578,7 +576,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         mapboxMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(position), 2000);
         mapView.invalidate();
-        isFromMainPlaceList = true;
+        isFromMainPlaceList = false;
 
 //        enableLocationComponent();
     }
@@ -960,7 +958,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     private void plotDefaultMarkerOnMap(String placeType) {
 
 
-        Log.d(TAG, "plotDefaultMarkerOnMap: " + isMapFirstTime);
+        Log.d(TAG, "plotDefaultMarkerOnMap: isMapFirstTime " + isMapFirstTime);
+        Log.d(TAG, "plotDefaultMarkerOnMap: isFromMainPlaceList " + isFromMainPlaceList);
         if (!isMapFirstTime || !isFromMainPlaceList) {
             return;
         }
@@ -1024,13 +1023,13 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
             mapboxMap.setMinZoomPreference(11.5);
         }
 
-        isMapFirstTime = true;
 
+        isMapFirstTime = true;
 //        if (!isMapPlaceLayerFromDialog) {
         setupMapOptionsDialog().hide();
 //        }
-
         isMapPlaceLayerFromDialog = false;
+
     }
 
     @Override
