@@ -1,14 +1,18 @@
 package com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails;
 
 import android.text.TextUtils;
+import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.naxa.np.changunarayantouristapp.R;
+import com.naxa.np.changunarayantouristapp.common.ChangunarayanTouristApp;
 import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.utils.imageutils.LoadImageUtils;
 
@@ -23,20 +27,26 @@ public class MainPlacesListViewHolder extends RecyclerView.ViewHolder  {
     private TextView tvPlaceName;
     private TextView tvPlaceDistance;
     private ImageView ivPlaceImage;
+    CardView cardView;
 
 
-    public MainPlacesListViewHolder(@NonNull View itemView) {
+    public MainPlacesListViewHolder(@NonNull View itemView, Display display, boolean isFromMainList) {
         super(itemView);
+        cardView = itemView.findViewById(R.id.card_view);
         tvPlaceName = itemView.findViewById(R.id.tv_main_place_name);
         tvPlaceDistance = itemView.findViewById(R.id.tv_Places_distance);
         ivPlaceImage = itemView.findViewById(R.id.iv_main_place_image);
+
+        if(isFromMainList){
+            setCardHeight(cardView, display);
+        }
 
     }
 
     public void bindView(PlacesDetailsEntity placesDetailsEntity, Float distance) {
         tvPlaceName.setText(placesDetailsEntity.getName());
-        if(!TextUtils.isEmpty(fetchPromaryImageFromList(placesDetailsEntity))){
-            LoadImageUtils.loadImageToViewFromSrc(ivPlaceImage, fetchPromaryImageFromList(placesDetailsEntity));
+        if(!TextUtils.isEmpty(fetchPrimaryImageFromList(placesDetailsEntity))){
+            LoadImageUtils.loadImageToViewFromSrc(ivPlaceImage, fetchPrimaryImageFromList(placesDetailsEntity));
         }
 
         if(distance != null){
@@ -47,7 +57,7 @@ public class MainPlacesListViewHolder extends RecyclerView.ViewHolder  {
 
     }
 
-    private synchronized String  fetchPromaryImageFromList(@NotNull PlacesDetailsEntity placesDetailsEntity) {
+    private synchronized String fetchPrimaryImageFromList(@NotNull PlacesDetailsEntity placesDetailsEntity) {
         String primaryImage = null;
 
         if(!TextUtils.isEmpty(placesDetailsEntity.getImages())) {
@@ -81,6 +91,14 @@ public class MainPlacesListViewHolder extends RecyclerView.ViewHolder  {
         }
 
         return convertedDistance;
+    }
+
+    private void setCardHeight(@NotNull CardView cardView, @NotNull Display display){
+        int width = display.getWidth(); // ((display.getWidth()*20)/100)
+        int height = display.getHeight();// ((display.getHeight()*30)/100)
+        LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(width,(height*3)/8);
+        cardView.setLayoutParams(parms);
+
     }
 
 }

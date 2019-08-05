@@ -72,11 +72,11 @@
     <color name="dot_dark_screen5">@color/sectionrecyclerHeadBG</color>
 
     <!-- dots active colors -->
-    <color name="dot_light_screen1">@color/colorAccent</color>
-    <color name="dot_light_screen2">@color/colorAccent</color>
-    <color name="dot_light_screen3">@color/colorAccent</color>
-    <color name="dot_light_screen4">@color/colorAccent</color>
-    <color name="dot_light_screen5">@color/colorAccent</color>
+    <color name="dot_light_screen1">@color/colorPrimaryDark</color>
+    <color name="dot_light_screen2">@color/colorPrimaryDark</color>
+    <color name="dot_light_screen3">@color/colorPrimaryDark</color>
+    <color name="dot_light_screen4">@color/colorPrimaryDark</color>
+    <color name="dot_light_screen5">@color/colorPrimaryDark</color>
     <color name="home_grid_card_bg_volor">#E3F2FD</color>
 
     <array name="array_dot_active">
