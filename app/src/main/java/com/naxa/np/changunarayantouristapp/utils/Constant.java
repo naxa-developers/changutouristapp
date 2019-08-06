@@ -3,6 +3,7 @@ package com.naxa.np.changunarayantouristapp.utils;
 
 import android.Manifest;
 
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,6 +118,13 @@ public class Constant {
                 "</div>";
 
         return demoContent;
+    }
+
+    public static String getAboutUsDemoContentEnglish(){
+        String aboutUsContent = "<p style=\"text-align: justify;\"><strong>Changunarayan app</strong> is a vision of the Mayor of Changunarayan Municipality to provide accurate first hand information to any tourists coming to visit changunarayan municipality in different forms.</p>\n" +
+                "<p style=\"text-align: justify;\">This app acts as a <strong>virtual tourist guide</strong> to facilitate the tourist coming to <strong><em>Changunarayan </em></strong><strong><em>Municipality</em> </strong>to help them easily navigate around places, get firsthand information andunderstand more details of the most visited tourist destinations. Also, it provides salient history, culture of such locations along with other interesting features. Currently the app is available in three different langugages : <em>English</em> , <em>Nepali</em> and <em>Chinese</em>. Users would also be able to listen to audio based description of these sites and also view multiple seasons , day/night photographs some popular locations and scenaries depending on where they are.</p>\n" +
+                "<p style=\"text-align: justify;\"><br />The app user can either scan the <strong>QR code</strong> pasted at each major locations/temples/statues or look for nearby most visit places when he/she is navigating around changunarayan world heritage sites and Nagarkot area.The app has been developed in technical partnership with a location based service provider company <em><a href=\"http://naxa.com.np/home/about-us/\">NAXA</a></em> based in kathmandu.This app can facilitate the visitors coming to visit <strong>Changunarayan</strong> and <strong>Nagarkot </strong>areas and also become a boon for the promotion and development of tourism in the area.</p>";
+        return aboutUsContent;
     }
 
 
