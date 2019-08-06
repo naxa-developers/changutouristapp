@@ -52,7 +52,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        app:srcCompat="@drawable/naxa_logo" />
+                        app:srcCompat="@drawable/naxa_logo"
+                        android:padding="@dimen/activity_default_margin"
+                        />
 
                     <TextView
                         android:layout_width="match_parent"
