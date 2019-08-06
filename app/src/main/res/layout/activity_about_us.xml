@@ -4,19 +4,113 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".common.AboutUsActivity">
+    tools:context=".common.AboutUsActivity"
+    android:background="@color/white_95">
 
     <include layout="@layout/toolbar"
         android:id="@+id/toolbar_layout"/>
 
-    <WebView
-        android:id="@+id/webViewAboutUs"
-        android:layout_below="@id/toolbar_layout"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/activity_default_margin"
-        android:paddingRight="@dimen/activity_default_margin"
+        android:layout_below="@id/toolbar_layout"
         >
-    </WebView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_default_margin">
+        <WebView
+            android:id="@+id/webViewAboutUs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:nestedScrollingEnabled="false"
+            >
+        </WebView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/bodyText"
+            android:gravity="center"
+            android:text="@string/designed_and_developed_by_naxa_pvt_ltd"/>
+
+        <androidx.cardview.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:foreground="?android:attr/selectableItemBackground"
+            card_view:cardCornerRadius="@dimen/activity_default_margin"
+            card_view:cardElevation="2dp"
+            card_view:cardUseCompatPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="horizontal"
+            android:background="@drawable/double_gradient_bg_transparent_green">
+
+
+
+            <androidx.cardview.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:foreground="?android:attr/selectableItemBackground"
+                card_view:cardCornerRadius="@dimen/activity_default_margin"
+                card_view:cardElevation="0dp"
+                card_view:cardUseCompatPadding="false"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:layout_marginBottom="@dimen/spacing_medium">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/changunarayan_municipality_logo"
+                android:scaleType="fitCenter"
+
+                />
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:foreground="?android:attr/selectableItemBackground"
+                card_view:cardCornerRadius="@dimen/activity_default_margin"
+                card_view:cardElevation="0dp"
+                card_view:cardUseCompatPadding="false"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_medium"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:layout_marginBottom="@dimen/spacing_medium">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/naxa_logo"
+                android:scaleType="fitCenter" />
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/bodyText"
+            android:gravity="center"
+            android:text="@string/all_rights_reserved_2019"/>
+    </LinearLayout>
+
+    </ScrollView>
 </RelativeLayout>
