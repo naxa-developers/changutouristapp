@@ -19,7 +19,6 @@ public class SelectMaincategoryViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         tvSelectMainCategory = itemView.findViewById(R.id.tv_select_map_layer_main_category);
         cardViewCategoryHead = itemView.findViewById(R.id.card_view_map_category_title);
-
     }
 
     public void bindView(GeoJsonCategoryListEntity maincategoryName, int position, int selectedosition) {
