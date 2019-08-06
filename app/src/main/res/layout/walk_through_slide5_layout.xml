@@ -15,7 +15,8 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="@dimen/walkthrough_image_height"
+            android:scaleType="centerCrop"
             app:srcCompat="@drawable/walkthrough_view_on_map_image" />
 
         <TextView

@@ -69,5 +69,6 @@
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">200dp</dimen>
     <dimen name="dp_76">76dp</dimen>
+    <dimen name="walkthrough_image_height">400dp</dimen>
 
 </resources>

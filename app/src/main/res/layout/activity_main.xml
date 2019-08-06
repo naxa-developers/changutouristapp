@@ -37,7 +37,7 @@
                     android:id="@+id/tv_home_title"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1.5"
+                    android:layout_weight="1.3"
                     android:text="@string/changunarayan"
                     android:layout_alignParentTop="true"
                     android:background="@color/transparent"
@@ -73,6 +73,7 @@
                     android:paddingBottom="0dp"
                     android:layout_marginLeft="@dimen/activity_default_margin"
                     android:layout_marginRight="@dimen/activity_default_margin"
+                    android:visibility="gone"
                     />
 
 

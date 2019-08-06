@@ -7,7 +7,7 @@
     >
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center_horizontal"
@@ -15,8 +15,9 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="350dp"
-            app:srcCompat="@drawable/walkthrough_travelling" />
+            android:layout_height="@dimen/walkthrough_image_height"
+            app:srcCompat="@drawable/walkthrough_travelling"
+            android:scaleType="centerCrop"/>
 
         <TextView
             android:layout_width="wrap_content"
