@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListEntity;
+import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonListEntity;
 
 import java.util.List;
 
@@ -27,8 +28,8 @@ public interface GeoJsonCategoryDao {
     Flowable<List<GeoJsonCategoryListEntity>> getGeoJsonCategoryListByLanguage(String language, String slug);
 
 
-    @Query("SELECT DISTINCT slug from GeoJsonCategoryListEntity WHERE language LIKE :language ORDER BY slug ASC ")
-    Flowable<List<String>> getGeoJsonSubCategorySlugByLanguage(String language);
+    @Query("SELECT * from GeoJsonCategoryListEntity WHERE language LIKE :language GROUP BY slug ORDER BY slug ASC ")
+    Flowable<List<GeoJsonCategoryListEntity>> getGeoJsonSubCategorySlugByLanguage(String language);
 
     @Query("DELETE FROM GeoJsonCategoryListEntity")
     void deleteAll();

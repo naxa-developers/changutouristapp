@@ -20,7 +20,9 @@
             android:layout_height="wrap_content"
             android:text="@string/english"
             style="@style/headlineText"
+            android:textSize="@dimen/sp_16"
             android:layout_margin="@dimen/spacing_xxsmall"
+            android:padding="@dimen/spacing_small"
             android:background="@color/sectionrecyclerHeadBG"/>
     </androidx.cardview.widget.CardView>
 

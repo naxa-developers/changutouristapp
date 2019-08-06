@@ -18,7 +18,7 @@ public class GeoJsonCategoryViewModel extends AndroidViewModel {
 
     private Flowable<List<GeoJsonCategoryListEntity>> mAllGeoJsonCategoryEntity;
     private Flowable<List<GeoJsonCategoryListEntity>> mSpecificTypeGeoJsonCategoryEntity;
-    private Flowable<List<String>> mDistinctSlugList;
+    private Flowable<List<GeoJsonCategoryListEntity>> mDistinctSlugList;
 
     public GeoJsonCategoryViewModel(Application application) {
         super(application);
@@ -35,7 +35,7 @@ public class GeoJsonCategoryViewModel extends AndroidViewModel {
         return mSpecificTypeGeoJsonCategoryEntity;
     }
 
-    public Flowable<List<String>> getGeoJsonSubCategorySlugByLanguage(String language) {
+    public Flowable<List<GeoJsonCategoryListEntity>> getGeoJsonSubCategorySlugByLanguage(String language) {
         mDistinctSlugList = mRepository.getGeoJsonSubCategorySlugByLanguage(language);
         return mDistinctSlugList;
     }

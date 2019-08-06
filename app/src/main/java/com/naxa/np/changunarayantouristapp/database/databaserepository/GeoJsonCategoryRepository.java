@@ -20,7 +20,7 @@ public class GeoJsonCategoryRepository {
     private GeoJsonCategoryDao mGeoJsonCategoryDao;
     private Flowable<List<GeoJsonCategoryListEntity>> mAllGeoJsonCategoryEntity;
     private Flowable<List<GeoJsonCategoryListEntity>> mSpecificTypeGeoJsonCategoryEntity;
-    private Flowable<List<String>> mDistinctSlugList;
+    private Flowable<List<GeoJsonCategoryListEntity>> mDistinctSlugList;
 
     // Note that in order to unit test the WordRepository, you have to remove the Application
     // dependency. This adds complexity and much more code, and this sample is not about testing.
@@ -44,7 +44,7 @@ public class GeoJsonCategoryRepository {
         return mSpecificTypeGeoJsonCategoryEntity;
     }
 
-    public Flowable<List<String>> getGeoJsonSubCategorySlugByLanguage(String language) {
+    public Flowable<List<GeoJsonCategoryListEntity>> getGeoJsonSubCategorySlugByLanguage(String language) {
         mDistinctSlugList = mGeoJsonCategoryDao.getGeoJsonSubCategorySlugByLanguage(language);
         return mDistinctSlugList;
     }

@@ -46,7 +46,7 @@
                     android:id="@+id/recyclerViewDialogMapDataMainCategory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/activity_default_margin"
+                    android:layout_marginTop="@dimen/spacing_medium"
                     android:layout_marginStart="@dimen/activity_default_margin"
                     android:background="@color/white">
                 </androidx.recyclerview.widget.RecyclerView>
@@ -57,7 +57,7 @@
                 android:id="@+id/recyclerViewDialogMapDataCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_default_margin"
+                android:layout_marginTop="@dimen/spacing_medium"
                 android:layout_marginBottom="@dimen/spacing_medium"
                 android:background="@color/white_95">
             </androidx.recyclerview.widget.RecyclerView>
