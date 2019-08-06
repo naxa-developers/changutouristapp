@@ -68,7 +68,9 @@
                 card_view:cardUseCompatPadding="false"
                 android:layout_marginStart="@dimen/spacing_medium"
                 android:layout_marginTop="@dimen/spacing_medium"
-                android:layout_marginBottom="@dimen/spacing_medium">
+                android:layout_marginBottom="@dimen/spacing_medium"
+                card_view:contentPadding="@dimen/spacing_xxsmall"
+                >
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -92,6 +94,7 @@
                 android:layout_marginStart="@dimen/spacing_medium"
                 android:layout_marginEnd="@dimen/spacing_medium"
                 android:layout_marginTop="@dimen/spacing_medium"
+                card_view:contentPadding="@dimen/spacing_xxsmall"
                 android:layout_marginBottom="@dimen/spacing_medium">
 
             <ImageView
