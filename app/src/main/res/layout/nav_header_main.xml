@@ -20,8 +20,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:scaleX="2"
-        android:scaleY="2"
+        android:scaleX="1.4"
+        android:scaleY="1.4"
         app:srcCompat="@mipmap/ic_launcher" />
 
     <TextView
