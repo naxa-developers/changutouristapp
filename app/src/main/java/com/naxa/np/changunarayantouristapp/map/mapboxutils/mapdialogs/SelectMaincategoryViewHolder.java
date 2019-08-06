@@ -8,6 +8,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.naxa.np.changunarayantouristapp.R;
+import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListEntity;
 
 public class SelectMaincategoryViewHolder extends RecyclerView.ViewHolder {
     private TextView tvSelectMainCategory;
@@ -21,14 +22,15 @@ public class SelectMaincategoryViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public void bindView(String maincategoryName, int position, int selectedosition) {
+    public void bindView(GeoJsonCategoryListEntity maincategoryName, int position, int selectedosition) {
 
         if(position == selectedosition){
             cardViewCategoryHead.setCardBackgroundColor(cardViewCategoryHead.getContext().getResources().getColor(R.color.colorPrimaryLight));
             tvSelectMainCategory.setBackgroundColor(tvSelectMainCategory.getContext().getResources().getColor(R.color.colorPrimaryLight));
+            tvSelectMainCategory.setTextColor(tvSelectMainCategory.getContext().getResources().getColor(R.color.white));
         }
 
-        tvSelectMainCategory.setText(maincategoryName);
+        tvSelectMainCategory.setText(maincategoryName.getSubCategories());
     }
 
 }

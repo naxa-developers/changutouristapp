@@ -46,7 +46,7 @@ public class MapDialogs {
 
 
     public  Dialog createMapDataLayerDialog(@NonNull Context context, GeoJsonCategoryViewModel geoJsonCategoryViewModel,
-                                                  List<String> mainCategoryList, boolean isFirsttime, @NonNull MapDataLayerDialogCloseListen listner) {
+                                                  List<GeoJsonCategoryListEntity> mainCategoryList, boolean isFirsttime, @NonNull MapDataLayerDialogCloseListen listner) {
 
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -78,7 +78,7 @@ public class MapDialogs {
             }
         });
 
-        setUpMainCategoryRecycler(context, recyclerViewMainCategory, geoJsonCategoryViewModel, mainCategoryList, recyclerView, 0, mainCategoryList.get(0));
+        setUpMainCategoryRecycler(context, recyclerViewMainCategory, geoJsonCategoryViewModel, mainCategoryList, recyclerView, 0, mainCategoryList.get(0).getSlug());
 
         if (isFirsttime) {
             listner.isFirstTime();
@@ -88,25 +88,25 @@ public class MapDialogs {
     }
 
 
-    private void setUpMainCategoryRecycler(Context context, RecyclerView recyclerViewMainCategory, GeoJsonCategoryViewModel geoJsonCategoryViewModel, List<String> mainCategoryList, RecyclerView recyclerViewMapLayer,
+    private void setUpMainCategoryRecycler(Context context, RecyclerView recyclerViewMainCategory, GeoJsonCategoryViewModel geoJsonCategoryViewModel, List<GeoJsonCategoryListEntity> mainCategoryList, RecyclerView recyclerViewMapLayer,
                                            int selectedPosition, String selectedMainCategory) {
 
         if (mainCategoryList == null) {
             return;
         }
-        BaseRecyclerViewAdapter<String, SelectMaincategoryViewHolder> adapter;
+        BaseRecyclerViewAdapter<GeoJsonCategoryListEntity, SelectMaincategoryViewHolder> adapter;
         LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false );
         recyclerViewMainCategory.setLayoutManager(manager);
         recyclerViewMainCategory.setItemAnimator(new DefaultItemAnimator());
-        adapter = new BaseRecyclerViewAdapter<String, SelectMaincategoryViewHolder>(mainCategoryList, R.layout.select_main_category_map_layer_dialog) {
+        adapter = new BaseRecyclerViewAdapter<GeoJsonCategoryListEntity, SelectMaincategoryViewHolder>(mainCategoryList, R.layout.select_main_category_map_layer_dialog) {
 
             @Override
-            public void viewBinded(SelectMaincategoryViewHolder selectMaincategoryViewHolder, final String maincategory, int position) {
+            public void viewBinded(SelectMaincategoryViewHolder selectMaincategoryViewHolder, final GeoJsonCategoryListEntity maincategory, int position) {
                 selectMaincategoryViewHolder.bindView(maincategory, position, selectedPosition );
                 selectMaincategoryViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        setUpMainCategoryRecycler(context, recyclerViewMainCategory, geoJsonCategoryViewModel, mainCategoryList, recyclerViewMapLayer, position, mainCategoryList.get(position));
+                        setUpMainCategoryRecycler(context, recyclerViewMainCategory, geoJsonCategoryViewModel, mainCategoryList, recyclerViewMapLayer, position, mainCategoryList.get(position).getSlug());
                     }
                 });
 

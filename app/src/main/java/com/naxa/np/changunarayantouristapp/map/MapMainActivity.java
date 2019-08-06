@@ -52,6 +52,7 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.services.android.navigation.ui.v5.route.NavigationMapRoute;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
+import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListEntity;
 import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonCategoryViewModel;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntityViewModel;
@@ -211,16 +212,17 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
     }
 
-    List<String> maincategoryList = new ArrayList<>();
+    List<GeoJsonCategoryListEntity> maincategoryList = new ArrayList<>();
 
     private void getMapFilterLayerCategoryList() {
         geoJsonCategoryViewModel.getGeoJsonSubCategorySlugByLanguage(SharedPreferenceUtils.getInstance(MapMainActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null))
                 .observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new DisposableSubscriber<List<String>>() {
+                .subscribe(new DisposableSubscriber<List<GeoJsonCategoryListEntity>>() {
                     @Override
-                    public void onNext(List<String> stringList) {
-                        maincategoryList = stringList;
+                    public void onNext(List<GeoJsonCategoryListEntity> geoJsonCategoryListEntities) {
+                        Log.d(TAG, "onNext: "+gson.toJson(geoJsonCategoryListEntities));
+                        maincategoryList = geoJsonCategoryListEntities;
                     }
 
                     @Override
@@ -409,7 +411,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
     }
 
-    private Dialog setupMapDataLayerDialog(boolean isFirstTime, List<String> maincategoryList) {
+    private Dialog setupMapDataLayerDialog(boolean isFirstTime, List<GeoJsonCategoryListEntity> maincategoryList) {
 
         if (mapboxMap == null) {
             Toast.makeText(this, "Your map is not ready yet", Toast.LENGTH_SHORT).show();
