@@ -337,6 +337,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 ActivityUtil.openActivity(TourishInformationGuideActivity.class, this);
                 break;
 
+            case R.id.nav_mayors_message:
+                ActivityUtil.openActivity(MayorMessageActivity.class, this);
+                break;
+
             case R.id.nav_logout:
                 SharedPreferenceUtils.getInstance(MainActivity.this).setValue(IS_USER_ALREADY_LOGGED_IN, false);
                 ActivityUtil.openActivity(LoginActivity.class, this);

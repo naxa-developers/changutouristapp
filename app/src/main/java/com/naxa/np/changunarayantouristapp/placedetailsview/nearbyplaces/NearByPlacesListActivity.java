@@ -201,7 +201,7 @@ public class NearByPlacesListActivity extends BaseActivity {
 
             @Override
             public MainPlacesListViewHolder attachViewHolder(View view) {
-                return new MainPlacesListViewHolder(view);
+                return new MainPlacesListViewHolder(view, getWindowManager().getDefaultDisplay(), false);
             }
         };
         recyclerView.setAdapter(adapter);

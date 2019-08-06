@@ -8,13 +8,14 @@
     <color name="white_95">#F2FFFFFF</color>
     <color name="white_80">#CCFFFFFF</color>
     <color name="white_37">#5EFFFFFF</color>
-    <color name="colorPrimaryLight37">#5E07AA8A</color>
+    <color name="colorPrimaryLight87">#DE07AA8A</color>
 
     <color name="white_56">#8FFFFFFF</color>
     <color name="light_green">#F7FCFB</color>
     <color name="green_boarder">#05B491</color>
     <color name="white">#fff</color>
     <color name="black">#000</color>
+    <color name="black_37">#5E000000</color>
     <!--<color name="textColorPrimary">#E6000000</color>-->
     <color name="textColorPrimary">#2E2E2E</color>
     <color name="transparentBackgroundColor">#5E000000</color>
@@ -27,7 +28,7 @@
     <color name="listItemFirstBG">#E3F2FD</color>
     <color name="sectionrecyclerHeadBG">#F3BBDEFB</color>
     <color name="sectionrecyclerHeadBG_37">#5EBBDEFB</color>
-    <color name="transparent">#00e040fb</color>
+    <color name="transparent">#00000000</color>
 
 
 
@@ -71,11 +72,11 @@
     <color name="dot_dark_screen5">@color/sectionrecyclerHeadBG</color>
 
     <!-- dots active colors -->
-    <color name="dot_light_screen1">@color/colorAccent</color>
-    <color name="dot_light_screen2">@color/colorAccent</color>
-    <color name="dot_light_screen3">@color/colorAccent</color>
-    <color name="dot_light_screen4">@color/colorAccent</color>
-    <color name="dot_light_screen5">@color/colorAccent</color>
+    <color name="dot_light_screen1">@color/colorPrimaryDark</color>
+    <color name="dot_light_screen2">@color/colorPrimaryDark</color>
+    <color name="dot_light_screen3">@color/colorPrimaryDark</color>
+    <color name="dot_light_screen4">@color/colorPrimaryDark</color>
+    <color name="dot_light_screen5">@color/colorPrimaryDark</color>
     <color name="home_grid_card_bg_volor">#E3F2FD</color>
 
     <array name="array_dot_active">

@@ -115,7 +115,7 @@ public class MainPlacesListActivity extends BaseActivity {
 
             @Override
             public MainPlacesListViewHolder attachViewHolder(View view) {
-                return new MainPlacesListViewHolder(view);
+                return new MainPlacesListViewHolder(view, getWindowManager().getDefaultDisplay(), true);
             }
         };
         recyclerView.setAdapter(adapter);
