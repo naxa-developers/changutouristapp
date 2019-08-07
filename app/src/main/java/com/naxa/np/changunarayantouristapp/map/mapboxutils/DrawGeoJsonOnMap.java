@@ -264,7 +264,7 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
                 if (mapboxMap.getLayer(geojsonLayerId) == null) {
 
 
-                    mapboxMap.addLayerAt(lineLayer, 1);
+                    mapboxMap.addLayerAt(lineLayer, 2);
                     JSONObject geoJsonObj = null;
                     try {
                         geoJsonObj = new JSONObject(geoJsonString.toString());
