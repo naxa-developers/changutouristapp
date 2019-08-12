@@ -24,20 +24,31 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".common.AboutUsActivity"></activity>
-        <activity android:name=".touristinformationguide.TourishInformationGuideActivity" />
+        <activity android:name=".touristinformationguide.TourishInformationGuideActivity"
+            android:hardwareAccelerated="true"/>
         <activity android:name=".mayormessage.MayorMessageActivity"
             android:noHistory="true"
             android:screenOrientation="portrait"/>
-        <activity android:name=".placedetailsview.nearbyplaces.NearByPlacesListActivity" />
-        <activity android:name=".placedetailsview.mainplacesdetails.MainPlacesListActivity" />
-        <activity android:name=".audioplayer.AudioListActivity" />
-        <activity android:name=".videoplayer.VideoListActivity" />
-        <activity android:name=".imageviewer.ImageListGridViewActivity" />
+        <activity android:name=".placedetailsview.nearbyplaces.NearByPlacesListActivity"
+            android:hardwareAccelerated="true"
+            />
+        <activity android:name=".placedetailsview.mainplacesdetails.MainPlacesListActivity"
+            android:hardwareAccelerated="true"
+            />
+        <activity android:name=".audioplayer.AudioListActivity"
+            android:hardwareAccelerated="true"/>
+        <activity android:name=".videoplayer.VideoListActivity"
+            android:hardwareAccelerated="true"/>
+        <activity android:name=".imageviewer.ImageListGridViewActivity"
+            android:hardwareAccelerated="true"/>
         <activity android:name=".videoplayer.VideoPlayerActivity" />
         <activity
             android:name=".placedetailsview.PlaceDetailsActivity"
-            android:exported="true" />
-        <activity android:name=".map.MapMainActivity" />
+            android:exported="true"
+            android:hardwareAccelerated="true"/>
+        <activity android:name=".map.MapMainActivity"
+            android:hardwareAccelerated="true"
+            />
         <activity android:name=".map.markerdetailspage.MarkerDetailsDisplayActivity" />
         <activity android:name=".login.LoginActivity" />
         <activity
@@ -51,7 +62,9 @@
             android:exported="true" />
         <activity android:name=".common.BaseActivity" />
         <activity android:name=".selectlanguage.SelectlanguageActivity"
-            android:noHistory="true"/>
+            android:noHistory="true"
+            android:hardwareAccelerated="true"/>
+
         <activity android:name=".splashscreen.SplashActivity"
             android:noHistory="true">
             <intent-filter>
@@ -63,9 +76,11 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:hardwareAccelerated="true"
+            />
         <activity android:name=".splashscreen.WalkThroughSliderActivity"
-            android:noHistory="true"/>
+            android:noHistory="true" />
         <activity android:name=".gps.GeoPointActivity" />
     </application>
 
