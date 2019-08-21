@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.naxa.np.changunarayantouristapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -21,8 +22,10 @@
         android:supportsRtl="true"
         android:largeHeap="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".common.AboutUsActivity"></activity>
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".common.AboutUsActivity">
+        </activity>
         <activity android:name=".touristinformationguide.TourishInformationGuideActivity"
             android:hardwareAccelerated="true"/>
         <activity android:name=".mayormessage.MayorMessageActivity"

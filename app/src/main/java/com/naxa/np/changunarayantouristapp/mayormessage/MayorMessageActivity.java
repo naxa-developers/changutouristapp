@@ -2,7 +2,6 @@ package com.naxa.np.changunarayantouristapp.mayormessage;
 
 import android.app.Dialog;
 import android.content.res.Configuration;
-import android.net.ParseException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -32,6 +31,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -99,8 +99,8 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
 
                                     for (MayorMessageDetails mayorMessageDetails1 : mayorMessagesListResponse.getData()){
                                         if(TextUtils.equals(appLanguage, mayorMessageDetails1.getLanguage())){
-                                            mayorMessageDetails = mayorMessageDetails1;
-                                            downloadVideo(mayorMessageDetails);
+//                                            mayorMessageDetails = mayorMessageDetails1;
+                                            downloadVideo(mayorMessageDetails1);
                                         }
                                     }
 //                                    mayorMessageDetails = mayorMessagesListResponse.getData().get(0);
@@ -141,10 +141,25 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
 
     private void downloadVideo(@NotNull MayorMessageDetails mayorMessageDetails) {
         if (!TextUtils.isEmpty(mayorMessageDetails.getVideo())) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+            try {
+                Date expiryDate = dateFormat.parse(mayorMessageDetails.getCreatedAt());
+                String fmtOut=dateFormat.format(expiryDate );
+                Log.d(TAG, "downloadVideo: "+fmtOut);
+
+
             dialog = DialogFactory.createProgressDialog(MayorMessageActivity.this, "Please wait!!! \nDownloading " + mayorMessageDetails.getTitle()+" video file");
             dialog.show();
-            fileDownloadPresenter.handleFileDownload(mayorMessageDetails.getVideo(), mayorMessageDetails.getTitle()+mayorMessageDetails.getCreatedAt(), CreateAppMainFolderUtils.getAppMediaFolderName());
+            fileDownloadPresenter.handleFileDownload(mayorMessageDetails.getVideo(), mayorMessageDetails.getTitle()+fmtOut, CreateAppMainFolderUtils.getAppMediaFolderName());
+            } catch (ParseException e) {
+                e.printStackTrace();
+                if(dialog!= null && dialog.isShowing()){
+                    dialog.dismiss();
 
+                    dialog = DialogFactory.createSimpleOkErrorDialog(MayorMessageActivity.this, "Error!!!", "Video Downloading Error");
+                    dialog.show();
+                }
+            }
         }
     }
 
