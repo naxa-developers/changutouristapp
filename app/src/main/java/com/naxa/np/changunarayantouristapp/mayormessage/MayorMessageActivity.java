@@ -42,6 +42,7 @@ import io.reactivex.schedulers.Schedulers;
 
 import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_MAYOR_MESSAGE_FIRST_TIME;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_USER_ALREADY_LOGGED_IN;
+import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.KEY_USER_LOGGED_IN_RESPONSE;
 
 public class MayorMessageActivity extends BaseActivity implements FileDownloadView {
@@ -53,6 +54,7 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
     Dialog dialog;
 
     FileDownloadPresenter fileDownloadPresenter;
+    String appLanguage ;
 
 
     @Override
@@ -62,6 +64,7 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
 
         gson = new Gson();
         fileDownloadPresenter = new FileDownloadPresenterImpl(this, MayorMessageActivity.this);
+        appLanguage = SharedPreferenceUtils.getInstance(MayorMessageActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null);
 
         setupToolbar(getResources().getString(R.string.welcome_to_changunarayan), false);
 
@@ -93,9 +96,15 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
                                 if (mayorMessagesListResponse.getData() != null) {
                                     SharedPreferenceUtils.getInstance(MayorMessageActivity.this).setValue(Constant.SharedPrefKey.KEY_MAYOR_MESSAGE_DETAILS, gson.toJson(mayorMessagesListResponse));
                                     SharedPreferenceUtils.getInstance(MayorMessageActivity.this).setValue(IS_MAYOR_MESSAGE_FIRST_TIME, false);
-                                    mayorMessageDetails = mayorMessagesListResponse.getData().get(0);
 
-                                    downloadVideo(mayorMessageDetails);
+                                    for (MayorMessageDetails mayorMessageDetails1 : mayorMessagesListResponse.getData()){
+                                        if(TextUtils.equals(appLanguage, mayorMessageDetails1.getLanguage())){
+                                            mayorMessageDetails = mayorMessageDetails1;
+                                            downloadVideo(mayorMessageDetails);
+                                        }
+                                    }
+//                                    mayorMessageDetails = mayorMessagesListResponse.getData().get(0);
+
                                 }
                             } else {
                                 dialog = DialogFactory.createSimpleOkErrorDialog(MayorMessageActivity.this, "Data Fetch Error", mayorMessagesListResponse.getMessage());
@@ -118,8 +127,14 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
                     });
         } else {
             MayorMessagesListResponse mayorMessagesListResponse = gson.fromJson(SharedPreferenceUtils.getInstance(MayorMessageActivity.this).getStringValue(Constant.SharedPrefKey.KEY_MAYOR_MESSAGE_DETAILS, null), MayorMessagesListResponse.class);
-            mayorMessageDetails = mayorMessagesListResponse.getData().get(0);
-            downloadVideo(mayorMessageDetails);
+//            mayorMessageDetails = mayorMessagesListResponse.getData().get(0);
+//            downloadVideo(mayorMessageDetails);
+            for (MayorMessageDetails mayorMessageDetails1 : mayorMessagesListResponse.getData()){
+                if(TextUtils.equals(appLanguage, mayorMessageDetails1.getLanguage())){
+                    mayorMessageDetails = mayorMessageDetails1;
+                    downloadVideo(mayorMessageDetails);
+                }
+            }
         }
 
     }
@@ -128,7 +143,7 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
         if (!TextUtils.isEmpty(mayorMessageDetails.getVideo())) {
             dialog = DialogFactory.createProgressDialog(MayorMessageActivity.this, "Please wait!!! \nDownloading " + mayorMessageDetails.getTitle()+" video file");
             dialog.show();
-            fileDownloadPresenter.handleFileDownload(mayorMessageDetails.getVideo(), mayorMessageDetails.getTitle(), CreateAppMainFolderUtils.getAppMediaFolderName());
+            fileDownloadPresenter.handleFileDownload(mayorMessageDetails.getVideo(), mayorMessageDetails.getTitle()+mayorMessageDetails.getCreatedAt(), CreateAppMainFolderUtils.getAppMediaFolderName());
 
         }
     }
@@ -213,7 +228,7 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
         Log.d(TAG, "playMayorVideo: "+fileName);
 
         String folderPath = CreateAppMainFolderUtils.getAppMediaFolderName();
-        Log.d("PlaceDetailsActivity", "downloaFile: full file path  " + folderPath + File.separator + fileName);
+        Log.d("playMayorVideo", "downloadedFile: full file path  " + folderPath + File.separator + fileName);
         File targetFile = new File(folderPath + File.separator + fileName);
 
         //Set MediaController  to enable play, pause, forward, etc options.
