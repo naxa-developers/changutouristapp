@@ -555,7 +555,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         int MAP_PLACE_BOUNDARY_ID = sharedPreferenceUtils.getIntValue(MAP_OVERLAY_LAYER, -1);
 
 //        mapView.setStyleUrl(getResources().getString(R.string.mapbox_style_mapbox_streets));
-        mapView.setStyleUrl("mapbox://styles/peacenepal/cjypk1l6w56y81co32qklu983");
+        mapboxMap.setStyleUrl("mapbox://styles/peacenepal/cjypk1l6w56y81co32qklu983");
 
         if (MAP_PLACE_BOUNDARY_ID == KEY_CHANGUNARAYAN_BOARDER) {
             mapPlaceListSpinner.setSelection(0);
