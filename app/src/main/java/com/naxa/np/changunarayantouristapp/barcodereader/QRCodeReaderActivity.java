@@ -42,13 +42,13 @@ import static com.naxa.np.changunarayantouristapp.utils.Constant.PermissionID.RC
 import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE;
 
 public class QRCodeReaderActivity extends BaseActivity {
-    
+
     private static final String TAG = "QRCodeReaderActivity";
 
     PlaceDetailsEntityViewModel placeDetailsEntityViewModel;
 
     EditText tvQRCode;
-    Button btnScanQrCode, btnSubmitQRCode;
+    Button btnSubmitQRCode;
     private CodeScanner mCodeScanner;
     CodeScannerView scannerView;
 
@@ -65,9 +65,7 @@ public class QRCodeReaderActivity extends BaseActivity {
 
     private void initUI() {
         tvQRCode = findViewById(R.id.tv_qr_code);
-        btnScanQrCode = findViewById(R.id.btn_scan_qr_code);
         btnSubmitQRCode = findViewById(R.id.btn_submit_qr_code);
-        btnScanQrCode.setEnabled(false);
         btnSubmitQRCode.setEnabled(false);
 
         tvQRCodeTextChangeListner();
@@ -80,9 +78,8 @@ public class QRCodeReaderActivity extends BaseActivity {
         });
 
 
-
         checkPermission(RC_CAMERA, new String[]{CAMERA},
-                getString(R.string.camera_rationale),new PermissionRequestListener() {
+                getString(R.string.camera_rationale), new PermissionRequestListener() {
                     @Override
                     public void onPermissionGranted() {
                         setupQRCodeReader();
@@ -100,7 +97,8 @@ public class QRCodeReaderActivity extends BaseActivity {
         tvQRCode.addTextChangedListener(new TextWatcher() {
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start,
@@ -110,7 +108,7 @@ public class QRCodeReaderActivity extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
-                if(s.length() != 0) {
+                if (s.length() != 0) {
                     btnSubmitQRCode.setEnabled(true);
                 }
             }
@@ -118,7 +116,7 @@ public class QRCodeReaderActivity extends BaseActivity {
     }
 
     private void getPlaceDetails() {
-        if(FieldValidatorUtils.validateEditText(tvQRCode)){
+        if (FieldValidatorUtils.validateEditText(tvQRCode)) {
             placeDetailsEntityViewModel.getPlacesDetailsEntityBYQRCode(tvQRCode.getText().toString(),
                     SharedPreferenceUtils.getInstance(QRCodeReaderActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null))
                     .subscribeOn(Schedulers.io())
@@ -126,12 +124,12 @@ public class QRCodeReaderActivity extends BaseActivity {
                     .subscribe(new DisposableSingleObserver<PlacesDetailsEntity>() {
                         @Override
                         public void onSuccess(PlacesDetailsEntity placesDetailsEntity) {
-                            if(placesDetailsEntity != null) {
+                            if (placesDetailsEntity != null) {
                                 HashMap<String, Object> hashMap3 = new HashMap<>();
                                 hashMap3.put(KEY_VALUE, false);
                                 hashMap3.put(KEY_OBJECT, placesDetailsEntity);
                                 ActivityUtil.openActivity(PlaceDetailsActivity.class, QRCodeReaderActivity.this, hashMap3, false);
-                            }else {
+                            } else {
                                 DialogFactory.createSimpleOkErrorDialog(QRCodeReaderActivity.this, "", getResources().getString(R.string.currently_there_is_no_data_available)).show();
                             }
 
@@ -148,13 +146,10 @@ public class QRCodeReaderActivity extends BaseActivity {
     }
 
 
-
-
     private void setupQRCodeReader() {
         scannerView = findViewById(R.id.scanner_view);
         mCodeScanner = new CodeScanner(this, scannerView);
-        btnScanQrCode.setEnabled(true);
-
+        btnSubmitQRCode.setEnabled(true);
         mCodeScanner.setDecodeCallback(new DecodeCallback() {
             @Override
             public void onDecoded(@NonNull final Result result) {
@@ -178,19 +173,11 @@ public class QRCodeReaderActivity extends BaseActivity {
             }
         });
 
-        btnScanQrCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCodeScanner.startPreview();
-//                LoadImageUtils.downloadAndSaveImageToStorage(QRCodeReaderActivity.this, "butterfly", "https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg");
-//                LoadImageUtils.downloadAndSaveImageToStorage(QRCodeReaderActivity.this, "nature", "https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832_960_720.jpg");
-            }
-        });
     }
 
     @Override
     protected void onResume() {
-        if(mCodeScanner != null){
+        if (mCodeScanner != null) {
             mCodeScanner.startPreview();
         }
         super.onResume();
@@ -198,7 +185,7 @@ public class QRCodeReaderActivity extends BaseActivity {
 
     @Override
     protected void onPause() {
-        if(mCodeScanner != null){
+        if (mCodeScanner != null) {
             mCodeScanner.releaseResources();
         }
         super.onPause();
