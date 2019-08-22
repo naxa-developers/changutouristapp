@@ -524,8 +524,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
     @Override
     public void onMapReady(MapboxMap mapboxMap) {
-
         this.mapboxMap = mapboxMap;
+        this.mapboxMap.setMaxZoomPreference(22.0);
 //        setMapCameraPosition();
         enableLocationComponent();
         mapboxMap.getUiSettings().setCompassFadeFacingNorth(false);
@@ -574,7 +574,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 .target(location) // Sets the new camera position
                 .zoom(20.0) // Sets the zoom
                 .bearing(0) // Rotate the camera
-                .tilt(30) // Set the camera tilt
+                .tilt(15) // Set the camera tilt
                 .build(); // Creates a CameraPosition from the builder
 
         mapboxMap.animateCamera(CameraUpdateFactory
