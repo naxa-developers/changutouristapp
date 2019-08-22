@@ -61,6 +61,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="center_vertical"
+            android:layout_centerInParent="true"
             android:layout_marginStart="@dimen/spacing_medium"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/activity_default_margin"
