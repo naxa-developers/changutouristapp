@@ -141,7 +141,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
     String filename = "";
     String placeType = "";
-    private boolean isMapFirstTime = true;
+    private boolean isMapFirstTime = false;
     private boolean isMapPlaceLayerFromDialog = false;
 
 
@@ -240,8 +240,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     }
 
 
-    boolean isFromIntent = false;
-
     private void netIntent(Intent intent) {
 
         try {
@@ -253,7 +251,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
                 if (placesDetailsEntity != null) {
                     setupToolbar(placesDetailsEntity.getName(), false);
-                    isFromIntent = true;
                 }
             }
         } catch (NullPointerException e) {
@@ -580,7 +577,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         mapboxMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(position), 2000);
         mapView.invalidate();
-        isFromMainPlaceList = true;
+        isFromMainPlaceList = false;
 
 //        enableLocationComponent();
     }
@@ -1053,13 +1050,15 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                plotDefaultMarkerOnMap(placeType);
 
-                if (isFromIntent) {
+//                if (isFromIntent) {
                     if (!isFromMainPlaceList) {
+                        mapboxMap.clear();
                         setMapCameraPosition(drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity)).getPosition());
+                    }else {
+                        plotDefaultMarkerOnMap(placeType);
                     }
-                }
+//                }
             }
         }, 50);
 //                drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity));
