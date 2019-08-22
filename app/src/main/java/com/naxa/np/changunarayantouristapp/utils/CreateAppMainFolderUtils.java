@@ -13,12 +13,12 @@ public class CreateAppMainFolderUtils {
     Context context;
     private String mainFolderName ;
     private   final String databaseFolderName  = "data" ;
-    private   final String mediaFolderName = "media" ;
-    private  final String mapFolderName = "mapdata" ;
+    private   final String mediaFolderName = ".media" ;
+    private  final String mapFolderName = ".mapdata" ;
 
     public  static final String databaseFolderNameStatic  = "data" ;
-    public  static final String mediaFolderNameStatic = "media" ;
-    public static final String mapFolderNameStatic = "mapdata" ;
+    public  static final String mediaFolderNameStatic = ".media" ;
+    public static final String mapFolderNameStatic = ".mapdata" ;
 
     public CreateAppMainFolderUtils(Context context, String mainFolderName) {
         this.context = context;
