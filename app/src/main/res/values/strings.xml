@@ -26,7 +26,7 @@
     <string name="nepali">Nepali (नेपाली)</string>
     <string name="chinese">Chinese (中文)</string>
     <string name="scan_barcode">Scan QRCode</string>
-    <string name="no_barcode_captured">No QRCode Captured</string>
+    <string name="no_barcode_captured">Enter the QR code</string>
     <string name="image_description">Image Description</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
