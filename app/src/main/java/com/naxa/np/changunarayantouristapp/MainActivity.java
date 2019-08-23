@@ -113,7 +113,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         NavigationView navigationView = (NavigationView) drawer.findViewById(R.id.nav_view);
 
-
         View headerLayout = navigationView.getHeaderView(0);
         ImageView profileIageView = (ImageView) headerLayout.findViewById(R.id.nav_user_profile_image_view);
         TextView tvUserName = (TextView) headerLayout.findViewById(R.id.nav_user_username);

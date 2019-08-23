@@ -29,43 +29,18 @@
                 app:menu="@menu/activity_main_drawer">
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:clickable="true"
-                    android:gravity="center"
-                    android:layout_marginBottom="@dimen/activity_default_margin"
-                    android:orientation="vertical"
-                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/designed_and_developed_by_naxa_pvt_ltd"
                         style="@style/bodyText"
-                        android:textSize="@dimen/sp_12"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="@dimen/spacing_medium"
+                        android:textSize="@dimen/sp_10"
                         android:gravity="center"
-                        android:textColor="@color/white_80"/>
+                        android:textColor="@color/white_80" />
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        app:srcCompat="@drawable/naxa_logo"
-                        android:padding="@dimen/activity_default_margin"
-                        />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/all_rights_reserved_2019"
-                        style="@style/bodyText"
-                        android:textSize="10sp"
-                        android:gravity="center"
-                        android:textColor="@color/white_80"/>
-
-                </LinearLayout>
 
             </com.google.android.material.navigation.NavigationView>
 
