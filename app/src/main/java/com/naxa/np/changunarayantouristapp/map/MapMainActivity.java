@@ -323,7 +323,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
                     @Override
                     public void onSatelliteClick() {
-                        mapView.setStyleUrl(getResources().getString(R.string.mapbox_style_satellite));
+                        mapView.setStyleUrl(getResources().getString(R.string.mapbox_style_satellite_streets));
                         if (MAP_PLACE_BOUNDARY_ID == KEY_CHANGUNARAYAN_BOARDER) {
                             onChangunarayanBoarderClick();
                         } else if (MAP_PLACE_BOUNDARY_ID == KEY_NAGARKOT_BOARDER) {

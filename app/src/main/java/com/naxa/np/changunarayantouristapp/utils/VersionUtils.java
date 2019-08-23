@@ -6,12 +6,10 @@ import androidx.annotation.RequiresApi;
 
 public class VersionUtils {
 
-    @RequiresApi(Build.VERSION_CODES.N_MR1)
     public static boolean isAfter25() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1;
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     public static boolean isAfter24() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N;
     }

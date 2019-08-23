@@ -9,6 +9,8 @@ import android.os.Build;
 import android.os.LocaleList;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
+
 import com.naxa.np.changunarayantouristapp.utils.VersionUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +22,6 @@ public class MyContextWrapper  extends ContextWrapper {
         super(base);
     }
 
-    @TargetApi(Build.VERSION_CODES.N)
     public static ContextWrapper wrap(@NotNull Context context, Locale newLocale) {
         Resources res = context.getResources();
         Configuration configuration = res.getConfiguration();
