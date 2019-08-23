@@ -156,35 +156,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
 
             case R.id.btn_view_on_map:
-
-//                new GpsUtils(this).turnGPSOn(new GpsUtils.onGpsListener() {
-//                    @Override
-//                    public void gpsStatus(boolean isGPSEnable) {
-//                        // turn on GPS
-//                        if(isGPSEnable){
                             ActivityUtil.openActivity(MapMainActivity.class, MainActivity.this);
-//                        }else {
-//                            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-//                            startActivity(intent);
-//                        }
-//                    }
-//                });
-
                 break;
 
         }
     }
-
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == Activity.RESULT_OK) {
-//            if (requestCode == Constant.MapKey.GPS_REQUEST) {
-//                ActivityUtil.openActivity(MapMainActivity.class, MainActivity.this);
-//            }
-//        }
-//    }
 
 
     private void fetchAllData() {
