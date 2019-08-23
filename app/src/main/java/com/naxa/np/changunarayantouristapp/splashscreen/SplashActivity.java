@@ -34,7 +34,7 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         makeActivityFullScreen();
-        setContentView(R.layout.activity_splash);
+        setContentView(R.layout.activity_spPlash);
 
 
         checkStoragePermission();
