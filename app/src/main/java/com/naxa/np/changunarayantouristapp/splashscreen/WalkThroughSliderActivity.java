@@ -25,6 +25,8 @@ import com.naxa.np.changunarayantouristapp.mayormessage.MayorMessageActivity;
 import com.naxa.np.changunarayantouristapp.selectlanguage.SelectlanguageActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
+import com.naxa.np.changunarayantouristapp.utils.languageswitchutils.AppLocale;
+import com.naxa.np.changunarayantouristapp.utils.languageswitchutils.MyContextWrapper;
 
 import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_APP_FIRST_TIME_LAUNCH;
 
@@ -228,7 +230,15 @@ public class WalkThroughSliderActivity extends AppCompatActivity {
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
         LocaleChanger.onConfigurationChanged();
+        super.onConfigurationChanged(newConfig);
+
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        newBase = LocaleChanger.configureBaseContext(newBase);
+        super.attachBaseContext(MyContextWrapper.wrap(newBase, AppLocale.changeLocale()));
+//        super.attachBaseContext(newBase);
     }
 }

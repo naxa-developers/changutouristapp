@@ -3,6 +3,7 @@ package com.naxa.np.changunarayantouristapp.selectlanguage;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.LocaleList;
 import android.text.TextUtils;
@@ -236,6 +237,14 @@ public class SelectlanguageActivity extends BaseActivity {
                     public void onPermissionDenied() {
                     }
                 });
+    }
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        LocaleChanger.onConfigurationChanged();
+        super.onConfigurationChanged(newConfig);
+
     }
 
     @Override

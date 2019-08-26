@@ -99,11 +99,6 @@ public class MainPlacesListActivity extends BaseActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        int spanCount = 2;
-        int spacing = 0;
-        boolean includeEdge = true;
-//        recyclerView.addItemDecoration(new GridSpacingItemDecorator(spanCount, spacing, includeEdge));
-
         adapter = new BaseRecyclerViewAdapter<PlacesDetailsEntity, MainPlacesListViewHolder>(placesDetailsEntities, R.layout.main_places_item_row_layout) {
 
             @Override
