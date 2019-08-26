@@ -6,7 +6,7 @@
     <string name="got_it">GOT IT</string>
 
     <string name="slide_1_title">Travelling!</string>
-    <string name="slide_1_desc">Travel with better Technology.</string>
+    <string name="travel_with_better_technology">Travel with better Technology.</string>
 
     <string name="slide_2_title">Scan QR Code!</string>
     <string name="slide_2_desc">Scan QR Code for easy access to information.</string>
@@ -75,7 +75,7 @@
     <string name="stop">Stop</string>
     <string name="fast">Fast</string>
     <string name="audio_title">Audio title</string>
-    <string name="see_the_majestic_himalayas_including_mt_everest_if_the_skies_are_clear_you_can_view_the_himalayan_mountains">Welcome to the ancient City of Changunarayan and get lost in the beauty of Nagarkot . This app is your virtual tour guide with verified information on each heritage items and surrounding locations.</string>
+    <string name="see_the_majestic_himalayas_including_mt_everest_if_the_skies_are_clear_you_can_view_the_himalayan_mountains">Welcome to the ancient City of Changunarayan and get lost in the beauty of Nagarkot. This app is your virtual tour guide with verified information on each heritage items and surrounding locations.</string>
     <string name="nepal">Nepal</string>
     <string name="place_list">LIST</string>
     <string name="near_by_places_list">Nearby Places List</string>
@@ -95,7 +95,7 @@
     <string name="explore_changunarayan_area">Explore %s Area</string>
     <string name="tourist_information_guide">Tourist Information Guide</string>
     <string name="get_started">Get Started</string>
-    <string name="welcome_to_changunarayan">Welcome to Changunarayan</string>
+    <string name="welcome_to_changunarayan">Welcome to Changunarayan Municipality</string>
     <string name="your_virtual_guide">Your virtual guide.</string>
 
 
@@ -137,9 +137,9 @@
     <string name="or">OR</string>
     <string name="language_not_found">Language not found</string>
     <string name="logout">Logout</string>
-    <string name="respected_mayor_lbl">सम्माननीय मेयर</string>
-    <string name="mayor_name">सोम प्रसाद मिश्र</string>
-    <string name="mayors_video_desc">चाँगुनारायण नगरपालिकाको पहिलो पर्यटनसम्बन्धि मोबाइल अनुप्रयोगमा तपाईलाई स्वागत छ।</string>
+    <string name="respected_mayor_lbl">Respected Mayor</string>
+    <string name="mayor_name">Som Prasad Mishra</string>
+    <string name="mayors_video_desc">Welcome to Changunarayan Municipality\'s first tourist guide mobile App.</string>
     <string name="mayor_s_message">Mayor\'s Message</string>
     <string name="developed_by_naxa_pvt_ltd">Developed By: Naxa Pvt. Ltd.</string>
 

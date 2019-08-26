@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/desc_padding"
             android:paddingRight="@dimen/desc_padding"
-            android:text="@string/slide_1_desc"
+            android:text="@string/travel_with_better_technology"
             android:textAlignment="center"
             style="@style/bodyText"
             android:textColor="@color/white"/>

@@ -757,13 +757,10 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     List<MapDataLayerListCheckEvent.MapDataLayerListCheckedEvent> mapDataLayerListCheckedEventList = new ArrayList<MapDataLayerListCheckEvent.MapDataLayerListCheckedEvent>();
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onRVItemClick(MapDataLayerListCheckEvent.MapDataLayerListCheckedEvent itemClick) {
+    public void onRVItemClick(@NotNull MapDataLayerListCheckEvent.MapDataLayerListCheckedEvent itemClick) {
         String name = itemClick.getMultiItemSectionModel().getData_value();
-//        if(itemClick.getChecked()){
         if (mapDataLayerListCheckedEventList.size() == 0) {
             mapDataLayerListCheckedEventList.add(itemClick);
-
-//            hashMapDataLayer.put(itemClick.getMultiItemSectionModel().getData_key(), itemClick);
 
         } else if (mapDataLayerListCheckedEventList.size() > 0) {
             boolean alreadyExist = false;
@@ -795,12 +792,11 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
             }
 
         }
-//        Toast.makeText(this, "add to your circle button clicked " + name, Toast.LENGTH_SHORT).show();
     }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMarkerItemClick(MarkerClickEvent.MarkerItemClick itemClick) {
+    public void onMarkerItemClick(@NotNull MarkerClickEvent.MarkerItemClick itemClick) {
 
 
         selectedMarkerPosition = itemClick.getLocation();
@@ -885,7 +881,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(@NotNull View v) {
         switch (v.getId()) {
 
             case R.id.navigation:
