@@ -265,7 +265,7 @@ public class LoadImageUtils {
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
-                                id[0] = R.drawable.ic_launcher_background;
+                                id[0] = R.mipmap.ic_launcher_foreground;
                             }
 
                             @Override

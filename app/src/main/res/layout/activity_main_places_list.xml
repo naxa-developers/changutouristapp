@@ -22,6 +22,16 @@
         >
     </androidx.recyclerview.widget.RecyclerView>
 
+    <TextView
+        android:id="@+id/tv_no_data_found"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_default_margin"
+        android:text="@string/currently_there_is_no_data_available"
+        style="@style/headlineText"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
     <androidx.cardview.widget.CardView
         android:id="@+id/btn_layout"
         android:elevation="@dimen/spacing_small"
