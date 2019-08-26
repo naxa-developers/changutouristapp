@@ -643,8 +643,10 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     @Override
     public void onStart() {
         super.onStart();
-        EventBus.getDefault().register(this);
         mapView.onStart();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
 
 
     }
@@ -664,8 +666,10 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     @Override
     public void onStop() {
         super.onStop();
-        EventBus.getDefault().unregister(this);
         mapView.onStop();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     @Override
@@ -678,6 +682,9 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     protected void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     @Override
@@ -749,7 +756,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
     List<MapDataLayerListCheckEvent.MapDataLayerListCheckedEvent> mapDataLayerListCheckedEventList = new ArrayList<MapDataLayerListCheckEvent.MapDataLayerListCheckedEvent>();
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onRVItemClick(MapDataLayerListCheckEvent.MapDataLayerListCheckedEvent itemClick) {
         String name = itemClick.getMultiItemSectionModel().getData_value();
 //        if(itemClick.getChecked()){

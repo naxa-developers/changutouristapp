@@ -40,7 +40,6 @@ import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
 import com.naxa.np.changunarayantouristapp.mayormessage.MayorMessageActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlacesListActivity;
 import com.naxa.np.changunarayantouristapp.selectlanguage.SelectlanguageActivity;
-import com.naxa.np.changunarayantouristapp.splashscreen.WalkThroughSliderActivity;
 import com.naxa.np.changunarayantouristapp.touristinformationguide.TourishInformationGuideActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
@@ -53,7 +52,6 @@ import java.util.HashMap;
 
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_VALUE;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.Network.API_KEY;
-import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_APP_FIRST_TIME_LAUNCH;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_USER_ALREADY_LOGGED_IN;
 
@@ -269,6 +267,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     protected void onDestroy() {
+
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
@@ -277,10 +276,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     protected void onPause() {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
-        }
+                    if (progressDialog != null && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
         super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override

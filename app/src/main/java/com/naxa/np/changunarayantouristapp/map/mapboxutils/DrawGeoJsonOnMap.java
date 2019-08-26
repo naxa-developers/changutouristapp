@@ -252,11 +252,7 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
             }
             FillLayer lineLayer = new FillLayer(geojsonLayerId, geojsonSourceId);
             lineLayer.setProperties(
-                    PropertyFactory.lineCap(Property.LINE_CAP_ROUND),
-                    PropertyFactory.lineJoin(Property.LINE_JOIN_ROUND),
-                    PropertyFactory.fillColor(context.getResources().getColor(R.color.colorPrimaryLight87)),
-                    PropertyFactory.backgroundOpacity(0.5f),
-                    PropertyFactory.backgroundPattern(Property.FILL_TRANSLATE_ANCHOR_MAP)
+                    PropertyFactory.fillColor(context.getResources().getColor(R.color.colorPrimaryLight87))
             );
 
             if (isChecked) {
@@ -287,7 +283,7 @@ public class DrawGeoJsonOnMap implements MapboxMap.OnMapClickListener, MapboxMap
                         e.printStackTrace();
                     }
 
-                    EventBus.getDefault().post(new LayerAddedSuccessEvent.LayerAddedSuccess());
+                    EventBus.getDefault().post(new LayerAddedSuccessEvent.LayerAddedSuccess(true));
 
                 }
 
