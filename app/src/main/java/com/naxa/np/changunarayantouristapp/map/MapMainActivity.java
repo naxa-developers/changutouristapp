@@ -67,7 +67,6 @@ import com.naxa.np.changunarayantouristapp.map.mapboxutils.mapdialogs.MapDialogs
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.MapboxBaseStyleUtils;
 import com.naxa.np.changunarayantouristapp.placedetailsview.PlaceDetailsActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlacesListActivity;
-import com.naxa.np.changunarayantouristapp.placedetailsview.nearbyplaces.NearByPlacesListActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
@@ -1027,7 +1026,10 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         }
 
         isMapFirstTime = true;
-
+        layerLoadSuccessCount++;
+        if(layerLoadSuccessCount >=2){
+            isFromMainPlaceList = true;
+        }
 //        if (!isMapPlaceLayerFromDialog) {
         setupMapOptionsDialog().hide();
 //        }
@@ -1046,9 +1048,10 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         LocaleChanger.onConfigurationChanged();
     }
 
-
+int layerLoadSuccessCount = 0;
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLayerAddedSuccessEvent(@NotNull LayerAddedSuccessEvent.LayerAddedSuccess layerAddedSuccess) {
+
 
         if (layerAddedSuccess.isAdded()) {
             new Handler().postDelayed(new Runnable() {
@@ -1058,6 +1061,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                     if (!isFromMainPlaceList) {
                         mapboxMap.clear();
                         setMapCameraPosition(drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity)).getPosition());
+                    layerLoadSuccessCount++;
                     } else {
                         plotDefaultMarkerOnMap(placeType);
                     }
