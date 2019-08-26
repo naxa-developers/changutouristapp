@@ -61,7 +61,7 @@
     <string name="audios">अडियो</string>
     <string name="map">नक्सा</string>
     ​
-    <string name="fetching_file">Getting %1$s.\n\nGeojson data %2$s of %3$s file(s)</string>
+    <string name="fetching_file">पाइरहेको %1$s.\n\nभौगोलिक डाटा %2$s of %3$s फाइल(हरु)</string>
     <string name="changunarayan_boundary">चाँगुनारायण  </string>
     <string name="nagarkot_boundary">नगकोट </string>
     <string name="select_language">भाषा छनोट गर्नुस</string>
@@ -126,20 +126,20 @@
 
     <string name="designed_and_developed_by_naxa_pvt_ltd">Designed and developed by Naxa Pvt. Ltd.</string>
     <string name="all_rights_reserved_2019">All rights reserved ©2019.</string>
-    <string name="full_name">Full Name</string>
-    <string name="enter_full_name">Enter Full Name</string>
-    <string name="email">Email</string>
-    <string name="enter_your_email">Enter Your Email</string>
-    <string name="country">Country</string>
-    <string name="your_country">Your Country</string>
-    <string name="select_gender">Select Gender</string>
-    <string name="purpose_for_visit">Purpose For Visit</string>
-    <string name="easy_way_to_get_details_with_little_effort">Easy way to get details with little effort.</string>
-    <string name="verification_code">Verification Code</string>
-    <string name="enter_verification_code">Enter Verification Code</string>
-    <string name="or">OR</string>
+    <string name="full_name">पुरा नाम</string>
+    <string name="enter_full_name">पुरा नाम लेख्नुहोस</string>
+    <string name="email">ईमेल</string>
+    <string name="enter_your_email">तपाईको ईमेल लेख्नुहोस</string>
+    <string name="country">देश</string>
+    <string name="your_country">तपाईको देश</string>
+    <string name="select_gender">लिंग छानुहोस</string>
+    <string name="purpose_for_visit">घुम्नुको उधेस्य</string>
+    <string name="easy_way_to_get_details_with_little_effort">सानो प्रयासमा धेरै जानकारी लिने सजिलो उपाए।</string>
+    <string name="verification_code">प्रमाणीकरण कोड</string>
+    <string name="enter_verification_code">प्रमाणीकरण कोड हाल्नुहोस</string>
+    <string name="or">अथवा</string>
 
-    <string name="language_not_found">Language not found</string>
+    <string name="language_not_found">भाषा फेला परेन</string>
     <string name="logout">साइन आउट गर्नुहोस्</string>
     <string name="respected_mayor_lbl">सम्माननीय मेयर</string>
     <string name="mayor_name">सोम प्रसाद मिश्र</string>

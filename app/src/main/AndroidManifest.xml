@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+
     <application
         android:name=".common.ChangunarayanTouristApp"
         android:allowBackup="true"
@@ -24,6 +25,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+
+
         <activity android:name=".common.AboutUsActivity">
         </activity>
         <activity android:name=".touristinformationguide.TourishInformationGuideActivity"
