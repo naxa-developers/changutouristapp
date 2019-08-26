@@ -1052,22 +1052,21 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onLayerAddedSuccessEvent(LayerAddedSuccessEvent.LayerAddedSuccess layerAddedSuccess) {
+    public void onLayerAddedSuccessEvent(@NotNull LayerAddedSuccessEvent.LayerAddedSuccess layerAddedSuccess) {
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+        if (layerAddedSuccess.isAdded()) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
 
-//                if (isFromIntent) {
                     if (!isFromMainPlaceList) {
                         mapboxMap.clear();
                         setMapCameraPosition(drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity)).getPosition());
-                    }else {
+                    } else {
                         plotDefaultMarkerOnMap(placeType);
                     }
-//                }
-            }
-        }, 50);
-//                drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity));
+                }
+            }, 50);
+        }
     }
 }
