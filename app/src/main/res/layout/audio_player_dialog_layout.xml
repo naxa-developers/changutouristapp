@@ -23,11 +23,12 @@
                 android:id="@+id/tv_audio_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/LanguageSelectorTextStyle"
+                style="@style/headlineText"
                 android:text="@string/audio_title"
                 android:gravity="center"
                 android:layout_alignParentTop="true"
-                android:paddingLeft="@dimen/spacing_medium"
+                android:padding="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/activity_default_margin"
                 />
             <ImageButton
                 android:id="@+id/btn_close_dialog"

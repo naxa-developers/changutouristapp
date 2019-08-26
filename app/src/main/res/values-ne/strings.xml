@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">चाङुनारायण  पर्यटक गाइड</string>
+    <string name="app_name">चाँगुनारायण पर्यटक गाइड</string>
     ​
     <string name="next">अर्को</string>
-    <string name="skip">छोड्नुहोस्</string>
+    <string name="skip">अगाडि बढ्नुहोस्</string>
     <string name="got_it">बुझे</string>
     ​
     <string name="slide_1_title">यात्रा गर्दै!</string>
-    <string name="slide_1_desc">राम्रो प्रविधिसँग यात्रा गर्नुहोस्।</string>
+    <string name="travel_with_better_technology">राम्रो प्रविधिसँग यात्रा गर्नुहोस्।</string>
     ​
     <string name="slide_2_title">QR Code स्क्यान गर्नुहोस्!</string>
     <string name="slide_2_desc">जानकारीको सजिलो पहुँचको लागि QR कोड स्क्यान गर्नुहोस्।</string>
@@ -21,13 +21,13 @@
     <string name="slide_5_title">नक्सामा हेर्नुहोस्!</string>
     <string name="slide_5_desc">कम प्रयासको साथ गन्तव्यमा बाटो खोज्न सजिलो तरिका।</string>
     ​
-    <string name="storage_rationale">चाङुनारायण  पर्यटक अनुप्रयोगलाई डेटा डाउनलोड गर्न र सुरक्षित गर्न भण्डारण अनुमति चाहिन्छ ताकि तिनीहरू सिधा साझा गर्न सकिन्छ।</string>
-    <string name="camera_rationale">चाङुनारायण  पर्यटन अनुप्रयोगलाई QR Code स्क्यानको लागि क्यामेरा अनुमति चाहिन्छ।</string>
+    <string name="storage_rationale">चाँगुनारायण  पर्यटक अनुप्रयोगलाई डेटा डाउनलोड गर्न र सुरक्षित गर्न भण्डारण अनुमति चाहिन्छ ताकि तिनीहरू सिधा साझा गर्न सकिन्छ।</string>
+    <string name="camera_rationale">चाँगुनारायण  पर्यटन अनुप्रयोगलाई QR Code स्क्यानको लागि क्यामेरा अनुमति चाहिन्छ।</string>
     <string name="english">English</string>
     <string name="nepali">Nepali (नेपाली)</string>
     <string name="chinese">Chinese (中文)</string>
     <string name="scan_barcode">स्क्यान QRCode</string>
-    <string name="no_barcode_captured">कुनै QRCode कैप्चर गरिएको छैन</string>
+    <string name="no_barcode_captured">कोड हाल्नुहोस्</string>
     <string name="image_description">चित्र विवरण</string>
     <string name="male">पुरुष</string>
     <string name="female">महिला</string>
@@ -61,11 +61,11 @@
     <string name="audios">अडियो</string>
     <string name="map">नक्सा</string>
     ​
-    <string name="fetching_file">Getting %1$s.\n\nGeojson data %2$s of %3$s file(s)</string>
-    <string name="changunarayan_boundary">चाङुनारायण  </string>
+    <string name="fetching_file">पाइरहेको %1$s.\n\nभौगोलिक डाटा %2$s of %3$s फाइल(हरु)</string>
+    <string name="changunarayan_boundary">चाँगुनारायण  </string>
     <string name="nagarkot_boundary">नगकोट </string>
     <string name="select_language">भाषा छनोट गर्नुस</string>
-    <string name="refresh_data">डाटा ताजा गर्नुहोस्</string>
+    <string name="refresh_data">डाटा रिफ्रेस गर्नुहोस्</string>
     <string name="view_details">विवरण हेर्नुहोस्</string>
     ​
     <!-- TODO: Remove or change this placeholder text -->
@@ -76,28 +76,28 @@
     <string name="stop">रोक्नुहोस्</string>
     <string name="fast">छिटो</string>
     <string name="audio_title">अडियो शीर्षक</string>
-    <string name="see_the_majestic_himalayas_including_mt_everest_if_the_skies_are_clear_you_can_view_the_himalayan_mountains">चाङुनारायणको पुरातन शहरमा स्वागत छ र नगरकोटको सुन्दरतामा मजा लिनुहोस्। यो एप प्रत्येक वस्तुहरू र वरिपरिको स्थानहरूको प्रमाणित जानकारीसहित तपाईंको  साथ दिने भर्चुअल टूर गाइड हो।</string>
+    <string name="see_the_majestic_himalayas_including_mt_everest_if_the_skies_are_clear_you_can_view_the_himalayan_mountains">तपाईंहरु लाई चाँगुनारायण नगरपालिका मा स्वागत छ।  यस क्षेत्र मा अबस्थित बिभिन्न धार्मिक तथा पर्यटकिय स्थान हरु को बारेमा जानकारी दिने उद्देस्यका साथ यस एपको निर्माण गरिएको हो।</string>
     <string name="nepal">नेपाल</string>
     <string name="place_list">सूची</string>
     <string name="near_by_places_list">नजिकैको स्थान सूची</string>
     <string name="submit_qrcode">QR Code पेश गर्नुहोस्</string>
-    <string name="home">घर</string>
+    <string name="home">गृह पृष्ठ</string>
     <string name="qrcode_scanner">QRCode स्क्यानर</string>
     <string name="settings">सेटिङ्हरू</string>
-    <string name="about_us">हाम्रोबारे</string>
+    <string name="about_us">हाम्रो बारे</string>
     ​
     <string name = "navigation_drawer_open"> नेभिगेसन ड्रयर खोल्नुहोस् </string>
     <string name = "navigation_drawer_close"> बन्द नेविगेसन ड्रयर </string>
     <string name = "nav_header_title"> समीर दाङ </string>
     <string name = "nav_header_subtitle"> samirdangal@gmail.com </string>
     <string name = "nav_header_desc"> नेभिगेसन हेडर </string>
-    <string name = "changunarayan"> चाङुनारायण विरासत स्थल </string>
+    <string name = "changunarayan">चाँगुनारायण धार्मिक तथा पर्यटकिय स्थल</string>
     <string name = "currently_there_is_no_data_available"> हाल कुनै डेटा उपलब्ध छैन। </string>
     <string name = "explore_changunarayan_area">%s क्षेत्र अन्वेषण गर्नुहोस् </string>
     <string name = "tourist_information_guide"> पर्यटक जानकारी गाइड </string>
     <string name = "get_started"> सुरू गर्नुहोस् </string>
-    <string name = "welcome_to_changunarayan"> चाङुनारायणमा स्वागत छ </string>
-    <string name = "your_virtual_guide"> तपाईको भर्चुअल गाइड। </string>
+    <string name = "welcome_to_changunarayan"> चाँगुनारायण नगरपालिकामा स्वागत छ</string>
+    <string name = "your_virtual_guide"> तपाईको भर्चुअल गाइड।</string>
     ​
     ​
     <string name = "get_location"> रेकर्ड स्थान </string>
@@ -126,24 +126,25 @@
 
     <string name="designed_and_developed_by_naxa_pvt_ltd">Designed and developed by Naxa Pvt. Ltd.</string>
     <string name="all_rights_reserved_2019">All rights reserved ©2019.</string>
-    <string name="full_name">Full Name</string>
-    <string name="enter_full_name">Enter Full Name</string>
-    <string name="email">Email</string>
-    <string name="enter_your_email">Enter Your Email</string>
-    <string name="country">Country</string>
-    <string name="your_country">Your Country</string>
-    <string name="select_gender">Select Gender</string>
-    <string name="purpose_for_visit">Purpose For Visit</string>
-    <string name="easy_way_to_get_details_with_little_effort">Easy way to get details with little effort.</string>
-    <string name="verification_code">Verification Code</string>
-    <string name="enter_verification_code">Enter Verification Code</string>
-    <string name="or">OR</string>
+    <string name="full_name">पुरा नाम</string>
+    <string name="enter_full_name">पुरा नाम लेख्नुहोस</string>
+    <string name="email">ईमेल</string>
+    <string name="enter_your_email">तपाईको ईमेल लेख्नुहोस</string>
+    <string name="country">देश</string>
+    <string name="your_country">तपाईको देश</string>
+    <string name="select_gender">लिंग छानुहोस</string>
+    <string name="purpose_for_visit">घुम्नुको उधेस्य</string>
+    <string name="easy_way_to_get_details_with_little_effort">सानो प्रयासमा धेरै जानकारी लिने सजिलो उपाए।</string>
+    <string name="verification_code">प्रमाणीकरण कोड</string>
+    <string name="enter_verification_code">प्रमाणीकरण कोड हाल्नुहोस</string>
+    <string name="or">अथवा</string>
 
-    <string name="language_not_found">Language not found</string>
-    <string name="logout">Logout</string>
+    <string name="language_not_found">भाषा फेला परेन</string>
+    <string name="logout">साइन आउट गर्नुहोस्</string>
     <string name="respected_mayor_lbl">सम्माननीय मेयर</string>
     <string name="mayor_name">सोम प्रसाद मिश्र</string>
     <string name="mayors_video_desc">चाँगुनारायण नगरपालिकाको पहिलो पर्यटनसम्बन्धि मोबाइल अनुप्रयोगमा तपाईलाई स्वागत छ।</string>
-    <string name="mayor_s_message">Mayor\'s Message</string>
+    <string name="mayor_s_message">मेयर सन्देश</string>
+    <string name="developed_by_naxa_pvt_ltd">Developed By: Naxa Pvt. Ltd.</string>
 
 </resources>

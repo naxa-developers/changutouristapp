@@ -40,7 +40,6 @@ import com.naxa.np.changunarayantouristapp.map.MapMainActivity;
 import com.naxa.np.changunarayantouristapp.mayormessage.MayorMessageActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlacesListActivity;
 import com.naxa.np.changunarayantouristapp.selectlanguage.SelectlanguageActivity;
-import com.naxa.np.changunarayantouristapp.splashscreen.WalkThroughSliderActivity;
 import com.naxa.np.changunarayantouristapp.touristinformationguide.TourishInformationGuideActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
@@ -53,7 +52,6 @@ import java.util.HashMap;
 
 import static com.naxa.np.changunarayantouristapp.utils.Constant.KEY_VALUE;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.Network.API_KEY;
-import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_APP_FIRST_TIME_LAUNCH;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS;
 import static com.naxa.np.changunarayantouristapp.utils.Constant.SharedPrefKey.IS_USER_ALREADY_LOGGED_IN;
 
@@ -113,11 +111,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         NavigationView navigationView = (NavigationView) drawer.findViewById(R.id.nav_view);
 
-
         View headerLayout = navigationView.getHeaderView(0);
         ImageView profileIageView = (ImageView) headerLayout.findViewById(R.id.nav_user_profile_image_view);
-        TextView tvUserName = (TextView) headerLayout.findViewById(R.id.nav_user_username);
-        TextView tvUserEmail = (TextView) headerLayout.findViewById(R.id.nav_user_email);
+        TextView tvUserName = (TextView) headerLayout.findViewById(R.id.nav_header_title);
+        TextView tvUserEmail = (TextView) headerLayout.findViewById(R.id.nav_header_desc);
 
         navigationView.setNavigationItemSelectedListener(this);
     }
@@ -156,35 +153,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
 
             case R.id.btn_view_on_map:
-
-//                new GpsUtils(this).turnGPSOn(new GpsUtils.onGpsListener() {
-//                    @Override
-//                    public void gpsStatus(boolean isGPSEnable) {
-//                        // turn on GPS
-//                        if(isGPSEnable){
                             ActivityUtil.openActivity(MapMainActivity.class, MainActivity.this);
-//                        }else {
-//                            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-//                            startActivity(intent);
-//                        }
-//                    }
-//                });
-
                 break;
 
         }
     }
-
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == Activity.RESULT_OK) {
-//            if (requestCode == Constant.MapKey.GPS_REQUEST) {
-//                ActivityUtil.openActivity(MapMainActivity.class, MainActivity.this);
-//            }
-//        }
-//    }
 
 
     private void fetchAllData() {
@@ -294,6 +267,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     protected void onDestroy() {
+
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
@@ -302,10 +276,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     protected void onPause() {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
-        }
+                    if (progressDialog != null && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
         super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override

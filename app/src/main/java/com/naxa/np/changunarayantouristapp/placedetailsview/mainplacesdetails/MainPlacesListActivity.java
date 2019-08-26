@@ -2,9 +2,11 @@ package com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +25,7 @@ import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.GridSpacingItemDecorator;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,8 +40,10 @@ public class MainPlacesListActivity extends BaseActivity {
 
     RecyclerView recyclerView;
     Button btnRouteToMap, btnRouteToPlaces;
+    TextView tvNoDataFound;
     Gson gson;
     private BaseRecyclerViewAdapter<PlacesDetailsEntity, MainPlacesListViewHolder> adapter;
+    List<PlacesDetailsEntity> placesDetailsEntityList;
 
 
     @Override
@@ -47,6 +52,7 @@ public class MainPlacesListActivity extends BaseActivity {
         setContentView(R.layout.activity_main_places_list);
 
         gson = new Gson();
+        placesDetailsEntityList = new ArrayList<>();
         setupToolbar(getString(R.string.place_list), false);
 
 
@@ -58,6 +64,7 @@ public class MainPlacesListActivity extends BaseActivity {
         recyclerView = findViewById(R.id.rv_main_places_list);
         btnRouteToMap = findViewById(R.id.btn_route_to_map);
         btnRouteToPlaces = findViewById(R.id.btn_route_to_main_places_list);
+        tvNoDataFound = findViewById(R.id.tv_no_data_found);
         btnRouteToPlaces.setEnabled(true);
         btnRouteToMap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +79,17 @@ public class MainPlacesListActivity extends BaseActivity {
 
         if (placesDetailsEntities != null && placesDetailsEntities.size() > 0) {
 
-            setUpRecyclerView(placesDetailsEntities);
+            for (PlacesDetailsEntity placesDetailsEntity  : placesDetailsEntities) {
+                if (TextUtils.equals(placesDetailsEntity.getLanguage(), SharedPreferenceUtils.getInstance(MainPlacesListActivity.this).getStringValue(Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE, null))) {
+                    placesDetailsEntityList.add(placesDetailsEntity);
+                }
+                if (placesDetailsEntityList.size() < 1) {
+                    tvNoDataFound.setVisibility(View.VISIBLE);
+                } else {
+                    setUpRecyclerView(placesDetailsEntities);
+                }
+            }
+
         }
 
 

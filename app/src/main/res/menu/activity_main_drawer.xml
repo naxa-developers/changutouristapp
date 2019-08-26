@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
@@ -34,38 +35,19 @@
             />
         <item
             android:id="@+id/nav_about_us"
-            android:title="@string/about_us" />
+            android:title="@string/about_us"
+            />
 
 
     </group>
 
-    <group android:checkableBehavior="all">
-        <LinearLayout
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:clickable="true"
-            android:orientation="vertical">
-
-
-            <TextView
-                android:padding="16dp"
-                style="@style/TextAppearance.AppCompat.Subhead.Inverse"
-                android:id="@+id/footer_item_1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Developed at" />
-
-            <ImageView
-                android:layout_marginBottom="16dp"
-                android:src="@drawable/naxa_logo"
-                android:layout_width="match_parent"
-                android:layout_height="40dp" />
-
-        </LinearLayout>
-    </group>
+<!--    <group android:checkableBehavior="single">-->
+<!--        <item-->
+<!--            android:id="@+id/nav_designd_and_developed"-->
+<!--            android:title="@string/developed_by_naxa_pvt_ltd"-->
+<!--            />-->
+<!--    </group>-->
 
 
 </menu>

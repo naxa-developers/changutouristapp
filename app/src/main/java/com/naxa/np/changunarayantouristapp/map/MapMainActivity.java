@@ -67,7 +67,6 @@ import com.naxa.np.changunarayantouristapp.map.mapboxutils.mapdialogs.MapDialogs
 import com.naxa.np.changunarayantouristapp.map.mapboxutils.MapboxBaseStyleUtils;
 import com.naxa.np.changunarayantouristapp.placedetailsview.PlaceDetailsActivity;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlacesListActivity;
-import com.naxa.np.changunarayantouristapp.placedetailsview.nearbyplaces.NearByPlacesListActivity;
 import com.naxa.np.changunarayantouristapp.utils.ActivityUtil;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
@@ -323,7 +322,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
                     @Override
                     public void onSatelliteClick() {
-                        mapView.setStyleUrl(getResources().getString(R.string.mapbox_style_satellite));
+                        mapView.setStyleUrl(getResources().getString(R.string.mapbox_style_satellite_streets));
                         if (MAP_PLACE_BOUNDARY_ID == KEY_CHANGUNARAYAN_BOARDER) {
                             onChangunarayanBoarderClick();
                         } else if (MAP_PLACE_BOUNDARY_ID == KEY_NAGARKOT_BOARDER) {
@@ -643,8 +642,10 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     @Override
     public void onStart() {
         super.onStart();
-        EventBus.getDefault().register(this);
         mapView.onStart();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
 
 
     }
@@ -664,8 +665,10 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     @Override
     public void onStop() {
         super.onStop();
-        EventBus.getDefault().unregister(this);
         mapView.onStop();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     @Override
@@ -678,6 +681,9 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     protected void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     @Override
@@ -749,14 +755,11 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
     List<MapDataLayerListCheckEvent.MapDataLayerListCheckedEvent> mapDataLayerListCheckedEventList = new ArrayList<MapDataLayerListCheckEvent.MapDataLayerListCheckedEvent>();
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onRVItemClick(MapDataLayerListCheckEvent.MapDataLayerListCheckedEvent itemClick) {
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onRVItemClick(@NotNull MapDataLayerListCheckEvent.MapDataLayerListCheckedEvent itemClick) {
         String name = itemClick.getMultiItemSectionModel().getData_value();
-//        if(itemClick.getChecked()){
         if (mapDataLayerListCheckedEventList.size() == 0) {
             mapDataLayerListCheckedEventList.add(itemClick);
-
-//            hashMapDataLayer.put(itemClick.getMultiItemSectionModel().getData_key(), itemClick);
 
         } else if (mapDataLayerListCheckedEventList.size() > 0) {
             boolean alreadyExist = false;
@@ -788,12 +791,11 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
             }
 
         }
-//        Toast.makeText(this, "add to your circle button clicked " + name, Toast.LENGTH_SHORT).show();
     }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMarkerItemClick(MarkerClickEvent.MarkerItemClick itemClick) {
+    public void onMarkerItemClick(@NotNull MarkerClickEvent.MarkerItemClick itemClick) {
 
 
         selectedMarkerPosition = itemClick.getLocation();
@@ -878,7 +880,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(@NotNull View v) {
         switch (v.getId()) {
 
             case R.id.navigation:
@@ -1024,7 +1026,10 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         }
 
         isMapFirstTime = true;
-
+        layerLoadSuccessCount++;
+        if(layerLoadSuccessCount >=2){
+            isFromMainPlaceList = true;
+        }
 //        if (!isMapPlaceLayerFromDialog) {
         setupMapOptionsDialog().hide();
 //        }
@@ -1043,24 +1048,25 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
         LocaleChanger.onConfigurationChanged();
     }
 
-
+int layerLoadSuccessCount = 0;
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onLayerAddedSuccessEvent(LayerAddedSuccessEvent.LayerAddedSuccess layerAddedSuccess) {
+    public void onLayerAddedSuccessEvent(@NotNull LayerAddedSuccessEvent.LayerAddedSuccess layerAddedSuccess) {
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
 
-//                if (isFromIntent) {
+        if (layerAddedSuccess.isAdded()) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
                     if (!isFromMainPlaceList) {
                         mapboxMap.clear();
                         setMapCameraPosition(drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity)).getPosition());
-                    }else {
+                    layerLoadSuccessCount++;
+                    } else {
                         plotDefaultMarkerOnMap(placeType);
                     }
-//                }
-            }
-        }, 50);
-//                drawMarkerOnMap.addSingleMarker(placesDetailsEntity.getCategoryType(), gson.toJson(placesDetailsEntity));
+                }
+            }, 50);
+        }
     }
 }

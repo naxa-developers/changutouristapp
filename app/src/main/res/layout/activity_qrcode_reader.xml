@@ -31,16 +31,26 @@
             app:frameThickness="2dp"
             app:maskColor="#77000000"/>
 
-    <RelativeLayout
+
+    <TextView
+        android:id="@+id/tv_qr_or_lbl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        style="@style/headlineText"
+        android:text="OR"
+        android:gravity="center"
+        android:textColor="@color/colorPrimaryLight"
+        android:layout_above="@id/rl_scan_layout"
+        />
+    <RelativeLayout
+        android:id="@+id/rl_scan_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:padding="@dimen/spacing_medium"
         android:layout_marginEnd="@dimen/activity_default_margin"
         android:layout_marginStart="@dimen/activity_default_margin"
-        android:layout_marginBottom="@dimen/spacing_appbar_size">
+        android:layout_marginBottom="@dimen/activity_default_margin">
 
         <EditText
             android:id="@+id/tv_qr_code"
