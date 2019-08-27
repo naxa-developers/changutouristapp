@@ -40,7 +40,7 @@
             android:layout_marginBottom="@dimen/spacing_large"
             android:background="@drawable/rectangle_rounded_text_bordered_light_"
             android:inputType="text"
-            android:text="CTG2"
+            android:text=""
             android:hint="@string/enter_verification_code"
             android:padding="@dimen/spacing_medium" />
 

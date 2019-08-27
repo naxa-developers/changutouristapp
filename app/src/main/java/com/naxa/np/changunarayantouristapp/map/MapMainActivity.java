@@ -534,10 +534,11 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
 
         isMapFirstTime = true;
-        setupMapOptionsDialog().hide();
 
         initSpinner();
 
+
+        setupMapOptionsDialog().hide();
 
         setupMapDataLayerDialog(true, maincategoryList).hide();
 
@@ -960,7 +961,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
     private void plotDefaultMarkerOnMap(String placeType) {
 
-
         Log.d(TAG, "plotDefaultMarkerOnMap: " + isMapFirstTime);
         if (!isMapFirstTime || !isFromMainPlaceList) {
             return;
@@ -1025,14 +1025,14 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
             mapboxMap.setMinZoomPreference(11.5);
         }
 
+        setupMapOptionsDialog().hide();
+
         isMapFirstTime = true;
         layerLoadSuccessCount++;
         if(layerLoadSuccessCount >=2){
             isFromMainPlaceList = true;
         }
-//        if (!isMapPlaceLayerFromDialog) {
-        setupMapOptionsDialog().hide();
-//        }
+
 
         isMapPlaceLayerFromDialog = false;
     }

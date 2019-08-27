@@ -82,8 +82,8 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait"
             android:hardwareAccelerated="true"
+            android:screenOrientation="portrait"
             />
         <activity android:name=".splashscreen.WalkThroughSliderActivity"
             android:noHistory="true"/>
