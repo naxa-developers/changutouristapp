@@ -2,6 +2,7 @@ package com.naxa.np.changunarayantouristapp.map.mapboxutils;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +15,7 @@ import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.services.android.navigation.ui.v5.NavigationLauncher;
 import com.mapbox.services.android.navigation.ui.v5.NavigationLauncherOptions;
 import com.mapbox.services.android.navigation.ui.v5.route.NavigationMapRoute;
+import com.mapbox.services.android.navigation.ui.v5.route.OnRouteSelectionChangeListener;
 import com.mapbox.services.android.navigation.v5.navigation.NavigationRoute;
 import com.naxa.np.changunarayantouristapp.R;
 
@@ -39,6 +41,7 @@ public class DrawRouteOnMap {
         NavigationRoute.builder(context)
                 .accessToken(Mapbox.getAccessToken())
                 .origin(origin)
+                .alternatives(true)
                 .destination(destination)
                 .build()
                 .getRoute(new Callback<DirectionsResponse>() {
@@ -53,6 +56,7 @@ public class DrawRouteOnMap {
                             Log.e(TAG, "No routes found");
                             return;
                         }
+                        Log.d(TAG, "Routes size "+response.body().routes().size());
 
                         currentRoute = response.body().routes().get(0);
 
@@ -61,8 +65,23 @@ public class DrawRouteOnMap {
                             navigationMapRoute.removeRoute();
                         } else {
                             navigationMapRoute = new NavigationMapRoute(null, mapView, mapboxMap, R.style.NavigationMapRoute);
+//                            navigationMapRoute.showAlternativeRoutes(true);
                         }
-                        navigationMapRoute.addRoute(currentRoute);
+                        if(response.body().routes().size()>0){
+                            navigationMapRoute.addRoutes(response.body().routes());
+                            navigationMapRoute.showAlternativeRoutes(true);
+                        }else {
+                            Toast.makeText(context, "Routes not found", Toast.LENGTH_SHORT).show();
+                        }
+
+                        navigationMapRoute.setOnRouteSelectionChangeListener(new OnRouteSelectionChangeListener() {
+                            @Override
+                            public void onNewPrimaryRouteSelected(DirectionsRoute directionsRoute) {
+                                currentRoute = directionsRoute;
+                                Toast.makeText(context, "Distance : "+ currentRoute.distance()/1000+" Km." + "\nEstimated Time : "+currentRoute.duration()/(60*60)+" Hrs.", Toast.LENGTH_SHORT).show();
+                                Log.d(TAG, "onNewPrimaryRouteSelected: ");
+                            }
+                        });
                     }
 
                     @Override

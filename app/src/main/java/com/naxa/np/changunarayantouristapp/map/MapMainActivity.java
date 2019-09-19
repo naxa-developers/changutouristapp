@@ -743,6 +743,9 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
             drawRouteOnMap.getRoute(originPosition, destinationPosition);
             btnNavigation.setVisibility(View.VISIBLE);
             btnLayoutMapList.setVisibility(View.GONE);
+
+            mapboxMap.setMinZoomPreference(10.0
+            );
             isBtnGetRoutePressed = true;
             mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
 
