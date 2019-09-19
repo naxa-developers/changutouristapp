@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.ViewCompat;
@@ -78,7 +79,12 @@ public class MapDialogs {
             }
         });
 
-        setUpMainCategoryRecycler(context, recyclerViewMainCategory, geoJsonCategoryViewModel, mainCategoryList, recyclerView, 0, mainCategoryList.get(0).getSlug());
+        if(mainCategoryList.size() >0) {
+            setUpMainCategoryRecycler(context, recyclerViewMainCategory, geoJsonCategoryViewModel, mainCategoryList, recyclerView, 0, mainCategoryList.get(0).getSlug());
+        }else {
+            Toast.makeText(context, R.string.currently_there_is_no_data_available, Toast.LENGTH_LONG).show();
+            return new Dialog(context);
+        }
 
         if (isFirsttime) {
             listner.isFirstTime();
