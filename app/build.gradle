@@ -6,8 +6,8 @@ android {
         applicationId "com.naxa.np.changunarayantouristapp"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 3
-        versionName "1.0.2"
+        versionCode 4
+        versionName "1.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -22,20 +22,20 @@ android {
 //            android.enableR8.fullMode=true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-            splits {
-                density {
-                    enable true
-                    reset()
-                    include "ldpi", "mdpi", "hdpi", "xxhdpi"
-                    compatibleScreens 'small', 'normal', 'large', 'xlarge'
-
-                }
-                abi {
-                    enable true
-                    reset()
-                    include "x86", "armeabi-v7a", "arm64-v8a", "x86_64"
-                }
-            }
+//            splits {
+//                density {
+//                    enable true
+//                    reset()
+//                    include "ldpi", "mdpi", "hdpi", "xxhdpi"
+//                    compatibleScreens 'small', 'normal', 'large', 'xlarge'
+//
+//                }
+//                abi {
+//                    enable true
+//                    reset()
+//                    include "x86", "armeabi-v7a", "arm64-v8a", "x86_64"
+//                }
+//            }
 
         }
     }

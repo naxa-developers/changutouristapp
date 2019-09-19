@@ -118,7 +118,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
     ImageButton btnUsersCurrentLocation;
 
     private SlidingUpPanelLayout mLayout;
-    TextView tvMarkerTitle, tvMarkerDesc;
+    TextView tvMarkerTitle, tvMarkerDesc, tvDistanceAndTime;
     ImageView ivMarkerPrimaryImage;
     Button btnGoThere, btnViewMarkerDetails, btnPlacesDetailsList, btnRouteToMap;
     CardView btnLayoutMapList;
@@ -185,6 +185,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
         tvMarkerTitle = findViewById(R.id.tv_marker_title);
         tvMarkerDesc = findViewById(R.id.tv_marker_desc);
+        tvDistanceAndTime = findViewById(R.id.tv_distance_and_time);
         ivMarkerPrimaryImage = findViewById(R.id.iv_marker_primary_image);
         btnViewMarkerDetails = findViewById(R.id.btn_view_marker_details);
         btnPlacesDetailsList = findViewById(R.id.btn_route_to_main_places_list);
@@ -740,9 +741,13 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
             if (destinationPosition == null) {
                 return;
             }
-            drawRouteOnMap.getRoute(originPosition, destinationPosition);
+            drawRouteOnMap.getRoute(originPosition, destinationPosition, tvDistanceAndTime);
             btnNavigation.setVisibility(View.VISIBLE);
+            tvDistanceAndTime.setVisibility(View.VISIBLE);
             btnLayoutMapList.setVisibility(View.GONE);
+
+            mapboxMap.setMinZoomPreference(10.0
+            );
             isBtnGetRoutePressed = true;
             mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
 
@@ -887,6 +892,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
             case R.id.navigation:
                 drawRouteOnMap.enableNavigationUiLauncher(MapMainActivity.this);
                 btnNavigation.setVisibility(View.GONE);
+                tvDistanceAndTime.setVisibility(View.GONE);
                 isBtnGetRoutePressed = false;
                 btnLayoutMapList.setVisibility(View.VISIBLE);
                 break;

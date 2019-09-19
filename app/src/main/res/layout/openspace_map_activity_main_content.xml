@@ -33,19 +33,36 @@
             android:layout_height="@dimen/dp_40"
             android:layout_marginStart="@dimen/activity_default_margin"
             android:layout_marginTop="@dimen/activity_default_margin"
-            style="@style/SpinnerTheme"
             android:layout_marginEnd="@dimen/dp_76"
+            style="@style/SpinnerTheme"
             android:entries="@array/places_list"
             />
+
+        <TextView
+            android:id="@+id/tv_distance_and_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/spinner_map_places"
+            style="@style/bodyText"
+            android:layout_marginStart="@dimen/activity_default_margin"
+            android:layout_marginTop="@dimen/activity_default_margin"
+            android:layout_marginEnd="@dimen/dp_76"
+            android:background="@color/white_37"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:visibility="gone"
+            />
+
 
 
         <Button
             android:id="@+id/navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Start Navigation"
-            android:layout_below="@+id/toolbar_layout"
-            android:layout_margin="@dimen/activity_default_margin"
+            android:text="@string/start_navigation"
+            android:layout_marginStart="@dimen/activity_default_margin"
+            android:layout_marginBottom="@dimen/activity_default_margin"
+            android:layout_marginEnd="@dimen/activity_default_margin"
             android:background="@drawable/button_rounded_bg"
             android:textColor="@color/white"
             android:layout_alignParentBottom="true"

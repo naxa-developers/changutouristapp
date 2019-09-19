@@ -2,6 +2,8 @@ package com.naxa.np.changunarayantouristapp.map.mapboxutils;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,8 +16,13 @@ import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.services.android.navigation.ui.v5.NavigationLauncher;
 import com.mapbox.services.android.navigation.ui.v5.NavigationLauncherOptions;
 import com.mapbox.services.android.navigation.ui.v5.route.NavigationMapRoute;
+import com.mapbox.services.android.navigation.ui.v5.route.OnRouteSelectionChangeListener;
 import com.mapbox.services.android.navigation.v5.navigation.NavigationRoute;
 import com.naxa.np.changunarayantouristapp.R;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.text.DecimalFormat;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,10 +42,11 @@ public class DrawRouteOnMap {
         this.mapView = mapView;
     }
 
-    public void getRoute(Point origin, Point destination) {
+    public void getRoute(Point origin, Point destination, TextView textView) {
         NavigationRoute.builder(context)
                 .accessToken(Mapbox.getAccessToken())
                 .origin(origin)
+                .alternatives(true)
                 .destination(destination)
                 .build()
                 .getRoute(new Callback<DirectionsResponse>() {
@@ -55,6 +63,8 @@ public class DrawRouteOnMap {
                         }
 
                         currentRoute = response.body().routes().get(0);
+                        setDistanceAndTime(currentRoute, textView);
+
 
                         // Draw the route on the map
                         if (navigationMapRoute != null) {
@@ -62,7 +72,22 @@ public class DrawRouteOnMap {
                         } else {
                             navigationMapRoute = new NavigationMapRoute(null, mapView, mapboxMap, R.style.NavigationMapRoute);
                         }
-                        navigationMapRoute.addRoute(currentRoute);
+                        if(response.body().routes().size()>0){
+                            navigationMapRoute.addRoutes(response.body().routes());
+                            navigationMapRoute.showAlternativeRoutes(true);
+                        }else {
+                            Toast.makeText(context, "Routes not found", Toast.LENGTH_SHORT).show();
+                        }
+
+                        navigationMapRoute.setOnRouteSelectionChangeListener(new OnRouteSelectionChangeListener() {
+                            @Override
+                            public void onNewPrimaryRouteSelected(DirectionsRoute directionsRoute) {
+                                currentRoute = directionsRoute;
+                                setDistanceAndTime(currentRoute, textView);
+//                                Toast.makeText(context, "Distance : "+ currentRoute.distance()/1000+" Km." + "\nEstimated Time : "+currentRoute.duration()/(60*60)+" Hrs." +"\n"+currentRoute.weight(), Toast.LENGTH_SHORT).show();
+                                Log.d(TAG, "onNewPrimaryRouteSelected: ");
+                            }
+                        });
                     }
 
                     @Override
@@ -83,6 +108,36 @@ public class DrawRouteOnMap {
 
         navigationMapRoute.updateRouteVisibilityTo(false);
 
+    }
+
+    private void setDistanceAndTime(@NotNull DirectionsRoute directionsRoute, @NotNull TextView textView){
+        double directionDuration = directionsRoute.duration();
+        double directionDistance = directionsRoute.distance();
+        String distance;
+        String time;
+
+        if(directionDistance < 1000){
+             distance = "Distance: "+ getTwoDigitsOnlyAfterDecimal(directionsRoute.distance())+" Meters.";
+        }else {
+             distance = "Distance: "+ getTwoDigitsOnlyAfterDecimal((directionsRoute.distance()/1000))+" Km/s.";
+        }
+
+        if(directionDuration < (60*60)){
+             time = "Expected Time: "+getTwoDigitsOnlyAfterDecimal((directionsRoute.duration()/(60)))+" Minutes.";
+        }else {
+             time = "Expected Time: "+getTwoDigitsOnlyAfterDecimal((directionsRoute.duration()/(60*60)))+" Hr/s.";
+        }
+
+        textView.setText(String.format("%s\n%s", distance, time));
+
+    }
+
+    private String getTwoDigitsOnlyAfterDecimal(double rawDigits){
+        String twoDigitsDecimalNo = "no data";
+        if(rawDigits != 0){
+            twoDigitsDecimalNo = String.format("%.2f", rawDigits);
+        }
+        return twoDigitsDecimalNo;
     }
 
     public void removeRoute (){
