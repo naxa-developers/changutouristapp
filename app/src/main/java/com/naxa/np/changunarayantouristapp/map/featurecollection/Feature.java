@@ -12,7 +12,7 @@ public class Feature {
     private String type;
     @SerializedName("properties")
     @Expose
-    private Properties properties;
+    private PlacesDetailsEntity properties;
     @SerializedName("geometry")
     @Expose
     private Geometry geometry;
@@ -25,11 +25,11 @@ public class Feature {
         this.type = type;
     }
 
-    public Properties getProperties() {
+    public PlacesDetailsEntity getProperties() {
         return properties;
     }
 
-    public void setProperties(Properties properties) {
+    public void setProperties(PlacesDetailsEntity properties) {
         this.properties = properties;
     }
 

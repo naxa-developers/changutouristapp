@@ -24,8 +24,6 @@ import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -42,7 +40,6 @@ import io.reactivex.functions.Function;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
-import timber.log.Timber;
 
 import static com.naxa.np.changunarayantouristapp.utils.Constant.Network.API_KEY;
 
@@ -85,7 +82,6 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                     totalCount = listResponse.getData().size();
                     if (listResponse.getData() != null) {
                         downloadMainPlaceListDetails(apiInterface, apiKey, language);
-//                        new ISETRoomDatabase.DeleteAllDbTableAsync(ISETRoomDatabase.getDatabase(appCompatActivity)).execute();
                     }
                     return listResponse.getData();
                 })
@@ -101,14 +97,10 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                             .retryWhen(observable -> Observable.timer(5, TimeUnit.SECONDS))
                             .doOnNext(responseBody -> {
                                 progress++;
-                                Log.d(TAG, "handleDataDownload response body: "+responseBody.string());
-                                Log.d(TAG, "handleDataDownload: doOnNext " + categoryListEntity.getCategoryName());
                                 dataDonwloadView.downloadProgress(progress, totalCount, categoryListEntity.getCategoryName(), categoryListEntity.getCategoryName(), categoryListEntity.getCategoryMarker());
                             })
                             .map(responseBody -> {
                                 try {
-
-//                                    FeatureCollectionModel featureCollection = FeatureCollectionModel.fromJson(getJsonStringFromResponseBody(responseBody));
                                     FeatureCollectionModel featureCollection = gson.fromJson(getJsonStringFromResponseBody(responseBody), FeatureCollectionModel.class);
                                     return featureCollection.getFeatures();
 
@@ -141,9 +133,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                             }).doOnNext(new Consumer<Feature>() {
                                 @Override
                                 public void accept(Feature feature) throws Exception {
-                                    String snippest = feature.getProperties().toString();
-                                    Log.d(TAG, "accept: "+snippest);
-                                    PlacesDetailsEntity placesDetailsEntity = gson.fromJson(snippest, PlacesDetailsEntity.class);
+                                    PlacesDetailsEntity placesDetailsEntity = feature.getProperties();
                                     placesDetailsEntity.setCategoryType(geoJsonName);
 
                                     LatLng latLng = getLocationFromGeometry(feature);
@@ -156,7 +146,6 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                                     }
 
                                     placeDetailsEntityViewModel.insert(placesDetailsEntity);
-                                    Timber.d("accept: JSON Object %s", snippest + " " + geoJsonName);
                                 }
                             });
 
@@ -182,6 +171,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                     public void onComplete() {
                         fetchMayorMessage(apiInterface, apiKey, language);
                         fetchTouristInfoDatFromServer(apiInterface, apiKey, language);
+                        fetchLanguageListFromServer(apiInterface);
                         dataDonwloadView.downloadSuccess("All Data Downloaded Successfully");
                         SharedPreferenceUtils.getInstance(ChangunarayanTouristApp.getInstance()).setValue(Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS, true);
                         Log.d(TAG, "onComplete: ");
@@ -203,16 +193,13 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
         reader.close();
         String geoJsonToString = sb.toString();
 
+        Log.d(TAG, "getJsonStringFromResponseBody: "+geoJsonToString);
         return geoJsonToString;
     }
 
     private LatLng getLocationFromGeometry (@NotNull Feature feature){
                                 LatLng location = new LatLng(0.0, 0.0);
                         try {
-//                            JSONObject jsonObject = new JSONObject(feature.geometry().toJson());
-//                            Log.d(TAG, "onNext: JSON Object Co-ordinates " + jsonObject.getJSONArray("coordinates").getString(0));
-//                            String Lon = jsonObject.getJSONArray("coordinates").getString(0);
-//                            String Lat = jsonObject.getJSONArray("coordinates").getString(1);
                             String Lon = feature.getGeometry().getCoordinates().get(0).toString();
                             String Lat = feature.getGeometry().getCoordinates().get(1).toString();
                             location = new LatLng(Double.parseDouble(Lat), Double.parseDouble(Lon));
