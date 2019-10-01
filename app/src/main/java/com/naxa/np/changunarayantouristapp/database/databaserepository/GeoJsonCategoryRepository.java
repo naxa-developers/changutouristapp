@@ -12,6 +12,7 @@ import java.util.List;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -20,6 +21,7 @@ public class GeoJsonCategoryRepository {
     private GeoJsonCategoryDao mGeoJsonCategoryDao;
     private Flowable<List<GeoJsonCategoryListEntity>> mAllGeoJsonCategoryEntity;
     private Flowable<List<GeoJsonCategoryListEntity>> mSpecificTypeGeoJsonCategoryEntity;
+    private List<GeoJsonCategoryListEntity> mDistinctTypeGeoJsonCategoryEntity;
     private Flowable<List<GeoJsonCategoryListEntity>> mDistinctSlugList;
 
     // Note that in order to unit test the WordRepository, you have to remove the Application
@@ -43,6 +45,11 @@ public class GeoJsonCategoryRepository {
         mSpecificTypeGeoJsonCategoryEntity = mGeoJsonCategoryDao.getGeoJsonCategoryListByLanguage(language, slug);
         return mSpecificTypeGeoJsonCategoryEntity;
     }
+
+//    public List<GeoJsonCategoryListEntity> getDistinctGeoJsonCategoryEntityByType() {
+//        mDistinctTypeGeoJsonCategoryEntity = mGeoJsonCategoryDao.getDistinctGeoJsonCategoryEntityByType();
+//        return mDistinctTypeGeoJsonCategoryEntity;
+//    }
 
     public Flowable<List<GeoJsonCategoryListEntity>> getGeoJsonSubCategorySlugByLanguage(String language) {
         mDistinctSlugList = mGeoJsonCategoryDao.getGeoJsonSubCategorySlugByLanguage(language);
@@ -72,6 +79,42 @@ public class GeoJsonCategoryRepository {
 
             }
         });
+
+
+    }
+
+    public void insertAll (List<GeoJsonCategoryListEntity> geoJsonCategoryListEntity) {
+        Observable.just(geoJsonCategoryListEntity)
+                .subscribeOn(Schedulers.io())
+                .flatMapIterable(new Function<List<GeoJsonCategoryListEntity>, Iterable<GeoJsonCategoryListEntity>>() {
+                    @Override
+                    public Iterable<GeoJsonCategoryListEntity> apply(List<GeoJsonCategoryListEntity> geoJsonCategoryListEntities) throws Exception {
+                        return geoJsonCategoryListEntities;
+                    }
+                })
+                .map(new Function<GeoJsonCategoryListEntity, GeoJsonCategoryListEntity>() {
+                    @Override
+                    public GeoJsonCategoryListEntity apply(GeoJsonCategoryListEntity geoJsonCategoryListEntity) throws Exception {
+                        return geoJsonCategoryListEntity;
+                    }
+                })
+                .subscribe(new DisposableObserver<GeoJsonCategoryListEntity>() {
+                    @Override
+                    public void onNext(GeoJsonCategoryListEntity geoJsonCategoryListEntity) {
+                        Log.d("GeoJsonCategoryListEntity", "insert: "+ geoJsonCategoryListEntity.getCategoryName());
+                        mGeoJsonCategoryDao.insert(geoJsonCategoryListEntity);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
 
 
     }

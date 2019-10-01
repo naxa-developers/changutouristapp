@@ -75,80 +75,103 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
         totalCount = 0;
         progress = 0;
 
+        List<String> distinctCategoryType = new ArrayList<>();
+        List<GeoJsonCategoryListEntity> distinctCategoryEntityListType = new ArrayList<>();
+
         apiInterface.getGeoJsonCategoriesListResponse(API_KEY)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(listResponse -> {
-                    totalCount = listResponse.getData().size();
                     if (listResponse.getData() != null) {
+                        geoJsonCategoryViewModel.insertAll(listResponse.getData());
                         downloadMainPlaceListDetails(apiInterface, apiKey, language);
+//                        totalCount = listResponse.getData().size();
+                        for(GeoJsonCategoryListEntity geoJsonCategoryListEntity : listResponse.getData()){
+
+                            if(!distinctCategoryType.contains(geoJsonCategoryListEntity.getCategoryTable())){
+                                distinctCategoryType.add(geoJsonCategoryListEntity.getCategoryTable());
+                                distinctCategoryEntityListType.add(geoJsonCategoryListEntity);
+                            }
+                        }
+                        totalCount = distinctCategoryEntityListType.size();
+                        return distinctCategoryEntityListType;
+                    }else {
+                        List<GeoJsonCategoryListEntity> geoJsonCategoryListEntityList = new ArrayList<>();
+                        return geoJsonCategoryListEntityList;
                     }
-                    return listResponse.getData();
                 })
-                .flatMapIterable((Function<List<GeoJsonCategoryListEntity>, Iterable<GeoJsonCategoryListEntity>>) entities -> entities)
-                .flatMap((Function<GeoJsonCategoryListEntity, ObservableSource<Feature>>) categoryListEntity -> {
-                    geoJsonCategoryViewModel.insert(categoryListEntity);
-                    geoJsonDisplayName = categoryListEntity.getCategoryName();
-                    String geoJsonName = categoryListEntity.getCategoryTable();
+                .flatMapIterable(new Function<List<GeoJsonCategoryListEntity>, Iterable<GeoJsonCategoryListEntity>>() {
+                    @Override
+                    public Iterable<GeoJsonCategoryListEntity> apply(List<GeoJsonCategoryListEntity> entities) throws Exception {
 
-                    return apiInterface.getGeoJsonDetails(API_KEY, categoryListEntity.getSlug(), categoryListEntity.getCategoryName())
-                            .subscribeOn(Schedulers.computation())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .retryWhen(observable -> Observable.timer(5, TimeUnit.SECONDS))
-                            .doOnNext(responseBody -> {
-                                progress++;
-                                dataDonwloadView.downloadProgress(progress, totalCount, categoryListEntity.getCategoryName(), categoryListEntity.getCategoryName(), categoryListEntity.getCategoryMarker());
-                            })
-                            .map(responseBody -> {
-                                try {
-                                    FeatureCollectionModel featureCollection = gson.fromJson(getJsonStringFromResponseBody(responseBody), FeatureCollectionModel.class);
-                                    return featureCollection.getFeatures();
+                        return entities;
+                    }
+                })
+                .flatMap(new Function<GeoJsonCategoryListEntity, ObservableSource<Feature>>() {
+                    @Override
+                    public ObservableSource<Feature> apply(GeoJsonCategoryListEntity categoryListEntity) throws Exception {
+                        geoJsonDisplayName = categoryListEntity.getCategoryName();
+                        String geoJsonName = categoryListEntity.getCategoryTable();
 
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    Log.d(TAG, "handleDataDownload: catch " + " type : " + categoryListEntity.getCategoryTable() + " , " + responseBody.string());
-                                    return new ArrayList<Feature>();
-                                }
-                            })
-                            .toList()
-                            .map(lists -> {
-                                Log.d(TAG, "handleDataDownload: mapLists : " + categoryListEntity.getCategoryTable() + " : " + lists.size());
-                                List<Feature> features = new ArrayList<>();
-                                for (List<Feature> list : lists) {
-                                    features.addAll(list);
-                                }
-                                return features;
-                            })
-                            .flattenAsObservable(new Function<List<Feature>, Iterable<Feature>>() {
-                                @Override
-                                public Iterable<Feature> apply(List<Feature> features) throws Exception {
-                                    return features;
-                                }
-                            })
-                            .map(new Function<Feature, Feature>() {
-                                @Override
-                                public Feature apply(Feature feature) throws Exception {
-                                    return feature;
-                                }
-                            }).doOnNext(new Consumer<Feature>() {
-                                @Override
-                                public void accept(Feature feature) throws Exception {
-                                    PlacesDetailsEntity placesDetailsEntity = feature.getProperties();
-                                    placesDetailsEntity.setCategoryType(geoJsonName);
+                        return apiInterface.getGeoJsonDetails(API_KEY, categoryListEntity.getSlug(), categoryListEntity.getCategoryTable())
+                                .subscribeOn(Schedulers.computation())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .retryWhen(observable -> Observable.timer(5, TimeUnit.SECONDS))
+                                .doOnNext(responseBody -> {
+                                    progress++;
+                                    dataDonwloadView.downloadProgress(progress, totalCount, categoryListEntity.getSubCategories(), categoryListEntity.getCategoryTable(), categoryListEntity.getCategoryMarker());
+                                })
+                                .map(responseBody -> {
+                                    try {
+                                        FeatureCollectionModel featureCollection = gson.fromJson(DataDownloadPresenterImpl.this.getJsonStringFromResponseBody(responseBody), FeatureCollectionModel.class);
+                                        return featureCollection.getFeatures();
 
-                                    LatLng latLng = getLocationFromGeometry(feature);
-                                    placesDetailsEntity.setLatitude(latLng.getLatitude()+"");
-                                    placesDetailsEntity.setLongitude(latLng.getLongitude()+"");
-                                    if(TextUtils.isEmpty(placesDetailsEntity.getQRCode())){
-                                        placesDetailsEntity.setQrLanguage(placesDetailsEntity.getLanguage() + "_" + placesDetailsEntity.getName());
-                                    }else {
-                                        placesDetailsEntity.setQrLanguage(placesDetailsEntity.getLanguage() + "_" + placesDetailsEntity.getQRCode());
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                        Log.d(TAG, "handleDataDownload: catch " + " type : " + categoryListEntity.getCategoryTable() + " , " + responseBody.string());
+                                        return new ArrayList<Feature>();
                                     }
+                                })
+                                .toList()
+                                .map(lists -> {
+                                    Log.d(TAG, "handleDataDownload: mapLists : " + categoryListEntity.getCategoryTable() + " : " + lists.size());
+                                    List<Feature> features = new ArrayList<>();
+                                    for (List<Feature> list : lists) {
+                                        features.addAll(list);
+                                    }
+                                    return features;
+                                })
+                                .flattenAsObservable(new Function<List<Feature>, Iterable<Feature>>() {
+                                    @Override
+                                    public Iterable<Feature> apply(List<Feature> features) throws Exception {
+                                        return features;
+                                    }
+                                })
+                                .map(new Function<Feature, Feature>() {
+                                    @Override
+                                    public Feature apply(Feature feature) throws Exception {
+                                        return feature;
+                                    }
+                                }).doOnNext(new Consumer<Feature>() {
+                                    @Override
+                                    public void accept(Feature feature) throws Exception {
+                                        PlacesDetailsEntity placesDetailsEntity = feature.getProperties();
+                                        placesDetailsEntity.setCategoryType(geoJsonName);
 
-                                    placeDetailsEntityViewModel.insert(placesDetailsEntity);
-                                }
-                            });
+                                        LatLng latLng = getLocationFromGeometry(feature);
+                                        placesDetailsEntity.setLatitude(latLng.getLatitude() + "");
+                                        placesDetailsEntity.setLongitude(latLng.getLongitude() + "");
+                                        if (TextUtils.isEmpty(placesDetailsEntity.getQRCode())) {
+                                            placesDetailsEntity.setQrLanguage(placesDetailsEntity.getLanguage() + "_" + placesDetailsEntity.getName());
+                                        } else {
+                                            placesDetailsEntity.setQrLanguage(placesDetailsEntity.getLanguage() + "_" + placesDetailsEntity.getQRCode());
+                                        }
 
+                                        placeDetailsEntityViewModel.insert(placesDetailsEntity);
+                                    }
+                                });
+
+                    }
                 })
                 .subscribe(new DisposableObserver<Feature>() {
                     @Override

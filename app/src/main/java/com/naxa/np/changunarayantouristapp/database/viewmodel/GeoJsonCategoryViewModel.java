@@ -18,6 +18,7 @@ public class GeoJsonCategoryViewModel extends AndroidViewModel {
 
     private Flowable<List<GeoJsonCategoryListEntity>> mAllGeoJsonCategoryEntity;
     private Flowable<List<GeoJsonCategoryListEntity>> mSpecificTypeGeoJsonCategoryEntity;
+    private List<GeoJsonCategoryListEntity> mDistinctTypeGeoJsonCategoryEntity;
     private Flowable<List<GeoJsonCategoryListEntity>> mDistinctSlugList;
 
     public GeoJsonCategoryViewModel(Application application) {
@@ -35,6 +36,13 @@ public class GeoJsonCategoryViewModel extends AndroidViewModel {
         return mSpecificTypeGeoJsonCategoryEntity;
     }
 
+//    public List<GeoJsonCategoryListEntity> getDistinctGeoJsonCategoryEntityByType() {
+//        mDistinctTypeGeoJsonCategoryEntity = mRepository.getDistinctGeoJsonCategoryEntityByType();
+//        return mDistinctTypeGeoJsonCategoryEntity;
+//    }
+
+
+
     public Flowable<List<GeoJsonCategoryListEntity>> getGeoJsonSubCategorySlugByLanguage(String language) {
         mDistinctSlugList = mRepository.getGeoJsonSubCategorySlugByLanguage(language);
         return mDistinctSlugList;
@@ -43,6 +51,10 @@ public class GeoJsonCategoryViewModel extends AndroidViewModel {
 
     public void insert(GeoJsonCategoryListEntity geoJsonCategoryListEntity) {
         mRepository.insert(geoJsonCategoryListEntity);
+
+    }
+    public void insertAll(List<GeoJsonCategoryListEntity> geoJsonCategoryListEntity) {
+        mRepository.insertAll(geoJsonCategoryListEntity);
 
     }
 }
