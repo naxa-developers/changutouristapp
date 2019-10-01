@@ -147,8 +147,10 @@ public class MapDialogs {
                                 if (index == 0) {
                                     mapDataLayerList.add(new SectionMultipleItem(true, geoJsonCategoryListEntity.getSubCategories(), false, false, geoJsonCategoryListEntities.size()+""));
                                 }
+//                                mapDataLayerList.add(new SectionMultipleItem(SectionMultipleItem.MAP_DATA_LIST, new MultiItemSectionModel(
+//                                        geoJsonCategoryListEntity.getCategoryMarker(), geoJsonCategoryListEntity.getCategoryName(), geoJsonCategoryListEntity.getCategoryTable())));
                                 mapDataLayerList.add(new SectionMultipleItem(SectionMultipleItem.MAP_DATA_LIST, new MultiItemSectionModel(
-                                        geoJsonCategoryListEntity.getCategoryMarker(), geoJsonCategoryListEntity.getCategoryName(), geoJsonCategoryListEntity.getCategoryTable())));
+                                        geoJsonCategoryListEntity.getCategoryMarker(), geoJsonCategoryListEntity.getCategoryName(), geoJsonCategoryListEntity.getCategoryName())));
                             }
                             setUpFilterlayerRecyclerView(recyclerView, mapDataLayerList);
                         }

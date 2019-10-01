@@ -72,7 +72,7 @@ public class PlacesDetailsEntity implements Parcelable {
     @Expose
     private String videos ;
 
-    @SerializedName("360 images")
+    @SerializedName("360 Image")
     @ColumnInfo(name = "360_images")
     @Expose
     private String _360Images;
@@ -82,7 +82,7 @@ public class PlacesDetailsEntity implements Parcelable {
     @Expose
     private String audio ;
 
-    @SerializedName("QR code")
+    @SerializedName("QR Code")
     @ColumnInfo(name = "qr_code")
     @Expose
     private String QRCode;

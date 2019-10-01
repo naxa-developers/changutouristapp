@@ -30,12 +30,13 @@ public interface NetworkApiInterface {
 
     @POST(UrlConstant.FETCH_GEOJSON_CATEGORIES_LIST)
     @FormUrlEncoded
-    Observable<GeojsonCategoriesListResponse> getGeoJsonCategoriesListResponse(@Field("api_key") String key, @Field("language") String language);
+//    Observable<GeojsonCategoriesListResponse> getGeoJsonCategoriesListResponse(@Field("api_key") String key, @Field("language") String language);
+    Observable<GeojsonCategoriesListResponse> getGeoJsonCategoriesListResponse(@Field("api_key") String key);
 
 
     @POST(UrlConstant.FETCH_GEOJSON_FILES)
     @FormUrlEncoded
-    Observable<ResponseBody> getGeoJsonDetails(@Field("api_key") String api_key, @Field("cat_table") String catTable);
+    Observable<ResponseBody> getGeoJsonDetails(@Field("api_key") String api_key, @Field("cat_table") String catTable, @Field("type") String type);
 
 
     @POST(UrlConstant.FETCH_PLACE_DETAILS)

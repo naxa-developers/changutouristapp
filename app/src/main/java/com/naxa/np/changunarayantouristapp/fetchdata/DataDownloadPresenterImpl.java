@@ -6,8 +6,6 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
-import com.mapbox.geojson.Feature;
-import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.naxa.np.changunarayantouristapp.common.ChangunarayanTouristApp;
 import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListEntity;
@@ -15,6 +13,8 @@ import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonCategoryViewModel;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonListViewModel;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntityViewModel;
+import com.naxa.np.changunarayantouristapp.map.featurecollection.Feature;
+import com.naxa.np.changunarayantouristapp.map.featurecollection.FeatureCollectionModel;
 import com.naxa.np.changunarayantouristapp.mayormessage.MayorMessagesListResponse;
 import com.naxa.np.changunarayantouristapp.network.NetworkApiInterface;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlaceListDetailsResponse;
@@ -78,7 +78,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
         totalCount = 0;
         progress = 0;
 
-        apiInterface.getGeoJsonCategoriesListResponse(Constant.Network.API_KEY, language)
+        apiInterface.getGeoJsonCategoriesListResponse(API_KEY)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(listResponse -> {
@@ -95,21 +95,25 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                     geoJsonDisplayName = categoryListEntity.getCategoryName();
                     String geoJsonName = categoryListEntity.getCategoryTable();
 
-                    return apiInterface.getGeoJsonDetails(Constant.Network.API_KEY, categoryListEntity.getCategoryTable())
+                    return apiInterface.getGeoJsonDetails(API_KEY, categoryListEntity.getSlug(), categoryListEntity.getCategoryName())
                             .subscribeOn(Schedulers.computation())
                             .observeOn(AndroidSchedulers.mainThread())
                             .retryWhen(observable -> Observable.timer(5, TimeUnit.SECONDS))
                             .doOnNext(responseBody -> {
                                 progress++;
-                                Log.d(TAG, "handleDataDownload: doOnNext " + categoryListEntity.getCategoryTable());
-                                dataDonwloadView.downloadProgress(progress, totalCount, categoryListEntity.getCategoryName(), categoryListEntity.getCategoryTable(), categoryListEntity.getCategoryMarker());
+                                Log.d(TAG, "handleDataDownload response body: "+responseBody.string());
+                                Log.d(TAG, "handleDataDownload: doOnNext " + categoryListEntity.getCategoryName());
+                                dataDonwloadView.downloadProgress(progress, totalCount, categoryListEntity.getCategoryName(), categoryListEntity.getCategoryName(), categoryListEntity.getCategoryMarker());
                             })
                             .map(responseBody -> {
                                 try {
-                                    FeatureCollection featureCollection = FeatureCollection.fromJson(getJsonStringFromResponseBody(responseBody));
-                                    return featureCollection.features();
+
+//                                    FeatureCollectionModel featureCollection = FeatureCollectionModel.fromJson(getJsonStringFromResponseBody(responseBody));
+                                    FeatureCollectionModel featureCollection = gson.fromJson(getJsonStringFromResponseBody(responseBody), FeatureCollectionModel.class);
+                                    return featureCollection.getFeatures();
 
                                 } catch (Exception e) {
+                                    e.printStackTrace();
                                     Log.d(TAG, "handleDataDownload: catch " + " type : " + categoryListEntity.getCategoryTable() + " , " + responseBody.string());
                                     return new ArrayList<Feature>();
                                 }
@@ -137,7 +141,8 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                             }).doOnNext(new Consumer<Feature>() {
                                 @Override
                                 public void accept(Feature feature) throws Exception {
-                                    String snippest = feature.properties().toString();
+                                    String snippest = feature.getProperties().toString();
+                                    Log.d(TAG, "accept: "+snippest);
                                     PlacesDetailsEntity placesDetailsEntity = gson.fromJson(snippest, PlacesDetailsEntity.class);
                                     placesDetailsEntity.setCategoryType(geoJsonName);
 
@@ -204,13 +209,17 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
     private LatLng getLocationFromGeometry (@NotNull Feature feature){
                                 LatLng location = new LatLng(0.0, 0.0);
                         try {
-                            JSONObject jsonObject = new JSONObject(feature.geometry().toJson());
-                            Log.d(TAG, "onNext: JSON Object Co-ordinates " + jsonObject.getJSONArray("coordinates").getString(0));
-                            String Lon = jsonObject.getJSONArray("coordinates").getString(0);
-                            String Lat = jsonObject.getJSONArray("coordinates").getString(1);
+//                            JSONObject jsonObject = new JSONObject(feature.geometry().toJson());
+//                            Log.d(TAG, "onNext: JSON Object Co-ordinates " + jsonObject.getJSONArray("coordinates").getString(0));
+//                            String Lon = jsonObject.getJSONArray("coordinates").getString(0);
+//                            String Lat = jsonObject.getJSONArray("coordinates").getString(1);
+                            String Lon = feature.getGeometry().getCoordinates().get(0).toString();
+                            String Lat = feature.getGeometry().getCoordinates().get(1).toString();
                             location = new LatLng(Double.parseDouble(Lat), Double.parseDouble(Lon));
+                            Log.d(TAG, "onNext: JSON Object Co-ordinates " + feature.getGeometry().getCoordinates().toString());
+
                             return  location;
-                        } catch (JSONException e) {
+                        } catch (NullPointerException e) {
                             e.printStackTrace();
                             return location;
                         }
