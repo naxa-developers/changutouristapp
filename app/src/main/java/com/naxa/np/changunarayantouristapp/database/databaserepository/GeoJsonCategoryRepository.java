@@ -46,10 +46,6 @@ public class GeoJsonCategoryRepository {
         return mSpecificTypeGeoJsonCategoryEntity;
     }
 
-//    public List<GeoJsonCategoryListEntity> getDistinctGeoJsonCategoryEntityByType() {
-//        mDistinctTypeGeoJsonCategoryEntity = mGeoJsonCategoryDao.getDistinctGeoJsonCategoryEntityByType();
-//        return mDistinctTypeGeoJsonCategoryEntity;
-//    }
 
     public Flowable<List<GeoJsonCategoryListEntity>> getGeoJsonSubCategorySlugByLanguage(String language) {
         mDistinctSlugList = mGeoJsonCategoryDao.getGeoJsonSubCategorySlugByLanguage(language);

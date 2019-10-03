@@ -85,9 +85,8 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                     if (listResponse.getData() != null) {
                         geoJsonCategoryViewModel.insertAll(listResponse.getData());
                         downloadMainPlaceListDetails(apiInterface, apiKey, language);
-//                        totalCount = listResponse.getData().size();
-                        for(GeoJsonCategoryListEntity geoJsonCategoryListEntity : listResponse.getData()){
 
+                        for(GeoJsonCategoryListEntity geoJsonCategoryListEntity : listResponse.getData()){
                             if(!distinctCategoryType.contains(geoJsonCategoryListEntity.getCategoryTable())){
                                 distinctCategoryType.add(geoJsonCategoryListEntity.getCategoryTable());
                                 distinctCategoryEntityListType.add(geoJsonCategoryListEntity);
@@ -95,6 +94,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                         }
                         totalCount = distinctCategoryEntityListType.size();
                         return distinctCategoryEntityListType;
+
                     }else {
                         List<GeoJsonCategoryListEntity> geoJsonCategoryListEntityList = new ArrayList<>();
                         return geoJsonCategoryListEntityList;
@@ -119,7 +119,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                                 .retryWhen(observable -> Observable.timer(5, TimeUnit.SECONDS))
                                 .doOnNext(responseBody -> {
                                     progress++;
-                                    dataDonwloadView.downloadProgress(progress, totalCount, categoryListEntity.getSubCategories(), categoryListEntity.getCategoryTable(), categoryListEntity.getCategoryMarker());
+                                    dataDonwloadView.downloadProgress(progress, totalCount, categoryListEntity.getSubCategories(), categoryListEntity.getCategoryName(), categoryListEntity.getCategoryMarker());
                                 })
                                 .map(responseBody -> {
                                     try {

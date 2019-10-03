@@ -552,8 +552,8 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
         int MAP_PLACE_BOUNDARY_ID = sharedPreferenceUtils.getIntValue(MAP_OVERLAY_LAYER, -1);
 
-//        mapView.setStyleUrl(getResources().getString(R.string.mapbox_style_mapbox_streets));
-        mapView.setStyleUrl("mapbox://styles/peacenepal/cjypk1l6w56y81co32qklu983");
+        mapView.setStyleUrl(getResources().getString(R.string.mapbox_style_mapbox_streets));
+//        mapView.setStyleUrl("mapbox://styles/peacenepal/cjypk1l6w56y81co32qklu983");
 
         if (MAP_PLACE_BOUNDARY_ID == KEY_CHANGUNARAYAN_BOARDER) {
             mapPlaceListSpinner.setSelection(0);
@@ -746,13 +746,13 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
             tvDistanceAndTime.setVisibility(View.VISIBLE);
             btnLayoutMapList.setVisibility(View.GONE);
 
-            mapboxMap.setMinZoomPreference(10.0
+            mapboxMap.setMinZoomPreference(8.0
             );
             isBtnGetRoutePressed = true;
             mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
 
         } catch (NullPointerException e) {
-            Toast.makeText(this, "Searching current location \nMake sure your GPS provider is enabled.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.searching_current_location), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
 
@@ -881,7 +881,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
     @Override
     public void onProviderDisabled(String provider) {
-        Toast.makeText(this, "Please enable your GPS Provider", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getResources().getString(R.string.please_enable_gps_provider), Toast.LENGTH_LONG).show();
 
     }
 
@@ -899,7 +899,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
             case R.id.btnMapLayerData:
                 if (mapboxMap == null) {
-                    Toast.makeText(this, "Your map is not ready yet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getResources().getString(R.string.map_is_not_ready_yet), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 mapboxMap.clear();
@@ -917,7 +917,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 if (originLocation != null) {
                     animateCameraPosition(originLocation);
                 } else {
-                    Toast.makeText(this, "Searching Your Current Location", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getResources().getString(R.string.searching_your_current_location), Toast.LENGTH_SHORT).show();
                 }
                 break;
 
@@ -950,7 +950,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 }
             });
         } else {
-            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
         }
     }
 

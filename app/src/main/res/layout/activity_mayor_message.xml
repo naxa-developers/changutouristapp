@@ -54,15 +54,15 @@
             style="@style/headlineText"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:text="@string/respected_mayor_lbl"
+            android:text="@string/mayor_name"
             android:gravity="center"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/subHeadText"
+            android:text="@string/respected_mayor_lbl"
             android:textColor="@color/white"
-            android:text="@string/mayor_name"
             android:gravity="center"/>
 
         <TextView

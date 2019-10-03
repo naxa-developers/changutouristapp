@@ -24,7 +24,7 @@ public interface PlaceDetailsDao {
     Flowable<List<PlacesDetailsEntity>> getPlacesDetailsEntityBYPlaceAndCategoryType(String placeType, String categoryType, String language);
 
 
-    @Query("SELECT * from PlacesDetailsEntity WHERE place_type LIKE :placeType AND type IN (:nearbyTypeList) AND language LIKE :language")
+    @Query("SELECT * from PlacesDetailsEntity WHERE place_type LIKE :placeType AND category_type IN (:nearbyTypeList) AND language LIKE :language")
     Flowable<List<PlacesDetailsEntity>> getNearByPlacesListByPlaceTypeAndNearByTypeList(String placeType, List<String> nearbyTypeList,  String language);
 
     @Query("SELECT * from PlacesDetailsEntity WHERE qr_code  LIKE '%' || :qrcODE || '%' AND language LIKE :language")

@@ -112,6 +112,7 @@
     <string name = "location_accuracy"> शुद्धता %f$s m हो</string>
     <string name = "location_metadata"> उपग्रह उपलब्ध: %1$d / 2४ \n \n समय सीमा: %2$s </string>
 
+
     <string name="submit_rating">रेटिंग पठाउनुहोस</string>
     <string name="rate_place">ठाउँको रेट </string>
     <string name="thank_you_for_rating_us">रेटिंग गर्नुभएकोमा यहालाई धन्यबाद</string>
@@ -141,10 +142,17 @@
 
     <string name="language_not_found">भाषा फेला परेन</string>
     <string name="logout">साइन आउट गर्नुहोस्</string>
-    <string name="respected_mayor_lbl">सम्माननीय मेयर</string>
+    <string name="respected_mayor_lbl">नगर प्रमुख</string>
     <string name="mayor_name">सोम प्रसाद मिश्र</string>
     <string name="mayors_video_desc">चाँगुनारायण नगरपालिकाको पहिलो पर्यटनसम्बन्धि मोबाइल अनुप्रयोगमा तपाईलाई स्वागत छ।</string>
     <string name="mayor_s_message">मेयर सन्देश</string>
     <string name="developed_by_naxa_pvt_ltd">Developed By: Naxa Pvt. Ltd.</string>
+    <string name="start_navigation">नेभिगेसन सुरु गर्नुहोस्</string>
+    <string name="searching_current_location">Searching current location  Make sure your GPS provider is enabled.</string>
+    <string name="please_enable_gps_provider">Please enable your GPS Provider</string>
+    <string name="map_is_not_ready_yet">Your map is not ready yet</string>
+    <string name="searching_your_current_location">Searching Your Current Location</string>
+    <string name="changunarayan_virtual_app_guide">Changunarayan Virtual App Guide.</string>
+    <string name="welcome_message">Welcome Message</string>
 
 </resources>

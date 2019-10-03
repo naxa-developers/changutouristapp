@@ -65,8 +65,9 @@ public class Constant {
 
     public List<String> getNearByPlacesTypeList (){
         List<String> nearByPlaces = new ArrayList<>();
-        nearByPlaces.add("Museum");
-        nearByPlaces.add("Staue");
+        nearByPlaces.add("museum");
+        nearByPlaces.add("statue");
+        nearByPlaces.add("temple");
         nearByPlaces.add("Hindu temple");
         nearByPlaces.add("Viewpoint");
         nearByPlaces.add("Waterfall");
@@ -84,13 +85,13 @@ public class Constant {
 
     public List<String> getDefaultPlacesTypeListToPlotMarker (){
         List<String> nearByPlaces = new ArrayList<>();
-        nearByPlaces.add("Museum");
-        nearByPlaces.add("Staue");
-        nearByPlaces.add("Statue");
-        nearByPlaces.add("Hindu temple");
-        nearByPlaces.add("Viewpoint");
-        nearByPlaces.add("View point");
-        nearByPlaces.add("Cave");
+        nearByPlaces.add("museum");
+        nearByPlaces.add("statue");
+        nearByPlaces.add("temple");
+        nearByPlaces.add("view_point");
+        nearByPlaces.add("view_tower");
+        nearByPlaces.add("waterfall");
+        nearByPlaces.add("cave");
 
         return nearByPlaces;
     }
