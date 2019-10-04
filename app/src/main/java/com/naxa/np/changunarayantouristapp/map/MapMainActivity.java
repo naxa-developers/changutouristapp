@@ -401,14 +401,12 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                         }
                     }
 
-
                 }
         );
-
-
     }
 
     private Dialog setupMapDataLayerDialog(boolean isFirstTime, List<GeoJsonCategoryListEntity> maincategoryList) {
+
 
         if (mapboxMap == null) {
             Toast.makeText(this, "Your map is not ready yet", Toast.LENGTH_SHORT).show();
