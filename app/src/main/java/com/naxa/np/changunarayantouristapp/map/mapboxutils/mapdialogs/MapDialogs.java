@@ -113,6 +113,7 @@ public class MapDialogs {
                     @Override
                     public void onClick(View v) {
                         setUpMainCategoryRecycler(context, recyclerViewMainCategory, geoJsonCategoryViewModel, mainCategoryList, recyclerViewMapLayer, position, mainCategoryList.get(position).getSlug());
+                        recyclerViewMainCategory.scrollToPosition(position);
                     }
                 });
 

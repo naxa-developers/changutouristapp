@@ -16,7 +16,7 @@ import com.google.gson.annotations.SerializedName;
 import org.jetbrains.annotations.NotNull;
 
 @Entity(tableName = "GeoJsonCategoryListEntity",
-        indices = {@Index(value = "category_table",
+        indices = {@Index(value = "category_table_language",
                 unique = true)})
 public class GeoJsonCategoryListEntity implements Parcelable {
 
@@ -64,8 +64,13 @@ public class GeoJsonCategoryListEntity implements Parcelable {
     @Expose
     private String summaryName;
 
+    @SerializedName("category_table_language")
+    @ColumnInfo(name = "category_table_language")
+    @Expose
+    private String categoryTableLanguage;
 
-    public GeoJsonCategoryListEntity(String categoryName, String categoryTable, String categoryMarker, String language, String summaryList, String subCategories, String slug, String summaryName) {
+
+    public GeoJsonCategoryListEntity(String categoryName, String categoryTable, String categoryMarker, String language, String summaryList, String subCategories, String slug, String summaryName, String categoryTableLanguage) {
         this.categoryName = categoryName;
         this.categoryTable = categoryTable;
         this.categoryMarker = categoryMarker;
@@ -74,6 +79,7 @@ public class GeoJsonCategoryListEntity implements Parcelable {
         this.subCategories = subCategories;
         this.slug = slug;
         this.summaryName = summaryName;
+        this.categoryTableLanguage = categoryTableLanguage;
     }
 
 
@@ -141,6 +147,7 @@ public class GeoJsonCategoryListEntity implements Parcelable {
         dest.writeString(this.subCategories);
         dest.writeString(this.slug);
         dest.writeString(this.summaryName);
+        dest.writeString(this.categoryTableLanguage);
     }
 
     protected GeoJsonCategoryListEntity(@NotNull Parcel in) {
@@ -153,6 +160,7 @@ public class GeoJsonCategoryListEntity implements Parcelable {
         this.subCategories = in.readString();
         this.slug = in.readString();
         this.summaryName = in.readString();
+        this.categoryTableLanguage = in.readString();
     }
 
     public static final Parcelable.Creator<GeoJsonCategoryListEntity> CREATOR = new Parcelable.Creator<GeoJsonCategoryListEntity>() {
@@ -189,5 +197,13 @@ public class GeoJsonCategoryListEntity implements Parcelable {
 
     public void setSlug(String slug) {
         this.slug = slug;
+    }
+
+    public String getCategoryTableLanguage() {
+        return categoryTableLanguage;
+    }
+
+    public void setCategoryTableLanguage(String categoryTableLanguage) {
+        this.categoryTableLanguage = categoryTableLanguage;
     }
 }

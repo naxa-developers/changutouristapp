@@ -98,6 +98,7 @@ public class GeoJsonCategoryRepository {
                     @Override
                     public void onNext(GeoJsonCategoryListEntity geoJsonCategoryListEntity) {
                         Log.d("GeoJsonCategoryListEntity", "insert: "+ geoJsonCategoryListEntity.getCategoryName());
+                        GeoJsonCategoryListEntity geoJsonCategoryListEntity1 = geoJsonCategoryListEntity;
                         mGeoJsonCategoryDao.insert(geoJsonCategoryListEntity);
                     }
 

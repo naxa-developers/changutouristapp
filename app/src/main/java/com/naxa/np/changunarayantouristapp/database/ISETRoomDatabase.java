@@ -27,7 +27,7 @@ import java.io.File;
  */
 
 @Database(entities = {GeoJsonCategoryListEntity.class, GeoJsonListEntity.class, PlacesDetailsEntity.class
-}, version = 1, exportSchema = false)
+}, version = 2, exportSchema = false)
 //@TypeConverters({Converters.class})
 
 public abstract class ISETRoomDatabase extends RoomDatabase {
