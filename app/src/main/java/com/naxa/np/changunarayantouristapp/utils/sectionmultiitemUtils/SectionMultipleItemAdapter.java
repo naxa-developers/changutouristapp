@@ -105,7 +105,7 @@ public class SectionMultipleItemAdapter extends BaseSectionMultiItemQuickAdapter
                 sharedPreferenceUtils = new SharedPreferenceUtils(switchButton.getContext());
 
 
-                helper.setText(R.id.switchMapCategoryData, item.getMultiItemSectionModel().getData_key());
+                helper.setText(R.id.switchMapCategoryData, item.getMultiItemSectionModel().getData_value());
                 ImageView imageViewData = helper.getView(R.id.ivCategoryIndicator);
                 Glide
                         .with(imageViewData.getContext())
