@@ -10,7 +10,6 @@ import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListE
 import java.util.List;
 
 import io.reactivex.Flowable;
-import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 import io.reactivex.observers.DisposableObserver;
@@ -61,7 +60,7 @@ public class GeoJsonCategoryRepository {
                 .subscribe(new DisposableObserver<GeoJsonCategoryListEntity>() {
             @Override
             public void onNext(GeoJsonCategoryListEntity geoJsonCategoryListEntity) {
-                Log.d("GeoJsonCategoryListEntity", "insert: "+ geoJsonCategoryListEntity.getCategoryName());
+                Log.d("GeoJsonCategoryEntity", "insert: "+ geoJsonCategoryListEntity.getCategoryName());
                 mGeoJsonCategoryDao.insert(geoJsonCategoryListEntity);
             }
 
@@ -97,9 +96,10 @@ public class GeoJsonCategoryRepository {
                 .subscribe(new DisposableObserver<GeoJsonCategoryListEntity>() {
                     @Override
                     public void onNext(GeoJsonCategoryListEntity geoJsonCategoryListEntity) {
-                        Log.d("GeoJsonCategoryListEntity", "insert: "+ geoJsonCategoryListEntity.getCategoryName());
+                        Log.d("GeoJsonCategoryEntity", "insert: "+ geoJsonCategoryListEntity.getCategoryName());
                         GeoJsonCategoryListEntity geoJsonCategoryListEntity1 = geoJsonCategoryListEntity;
-                        mGeoJsonCategoryDao.insert(geoJsonCategoryListEntity);
+                        geoJsonCategoryListEntity1.setCategoryTableLanguage(geoJsonCategoryListEntity.getCategoryTable()+geoJsonCategoryListEntity.getLanguage());
+                        mGeoJsonCategoryDao.insert(geoJsonCategoryListEntity1);
                     }
 
                     @Override

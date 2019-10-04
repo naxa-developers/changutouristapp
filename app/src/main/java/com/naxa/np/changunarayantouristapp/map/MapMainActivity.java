@@ -540,7 +540,6 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
         setupMapDataLayerDialog(true, maincategoryList).hide();
 
-
         mapView.invalidate();
     }
 
