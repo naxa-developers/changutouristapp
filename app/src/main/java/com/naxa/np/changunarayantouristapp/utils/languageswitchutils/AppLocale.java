@@ -22,14 +22,19 @@ public class AppLocale {
     }
 
     private static Locale changeAppLocale(String alias) {
-//        String language = "en";
 
 
         Locale newLocale ;
         newLocale = new Locale("en", "US");
+
         if(TextUtils.equals(alias, "nep")) {
             newLocale = new Locale("ne", "NP");
         }
+
+        if(TextUtils.equals(alias, "ch")) {
+            newLocale = new Locale("zh", "CN");
+        }
+
         LocaleChanger.setLocale(newLocale);
         return newLocale;
     }

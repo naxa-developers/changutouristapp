@@ -74,6 +74,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity_with_nav_drawer_layout);
 
+        Log.d(TAG, "onCreate: "+SharedPreferenceUtils.getInstance(MainActivity.this).getStringValue(Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE, null));
+
 
         geoJsonCategoryViewModel = ViewModelProviders.of(this).get(GeoJsonCategoryViewModel.class);
         geoJsonListViewModel = ViewModelProviders.of(this).get(GeoJsonListViewModel.class);

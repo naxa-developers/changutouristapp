@@ -113,6 +113,7 @@ public class MapDialogs {
                     @Override
                     public void onClick(View v) {
                         setUpMainCategoryRecycler(context, recyclerViewMainCategory, geoJsonCategoryViewModel, mainCategoryList, recyclerViewMapLayer, position, mainCategoryList.get(position).getSlug());
+                        recyclerViewMainCategory.scrollToPosition(position);
                     }
                 });
 
@@ -148,7 +149,7 @@ public class MapDialogs {
                                     mapDataLayerList.add(new SectionMultipleItem(true, geoJsonCategoryListEntity.getSubCategories(), false, false, geoJsonCategoryListEntities.size()+""));
                                 }
                                 mapDataLayerList.add(new SectionMultipleItem(SectionMultipleItem.MAP_DATA_LIST, new MultiItemSectionModel(
-                                        geoJsonCategoryListEntity.getCategoryMarker(), geoJsonCategoryListEntity.getCategoryName(), geoJsonCategoryListEntity.getCategoryTable())));
+                                        geoJsonCategoryListEntity.getCategoryMarker(), geoJsonCategoryListEntity.getCategoryTable(), geoJsonCategoryListEntity.getCategoryName())));
                             }
                             setUpFilterlayerRecyclerView(recyclerView, mapDataLayerList);
                         }

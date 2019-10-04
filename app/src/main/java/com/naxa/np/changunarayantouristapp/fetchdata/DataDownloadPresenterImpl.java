@@ -6,8 +6,6 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
-import com.mapbox.geojson.Feature;
-import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.naxa.np.changunarayantouristapp.common.ChangunarayanTouristApp;
 import com.naxa.np.changunarayantouristapp.database.entitiy.GeoJsonCategoryListEntity;
@@ -15,6 +13,8 @@ import com.naxa.np.changunarayantouristapp.database.entitiy.PlacesDetailsEntity;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonCategoryViewModel;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.GeoJsonListViewModel;
 import com.naxa.np.changunarayantouristapp.database.viewmodel.PlaceDetailsEntityViewModel;
+import com.naxa.np.changunarayantouristapp.map.featurecollection.Feature;
+import com.naxa.np.changunarayantouristapp.map.featurecollection.FeatureCollectionModel;
 import com.naxa.np.changunarayantouristapp.mayormessage.MayorMessagesListResponse;
 import com.naxa.np.changunarayantouristapp.network.NetworkApiInterface;
 import com.naxa.np.changunarayantouristapp.placedetailsview.mainplacesdetails.MainPlaceListDetailsResponse;
@@ -24,8 +24,6 @@ import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -42,7 +40,6 @@ import io.reactivex.functions.Function;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
-import timber.log.Timber;
 
 import static com.naxa.np.changunarayantouristapp.utils.Constant.Network.API_KEY;
 
@@ -78,83 +75,103 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
         totalCount = 0;
         progress = 0;
 
-        apiInterface.getGeoJsonCategoriesListResponse(Constant.Network.API_KEY, language)
+        List<String> distinctCategoryType = new ArrayList<>();
+        List<GeoJsonCategoryListEntity> distinctCategoryEntityListType = new ArrayList<>();
+
+        apiInterface.getGeoJsonCategoriesListResponse(API_KEY)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(listResponse -> {
-                    totalCount = listResponse.getData().size();
                     if (listResponse.getData() != null) {
+                        geoJsonCategoryViewModel.insertAll(listResponse.getData());
                         downloadMainPlaceListDetails(apiInterface, apiKey, language);
-//                        new ISETRoomDatabase.DeleteAllDbTableAsync(ISETRoomDatabase.getDatabase(appCompatActivity)).execute();
+
+                        for(GeoJsonCategoryListEntity geoJsonCategoryListEntity : listResponse.getData()){
+                            if(!distinctCategoryType.contains(geoJsonCategoryListEntity.getCategoryTable())){
+                                distinctCategoryType.add(geoJsonCategoryListEntity.getCategoryTable());
+                                distinctCategoryEntityListType.add(geoJsonCategoryListEntity);
+                            }
+                        }
+                        totalCount = distinctCategoryEntityListType.size();
+                        return distinctCategoryEntityListType;
+
+                    }else {
+                        List<GeoJsonCategoryListEntity> geoJsonCategoryListEntityList = new ArrayList<>();
+                        return geoJsonCategoryListEntityList;
                     }
-                    return listResponse.getData();
                 })
-                .flatMapIterable((Function<List<GeoJsonCategoryListEntity>, Iterable<GeoJsonCategoryListEntity>>) entities -> entities)
-                .flatMap((Function<GeoJsonCategoryListEntity, ObservableSource<Feature>>) categoryListEntity -> {
-                    geoJsonCategoryViewModel.insert(categoryListEntity);
-                    geoJsonDisplayName = categoryListEntity.getCategoryName();
-                    String geoJsonName = categoryListEntity.getCategoryTable();
+                .flatMapIterable(new Function<List<GeoJsonCategoryListEntity>, Iterable<GeoJsonCategoryListEntity>>() {
+                    @Override
+                    public Iterable<GeoJsonCategoryListEntity> apply(List<GeoJsonCategoryListEntity> entities) throws Exception {
 
-                    return apiInterface.getGeoJsonDetails(Constant.Network.API_KEY, categoryListEntity.getCategoryTable())
-                            .subscribeOn(Schedulers.computation())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .retryWhen(observable -> Observable.timer(5, TimeUnit.SECONDS))
-                            .doOnNext(responseBody -> {
-                                progress++;
-                                Log.d(TAG, "handleDataDownload: doOnNext " + categoryListEntity.getCategoryTable());
-                                dataDonwloadView.downloadProgress(progress, totalCount, categoryListEntity.getCategoryName(), categoryListEntity.getCategoryTable(), categoryListEntity.getCategoryMarker());
-                            })
-                            .map(responseBody -> {
-                                try {
-                                    FeatureCollection featureCollection = FeatureCollection.fromJson(getJsonStringFromResponseBody(responseBody));
-                                    return featureCollection.features();
+                        return entities;
+                    }
+                })
+                .flatMap(new Function<GeoJsonCategoryListEntity, ObservableSource<Feature>>() {
+                    @Override
+                    public ObservableSource<Feature> apply(GeoJsonCategoryListEntity categoryListEntity) throws Exception {
+                        geoJsonDisplayName = categoryListEntity.getCategoryName();
+                        String geoJsonName = categoryListEntity.getCategoryTable();
 
-                                } catch (Exception e) {
-                                    Log.d(TAG, "handleDataDownload: catch " + " type : " + categoryListEntity.getCategoryTable() + " , " + responseBody.string());
-                                    return new ArrayList<Feature>();
-                                }
-                            })
-                            .toList()
-                            .map(lists -> {
-                                Log.d(TAG, "handleDataDownload: mapLists : " + categoryListEntity.getCategoryTable() + " : " + lists.size());
-                                List<Feature> features = new ArrayList<>();
-                                for (List<Feature> list : lists) {
-                                    features.addAll(list);
-                                }
-                                return features;
-                            })
-                            .flattenAsObservable(new Function<List<Feature>, Iterable<Feature>>() {
-                                @Override
-                                public Iterable<Feature> apply(List<Feature> features) throws Exception {
-                                    return features;
-                                }
-                            })
-                            .map(new Function<Feature, Feature>() {
-                                @Override
-                                public Feature apply(Feature feature) throws Exception {
-                                    return feature;
-                                }
-                            }).doOnNext(new Consumer<Feature>() {
-                                @Override
-                                public void accept(Feature feature) throws Exception {
-                                    String snippest = feature.properties().toString();
-                                    PlacesDetailsEntity placesDetailsEntity = gson.fromJson(snippest, PlacesDetailsEntity.class);
-                                    placesDetailsEntity.setCategoryType(geoJsonName);
+                        return apiInterface.getGeoJsonDetails(API_KEY, categoryListEntity.getSlug(), categoryListEntity.getCategoryTable())
+                                .subscribeOn(Schedulers.computation())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .retryWhen(observable -> Observable.timer(5, TimeUnit.SECONDS))
+                                .doOnNext(responseBody -> {
+                                    progress++;
+                                    dataDonwloadView.downloadProgress(progress, totalCount, categoryListEntity.getSubCategories(), categoryListEntity.getCategoryTable(), categoryListEntity.getCategoryMarker());
+                                })
+                                .map(responseBody -> {
+                                    try {
+                                        FeatureCollectionModel featureCollection = gson.fromJson(DataDownloadPresenterImpl.this.getJsonStringFromResponseBody(responseBody), FeatureCollectionModel.class);
+                                        return featureCollection.getFeatures();
 
-                                    LatLng latLng = getLocationFromGeometry(feature);
-                                    placesDetailsEntity.setLatitude(latLng.getLatitude()+"");
-                                    placesDetailsEntity.setLongitude(latLng.getLongitude()+"");
-                                    if(TextUtils.isEmpty(placesDetailsEntity.getQRCode())){
-                                        placesDetailsEntity.setQrLanguage(placesDetailsEntity.getLanguage() + "_" + placesDetailsEntity.getName());
-                                    }else {
-                                        placesDetailsEntity.setQrLanguage(placesDetailsEntity.getLanguage() + "_" + placesDetailsEntity.getQRCode());
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                        Log.d(TAG, "handleDataDownload: catch " + " type : " + categoryListEntity.getCategoryTable() + " , " + responseBody.string());
+                                        return new ArrayList<Feature>();
                                     }
+                                })
+                                .toList()
+                                .map(lists -> {
+                                    Log.d(TAG, "handleDataDownload: mapLists : " + categoryListEntity.getCategoryTable() + " : " + lists.size());
+                                    List<Feature> features = new ArrayList<>();
+                                    for (List<Feature> list : lists) {
+                                        features.addAll(list);
+                                    }
+                                    return features;
+                                })
+                                .flattenAsObservable(new Function<List<Feature>, Iterable<Feature>>() {
+                                    @Override
+                                    public Iterable<Feature> apply(List<Feature> features) throws Exception {
+                                        return features;
+                                    }
+                                })
+                                .map(new Function<Feature, Feature>() {
+                                    @Override
+                                    public Feature apply(Feature feature) throws Exception {
+                                        return feature;
+                                    }
+                                }).doOnNext(new Consumer<Feature>() {
+                                    @Override
+                                    public void accept(Feature feature) throws Exception {
+                                        PlacesDetailsEntity placesDetailsEntity = feature.getProperties();
+                                        placesDetailsEntity.setCategoryType(geoJsonName);
 
-                                    placeDetailsEntityViewModel.insert(placesDetailsEntity);
-                                    Timber.d("accept: JSON Object %s", snippest + " " + geoJsonName);
-                                }
-                            });
+                                        LatLng latLng = getLocationFromGeometry(feature);
+                                        placesDetailsEntity.setLatitude(latLng.getLatitude() + "");
+                                        placesDetailsEntity.setLongitude(latLng.getLongitude() + "");
+                                        if (TextUtils.isEmpty(placesDetailsEntity.getQRCode())) {
+                                            placesDetailsEntity.setQrLanguage(placesDetailsEntity.getLanguage() + "_" + placesDetailsEntity.getName());
+                                        } else {
+                                            placesDetailsEntity.setQrLanguage(placesDetailsEntity.getLanguage() + "_" + placesDetailsEntity.getQRCode());
+                                        }
 
+                                        placeDetailsEntityViewModel.insert(placesDetailsEntity);
+                                    }
+                                });
+
+                    }
                 })
                 .subscribe(new DisposableObserver<Feature>() {
                     @Override
@@ -177,6 +194,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                     public void onComplete() {
                         fetchMayorMessage(apiInterface, apiKey, language);
                         fetchTouristInfoDatFromServer(apiInterface, apiKey, language);
+                        fetchLanguageListFromServer(apiInterface);
                         dataDonwloadView.downloadSuccess("All Data Downloaded Successfully");
                         SharedPreferenceUtils.getInstance(ChangunarayanTouristApp.getInstance()).setValue(Constant.SharedPrefKey.IS_PLACES_DATA_ALREADY_EXISTS, true);
                         Log.d(TAG, "onComplete: ");
@@ -198,19 +216,20 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
         reader.close();
         String geoJsonToString = sb.toString();
 
+        Log.d(TAG, "getJsonStringFromResponseBody: "+geoJsonToString);
         return geoJsonToString;
     }
 
     private LatLng getLocationFromGeometry (@NotNull Feature feature){
                                 LatLng location = new LatLng(0.0, 0.0);
                         try {
-                            JSONObject jsonObject = new JSONObject(feature.geometry().toJson());
-                            Log.d(TAG, "onNext: JSON Object Co-ordinates " + jsonObject.getJSONArray("coordinates").getString(0));
-                            String Lon = jsonObject.getJSONArray("coordinates").getString(0);
-                            String Lat = jsonObject.getJSONArray("coordinates").getString(1);
+                            String Lon = feature.getGeometry().getCoordinates().get(0).toString();
+                            String Lat = feature.getGeometry().getCoordinates().get(1).toString();
                             location = new LatLng(Double.parseDouble(Lat), Double.parseDouble(Lon));
+                            Log.d(TAG, "onNext: JSON Object Co-ordinates " + feature.getGeometry().getCoordinates().toString());
+
                             return  location;
-                        } catch (JSONException e) {
+                        } catch (NullPointerException e) {
                             e.printStackTrace();
                             return location;
                         }

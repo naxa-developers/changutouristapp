@@ -20,7 +20,8 @@ public class ChangunarayanTouristApp  extends Application {
     public static final List<Locale> SUPPORTED_LOCALES =
             Arrays.asList(
                     new Locale("en", "US"),
-                    new Locale("ne", "NP")
+                    new Locale("ne", "NP"),
+                    new Locale("zh", "CN")
             );
 
     @Override

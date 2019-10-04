@@ -66,7 +66,7 @@ public class MayorMessageActivity extends BaseActivity implements FileDownloadVi
         fileDownloadPresenter = new FileDownloadPresenterImpl(this, MayorMessageActivity.this);
         appLanguage = SharedPreferenceUtils.getInstance(MayorMessageActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null);
 
-        setupToolbar(getResources().getString(R.string.welcome_to_changunarayan), false);
+        setupToolbar(getResources().getString(R.string.welcome_message), false);
 
         initUI();
 

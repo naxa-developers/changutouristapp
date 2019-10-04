@@ -58,7 +58,7 @@ public class AboutUsActivity extends BaseActivity {
                 break;
 
             case "ch":
-                setupWebView(Constant.getAboutUsDemoContentEnglish());
+                setupWebView(Constant.getAboutUsContentChinese());
                 break;
 
             default:

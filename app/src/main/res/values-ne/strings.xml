@@ -76,7 +76,7 @@
     <string name="stop">रोक्नुहोस्</string>
     <string name="fast">छिटो</string>
     <string name="audio_title">अडियो शीर्षक</string>
-    <string name="see_the_majestic_himalayas_including_mt_everest_if_the_skies_are_clear_you_can_view_the_himalayan_mountains">तपाईंहरु लाई चाँगुनारायण नगरपालिका मा स्वागत छ।  यस क्षेत्र मा अबस्थित बिभिन्न धार्मिक तथा पर्यटकिय स्थान हरु को बारेमा जानकारी दिने उद्देस्यका साथ यस एपको निर्माण गरिएको हो।</string>
+    <string name="see_the_majestic_himalayas_including_mt_everest_if_the_skies_are_clear_you_can_view_the_himalayan_mountains">चाङ्गुनारायण पर्यटन एप मा तपाईंलाई स्वागत छ । यस एप मर्फत चाङ्गुनारायण र नगरकोट छेत्र वरिपरिको विभिन्न एतिहसिक स्थल्, मठ्मन्दिर तथा अन्य रमणिय र सुन्दर दृश्यहरुको अवलोकन गर्नुहोस।</string>
     <string name="nepal">नेपाल</string>
     <string name="place_list">सूची</string>
     <string name="near_by_places_list">नजिकैको स्थान सूची</string>
@@ -112,6 +112,7 @@
     <string name = "location_accuracy"> शुद्धता %f$s m हो</string>
     <string name = "location_metadata"> उपग्रह उपलब्ध: %1$d / 2४ \n \n समय सीमा: %2$s </string>
 
+
     <string name="submit_rating">रेटिंग पठाउनुहोस</string>
     <string name="rate_place">ठाउँको रेट </string>
     <string name="thank_you_for_rating_us">रेटिंग गर्नुभएकोमा यहालाई धन्यबाद</string>
@@ -134,17 +135,24 @@
     <string name="your_country">तपाईको देश</string>
     <string name="select_gender">लिंग छानुहोस</string>
     <string name="purpose_for_visit">घुम्नुको उधेस्य</string>
-    <string name="easy_way_to_get_details_with_little_effort">सानो प्रयासमा धेरै जानकारी लिने सजिलो उपाए।</string>
+    <string name="easy_way_to_get_details_with_little_effort">नगरपालिका भित्रका ऐतिहसिक स्थल र रमणिय दृश्य बारे जानकारी पाउनुहोस।</string>
     <string name="verification_code">प्रमाणीकरण कोड</string>
     <string name="enter_verification_code">प्रमाणीकरण कोड हाल्नुहोस</string>
     <string name="or">अथवा</string>
 
     <string name="language_not_found">भाषा फेला परेन</string>
     <string name="logout">साइन आउट गर्नुहोस्</string>
-    <string name="respected_mayor_lbl">सम्माननीय मेयर</string>
+    <string name="respected_mayor_lbl">नगर प्रमुख</string>
     <string name="mayor_name">सोम प्रसाद मिश्र</string>
     <string name="mayors_video_desc">चाँगुनारायण नगरपालिकाको पहिलो पर्यटनसम्बन्धि मोबाइल अनुप्रयोगमा तपाईलाई स्वागत छ।</string>
     <string name="mayor_s_message">मेयर सन्देश</string>
     <string name="developed_by_naxa_pvt_ltd">Developed By: Naxa Pvt. Ltd.</string>
+    <string name="start_navigation">नेभिगेसन सुरु गर्नुहोस्</string>
+    <string name="searching_current_location">Searching current location  Make sure your GPS provider is enabled.</string>
+    <string name="please_enable_gps_provider">Please enable your GPS Provider</string>
+    <string name="map_is_not_ready_yet">Your map is not ready yet</string>
+    <string name="searching_your_current_location">Searching Your Current Location</string>
+    <string name="changunarayan_virtual_app_guide">Changunarayan Virtual App Guide.</string>
+    <string name="welcome_message">स्वागत सन्देश</string>
 
 </resources>

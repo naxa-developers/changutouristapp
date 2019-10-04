@@ -61,9 +61,7 @@ public class PlaceDetailsEntityRepository {
                 .subscribe(new DisposableObserver<PlacesDetailsEntity>() {
                     @Override
                     public void onNext(PlacesDetailsEntity placesDetailsEntity1) {
-//                        Gson gson = new Gson();
-//                        Log.d("PlaceDetailsEntity", "insert: "+ gson.toJson(placesDetailsEntity1));
-                        Log.d("PlaceDetailsEntity", "insert: "+ placesDetailsEntity1.getCategoryType());
+                        Log.d("PlaceDetailsEntity", "insert: "+ placesDetailsEntity1.getCategoryType()+ " ==> "+ placesDetailsEntity1.getName());
                         placeDetailsDao.insert(placesDetailsEntity1);
                     }
 

@@ -175,6 +175,7 @@ public class SelectlanguageActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         Log.d(TAG, "onClick: " + languageDetails.getName());
+                        Log.d(TAG, "onClick: " + languageDetails.getAlias());
                         SharedPreferenceUtils.getInstance(SelectlanguageActivity.this).setValue(Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE, languageDetails.getAlias());
 
                         ActivityRecreationHelper.recreate(SelectlanguageActivity.this, true);

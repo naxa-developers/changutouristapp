@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.common.BaseActivity;
 import com.naxa.np.changunarayantouristapp.common.BaseRecyclerViewAdapter;
+import com.naxa.np.changunarayantouristapp.common.ChangunarayanTouristApp;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.DialogFactory;
 import com.naxa.np.changunarayantouristapp.utils.NetworkUtils;
@@ -94,9 +95,16 @@ public class TourishInformationGuideActivity extends BaseActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(lists -> {
                     List<TouristInformationGuideDetails> touristInformationGuideDetailsArrayList = new ArrayList<>();
+                    String alias = "en";
+                    String appLanguage = SharedPreferenceUtils.getInstance(ChangunarayanTouristApp.getInstance()).getStringValue(Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE, null);
+                    if (!TextUtils.isEmpty(appLanguage)) {
+                        alias = appLanguage;
+                    }
                     for (TouristInformationGuideDetails list : lists) {
                         if (TextUtils.equals(placeType, list.getName().trim())) {
-                            touristInformationGuideDetailsArrayList.add(list);
+                            if(TextUtils.equals(alias, list.getLanguage().trim())){
+                                touristInformationGuideDetailsArrayList.add(list);
+                            }
                         }
                     }
                     return touristInformationGuideDetailsArrayList;

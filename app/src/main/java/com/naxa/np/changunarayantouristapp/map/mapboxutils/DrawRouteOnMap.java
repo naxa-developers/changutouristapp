@@ -105,9 +105,6 @@ public class DrawRouteOnMap {
                 .build();
         // Call this method with Context from within an Activity
         NavigationLauncher.startNavigation(activity, options);
-
-        navigationMapRoute.updateRouteVisibilityTo(false);
-
     }
 
     private void setDistanceAndTime(@NotNull DirectionsRoute directionsRoute, @NotNull TextView textView){

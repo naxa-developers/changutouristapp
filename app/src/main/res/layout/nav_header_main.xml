@@ -30,7 +30,7 @@
         style="@style/Text.Title.Bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
+        android:text="@string/changunarayan_virtual_app_guide"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/white_80"
         android:gravity="center"/>
@@ -39,8 +39,9 @@
         android:id="@+id/nav_header_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/travel_with_better_technology"
+        android:text="@string/changunarayan_virtual_app_guide"
         android:textColor="@color/white_80"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:visibility="gone"/>
 
 </LinearLayout>
