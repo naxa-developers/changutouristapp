@@ -83,7 +83,7 @@ public class MainPlacesListActivity extends BaseActivity {
                 if (TextUtils.equals(placesDetailsEntity.getLanguage(), SharedPreferenceUtils.getInstance(MainPlacesListActivity.this).getStringValue(Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE, null))) {
                     placesDetailsEntityList.add(placesDetailsEntity);
                 }
-                if (placesDetailsEntityList.size() < 1) {
+                if (placesDetailsEntities.size() < 1) {
                     tvNoDataFound.setVisibility(View.VISIBLE);
                 } else {
                     setUpRecyclerView(placesDetailsEntities);
