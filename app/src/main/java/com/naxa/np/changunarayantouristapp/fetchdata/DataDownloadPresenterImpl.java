@@ -119,7 +119,7 @@ public class DataDownloadPresenterImpl implements DataDownloadPresenter {
                                 .retryWhen(observable -> Observable.timer(5, TimeUnit.SECONDS))
                                 .doOnNext(responseBody -> {
                                     progress++;
-                                    dataDonwloadView.downloadProgress(progress, totalCount, categoryListEntity.getSubCategories(), categoryListEntity.getCategoryName(), categoryListEntity.getCategoryMarker());
+                                    dataDonwloadView.downloadProgress(progress, totalCount, categoryListEntity.getSubCategories(), categoryListEntity.getCategoryTable(), categoryListEntity.getCategoryMarker());
                                 })
                                 .map(responseBody -> {
                                     try {

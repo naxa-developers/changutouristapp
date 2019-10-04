@@ -129,7 +129,7 @@ public class TourishInformationGuideActivity extends BaseActivity {
                 });
 
     }
-    
+
 
     private void fetchDatFromServer() {
         apiInterface.getTouristInformationGuideListResponse(Constant.Network.API_KEY,
