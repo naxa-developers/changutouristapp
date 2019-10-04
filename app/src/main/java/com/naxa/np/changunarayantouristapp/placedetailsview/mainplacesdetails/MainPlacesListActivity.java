@@ -81,15 +81,16 @@ public class MainPlacesListActivity extends BaseActivity {
 
             for (PlacesDetailsEntity placesDetailsEntity  : placesDetailsEntities) {
                 if (TextUtils.equals(placesDetailsEntity.getLanguage(), SharedPreferenceUtils.getInstance(MainPlacesListActivity.this).getStringValue(Constant.SharedPrefKey.KEY_SELECTED_APP_LANGUAGE, null))) {
+
                     placesDetailsEntityList.add(placesDetailsEntity);
                 }
-                if (placesDetailsEntities.size() < 1) {
-                    tvNoDataFound.setVisibility(View.VISIBLE);
-                } else {
-                    setUpRecyclerView(placesDetailsEntities);
-                }
-            }
 
+            }
+            if (placesDetailsEntityList.size() < 1) {
+                tvNoDataFound.setVisibility(View.VISIBLE);
+            } else {
+                setUpRecyclerView(placesDetailsEntityList);
+            }
         }
 
 
