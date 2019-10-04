@@ -64,7 +64,7 @@
     <string name="stop">停止</string>
     <string name="fast">快速</string>
     <string name="audio_title">音频标题</string>
-    <string name="see_the_majestic_himalayas_including_mt_everest_if_the_skies_are_clear_you_can_view_the_himalayan_mountains">欢迎来到古纳拉扬（Changunarayan）古城，迷失在纳加阔（Nagarkot）的美景中。此应用是您的虚拟导游，其中包含有关每个遗产和周围地点的经过验证的信息。</string>
+    <string name="see_the_majestic_himalayas_including_mt_everest_if_the_skies_are_clear_you_can_view_the_himalayan_mountains">欢迎来到古纳拉扬（Changunarayan）古城，迷失在纳加阔（Nagarkot）的美景中。此应用是您的虚拟导游，其中包含有关每个遗产和周围地点的经过验证的信息</string>
     <string name="nepal">尼泊尔</string>
     <string name="place_list">清单</string>
     <string name="near_by_places_list">附近地点清单</string>
@@ -116,7 +116,7 @@
     <string name="your_country">你的国家</string>
     <string name="select_gender">选择性别</string>
     <string name="purpose_for_visit">参观目的</string>
-    <string name="easy_way_to_get_details_with_little_effort">轻松获得细节的简便方法.</string>
+    <string name="easy_way_to_get_details_with_little_effort">探索景点，景点，地标，餐馆等</string>
     <string name="verification_code">验证码</string>
     <string name="enter_verification_code">输入验证码</string>
     <string name="or">要么</string>

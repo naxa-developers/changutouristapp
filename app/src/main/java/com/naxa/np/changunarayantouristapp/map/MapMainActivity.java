@@ -451,11 +451,11 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                 .subscribe(new DisposableObserver<MapDataLayerListCheckEvent.MapDataLayerListCheckedEvent>() {
                     @Override
                     public void onNext(MapDataLayerListCheckEvent.MapDataLayerListCheckedEvent mapDataLayerListCheckedEvent) {
-                        Log.d(TAG, "onNext: filter " + mapDataLayerListCheckedEvent.getMultiItemSectionModel().getData_value());
+                        Log.d(TAG, "onNext: filter " + mapDataLayerListCheckedEvent.getMultiItemSectionModel().getData_key());
                         Log.d(TAG, "onNext: filter " + placeType);
                         if (mapDataLayerListCheckedEvent.getChecked()) {
 
-                            placeDetailsEntityViewModel.getPlacesDetailsEntityBYPlaceAndCategoryType(placeType, mapDataLayerListCheckedEvent.getMultiItemSectionModel().getData_value(), SharedPreferenceUtils.getInstance(MapMainActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null))
+                            placeDetailsEntityViewModel.getPlacesDetailsEntityBYPlaceAndCategoryType(placeType, mapDataLayerListCheckedEvent.getMultiItemSectionModel().getData_key(), SharedPreferenceUtils.getInstance(MapMainActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null))
 //                        placeDetailsEntityViewModel.getAllPlacesDetailsEntity()
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
@@ -762,7 +762,10 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onRVItemClick(@NotNull MapDataLayerListCheckEvent.MapDataLayerListCheckedEvent itemClick) {
-        String name = itemClick.getMultiItemSectionModel().getData_value();
+        String name = itemClick.getMultiItemSectionModel().getData_key();
+        String value = itemClick.getMultiItemSectionModel().getData_value();
+        Log.d(TAG, "onRVItemClick: "+name);
+        Log.d(TAG, "onRVItemClick: "+value);
         if (mapDataLayerListCheckedEventList.size() == 0) {
             mapDataLayerListCheckedEventList.add(itemClick);
 

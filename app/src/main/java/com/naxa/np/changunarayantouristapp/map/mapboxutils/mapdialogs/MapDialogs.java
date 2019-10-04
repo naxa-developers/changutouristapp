@@ -148,7 +148,7 @@ public class MapDialogs {
                                     mapDataLayerList.add(new SectionMultipleItem(true, geoJsonCategoryListEntity.getSubCategories(), false, false, geoJsonCategoryListEntities.size()+""));
                                 }
                                 mapDataLayerList.add(new SectionMultipleItem(SectionMultipleItem.MAP_DATA_LIST, new MultiItemSectionModel(
-                                        geoJsonCategoryListEntity.getCategoryMarker(), geoJsonCategoryListEntity.getCategoryName(), geoJsonCategoryListEntity.getCategoryName())));
+                                        geoJsonCategoryListEntity.getCategoryMarker(), geoJsonCategoryListEntity.getCategoryTable(), geoJsonCategoryListEntity.getCategoryName())));
                             }
                             setUpFilterlayerRecyclerView(recyclerView, mapDataLayerList);
                         }

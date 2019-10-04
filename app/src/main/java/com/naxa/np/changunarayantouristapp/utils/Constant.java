@@ -113,5 +113,12 @@ public class Constant {
         return aboutUsContent;
     }
 
+    public static  String getAboutUsContentChinese(){
+        String aboutUsContent = "<p><strong>Changunarayan Tourist App是Changunarayan</strong>市市长的愿景，旨在为访<strong>问Changunarayan</strong>市的内部和国际游客提供准确的第一手信息。该应用程序是该地区首个此类应用程序，它包含有关历史遗址和主要旅游景点的信息。</p>\n" +
+                "<p>此应用程序充当虚拟游客指南，以方便来昌纳拉扬市的游客，帮助他们轻松地游览各个地点，获取第一手信息并了解访问量最大的旅游目的地的更多详细信息。此外，它还提供了此类位置的重要历史和文化以及其他有趣的功能。目前，该应用程序支持三种不同的语言：英语，尼泊尔语和中文。此应用程序的用户还可以听取这些站点的基于音频的描述，并查看不同季节的风景之美，白天/夜晚的照片，一些受欢迎的景点和风景（取决于位置。</p>\n" +
+                "<p><br />该应用程序用户可以扫描在每个主要位置/寺庙/雕像上安装的<strong>QR码</strong>，或者在用户在Changunarayan世界遗产遗址和Nagarkot地区中导航时在应用程序中查找附近访问量最大的地方。与基于位置的服务提供商公司<a href=\"http://naxa.com.np/home/\">NAXA Private Limited</a>（位于加德满都）一起使用。此应用程序使访问者可以探<strong>索Changunarayan和Nagarkot</strong>地区，从而可以促进这些地区的旅游业发展</p>";
+        return  aboutUsContent;
+    }
+
 
 }
