@@ -87,6 +87,7 @@ public class Constant {
         List<String> nearByPlaces = new ArrayList<>();
         nearByPlaces.add("museum");
         nearByPlaces.add("statue");
+        nearByPlaces.add("sattal");
         nearByPlaces.add("temple");
         nearByPlaces.add("view_point");
         nearByPlaces.add("view_tower");
@@ -96,31 +97,19 @@ public class Constant {
         return nearByPlaces;
     }
 
+
     public static String getAboutUsDemoContent(){
-        String demoContent = "<h1>संक्षिप्त परिचय</h1>\n" +
-                "<div>\n" +
-                "<p>ऐतिहासिक एवं पुरातात्विक महत्वको दृष्टीकोणले परिचित भक्तपुर जिल्ला भित्रका ४ वटा नगरपालिका मध्ये चाँगुनारायण नगरपालिका नेपाल सरकारले मिति २०७३ ११ २७ गतेको स्थानिय तह घोषणाबाट साविक चाँगुनारायण नगरपालिका र नगरकोट नगरपालिकालाई समेटेर गठन भएको हो । मिति २०७१ ८ १६ को मन्त्रीपरिषदको निर्णय अनुसार साविक चाँगुनारायण, झौखेल, छालिड, दुवाकोट गा.वि.स समेटेर चाँगुनारायण नगरपालिका तथा साविक नगरकोट बागेश्वरी, सुडाल र ताथली गा.वि.स समेटेर महामन्जुश्री नगरकोट नगरपालिका घोषणा भएको थियो । पछि महामन्जुश्री नगरकोट नगरपालिका मिलाएर नाम संशोधन भै नगरकोट नगरपालिका कायम भयो । चाँगुनारायण नगरपालिका र नगरकोट नगरपालिका मिलाएर चाँगुनारायण नगरपालिका भए पछि ९ वटा वडा कायम भई नगरपालिकाको केन्द्र खरिपाटी, भक्तपुरमा रहेको छ ।</p>\n" +
-                "<p><strong>क्षेत्रफल : </strong>६२.९८ बर्ग कि.मि</p>\n" +
-                "<p><strong>जनसंख्या : </strong>५५,४३० (२०११)</p>\n" +
-                "<section>\n" +
-                "<div>\n" +
-                "<h2>संपर्क</h2>\n" +
-                "<div>\n" +
-                "<p>चाँगुनारायण नगरपालिका, खरिपाटी,भक्तपुर</p>\n" +
-                "<p>०१-६६१४८०९ (प्रशासन शाखा)</p>\n" +
-                "<p>१६६००११४६६६ (नगर स्तरीय आपतकालीन कार्य संचालन केन्द्र)</p>\n" +
-                "</div>\n" +
-                "</div>\n" +
-                "</section>\n" +
-                "</div>";
+        String demoContent = "<p><strong>चाङ्गुनारायण पर्यटन एप</strong> चाङ्गुनारायण नगरपालिकाका मेयरको पहलमा सुरु भएको योजना हो र यो प्रविधिको प्रयोगबाट <strong>चाङ्गुनारायण नगरपालिका</strong> भ्रमण गर्न आउने आन्तरिक तथा बाह्य पयर्टकहरुका लागि सहज पथ प्रदर्शन प्रदान गर्न सकिनेछ । साथै, यो एपको मदतबाट चाङ्गुनारायणको गौरवमय इतिहास, सांस्कृतिक विविधता तथा अन्य पुरातात्विक महत्वका कुराहरुको जानकारी पनि लिन सकिनेछ । यि विशेषताहरु समावेश भएको यो एप यस क्षेत्रको पहिलो हुनेछ ।&nbsp;</p>\n" +
+                "<p>अहिलको अवस्थामा यो एप नेपाली, अङ्ग्रेजी, र चिनिंया गरी तिन भाषामा उपलब्ध छ । यस एपका प्रयोगकर्ताहरुले चाङ्गुनारायण तथा आसपासको क्षेत्रको अडियो विवरण , प्राकृतिक सौन्दर्यका सुन्दर तस्बिरहरु साथै प्रयोगकर्ताको स्थानअनुसार नजिकका भ्रमणयोग्य ठाउँहरुको बारेमा पनि जानकारी लिन सक्नेछन् ।&nbsp;</p>\n" +
+                "<p>चाङ्गुनारायण विश्व सांस्कृतिक सम्पदाको भ्रमण गर्दै गर्दा एपका प्रयोगकर्ताहरुले आफ्नो स्मार्टफोनबाट मुख्य स्थानहरुमा राखिएका <strong>QR Code</strong> स्क्यान गर्न सक्नेछन्, जसबाट आफ्नो नजिकाका प्रख्यात स्थलहरुको जानकारी लिन सकिनेछ । यो एप <a href=\"http://naxa.com.np/home/\">&lsquo;नक्सा&rsquo; </a>नामक नक्सांकनमा आधारीत सेवा प्रदायक सस्ंथाको प्राविधिक सहयोगबाट बनाईएको हो ।</p>\n" +
+                "<p><br />यस एपको प्रयोगबाट चाङ्गुनारायण नगरपालिका भ्रमण गर्ने सम्पुर्ण पर्यटकहरुलाई सरल पथ प्रदर्शनमा मदत गर्नेछ र <strong>चाङ्गुनारायण</strong> तथा <strong>नगरकोट</strong> को पर्यटन क्षेत्रको विकास र प्रवर्दन गर्न मदत गर्नेछ ।</p>";
 
         return demoContent;
     }
-
     public static String getAboutUsDemoContentEnglish(){
-        String aboutUsContent = "<p style=\"text-align: justify;\"><strong>Changunarayan app</strong> is a vision of the Mayor of Changunarayan Municipality to provide accurate first hand information to any tourists coming to visit changunarayan municipality in different forms.</p>\n" +
-                "<p style=\"text-align: justify;\">This app acts as a <strong>virtual tourist guide</strong> to facilitate the tourist coming to <strong><em>Changunarayan </em></strong><strong><em>Municipality</em> </strong>to help them easily navigate around places, get firsthand information andunderstand more details of the most visited tourist destinations. Also, it provides salient history, culture of such locations along with other interesting features. Currently the app is available in three different langugages : <em>English</em> , <em>Nepali</em> and <em>Chinese</em>. Users would also be able to listen to audio based description of these sites and also view multiple seasons , day/night photographs some popular locations and scenaries depending on where they are.</p>\n" +
-                "<p style=\"text-align: justify;\"><br />The app user can either scan the <strong>QR code</strong> pasted at each major locations/temples/statues or look for nearby most visit places when he/she is navigating around changunarayan world heritage sites and Nagarkot area.The app has been developed in technical partnership with a location based service provider company <em><a href=\"http://naxa.com.np/home/about-us/\">NAXA</a></em> based in kathmandu.This app can facilitate the visitors coming to visit <strong>Changunarayan</strong> and <strong>Nagarkot </strong>areas and also become a boon for the promotion and development of tourism in the area.</p>";
+        String aboutUsContent = "<p><strong>Changunarayan Tourist App</strong> is the vision of the Mayor of Changunarayan Municipality to provide accurate firsthand information to both the internal and international tourists visiting Changunarayan Municipality. This app is the first of its kind in the area to include information on historical sites and major tourists attractions.</p>\n" +
+                "<p>This app acts as a <strong>virtual tourist guide</strong> to facilitate the tourist coming to <strong>Changunarayan Municipality</strong> to help them easily navigate around places, get firsthand information and understand more details of the most visited tourist destinations. Also, it provides salient history and culture of such locations along with other interesting features. Currently the app is available in three different languages: English, Nepali and Chinese. Users of this app will also be able to listen to audio based description of these sites and view scenic beauty in different seasons, day/night photographs, some popular attractions and sceneries depending on where they are.</p>\n" +
+                "<p>The app users can either scan the <strong>QR code</strong> installed at each major location/temple/statue or look for nearby most visited places in the app when users are navigating around the Changunarayan World Heritage Site and Nagarkot area.The app has been developed in technical partnership with a location based service provider company, <a href=\"https://codebeautify.org/%22http://naxa.com.np/home/about-us//%22\">NAXA</a> Private Limited based in kathmandu.This app enables the visitors to explore <strong>Changunarayan</strong> and <strong>Nagarkot </strong>areas and hence, can contribute in the promotion and development of tourism in these areas. </p>";
         return aboutUsContent;
     }
 

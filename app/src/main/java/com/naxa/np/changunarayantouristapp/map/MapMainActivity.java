@@ -455,8 +455,7 @@ public class MapMainActivity extends BaseActivity implements OnMapReadyCallback,
                         Log.d(TAG, "onNext: filter " + placeType);
                         if (mapDataLayerListCheckedEvent.getChecked()) {
 
-                            placeDetailsEntityViewModel.getPlacesDetailsEntityBYPlaceAndCategoryType(placeType, mapDataLayerListCheckedEvent.getMultiItemSectionModel().getData_value(),
-                                    SharedPreferenceUtils.getInstance(MapMainActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null))
+                            placeDetailsEntityViewModel.getPlacesDetailsEntityBYPlaceAndCategoryType(placeType, mapDataLayerListCheckedEvent.getMultiItemSectionModel().getData_value(), SharedPreferenceUtils.getInstance(MapMainActivity.this).getStringValue(KEY_SELECTED_APP_LANGUAGE, null))
 //                        placeDetailsEntityViewModel.getAllPlacesDetailsEntity()
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
