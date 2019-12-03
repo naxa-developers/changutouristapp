@@ -64,7 +64,7 @@
     <string name="fetching_file">पाइरहेको %1$s.\n\nभौगोलिक डाटा %2$s of %3$s फाइल(हरु)</string>
     <string name="changunarayan_boundary">चाँगुनारायण  </string>
     <string name="nagarkot_boundary">नगकोट </string>
-    <string name="select_language">भाषा छनोट गर्नुस</string>
+    <string name="select_language">भाषा छनोट गर्नुहोस्</string>
     <string name="refresh_data">डाटा रिफ्रेस गर्नुहोस्</string>
     <string name="view_details">विवरण हेर्नुहोस्</string>
     ​
@@ -76,13 +76,13 @@
     <string name="stop">रोक्नुहोस्</string>
     <string name="fast">छिटो</string>
     <string name="audio_title">अडियो शीर्षक</string>
-    <string name="see_the_majestic_himalayas_including_mt_everest_if_the_skies_are_clear_you_can_view_the_himalayan_mountains">चाङ्गुनारायण पर्यटन एप मा तपाईंलाई स्वागत छ । यस एप मर्फत चाङ्गुनारायण र नगरकोट छेत्र वरिपरिको विभिन्न एतिहसिक स्थल्, मठ्मन्दिर तथा अन्य रमणिय र सुन्दर दृश्यहरुको अवलोकन गर्नुहोस।</string>
+    <string name="see_the_majestic_himalayas_including_mt_everest_if_the_skies_are_clear_you_can_view_the_himalayan_mountains">चाङ्गुनारायण पर्यटन एप मा तपाईंलाई स्वागत छ । यस एप मर्फत चाङ्गुनारायण र नगरकोट क्षेत्र वरिपरिको विभिन्न एतिहसिक स्थल्, मठ्मन्दिर तथा अन्य रमणिय र सुन्दर दृश्यहरुको अवलोकन गर्नुहोस।</string>
     <string name="nepal">नेपाल</string>
     <string name="place_list">सूची</string>
     <string name="near_by_places_list">नजिकैको स्थान सूची</string>
     <string name="submit_qrcode">QR Code पेश गर्नुहोस्</string>
     <string name="home">गृह पृष्ठ</string>
-    <string name="qrcode_scanner">QRCode स्क्यानर</string>
+    <string name="qrcode_scanner">QRCode हाल्नुहोस्</string>
     <string name="settings">सेटिङ्हरू</string>
     <string name="about_us">हाम्रो बारे</string>
     ​
@@ -94,7 +94,7 @@
     <string name = "changunarayan">चाँगुनारायण धार्मिक तथा पर्यटकिय स्थल</string>
     <string name = "currently_there_is_no_data_available"> हाल कुनै डेटा उपलब्ध छैन। </string>
     <string name = "explore_changunarayan_area">%s क्षेत्र अन्वेषण गर्नुहोस् </string>
-    <string name = "tourist_information_guide"> पर्यटक जानकारी गाइड </string>
+    <string name = "tourist_information_guide">पर्यटक जानकारी गाइड</string>
     <string name = "get_started"> सुरू गर्नुहोस् </string>
     <string name = "welcome_to_changunarayan"> चाँगुनारायण नगरपालिकामा स्वागत छ</string>
     <string name = "your_virtual_guide"> तपाईको भर्चुअल गाइड।</string>

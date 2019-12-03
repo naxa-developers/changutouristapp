@@ -98,13 +98,13 @@ public class Constant {
     }
 
 
-    public static String getAboutUsDemoContent(){
-        String demoContent = "<p><strong>चाङ्गुनारायण पर्यटन एप</strong> चाङ्गुनारायण नगरपालिकाका मेयरको पहलमा सुरु भएको योजना हो र यो प्रविधिको प्रयोगबाट <strong>चाङ्गुनारायण नगरपालिका</strong> भ्रमण गर्न आउने आन्तरिक तथा बाह्य पयर्टकहरुका लागि सहज पथ प्रदर्शन प्रदान गर्न सकिनेछ । साथै, यो एपको मदतबाट चाङ्गुनारायणको गौरवमय इतिहास, सांस्कृतिक विविधता तथा अन्य पुरातात्विक महत्वका कुराहरुको जानकारी पनि लिन सकिनेछ । यि विशेषताहरु समावेश भएको यो एप यस क्षेत्रको पहिलो हुनेछ ।&nbsp;</p>\n" +
+    public static String getAboutUsNepaliContent(){
+        String aboutUsContent = "<p><strong>चाङ्गुनारायण पर्यटन एप</strong> चाङ्गुनारायण नगरपालिकाका मेयरको पहलमा सुरु भएको योजना हो र यो प्रविधिको प्रयोगबाट <strong>चाङ्गुनारायण नगरपालिका</strong> भ्रमण गर्न आउने आन्तरिक तथा बाह्य पयर्टकहरुका लागि सहज पथ प्रदर्शन प्रदान गर्न सकिनेछ । साथै, यो एपको मदतबाट चाङ्गुनारायणको गौरवमय इतिहास, सांस्कृतिक विविधता तथा अन्य पुरातात्विक महत्वका कुराहरुको जानकारी पनि लिन सकिनेछ । यि विशेषताहरु समावेश भएको यो एप यस क्षेत्रको पहिलो हुनेछ ।&nbsp;</p>\n" +
                 "<p>अहिलको अवस्थामा यो एप नेपाली, अङ्ग्रेजी, र चिनिंया गरी तिन भाषामा उपलब्ध छ । यस एपका प्रयोगकर्ताहरुले चाङ्गुनारायण तथा आसपासको क्षेत्रको अडियो विवरण , प्राकृतिक सौन्दर्यका सुन्दर तस्बिरहरु साथै प्रयोगकर्ताको स्थानअनुसार नजिकका भ्रमणयोग्य ठाउँहरुको बारेमा पनि जानकारी लिन सक्नेछन् ।&nbsp;</p>\n" +
                 "<p>चाङ्गुनारायण विश्व सांस्कृतिक सम्पदाको भ्रमण गर्दै गर्दा एपका प्रयोगकर्ताहरुले आफ्नो स्मार्टफोनबाट मुख्य स्थानहरुमा राखिएका <strong>QR Code</strong> स्क्यान गर्न सक्नेछन्, जसबाट आफ्नो नजिकाका प्रख्यात स्थलहरुको जानकारी लिन सकिनेछ । यो एप <a href=\"http://naxa.com.np/home/\">&lsquo;नक्सा&rsquo; </a>नामक नक्सांकनमा आधारीत सेवा प्रदायक सस्ंथाको प्राविधिक सहयोगबाट बनाईएको हो ।</p>\n" +
                 "<p><br />यस एपको प्रयोगबाट चाङ्गुनारायण नगरपालिका भ्रमण गर्ने सम्पुर्ण पर्यटकहरुलाई सरल पथ प्रदर्शनमा मदत गर्नेछ र <strong>चाङ्गुनारायण</strong> तथा <strong>नगरकोट</strong> को पर्यटन क्षेत्रको विकास र प्रवर्दन गर्न मदत गर्नेछ ।</p>";
 
-        return demoContent;
+        return aboutUsContent;
     }
     public static String getAboutUsDemoContentEnglish(){
         String aboutUsContent = "<p><strong>Changunarayan Tourist App</strong> is the vision of the Mayor of Changunarayan Municipality to provide accurate firsthand information to both the internal and international tourists visiting Changunarayan Municipality. This app is the first of its kind in the area to include information on historical sites and major tourists attractions.</p>\n" +

@@ -25,7 +25,7 @@
     <string name="english">English</string>
     <string name="nepali">Nepali (नेपाली)</string>
     <string name="chinese">Chinese (中文)</string>
-    <string name="scan_barcode">Scan QRCode</string>
+    <string name="scan_barcode">Scan the QR code</string>
     <string name="no_barcode_captured">Enter the QR code</string>
     <string name="image_description">Image Description</string>
     <string name="male">Male</string>
@@ -147,7 +147,7 @@
     <string name="please_enable_gps_provider">Please enable your GPS Provider</string>
     <string name="map_is_not_ready_yet">Your map is not ready yet</string>
     <string name="searching_your_current_location">Searching Your Current Location</string>
-    <string name="changunarayan_virtual_app_guide">Changunarayan Virtual App Guide.</string>
+    <string name="changunarayan_virtual_app_guide">Changunarayan Virtual Guide App.</string>
     <string name="welcome_message">Welcome Message</string>
 
 

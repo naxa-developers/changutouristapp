@@ -13,8 +13,6 @@ import com.naxa.np.changunarayantouristapp.R;
 import com.naxa.np.changunarayantouristapp.utils.Constant;
 import com.naxa.np.changunarayantouristapp.utils.SharedPreferenceUtils;
 
-import java.util.Locale;
-
 public class AboutUsActivity extends BaseActivity {
 
     WebView web;
@@ -34,7 +32,7 @@ public class AboutUsActivity extends BaseActivity {
 
         web = findViewById(R.id.webViewAboutUs);
 
-        setupWebView(Constant.getAboutUsDemoContent());
+        setupWebView(Constant.getAboutUsNepaliContent());
         setupWebView(Constant.getAboutUsDemoContentEnglish());
 
         setUpWebAboutUsWebContent();
@@ -50,7 +48,7 @@ public class AboutUsActivity extends BaseActivity {
 
         switch (alias) {
             case "nep":
-                setupWebView(Constant.getAboutUsDemoContent());
+                setupWebView(Constant.getAboutUsNepaliContent());
                 break;
 
             case "en":

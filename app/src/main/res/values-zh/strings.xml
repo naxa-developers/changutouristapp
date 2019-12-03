@@ -19,7 +19,7 @@
     <string name="english">英语</string>
     <string name="nepali">尼泊尔(à¤¨à¥‡à¤ªà¤¾à¤²à¥€)</string>
     <string name="chinese">中文 (ä¸­?–‡)</string>
-    <string name="scan_barcode">扫描二维码</string>
+    <string name="scan_barcode">输入二维码</string>
     <string name="no_barcode_captured">输入二维码</string>
     <string name="image_description">图片描述</string>
     <string name="male">男</string>

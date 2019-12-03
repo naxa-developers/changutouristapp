@@ -6,8 +6,8 @@ android {
         applicationId "com.naxa.np.changunarayantouristapp"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 6
-        versionName "1.0.5"
+        versionCode 8
+        versionName "1.0.7"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -39,6 +39,16 @@ android {
 //
 //        }
 //    }
+
+    bundle {
+        language {
+            // Specifies that the app bundle should not support
+            // configuration APKs for language resources. These
+            // resources are instead packaged with each base and
+            // dynamic feature APK.
+            enableSplit = false
+        }
+    }
 
 
     compileOptions {
