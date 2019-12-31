@@ -77,7 +77,7 @@
     <string name="audio_title">Audio title</string>
     <string name="see_the_majestic_himalayas_including_mt_everest_if_the_skies_are_clear_you_can_view_the_himalayan_mountains">Welcome to the ancient city of Changunarayan and get lost in the beauty of Nagarkot. This app is your virtual tour guide with verified information on each heritage item and surrounding locations.</string>
     <string name="nepal">Nepal</string>
-    <string name="place_list">List</string>
+    <string name="place_list">Data View</string>
     <string name="near_by_places_list">Nearby Places List</string>
     <string name="submit_qrcode">Submit QR Code</string>
     <string name="home">Home</string>
@@ -93,7 +93,7 @@
     <string name="changunarayan">Changunarayan Heritage Site</string>
     <string name="currently_there_is_no_data_available">Currently, there is no data available.</string>
     <string name="explore_changunarayan_area">Explore %s Area</string>
-    <string name="tourist_information_guide">Tourist Information Guide</string>
+    <string name="tourist_information_guide">Rules And Regulations</string>
     <string name="get_started">Get Started</string>
     <string name="welcome_to_changunarayan">Welcome to Changunarayan Municipality</string>
     <string name="your_virtual_guide">Virtual Tourist Guide App.</string>
@@ -149,6 +149,8 @@
     <string name="searching_your_current_location">Searching Your Current Location</string>
     <string name="changunarayan_virtual_app_guide">Changunarayan Virtual Guide App.</string>
     <string name="welcome_message">Welcome Message</string>
+    <string name="street_view">Street View</string>
+    <string name="satellite_view">Satellite View</string>
 
 
 </resources>

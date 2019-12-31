@@ -66,7 +66,7 @@
     <string name="audio_title">音频标题</string>
     <string name="see_the_majestic_himalayas_including_mt_everest_if_the_skies_are_clear_you_can_view_the_himalayan_mountains">欢迎来到古纳拉扬（Changunarayan）古城，迷失在纳加阔（Nagarkot）的美景中。此应用是您的虚拟导游，其中包含有关每个遗产和周围地点的经过验证的信息</string>
     <string name="nepal">尼泊尔</string>
-    <string name="place_list">清单</string>
+    <string name="place_list">资料检视</string>
     <string name="near_by_places_list">附近地点清单</string>
     <string name="submit_qrcode">提交二维码</string>
     <string name="home">家</string>
@@ -81,7 +81,7 @@
     <string name="changunarayan">昌纳拉扬遗址</string>
     <string name="currently_there_is_no_data_available">当前，没有可用数据。</string>
     <string name="explore_changunarayan_area">探索 %s 区域</string>
-    <string name="tourist_information_guide">旅游信息指南</string>
+    <string name="tourist_information_guide">条款和规则</string>
     <string name="get_started">开始使用</string>
     <string name="welcome_to_changunarayan">欢迎来到昌那拉扬市</string>
     <string name="your_virtual_guide">您的虚拟指南。</string>
@@ -106,7 +106,7 @@
     <string name="register">\寄存器</string>
     <string name="place_details">地点详情</string>
     <string name="home_page">主页</string>
-    <string name="designed_and_developed_by_naxa_pvt_ltd">由Naxa Pvt设计和开发。有限公司</string>
+    <string name="designed_and_developed_by_naxa_pvt_ltd">由Naxa Pvt. Ltd.设计和开发。</string>
     <string name="all_rights_reserved_2019">保留所有权利©2019。</string>
     <string name="full_name">全名</string>
     <string name="enter_full_name">输入全名</string>
@@ -135,5 +135,7 @@
     <string name="searching_your_current_location">搜索您的当前位置</string>
     <string name="changunarayan_virtual_app_guide">Changunarayan虚拟应用程序指南。</string>
     <string name="welcome_message">欢迎留言</string>
+    <string name="street_view">街景</string>
+    <string name="satellite_view">卫星检视</string>
 
 </resources>

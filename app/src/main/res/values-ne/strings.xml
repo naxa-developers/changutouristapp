@@ -78,7 +78,7 @@
     <string name="audio_title">अडियो शीर्षक</string>
     <string name="see_the_majestic_himalayas_including_mt_everest_if_the_skies_are_clear_you_can_view_the_himalayan_mountains">चाङ्गुनारायण पर्यटन एप मा तपाईंलाई स्वागत छ । यस एप मर्फत चाङ्गुनारायण र नगरकोट क्षेत्र वरिपरिको विभिन्न एतिहसिक स्थल्, मठ्मन्दिर तथा अन्य रमणिय र सुन्दर दृश्यहरुको अवलोकन गर्नुहोस।</string>
     <string name="nepal">नेपाल</string>
-    <string name="place_list">सूची</string>
+    <string name="place_list">डाटा दृश्य</string>
     <string name="near_by_places_list">नजिकैको स्थान सूची</string>
     <string name="submit_qrcode">QR Code पेश गर्नुहोस्</string>
     <string name="home">गृह पृष्ठ</string>
@@ -94,7 +94,7 @@
     <string name = "changunarayan">चाँगुनारायण धार्मिक तथा पर्यटकिय स्थल</string>
     <string name = "currently_there_is_no_data_available"> हाल कुनै डेटा उपलब्ध छैन। </string>
     <string name = "explore_changunarayan_area">%s क्षेत्र अन्वेषण गर्नुहोस् </string>
-    <string name = "tourist_information_guide">पर्यटक जानकारी गाइड</string>
+    <string name = "tourist_information_guide">नियम र नियमन</string>
     <string name = "get_started"> सुरू गर्नुहोस् </string>
     <string name = "welcome_to_changunarayan"> चाँगुनारायण नगरपालिकामा स्वागत छ</string>
     <string name = "your_virtual_guide"> तपाईको भर्चुअल गाइड।</string>
@@ -103,9 +103,9 @@
     <string name = "get_location"> रेकर्ड स्थान </string>
     <string name = "getting_location"> स्थान लोड हुँदैछ </string>
     <string name = "please_wait_long"> कृपया प्रतीक्षा गर्नुहोस्। यसले केही मिनेट लिन सक्छ। </string>
-    <string name = "save_point"> जिप प्वाइन्ट </string> बचत गर्नुहोस्
-    <string name = "get_point"> जिएप्ट शुरू गर्नुहोस् </string>
-    <string name = "geopoint_view_read_only"> ज्योतिष </string> हेर्नुहोस्
+    <string name = "save_point"> जिपीएस प्वाइन्ट स्वीकार गर्नुहोस्</string>
+    <string name = "get_point"> जिपीएस पोइन्ट लिनुहोस् </string>
+    <string name = "geopoint_view_read_only"> जिपीएस पोइन्ट हेर्ने मात्र </string>
     <string name = "cancel_location"> रद्द गर्नुहोस् </string>
     <string name = "provider_disabled_error"> माफ गर्नुहोस्, स्थान प्रदायक असक्षम छन्! </string>
     <string name = "location_provider_accuracy">%1$s प्रयोग गर्दै। शुद्धता %2$s मीटर छ </string>
@@ -125,7 +125,7 @@
     <string name="place_details">ठाऊको विवरण</string>
     <string name="home_page">गृह पृष्ठ</string>
 
-    <string name="designed_and_developed_by_naxa_pvt_ltd">Designed and developed by Naxa Pvt. Ltd.</string>
+    <string name="designed_and_developed_by_naxa_pvt_ltd">Naxa Pvt. Ltd. द्वारा डिजाइन तथा विकास गरिएको।</string>
     <string name="all_rights_reserved_2019">All rights reserved ©2019.</string>
     <string name="full_name">पुरा नाम</string>
     <string name="enter_full_name">पुरा नाम लेख्नुहोस</string>
@@ -148,11 +148,13 @@
     <string name="mayor_s_message">मेयर सन्देश</string>
     <string name="developed_by_naxa_pvt_ltd">Developed By: Naxa Pvt. Ltd.</string>
     <string name="start_navigation">नेभिगेसन सुरु गर्नुहोस्</string>
-    <string name="searching_current_location">Searching current location  Make sure your GPS provider is enabled.</string>
-    <string name="please_enable_gps_provider">Please enable your GPS Provider</string>
-    <string name="map_is_not_ready_yet">Your map is not ready yet</string>
-    <string name="searching_your_current_location">Searching Your Current Location</string>
-    <string name="changunarayan_virtual_app_guide">Changunarayan Virtual App Guide.</string>
+    <string name="searching_current_location">हालको स्थान खोजी गर्दै यो निश्चित गर्नुहोस् कि तपाईको जीपीएस प्रदायक अन छ।</string>
+    <string name="please_enable_gps_provider">कृपया तपाईंको जीपीएस प्रदायक अन गर्नुहोस्।</string>
+    <string name="map_is_not_ready_yet">तपाईंको नक्शा अझै तयार छैन।</string>
+    <string name="searching_your_current_location">तपाईंको हालको स्थान खोजी गर्दै।</string>
+    <string name="changunarayan_virtual_app_guide">चांगुनारायण भर्चुअल अनुप्रयोग गाइड।</string>
     <string name="welcome_message">स्वागत सन्देश</string>
+    <string name="street_view">सडक दृश्य</string>
+    <string name="satellite_view">उपग्रह दृश्य</string>
 
 </resources>
